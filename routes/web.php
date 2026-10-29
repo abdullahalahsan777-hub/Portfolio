@@ -166,6 +166,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         Route::post('/maintenance/cache', [AdminMaintenanceController::class, 'clearCache'])->name('maintenance.clearCache');
         Route::post('/maintenance/toggle', [AdminMaintenanceController::class, 'toggleMaintenance'])->name('maintenance.toggle');
         Route::post('/maintenance/upgrade-status', [AdminMaintenanceController::class, 'upgradeStatus'])->name('maintenance.upgradeStatus');
+        Route::get('/maintenance/preview-email', [AdminMaintenanceController::class, 'previewEmail'])->name('maintenance.previewEmail');
+        Route::post('/maintenance/send-test-email', [AdminMaintenanceController::class, 'sendTestEmail'])->name('maintenance.sendTestEmail');
 
         // User Management Module
         Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');

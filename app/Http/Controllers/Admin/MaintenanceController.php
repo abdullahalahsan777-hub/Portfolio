@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ServerDownMail;
+use App\Mail\ServerUpMail;
 use App\Models\SiteSetting;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class MaintenanceController extends Controller
@@ -72,6 +77,7 @@ class MaintenanceController extends Controller
             'maintenance_title' => SiteSetting::get('maintenance_title', 'System Upgrade in Progress'),
             'maintenance_message' => SiteSetting::get('maintenance_message', 'The frontend portfolio and client services are temporarily paused while our infrastructure undergoes a scheduled performance upgrade. We apologize for the inconvenience and will be fully operational shortly.'),
             'maintenance_estimated_time' => SiteSetting::get('maintenance_estimated_time', 'Estimated duration: 15–30 minutes'),
+            'registered_users_count' => User::whereNotNull('email')->count(),
         ];
 
         $this->data['systemInfo'] = $systemInfo;
@@ -139,12 +145,19 @@ class MaintenanceController extends Controller
         try {
             $currentlyDown = SiteSetting::get('maintenance_mode', '0') === '1'
                 || SiteSetting::get('server_status', 'up') === 'maintenance';
+            $shouldSendEmail = $request->boolean('send_email', true);
 
             if ($currentlyDown) {
                 // UPGRADE SERVER STATUS BACK TO UP / LIVE
                 SiteSetting::set('maintenance_mode', '0', 'maintenance');
                 SiteSetting::set('server_status', 'up', 'maintenance');
                 Artisan::call('optimize:clear');
+
+                $emailSummary = '';
+                if ($shouldSendEmail) {
+                    $stats = $this->broadcastStatusEmail('up');
+                    $emailSummary = " &bull; 📧 Live notification sent to {$stats['sent']}/{$stats['total']} user(s).";
+                }
 
                 \App\Models\Notification::record([
                     'user_id' => Auth::id(),
@@ -156,13 +169,19 @@ class MaintenanceController extends Controller
                     'color' => 'emerald',
                 ]);
 
-                flash()->important('🚀 Server Status successfully UPGRADED to LIVE! Frontend and Client User Panel are now accessible to all visitors.');
+                flash()->important("🚀 Server Status successfully UPGRADED to LIVE! Frontend and Client User Panel are accessible.{$emailSummary}");
 
                 return redirect()->back();
             } else {
                 // ACTIVATE SERVICE UNAVAILABLE (503) FOR FRONTEND AND USER PANEL
                 SiteSetting::set('maintenance_mode', '1', 'maintenance');
                 SiteSetting::set('server_status', 'maintenance', 'maintenance');
+
+                $emailSummary = '';
+                if ($shouldSendEmail) {
+                    $stats = $this->broadcastStatusEmail('down');
+                    $emailSummary = " &bull; 📧 503 notification sent to {$stats['sent']}/{$stats['total']} user(s).";
+                }
 
                 \App\Models\Notification::record([
                     'user_id' => Auth::id(),
@@ -174,7 +193,7 @@ class MaintenanceController extends Controller
                     'color' => 'amber',
                 ]);
 
-                flash()->warning('⚠️ Server placed in MAINTENANCE / UPGRADE Mode. Frontend and Client User Panel will return HTTP 503 Service Unavailable. Admin panel remains fully operational.');
+                flash()->warning("⚠️ Server placed in MAINTENANCE / UPGRADE Mode (HTTP 503). Admin panel remains fully operational.{$emailSummary}");
 
                 return redirect()->back();
             }
@@ -191,12 +210,19 @@ class MaintenanceController extends Controller
     public function upgradeStatus(Request $request): RedirectResponse
     {
         $action = $request->input('action', 'up');
+        $shouldSendEmail = $request->boolean('send_email', true);
 
         try {
             if ($action === 'up') {
                 SiteSetting::set('maintenance_mode', '0', 'maintenance');
                 SiteSetting::set('server_status', 'up', 'maintenance');
                 Artisan::call('optimize:clear');
+
+                $emailSummary = '';
+                if ($shouldSendEmail) {
+                    $stats = $this->broadcastStatusEmail('up');
+                    $emailSummary = " &bull; 📧 Live notification sent to {$stats['sent']}/{$stats['total']} user(s).";
+                }
 
                 \App\Models\Notification::record([
                     'user_id' => Auth::id(),
@@ -208,7 +234,7 @@ class MaintenanceController extends Controller
                     'color' => 'emerald',
                 ]);
 
-                flash()->important('🚀 Server Status UPGRADE COMPLETE! The system is now LIVE and accessible to all users.');
+                flash()->important("🚀 Server Status UPGRADE COMPLETE! The system is now LIVE and accessible to all users.{$emailSummary}");
 
                 return redirect()->back();
             } else {
@@ -231,6 +257,16 @@ class MaintenanceController extends Controller
                     SiteSetting::set('maintenance_estimated_time', $validated['estimated_time'], 'maintenance');
                 }
 
+                $emailSummary = '';
+                if ($shouldSendEmail) {
+                    $stats = $this->broadcastStatusEmail('down', [
+                        'title' => $validated['title'] ?? null,
+                        'noticeMessage' => $validated['message'] ?? null,
+                        'estimatedTime' => $validated['estimated_time'] ?? null,
+                    ]);
+                    $emailSummary = " &bull; 📧 503 notification sent to {$stats['sent']}/{$stats['total']} user(s).";
+                }
+
                 \App\Models\Notification::record([
                     'user_id' => Auth::id(),
                     'type' => 'system',
@@ -241,7 +277,7 @@ class MaintenanceController extends Controller
                     'color' => 'amber',
                 ]);
 
-                flash()->warning('⚠️ Server status set to MAINTENANCE / UPGRADE MODE. Frontend and Client Dashboard are serving 503 Service Unavailable.');
+                flash()->warning("⚠️ Server status set to MAINTENANCE / UPGRADE MODE (HTTP 503).{$emailSummary}");
 
                 return redirect()->back();
             }
@@ -250,5 +286,141 @@ class MaintenanceController extends Controller
 
             return redirect()->back();
         }
+    }
+
+    /**
+     * Broadcast Server Status Email (Down or Up) to all registered users.
+     */
+    protected function broadcastStatusEmail(string $status, array $customDetails = []): array
+    {
+        $users = User::whereNotNull('email')->get();
+        $sent = 0;
+        $failed = 0;
+        $errors = [];
+
+        $siteName = SiteSetting::get('site_name', SiteSetting::get('site_title', config('app.name', 'Portfolio Studio')));
+        $contactEmail = SiteSetting::get('contact_email', config('mail.from.address', 'support@portfolio.local'));
+
+        foreach ($users as $user) {
+            try {
+                if ($status === 'down') {
+                    $details = array_merge([
+                        'siteName' => $siteName,
+                        'title' => SiteSetting::get('maintenance_title', 'System Upgrade in Progress'),
+                        'noticeMessage' => SiteSetting::get('maintenance_message', 'The frontend portfolio and client services are temporarily paused while our infrastructure undergoes a scheduled performance upgrade. We apologize for the inconvenience and will be fully operational shortly.'),
+                        'estimatedTime' => SiteSetting::get('maintenance_estimated_time', 'Estimated duration: 15–30 minutes'),
+                        'startedAt' => now()->format('M d, Y • h:i A T'),
+                        'statusUrl' => url('/errors/503'),
+                        'contactEmail' => $contactEmail,
+                    ], array_filter($customDetails));
+
+                    Mail::to($user->email)->send(new ServerDownMail($user, $details));
+                } else {
+                    $details = array_merge([
+                        'siteName' => $siteName,
+                        'title' => 'System Restored & Live Online',
+                        'noticeMessage' => 'All frontend portfolio themes, user dashboards, and application services are back online and operating normally at peak performance. Thank you for your patience while we upgraded our infrastructure!',
+                        'restoredAt' => now()->format('M d, Y • h:i A T'),
+                        'dashboardUrl' => route('login'),
+                        'contactEmail' => $contactEmail,
+                    ], array_filter($customDetails));
+
+                    Mail::to($user->email)->send(new ServerUpMail($user, $details));
+                }
+                $sent++;
+            } catch (\Throwable $e) {
+                $failed++;
+                $errors[] = $e->getMessage();
+                Log::warning("Failed to broadcast server {$status} email to [{$user->email}]: " . $e->getMessage());
+            }
+        }
+
+        return [
+            'sent' => $sent,
+            'failed' => $failed,
+            'total' => $users->count(),
+            'errors' => $errors,
+        ];
+    }
+
+    /**
+     * Preview Server Down or Server Up Email in the browser.
+     */
+    public function previewEmail(Request $request)
+    {
+        $type = $request->query('type', 'down');
+        $user = Auth::user() ?? User::first() ?? new User(['name' => 'Demo User', 'email' => 'user@example.com']);
+
+        $siteName = SiteSetting::get('site_name', SiteSetting::get('site_title', config('app.name', 'Portfolio Studio')));
+        $contactEmail = SiteSetting::get('contact_email', config('mail.from.address', 'support@portfolio.local'));
+
+        if ($type === 'up') {
+            $mail = new ServerUpMail($user, [
+                'siteName' => $siteName,
+                'title' => 'System Restored & Live Online',
+                'noticeMessage' => 'All frontend portfolio themes, user dashboards, and application services are back online and operating normally at peak performance. Thank you for your patience while we upgraded our infrastructure!',
+                'restoredAt' => now()->format('M d, Y • h:i A T'),
+                'dashboardUrl' => route('login'),
+                'contactEmail' => $contactEmail,
+            ]);
+        } else {
+            $mail = new ServerDownMail($user, [
+                'siteName' => $siteName,
+                'title' => SiteSetting::get('maintenance_title', 'System Upgrade in Progress'),
+                'noticeMessage' => SiteSetting::get('maintenance_message', 'The frontend portfolio and client services are temporarily paused while our infrastructure undergoes a scheduled performance upgrade. We apologize for the inconvenience and will be fully operational shortly.'),
+                'estimatedTime' => SiteSetting::get('maintenance_estimated_time', 'Estimated duration: 15–30 minutes'),
+                'startedAt' => now()->format('M d, Y • h:i A T'),
+                'statusUrl' => url('/errors/503'),
+                'contactEmail' => $contactEmail,
+            ]);
+        }
+
+        return $mail->render();
+    }
+
+    /**
+     * Send a sample test email to the logged-in administrator.
+     */
+    public function sendTestEmail(Request $request): RedirectResponse
+    {
+        $type = $request->input('type', 'down');
+        $admin = Auth::user();
+
+        if (!$admin || empty($admin->email)) {
+            flash()->danger('Admin account does not have a valid email configured.');
+            return redirect()->back();
+        }
+
+        $siteName = SiteSetting::get('site_name', SiteSetting::get('site_title', config('app.name', 'Portfolio Studio')));
+        $contactEmail = SiteSetting::get('contact_email', config('mail.from.address', 'support@portfolio.local'));
+
+        try {
+            if ($type === 'up') {
+                Mail::to($admin->email)->send(new ServerUpMail($admin, [
+                    'siteName' => $siteName,
+                    'title' => 'System Restored & Live Online (Test)',
+                    'noticeMessage' => 'All frontend portfolio themes, user dashboards, and application services are back online and operating normally at peak performance. This is a test dispatch.',
+                    'restoredAt' => now()->format('M d, Y • h:i A T'),
+                    'dashboardUrl' => route('login'),
+                    'contactEmail' => $contactEmail,
+                ]));
+                flash()->success("🚀 Test 'Server UP' notification dispatched to {$admin->email}.");
+            } else {
+                Mail::to($admin->email)->send(new ServerDownMail($admin, [
+                    'siteName' => $siteName,
+                    'title' => SiteSetting::get('maintenance_title', 'System Upgrade in Progress') . ' (Test)',
+                    'noticeMessage' => SiteSetting::get('maintenance_message', 'The frontend portfolio and client services are temporarily paused while our infrastructure undergoes a scheduled performance upgrade. This is a test dispatch.'),
+                    'estimatedTime' => SiteSetting::get('maintenance_estimated_time', 'Estimated duration: 15–30 minutes'),
+                    'startedAt' => now()->format('M d, Y • h:i A T'),
+                    'statusUrl' => url('/errors/503'),
+                    'contactEmail' => $contactEmail,
+                ]));
+                flash()->warning("⚠️ Test 'Server DOWN (503)' notification dispatched to {$admin->email}.");
+            }
+        } catch (\Throwable $e) {
+            flash()->danger("Failed to dispatch test email: " . $e->getMessage());
+        }
+
+        return redirect()->back();
     }
 }

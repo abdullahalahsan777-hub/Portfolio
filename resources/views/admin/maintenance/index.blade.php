@@ -90,7 +90,7 @@
                     @else
                         <button 
                             type="submit" 
-                            onclick="return confirm('Are you sure you want to activate Service Unavailable mode for frontend and user panel? Administrators can still log in and upgrade server status.')"
+                            onclick="return confirm('Are you sure you want to activate Service Unavailable mode for frontend and user panel? An email notification will be broadcast to all registered users.')"
                             class="w-full sm:w-auto px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-wider bg-amber-500 hover:bg-amber-400 text-black shadow-xl shadow-amber-500/20 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2.5"
                         >
                             <svg class="w-5 h-5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -99,6 +99,12 @@
                             <span>Enable 503 Service Unavailable</span>
                         </button>
                     @endif
+
+                    <!-- Automatic Email Dispatch Toggle -->
+                    <label class="flex items-center justify-center sm:justify-start gap-2 pt-2 text-[11px] font-mono text-slate-300 cursor-pointer select-none">
+                        <input type="checkbox" name="send_email" value="1" checked class="rounded border-white/20 bg-black/40 text-amber-500 focus:ring-0 w-3.5 h-3.5">
+                        <span>📧 Send {{ $isDown ? 'Server Live / Up' : 'Service Unavailable (503)' }} email to all {{ $systemInfo['registered_users_count'] ?? 0 }} users</span>
+                    </label>
                 </form>
 
                 <div class="flex items-center justify-center gap-3 text-[11px] font-mono text-slate-400">
@@ -170,10 +176,11 @@
                 >{{ $systemInfo['maintenance_message'] }}</textarea>
             </div>
 
-            <div class="flex items-center justify-between pt-2">
-                <span class="text-xs text-slate-400 font-mono">
-                    Changes apply immediately to any active or upcoming 503 screen.
-                </span>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+                <label class="flex items-center gap-2 text-xs text-slate-300 font-mono cursor-pointer select-none">
+                    <input type="checkbox" name="send_email" value="1" class="rounded border-white/20 bg-black/40 text-indigo-500 focus:ring-0 w-3.5 h-3.5">
+                    <span>📧 Also broadcast this updated 503 notice to all registered users</span>
+                </label>
                 <button 
                     type="submit" 
                     class="px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg transition-all"
@@ -260,6 +267,141 @@
                         Clear Views
                     </button>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. EMAIL BROADCAST NOTIFICATION TEMPLATES (SERVER DOWN & UP) -->
+    <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
+        <div class="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <span class="text-xs font-mono uppercase tracking-widest text-indigo-400">Automated Mail Alerts</span>
+                <h2 class="text-xl font-bold text-white mt-1">Server Status Email Broadcast Templates</h2>
+                <p class="text-xs text-slate-400">
+                    Dispatched automatically to all registered users ({{ $systemInfo['registered_users_count'] }} accounts) when server maintenance is triggered or restored.
+                </p>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-xs font-mono text-slate-300">
+                <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+                <span>Target: <strong>{{ $systemInfo['registered_users_count'] }} Registered Users</strong></span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Server Down (503) Email Card -->
+            <div class="p-6 rounded-2xl bg-black/40 border border-amber-500/20 hover:border-amber-500/40 transition-all flex flex-col justify-between space-y-5 relative overflow-hidden group">
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                            HTTP 503 &bull; Server Down Alert
+                        </span>
+                        <span class="text-[11px] font-mono text-slate-500">emails.server-down</span>
+                    </div>
+
+                    <h3 class="font-extrabold text-base text-white flex items-center gap-2">
+                        <span>⚠️ Scheduled Maintenance Notice</span>
+                    </h3>
+
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Sent when clicking <strong>Enable 503 Service Unavailable</strong>. Informs users about planned upgrades, estimated downtime, data safety guarantees, and provides a live status page link.
+                    </p>
+
+                    <!-- Mock Subject / Details Preview -->
+                    <div class="p-3 rounded-xl bg-slate-950/70 border border-white/5 space-y-1.5 text-[11px] font-mono">
+                        <div class="text-slate-400 truncate">
+                            <span class="text-slate-500">Subject:</span> ⚠️ [Maintenance Notice] {{ $systemInfo['maintenance_title'] }} &mdash; {{ config('app.name') }}
+                        </div>
+                        <div class="text-slate-400 truncate">
+                            <span class="text-slate-500">Timeline:</span> {{ $systemInfo['maintenance_estimated_time'] }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 pt-2">
+                    <a 
+                        href="{{ route('admin.maintenance.previewEmail', ['type' => 'down']) }}" 
+                        target="_blank" 
+                        class="px-4 py-2 rounded-xl text-xs font-bold font-mono bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 transition-all flex items-center gap-1.5"
+                    >
+                        <span>Preview HTML Template</span>
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+
+                    <form action="{{ route('admin.maintenance.sendTestEmail') }}" method="POST" class="inline">
+                        @csrf
+                        <input type="hidden" name="type" value="down">
+                        <button 
+                            type="submit" 
+                            class="px-4 py-2 rounded-xl text-xs font-mono font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-white/5 transition-all"
+                            title="Send a sample email to your admin address"
+                        >
+                            Send Test to My Inbox
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Server Up (200) Email Card -->
+            <div class="p-6 rounded-2xl bg-black/40 border border-emerald-500/20 hover:border-emerald-500/40 transition-all flex flex-col justify-between space-y-5 relative overflow-hidden group">
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                            HTTP 200 &bull; System Restored Alert
+                        </span>
+                        <span class="text-[11px] font-mono text-slate-500">emails.server-up</span>
+                    </div>
+
+                    <h3 class="font-extrabold text-base text-white flex items-center gap-2">
+                        <span>🚀 Service Restored &amp; Live Notice</span>
+                    </h3>
+
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Sent when clicking <strong>Upgrade Server Status (Bring Server UP)</strong>. Confirms systems are back online, caches refreshed, and invites users back to their dashboard.
+                    </p>
+
+                    <!-- Mock Subject / Details Preview -->
+                    <div class="p-3 rounded-xl bg-slate-950/70 border border-white/5 space-y-1.5 text-[11px] font-mono">
+                        <div class="text-slate-400 truncate">
+                            <span class="text-slate-500">Subject:</span> 🚀 [Service Restored] System Back Online &amp; Fully Operational &mdash; {{ config('app.name') }}
+                        </div>
+                        <div class="text-slate-400 truncate">
+                            <span class="text-slate-500">Status:</span> HTTP 200 OK &bull; All Portals Operational
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 pt-2">
+                    <a 
+                        href="{{ route('admin.maintenance.previewEmail', ['type' => 'up']) }}" 
+                        target="_blank" 
+                        class="px-4 py-2 rounded-xl text-xs font-bold font-mono bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 transition-all flex items-center gap-1.5"
+                    >
+                        <span>Preview HTML Template</span>
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </a>
+
+                    <form action="{{ route('admin.maintenance.sendTestEmail') }}" method="POST" class="inline">
+                        @csrf
+                        <input type="hidden" name="type" value="up">
+                        <button 
+                            type="submit" 
+                            class="px-4 py-2 rounded-xl text-xs font-mono font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-white/5 transition-all"
+                            title="Send a sample email to your admin address"
+                        >
+                            Send Test to My Inbox
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
