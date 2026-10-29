@@ -178,3 +178,36 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
     });
 });
+
+// Error Pages Showcase & Preview Routes
+Route::prefix('errors')->group(function () {
+    Route::get('/', function () {
+        $errors = [
+            '4xx' => [
+                '400' => ['title' => 'Bad Request', 'desc' => 'The server cannot process the request due to malformed syntax.', 'color' => '#f59e0b'],
+                '401' => ['title' => 'Unauthorized', 'desc' => 'The request requires user authentication credentials that are missing or invalid.', 'color' => '#6366f1'],
+                '403' => ['title' => 'Forbidden', 'desc' => 'The server refuses to give the content because the user lacks permission.', 'color' => '#f43f5e'],
+                '404' => ['title' => 'Not Found', 'desc' => 'The server cannot find the requested page or URL.', 'color' => '#0090e7'],
+                '405' => ['title' => 'Method Not Allowed', 'desc' => 'The HTTP method used (such as GET or POST) is not supported for that resource.', 'color' => '#a855f7'],
+                '408' => ['title' => 'Request Timeout', 'desc' => "The server timed out waiting for the browser's request.", 'color' => '#f97316'],
+                '410' => ['title' => 'Gone', 'desc' => 'The requested page has been permanently deleted and will not return.', 'color' => '#94a3b8'],
+                '429' => ['title' => 'Too Many Requests', 'desc' => 'The user has sent too many requests in a given amount of time (rate-limited).', 'color' => '#eab308'],
+            ],
+            '5xx' => [
+                '500' => ['title' => 'Internal Server Error', 'desc' => 'A generic catch-all error for an unexpected problem on the server.', 'color' => '#ef4444'],
+                '502' => ['title' => 'Bad Gateway', 'desc' => 'An upstream or proxy server received an invalid response from another server.', 'color' => '#fb923c'],
+                '503' => ['title' => 'Service Unavailable', 'desc' => 'The server is temporarily overloaded or down for maintenance.', 'color' => '#f59e0b'],
+                '504' => ['title' => 'Gateway Timeout', 'desc' => 'The server took too long to get a response from an upstream server or database.', 'color' => '#e11d48'],
+            ],
+        ];
+        return view('errors.index', compact('errors'));
+    })->name('errors.index');
+
+    Route::get('/{code}', function ($code) {
+        $allowed = ['400', '401', '403', '404', '405', '408', '410', '429', '500', '502', '503', '504'];
+        if (in_array((string) $code, $allowed, true)) {
+            return response()->view("errors.{$code}", [], (int) $code);
+        }
+        abort(404);
+    })->name('errors.show');
+});
