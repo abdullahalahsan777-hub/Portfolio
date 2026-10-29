@@ -13,11 +13,13 @@ use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\Skill;
 use App\Models\Testimonial;
+use App\Models\ThemeContent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PortfolioController extends Controller
 {
@@ -55,7 +57,7 @@ class PortfolioController extends Controller
     {
         $theme = $theme ?: $this->getActiveTheme();
         $allSettings = SiteSetting::all()->pluck('value', 'key')->toArray();
-        $themeContents = \App\Models\ThemeContent::forTheme($theme, $page);
+        $themeContents = ThemeContent::forTheme($theme, $page);
 
         // Merge site settings with theme_contents, with theme_contents taking priority
         return array_merge($allSettings, $themeContents);
@@ -164,7 +166,7 @@ class PortfolioController extends Controller
 
         $themeMode = $this->getThemeMode();
 
-        $themeContents = \App\Models\ThemeContent::forTheme($activeTheme, 'home');
+        $themeContents = ThemeContent::forTheme($activeTheme, 'home');
 
         $this->data['activeTheme'] = $activeTheme;
         $this->data['themeMode'] = $themeMode;
@@ -379,7 +381,7 @@ class PortfolioController extends Controller
     /**
      * Download or view the uploaded CV / Resume PDF file.
      */
-    public function downloadCv(): \Symfony\Component\HttpFoundation\BinaryFileResponse|\Illuminate\Http\RedirectResponse
+    public function downloadCv(): BinaryFileResponse|RedirectResponse
     {
         $pdfPath = SiteSetting::get('resume_pdf_file');
         $originalName = SiteSetting::get('resume_pdf_name', 'Curriculum_Vitae.pdf');

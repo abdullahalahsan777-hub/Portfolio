@@ -406,26 +406,50 @@
                                 </svg>
                             </a>
 
-                            <!-- Folder Header Name (Requested: Header Name of Top) -->
+                            <!-- Folder Header Name (Theme SVG Icons) -->
                             <div class="flex items-center gap-2 pl-2 border-l border-white/10">
                                 <span class="text-xs sm:text-sm font-bold text-white tracking-tight flex items-center gap-2">
                                     @if ($currentType === 'inbox')
-                                        <span>📥 Inbox</span>
+                                        <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                        </svg>
+                                        <span>Inbox</span>
                                         @if ($counts['unread_inbox'] > 0)
                                             <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
                                                 {{ $counts['unread_inbox'] }} New
                                             </span>
                                         @endif
                                     @elseif($currentType === 'sent')
-                                        <span>📤 Sent Correspondence</span>
+                                        <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                        </svg>
+                                        <span>Sent Correspondence</span>
                                     @elseif($currentType === 'draft')
-                                        <span>📝 Drafts</span>
+                                        <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                        <span>Drafts</span>
                                     @elseif($currentType === 'important')
-                                        <span>⭐ Important &bull; VIP</span>
+                                        <svg class="w-4 h-4 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.784.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                        </svg>
+                                        <span>Important &bull; VIP</span>
                                     @elseif($currentType === 'trash')
-                                        <span>🗑️ Trash Bin</span>
+                                        <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                        <span>Trash Bin</span>
                                     @else
-                                        <span>📬 All Mail</span>
+                                        <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                        <span>All Mail</span>
                                     @endif
                                 </span>
                             </div>
@@ -761,18 +785,32 @@
                             </div>
                         @empty
                             <div class="py-14 text-center text-slate-400 font-mono">
-                                <div
-                                    class="w-12 h-12 mx-auto mb-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl text-slate-400">
+                                <div class="w-12 h-12 mx-auto mb-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400">
                                     @if ($currentType === 'trash')
-                                        🗑️
+                                        <svg class="w-6 h-6 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
                                     @elseif($currentType === 'draft')
-                                        📝
+                                        <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
                                     @elseif($currentType === 'sent')
-                                        📤
+                                        <svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                        </svg>
                                     @elseif($currentType === 'important')
-                                        ⭐
+                                        <svg class="w-6 h-6 text-yellow-400 fill-yellow-400/20" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.784.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                        </svg>
                                     @else
-                                        📥
+                                        <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                        </svg>
                                     @endif
                                 </div>
                                 <p class="text-sm font-semibold text-white">No messages found in {{ ucfirst($currentType) }}</p>
@@ -835,9 +873,14 @@
                     <nav class="space-y-1 pt-1 font-mono text-xs">
                         <!-- 1. Inbox -->
                         <a href="{{ route('admin.messages.index', ['type' => 'inbox']) }}"
-                            class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all {{ $currentType === 'inbox' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
+                            class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'inbox' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <span class="text-base">📥</span>
+                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'inbox' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-white/5 text-slate-400 group-hover:text-indigo-400 group-hover:bg-indigo-500/10' }} transition-colors">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                    </svg>
+                                </div>
                                 <span>Inbox</span>
                             </div>
                             @if ($counts['unread_inbox'] > 0)
@@ -852,9 +895,14 @@
 
                         <!-- 2. Draft -->
                         <a href="{{ route('admin.messages.index', ['type' => 'draft']) }}"
-                            class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all {{ $currentType === 'draft' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
+                            class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'draft' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <span class="text-base">📝</span>
+                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'draft' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-white/5 text-slate-400 group-hover:text-amber-400 group-hover:bg-amber-500/10' }} transition-colors">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                </div>
                                 <span>Draft</span>
                             </div>
                             <span
@@ -865,9 +913,14 @@
 
                         <!-- 3. Sent -->
                         <a href="{{ route('admin.messages.index', ['type' => 'sent']) }}"
-                            class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all {{ $currentType === 'sent' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
+                            class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'sent' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <span class="text-base">📤</span>
+                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'sent' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-white/5 text-slate-400 group-hover:text-emerald-400 group-hover:bg-emerald-500/10' }} transition-colors">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                    </svg>
+                                </div>
                                 <span>Sent</span>
                             </div>
                             <span class="text-[11px] text-slate-500">{{ $counts['sent'] }}</span>
@@ -875,9 +928,14 @@
 
                         <!-- 4. Important -->
                         <a href="{{ route('admin.messages.index', ['type' => 'important']) }}"
-                            class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all {{ $currentType === 'important' ? 'bg-yellow-500/15 text-yellow-300 border border-yellow-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
+                            class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'important' ? 'bg-yellow-500/15 text-yellow-300 border border-yellow-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <span class="text-base">⭐</span>
+                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'important' ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30' : 'bg-white/5 text-slate-400 group-hover:text-yellow-400 group-hover:bg-yellow-500/10' }} transition-colors">
+                                    <svg class="w-3.5 h-3.5 {{ $currentType === 'important' ? 'fill-yellow-400 text-yellow-400' : 'fill-none' }}" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.784.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                    </svg>
+                                </div>
                                 <span>Important</span>
                             </div>
                             <span
@@ -888,9 +946,14 @@
 
                         <!-- 5. All Mail -->
                         <a href="{{ route('admin.messages.index', ['type' => 'all']) }}"
-                            class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all {{ $currentType === 'all' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
+                            class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'all' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <span class="text-base">📬</span>
+                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'all' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-white/5 text-slate-400 group-hover:text-indigo-400 group-hover:bg-indigo-500/10' }} transition-colors">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
                                 <span>All Mail</span>
                             </div>
                             <span class="text-[11px] text-slate-500">{{ $counts['all'] }}</span>
@@ -898,9 +961,14 @@
 
                         <!-- 6. Trash (Active SoftDelete) -->
                         <a href="{{ route('admin.messages.index', ['type' => 'trash']) }}"
-                            class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all {{ $currentType === 'trash' ? 'bg-rose-500/15 text-rose-300 border border-rose-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
+                            class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'trash' ? 'bg-rose-500/15 text-rose-300 border border-rose-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <span class="text-base">🗑️</span>
+                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'trash' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-white/5 text-slate-400 group-hover:text-rose-400 group-hover:bg-rose-500/10' }} transition-colors">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </div>
                                 <span>Trash</span>
                             </div>
                             <span

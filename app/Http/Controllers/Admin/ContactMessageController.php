@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ContactMessageController extends Controller
@@ -258,8 +259,8 @@ class ContactMessageController extends Controller
         $path = $request->input('path');
         $tempId = $request->input('temp_id');
 
-        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
-            \Illuminate\Support\Facades\Storage::disk('public')->delete($path);
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
         }
 
         if (!empty($tempId)) {
@@ -589,7 +590,7 @@ class ContactMessageController extends Controller
     /**
      * Permanently delete message from Trash.
      */
-    public function forceDelete($id): RedirectResponse|JsonResponse
+    public function forceDelete($id = null): RedirectResponse|JsonResponse
     {
         $message = ContactMessage::onlyTrashed()->findOrFail($id);
         $message->forceDelete();
