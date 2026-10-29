@@ -1,0 +1,620 @@
+/* ==========================================================================
+   Frontend Common Styles
+   Smooth scrolling, typography, glassmorphism, responsive utilities.
+   ========================================================================== */
+
+html, body {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    overflow-x: clip;
+}
+
+/* Enforce sticky top navigation across all portfolio themes */
+#mainHeader {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 50 !important;
+}
+
+/* Custom Webkit Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #090714;
+}
+::-webkit-scrollbar-thumb {
+    background: #251c47;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #7c3aed;
+}
+
+/* Glassmorphism helpers */
+.glass-nav {
+    background: rgba(12, 10, 24, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card-subtle {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Software Dev Glassmorphism Card Utility */
+.soft-card {
+    background: linear-gradient(180deg, rgba(20, 20, 20, 0.85) 0%, rgba(10, 10, 10, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.soft-card:hover {
+    border-color: rgba(255, 107, 0, 0.5);
+    box-shadow: 0 15px 35px -10px rgba(255, 107, 0, 0.25);
+}
+.soft-card.is-open {
+    border-color: rgba(255, 107, 0, 0.5);
+}
+
+/* ==========================================================================
+   UNIVERSAL THEME MODE SYSTEM (Dark, Light, System)
+   Applies to EVERY page (Home, About, Portfolio, Blog, FAQ, Contact) across all themes.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   LIGHT MODE OVERRIDES
+   -------------------------------------------------------------------------- */
+html.light body,
+[color-scheme="light"] body,
+body.light-mode {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+/* Base background overrides for dark page/section container wrappers */
+html.light .min-h-screen,
+[color-scheme="light"] .min-h-screen,
+html.light .bg-\[\#070707\],
+html.light .bg-\[\#080808\],
+html.light .bg-\[\#090714\],
+html.light .bg-\[\#0a0a0a\],
+html.light .bg-\[\#0c0a18\],
+html.light .bg-\[\#0c0c0c\],
+html.light .bg-\[\#0d0d0d\],
+html.light .bg-\[\#0e0b1d\],
+html.light .bg-\[\#0e0e0e\],
+html.light .bg-\[\#050505\],
+html.light .bg-\[\#050608\],
+html.light .bg-\[\#07080b\],
+html.light .bg-\[\#140608\],
+html.light .bg-\[\#140b05\],
+html.light .bg-\[\#150f2b\],
+html.light .bg-\[\#150f2c\],
+html.light .bg-\[\#1c1236\],
+html.light .bg-\[\#0e1015\],
+html.light .bg-\[\#141416\],
+html.light .bg-black,
+html.light .bg-neutral-900,
+html.light .bg-neutral-950,
+html.light .bg-zinc-900,
+html.light .bg-zinc-950,
+html.light .bg-slate-900,
+html.light .bg-slate-950,
+html.light .bg-gray-900,
+html.light .bg-gray-950,
+[color-scheme="light"] .bg-\[\#070707\],
+[color-scheme="light"] .bg-\[\#080808\],
+[color-scheme="light"] .bg-\[\#090714\],
+[color-scheme="light"] .bg-\[\#0a0a0a\],
+[color-scheme="light"] .bg-\[\#0c0a18\],
+[color-scheme="light"] .bg-\[\#0c0c0c\],
+[color-scheme="light"] .bg-\[\#0d0d0d\],
+[color-scheme="light"] .bg-\[\#0e0b1d\],
+[color-scheme="light"] .bg-\[\#0e0e0e\],
+[color-scheme="light"] .bg-\[\#050505\],
+[color-scheme="light"] .bg-\[\#050608\],
+[color-scheme="light"] .bg-\[\#07080b\],
+[color-scheme="light"] .bg-\[\#140608\],
+[color-scheme="light"] .bg-\[\#140b05\],
+[color-scheme="light"] .bg-\[\#150f2b\],
+[color-scheme="light"] .bg-\[\#150f2c\],
+[color-scheme="light"] .bg-\[\#1c1236\],
+[color-scheme="light"] .bg-\[\#0e1015\],
+[color-scheme="light"] .bg-\[\#141416\],
+[color-scheme="light"] .bg-black,
+[color-scheme="light"] .bg-neutral-900,
+[color-scheme="light"] .bg-neutral-950,
+[color-scheme="light"] .bg-zinc-900,
+[color-scheme="light"] .bg-zinc-950,
+[color-scheme="light"] .bg-slate-900,
+[color-scheme="light"] .bg-slate-950 {
+    background-color: #f8fafc !important;
+}
+
+/* Gradients in light mode */
+html.light .bg-gradient-to-b.from-\[\#0a0a0a\],
+html.light .bg-gradient-to-b.from-\[\#080808\],
+html.light .bg-gradient-to-b.from-\[\#070707\],
+html.light .bg-gradient-to-b.from-\[\#0c0a18\],
+[color-scheme="light"] .bg-gradient-to-b.from-\[\#0a0a0a\],
+[color-scheme="light"] .bg-gradient-to-b.from-\[\#080808\],
+[color-scheme="light"] .bg-gradient-to-b.from-\[\#070707\],
+[color-scheme="light"] .bg-gradient-to-b.from-\[\#0c0a18\] {
+    background-image: linear-gradient(to bottom, #f1f5f9, #f8fafc) !important;
+}
+
+/* Subtle Watermark Backdrop in light mode */
+html.light .watermark-text,
+[color-scheme="light"] .watermark-text {
+    color: rgba(0, 0, 0, 0.035) !important;
+}
+
+/* Typography in light mode - General Text Elements */
+html.light h1:not(.btn-primary *):not([class*="-btn-"] *),
+html.light h2:not(.btn-primary *):not([class*="-btn-"] *),
+html.light h3:not(.btn-primary *):not([class*="-btn-"] *):not(.highlighted *):not(.featured *),
+html.light h4:not(.btn-primary *):not([class*="-btn-"] *),
+html.light h5,
+html.light h6,
+[color-scheme="light"] h1:not(.btn-primary *):not([class*="-btn-"] *),
+[color-scheme="light"] h2:not(.btn-primary *):not([class*="-btn-"] *),
+[color-scheme="light"] h3:not(.btn-primary *):not([class*="-btn-"] *):not(.highlighted *):not(.featured *),
+[color-scheme="light"] h4:not(.btn-primary *):not([class*="-btn-"] *) {
+    color: #0f172a !important;
+}
+
+/* Standalone text-white elements that are NOT inside buttons or badges */
+html.light .text-white:not(button):not(button *):not(a.btn-primary):not(a.btn-primary *):not([class*="-btn-"]):not([class*="-btn-"] *):not([class*="btn-"]):not([class*="btn-"] *):not(.highlighted):not(.highlighted *):not(.featured):not(.featured *):not([class*="bg-indigo-600"]):not([class*="bg-indigo-600"] *):not(.bg-\[\#7c3aed\]):not(.bg-\[\#7c3aed\] *):not(.bg-\[\#ff0033\]):not(.bg-\[\#ff0033\] *):not(.from-\[\#ff0033\]):not(.from-\[\#ff0033\] *):not(.bg-\[\#ff6b00\]):not(.bg-\[\#ff6b00\] *):not(.bg-\[\#e26d9b\]):not(.bg-\[\#e26d9b\] *):not(.bg-emerald-600):not(.bg-emerald-600 *):not(.bg-black):not(.bg-black *),
+html.light .text-\[\#ffffff\]:not(button):not(button *):not([class*="-btn-"]):not([class*="-btn-"] *):not([class*="btn-"]):not([class*="btn-"] *):not(.bg-\[\#ff0033\]):not(.bg-\[\#ff0033\] *),
+html.light .text-\[\#f5f3ff\]:not(button):not(button *):not([class*="-btn-"]):not([class*="-btn-"] *):not([class*="btn-"]):not([class*="btn-"] *),
+[color-scheme="light"] .text-white:not(button):not(button *):not(a.btn-primary):not(a.btn-primary *):not([class*="-btn-"]):not([class*="-btn-"] *):not([class*="btn-"]):not([class*="btn-"] *):not(.highlighted):not(.highlighted *):not(.featured):not(.featured *):not([class*="bg-indigo-600"]):not([class*="bg-indigo-600"] *):not(.bg-\[\#7c3aed\]):not(.bg-\[\#7c3aed\] *):not(.bg-\[\#ff0033\]):not(.bg-\[\#ff0033\] *):not(.from-\[\#ff0033\]):not(.from-\[\#ff0033\] *):not(.bg-\[\#ff6b00\]):not(.bg-\[\#ff6b00\] *):not(.bg-\[\#e26d9b\]):not(.bg-\[\#e26d9b\] *):not(.bg-emerald-600):not(.bg-emerald-600 *):not(.bg-black):not(.bg-black *),
+[color-scheme="light"] .text-\[\#ffffff\]:not(button):not(button *):not([class*="-btn-"]):not([class*="-btn-"] *):not([class*="btn-"]):not([class*="btn-"] *):not(.bg-\[\#ff0033\]):not(.bg-\[\#ff0033\] *),
+[color-scheme="light"] .text-\[\#f5f3ff\]:not(button):not(button *):not([class*="-btn-"]):not([class*="-btn-"] *) {
+    color: #0f172a !important;
+}
+
+/* Secondary & Muted paragraphs in light mode */
+html.light .text-slate-200,
+html.light .text-slate-300,
+html.light .text-slate-400,
+html.light .text-neutral-200,
+html.light .text-neutral-300,
+html.light .text-neutral-400,
+html.light .text-zinc-300,
+html.light .text-zinc-400,
+html.light .text-\[\#8c8c8c\],
+html.light .text-\[\#948ba8\],
+html.light .text-\[\#8e8e8e\],
+html.light .text-\[\#9ba1b0\],
+html.light .text-\[\#5a606d\],
+[color-scheme="light"] .text-slate-200,
+[color-scheme="light"] .text-slate-300,
+[color-scheme="light"] .text-slate-400,
+[color-scheme="light"] .text-neutral-200,
+[color-scheme="light"] .text-neutral-300,
+[color-scheme="light"] .text-neutral-400,
+[color-scheme="light"] .text-\[\#8c8c8c\] {
+    color: #475569 !important;
+}
+
+/* Faint labels / Subtitles */
+html.light .text-neutral-500,
+html.light .text-slate-500,
+html.light .text-zinc-500,
+[color-scheme="light"] .text-neutral-500,
+[color-scheme="light"] .text-slate-500 {
+    color: #64748b !important;
+}
+
+/* =========================================================================
+   PROTECTED BUTTONS & BADGES (Preserve High Contrast Legibility)
+   ========================================================================= */
+html.light .btn-primary,
+html.light .btn-primary *,
+html.light .gd-btn-primary,
+html.light .gd-btn-primary *,
+html.light .btn-pill-red,
+html.light .btn-pill-red *,
+html.light .btn-soft-orange,
+html.light .btn-soft-orange *,
+html.light .btn-orange-primary,
+html.light .btn-orange-primary *,
+html.light .btn-illustrator,
+html.light .btn-illustrator *,
+html.light .bg-\[\#ff0033\],
+html.light .bg-\[\#ff0033\] > *,
+html.light .bg-\[\#ff0033\] span,
+html.light div.bg-\[\#ff0033\] *,
+html.light a.bg-\[\#ff0033\],
+html.light a.bg-\[\#ff0033\] *,
+html.light .from-\[\#ff0033\],
+html.light .from-\[\#ff0033\] > *,
+html.light .from-\[\#ff0033\] span,
+html.light [class*="bg-indigo-600"] .text-white,
+html.light .bg-\[\#7c3aed\] .text-white,
+html.light .bg-\[\#ff6b00\] .text-white,
+html.light .bg-\[\#e26d9b\] .text-white,
+html.light .bg-indigo-600,
+html.light .bg-purple-600,
+html.light .bg-emerald-600,
+html.light .bg-rose-600,
+html.light .bg-amber-600,
+[color-scheme="light"] .btn-primary,
+[color-scheme="light"] .btn-primary *,
+[color-scheme="light"] .gd-btn-primary,
+[color-scheme="light"] .gd-btn-primary *,
+[color-scheme="light"] .btn-pill-red,
+[color-scheme="light"] .btn-pill-red *,
+[color-scheme="light"] .btn-soft-orange,
+[color-scheme="light"] .btn-soft-orange *,
+[color-scheme="light"] .btn-orange-primary,
+[color-scheme="light"] .btn-orange-primary *,
+[color-scheme="light"] .btn-illustrator,
+[color-scheme="light"] .btn-illustrator *,
+[color-scheme="light"] .bg-\[\#ff0033\],
+[color-scheme="light"] .bg-\[\#ff0033\] > *,
+[color-scheme="light"] .bg-\[\#ff0033\] span,
+[color-scheme="light"] div.bg-\[\#ff0033\] *,
+[color-scheme="light"] a.bg-\[\#ff0033\],
+[color-scheme="light"] a.bg-\[\#ff0033\] *,
+[color-scheme="light"] .from-\[\#ff0033\],
+[color-scheme="light"] .from-\[\#ff0033\] > *,
+[color-scheme="light"] .from-\[\#ff0033\] span,
+[color-scheme="light"] .bg-\[\#7c3aed\],
+[color-scheme="light"] .bg-\[\#7c3aed\] *,
+[color-scheme="light"] .bg-\[\#ff6b00\],
+[color-scheme="light"] .bg-\[\#ff6b00\] *,
+[color-scheme="light"] .bg-\[\#e26d9b\],
+[color-scheme="light"] .bg-\[\#e26d9b\] * {
+    color: #ffffff !important;
+}
+
+/* Neon buttons/highlights that require dark text */
+html.light .dev-btn-primary,
+html.light .dev-btn-primary *,
+html.light .uiux-btn-primary,
+html.light .uiux-btn-primary *,
+html.light .dev-service-card.highlighted,
+html.light .dev-service-card.highlighted *,
+html.light .dev-pricing-card.featured,
+html.light .dev-pricing-card.featured *,
+[color-scheme="light"] .dev-btn-primary,
+[color-scheme="light"] .uiux-btn-primary,
+[color-scheme="light"] .dev-service-card.highlighted,
+[color-scheme="light"] .dev-pricing-card.featured {
+    color: #070707 !important;
+}
+
+/* =========================================================================
+   CARD COMPONENTS & SURFACES IN LIGHT MODE
+   ========================================================================= */
+html.light .soft-card,
+html.light .software-card,
+html.light .app-card,
+html.light .dev-service-card:not(.highlighted),
+html.light .dev-pricing-card:not(.featured),
+html.light .gd-service-row,
+html.light .gd-project-card,
+html.light .gd-resume-card,
+html.light .gd-skill-badge,
+html.light .illustrator-card,
+html.light .bg-\[\#0f0f0f\],
+html.light .bg-\[\#101010\],
+html.light .bg-\[\#111111\],
+html.light .bg-\[\#121212\],
+html.light .bg-\[\#131313\],
+html.light .bg-\[\#141414\],
+html.light .bg-\[\#151515\],
+html.light .bg-\[\#161616\],
+html.light .bg-\[\#171717\],
+html.light .bg-\[\#181818\],
+html.light .bg-\[\#191919\],
+html.light .bg-\[\#1a1a1a\],
+html.light .bg-\[\#1c1c1c\],
+html.light .bg-\[\#1f1f1f\],
+html.light .bg-\[\#222222\],
+html.light .bg-\[\#181233\],
+html.light .bg-\[\#140f29\],
+html.light .bg-\[\#1f1742\],
+html.light .bg-\[\#181008\],
+html.light .bg-black\/30,
+html.light .bg-black\/40,
+html.light .bg-black\/50,
+html.light .bg-black\/60,
+html.light .bg-black\/70,
+html.light .bg-black\/80,
+[color-scheme="light"] .soft-card,
+[color-scheme="light"] .software-card,
+[color-scheme="light"] .app-card,
+[color-scheme="light"] .dev-service-card:not(.highlighted),
+[color-scheme="light"] .dev-pricing-card:not(.featured),
+[color-scheme="light"] .gd-service-row,
+[color-scheme="light"] .illustrator-card,
+[color-scheme="light"] .bg-\[\#0f0f0f\],
+[color-scheme="light"] .bg-\[\#101010\],
+[color-scheme="light"] .bg-\[\#111111\],
+[color-scheme="light"] .bg-\[\#121212\],
+[color-scheme="light"] .bg-\[\#141414\],
+[color-scheme="light"] .bg-\[\#161616\],
+[color-scheme="light"] .bg-\[\#181818\],
+[color-scheme="light"] .bg-\[\#1a1a1a\],
+[color-scheme="light"] .bg-\[\#181233\],
+[color-scheme="light"] .bg-\[\#140f29\],
+[color-scheme="light"] .bg-\[\#181008\],
+[color-scheme="light"] .bg-black\/30,
+[color-scheme="light"] .bg-black\/40,
+[color-scheme="light"] .bg-black\/50,
+[color-scheme="light"] .bg-black\/60 {
+    background-color: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Translucent whites in dark mode convert to soft tints in light mode */
+html.light .bg-white\/5,
+html.light .bg-white\/10,
+html.light .bg-white\/15,
+[color-scheme="light"] .bg-white\/5,
+[color-scheme="light"] .bg-white\/10 {
+    background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Border overrides in light mode */
+html.light .border-white\/5,
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20,
+html.light .border-white\/30,
+html.light .border-white\/40,
+[color-scheme="light"] .border-white\/5,
+[color-scheme="light"] .border-white\/10,
+[color-scheme="light"] .border-white\/15,
+[color-scheme="light"] .border-white\/20,
+[color-scheme="light"] .border-white\/30 {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Form inputs in light mode */
+html.light input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]),
+html.light textarea,
+html.light select,
+[color-scheme="light"] input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]),
+[color-scheme="light"] textarea,
+[color-scheme="light"] select {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder,
+[color-scheme="light"] input::placeholder,
+[color-scheme="light"] textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Navigation headers in light mode */
+html.light #mainHeader,
+[color-scheme="light"] #mainHeader,
+html.light .glass-nav,
+[color-scheme="light"] .glass-nav {
+    background-color: rgba(255, 255, 255, 0.92) !important;
+    border-bottom-color: rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light #mainHeader nav a,
+[color-scheme="light"] #mainHeader nav a {
+    color: #334155 !important;
+    transition: color 0.2s ease, opacity 0.2s ease !important;
+}
+
+/* Header navigation links hover & active in light mode */
+html.light #mainHeader nav a:hover,
+[color-scheme="light"] #mainHeader nav a:hover,
+body.light-mode #mainHeader nav a:hover {
+    color: var(--theme-accent-hover, #7c3aed) !important;
+}
+
+html.light #mainHeader nav a.font-bold,
+[color-scheme="light"] #mainHeader nav a.font-bold,
+body.light-mode #mainHeader nav a.font-bold {
+    color: var(--theme-nav-active, #7c3aed) !important;
+}
+
+html.light #mainHeader a span.font-bold,
+[color-scheme="light"] #mainHeader a span.font-bold {
+    color: #0f172a !important;
+}
+
+/* Mobile drawer navigation links in light mode */
+html.light #gdMobileMenu a,
+[color-scheme="light"] #gdMobileMenu a {
+    transition: all 0.2s ease !important;
+}
+html.light #gdMobileMenu a:hover,
+[color-scheme="light"] #gdMobileMenu a:hover {
+    color: var(--theme-accent-hover, #7c3aed) !important;
+}
+
+/* Footers in light mode */
+html.light footer,
+[color-scheme="light"] footer {
+    background-color: #faf9fd !important;
+    border-top-color: rgba(0, 0, 0, 0.06) !important;
+    color: #64748b !important;
+}
+
+html.light footer h4,
+html.light footer .font-bold,
+[color-scheme="light"] footer h4,
+[color-scheme="light"] footer .font-bold {
+    color: #0f172a !important;
+}
+
+html.light footer a:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]),
+[color-scheme="light"] footer a:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]) {
+    color: #64748b !important;
+    transition: color 0.2s ease, transform 0.2s ease !important;
+}
+
+/* Footer menu links hover with theme color in light mode */
+html.light footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]),
+[color-scheme="light"] footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]),
+body.light-mode footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]) {
+    color: var(--theme-accent-hover, #7c3aed) !important;
+}
+
+html.light footer ul li a,
+[color-scheme="light"] footer ul li a {
+    display: inline-block;
+    transition: all 0.2s ease !important;
+}
+
+html.light footer ul li a:hover,
+[color-scheme="light"] footer ul li a:hover,
+body.light-mode footer ul li a:hover {
+    color: var(--theme-accent-hover, #7c3aed) !important;
+    transform: translateX(3px);
+}
+
+/* Back-to-top button in light mode */
+html.light footer a[title="Back to top"],
+[color-scheme="light"] footer a[title="Back to top"],
+body.light-mode footer a[title="Back to top"] {
+    background-color: #ffffff !important;
+    border-color: rgba(124, 58, 237, 0.2) !important;
+    color: #7c3aed !important;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1) !important;
+}
+html.light footer a[title="Back to top"]:hover,
+[color-scheme="light"] footer a[title="Back to top"]:hover,
+body.light-mode footer a[title="Back to top"]:hover {
+    background-color: #7c3aed !important;
+    color: #ffffff !important;
+    border-color: #7c3aed !important;
+}
+
+/* ==========================================================================
+   THEME-WISE LIGHT MODE ACCENTS FOR HEADER AND FOOTER HOVER
+   ========================================================================== */
+/* 1. Graphic Designer (Violet / Purple) */
+html.light .theme-graphic_designer, [color-scheme="light"] .theme-graphic_designer, body.theme-graphic_designer {
+    --theme-accent-hover: #7c3aed;
+    --theme-nav-active: #7c3aed;
+}
+html.light .theme-graphic_designer #mainHeader nav a:hover, [color-scheme="light"] .theme-graphic_designer #mainHeader nav a:hover { color: #7c3aed !important; }
+html.light .theme-graphic_designer #mainHeader nav a.font-bold, [color-scheme="light"] .theme-graphic_designer #mainHeader nav a.font-bold { color: #7c3aed !important; }
+html.light .theme-graphic_designer footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]), [color-scheme="light"] .theme-graphic_designer footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]) { color: #7c3aed !important; }
+
+/* 2. Developer (Emerald Green) */
+html.light .theme-developer, [color-scheme="light"] .theme-developer, body.theme-developer {
+    --theme-accent-hover: #059669;
+    --theme-nav-active: #059669;
+}
+html.light .theme-developer #mainHeader nav a:hover, [color-scheme="light"] .theme-developer #mainHeader nav a:hover { color: #059669 !important; }
+html.light .theme-developer #mainHeader nav a.font-bold, [color-scheme="light"] .theme-developer #mainHeader nav a.font-bold { color: #059669 !important; }
+html.light .theme-developer footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]), [color-scheme="light"] .theme-developer footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]) { color: #059669 !important; }
+
+/* 3. UI/UX Designer (Lime Green) */
+html.light .theme-uiux_designer, [color-scheme="light"] .theme-uiux_designer, body.theme-uiux_designer {
+    --theme-accent-hover: #65a30d;
+    --theme-nav-active: #65a30d;
+}
+html.light .theme-uiux_designer #mainHeader nav a:hover, [color-scheme="light"] .theme-uiux_designer #mainHeader nav a:hover { color: #65a30d !important; }
+html.light .theme-uiux_designer #mainHeader nav a.font-bold, [color-scheme="light"] .theme-uiux_designer #mainHeader nav a.font-bold { color: #65a30d !important; }
+html.light .theme-uiux_designer footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]), [color-scheme="light"] .theme-uiux_designer footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]) { color: #65a30d !important; }
+
+/* 4. App Developer (Crimson Red) */
+html.light .theme-app_developer, [color-scheme="light"] .theme-app_developer, body.theme-app_developer {
+    --theme-accent-hover: #ff0033;
+    --theme-nav-active: #ff0033;
+}
+html.light .theme-app_developer #mainHeader nav a:hover, [color-scheme="light"] .theme-app_developer #mainHeader nav a:hover { color: #ff0033 !important; }
+html.light .theme-app_developer #mainHeader nav a.font-bold, [color-scheme="light"] .theme-app_developer #mainHeader nav a.font-bold { color: #ff0033 !important; }
+html.light .theme-app_developer footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]), [color-scheme="light"] .theme-app_developer footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]) { color: #ff0033 !important; }
+
+/* 5. App & Software Developer (Warm Orange) */
+html.light .theme-app_software_developer, [color-scheme="light"] .theme-app_software_developer, body.theme-app_software_developer {
+    --theme-accent-hover: #ff6b00;
+    --theme-nav-active: #ff6b00;
+}
+html.light .theme-app_software_developer #mainHeader nav a:hover, [color-scheme="light"] .theme-app_software_developer #mainHeader nav a:hover { color: #ff6b00 !important; }
+html.light .theme-app_software_developer #mainHeader nav a.font-bold, [color-scheme="light"] .theme-app_software_developer #mainHeader nav a.font-bold { color: #ff6b00 !important; }
+html.light .theme-app_software_developer footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]), [color-scheme="light"] .theme-app_software_developer footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]) { color: #ff6b00 !important; }
+
+/* 6. Digital Designer & Illustrator (Electric Magenta / Pink) */
+html.light .theme-digital_designer_illustrator, [color-scheme="light"] .theme-digital_designer_illustrator, body.theme-digital_designer_illustrator {
+    --theme-accent-hover: #db2777;
+    --theme-nav-active: #db2777;
+}
+html.light .theme-digital_designer_illustrator #mainHeader nav a:hover, [color-scheme="light"] .theme-digital_designer_illustrator #mainHeader nav a:hover { color: #db2777 !important; }
+html.light .theme-digital_designer_illustrator #mainHeader nav a.font-bold, [color-scheme="light"] .theme-digital_designer_illustrator #mainHeader nav a.font-bold { color: #db2777 !important; }
+html.light .theme-digital_designer_illustrator footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]), [color-scheme="light"] .theme-digital_designer_illustrator footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]) { color: #db2777 !important; }
+
+/* --------------------------------------------------------------------------
+   DARK MODE OVERRIDES
+   -------------------------------------------------------------------------- */
+html.dark body,
+[color-scheme="dark"] body {
+    color: #f8fafc !important;
+}
+
+html.dark .bg-\[\#cfd3d8\],
+html.dark .bg-\[\#c9cdd4\],
+html.dark .bg-\[\#c2c6cd\],
+html.dark .bg-\[\#c5c9d0\],
+[color-scheme="dark"] .bg-\[\#cfd3d8\],
+[color-scheme="dark"] .bg-\[\#c9cdd4\],
+[color-scheme="dark"] .bg-\[\#c2c6cd\],
+[color-scheme="dark"] .bg-\[\#c5c9d0\] {
+    background-color: #141416 !important;
+}
+
+html.dark .text-\[\#151618\],
+html.dark .text-\[\#111215\],
+html.dark .text-\[\#14161b\],
+html.dark .text-\[\#101216\],
+[color-scheme="dark"] .text-\[\#151618\],
+[color-scheme="dark"] .text-\[\#111215\],
+[color-scheme="dark"] .text-\[\#14161b\],
+[color-scheme="dark"] .text-\[\#101216\] {
+    color: #f8fafc !important;
+}
+
+html.dark .text-\[\#555a64\],
+html.dark .text-\[\#646a77\],
+html.dark .text-\[\#444955\],
+html.dark .text-\[\#4e535e\],
+[color-scheme="dark"] .text-\[\#555a64\],
+[color-scheme="dark"] .text-\[\#646a77\],
+[color-scheme="dark"] .text-\[\#444955\],
+[color-scheme="dark"] .text-\[\#4e535e\] {
+    color: #94a3b8 !important;
+}
+
+html.dark #mainHeader,
+[color-scheme="dark"] #mainHeader {
+    background-color: rgba(14, 14, 18, 0.92) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark #mainHeader nav a,
+[color-scheme="dark"] #mainHeader nav a {
+    color: #cbd5e1 !important;
+}
+
+html.dark footer,
+[color-scheme="dark"] footer {
+    background-color: #0f1013 !important;
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+    color: #94a3b8 !important;
+}
+
+html.dark footer h4,
+[color-scheme="dark"] footer h4 {
+    color: #f8fafc !important;
+}

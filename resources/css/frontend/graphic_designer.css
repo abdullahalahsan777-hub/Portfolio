@@ -1,0 +1,718 @@
+/* ==========================================================================
+   Graphic Designer Theme Styles
+   Matches uploaded design: Deep cosmic dark, electric violet & neon fuchsia accents,
+   geometric flower/organic star badge shape, glass cards, and modern typography.
+   ========================================================================== */
+
+:root {
+    --gd-bg-main: #0c0a18;
+    --gd-bg-surface: #140f29;
+    --gd-bg-card: #181233;
+    --gd-bg-card-hover: #1f1742;
+    --gd-border-color: rgba(168, 85, 247, 0.16);
+    --gd-border-hover: rgba(168, 85, 247, 0.4);
+    --gd-accent-primary: #7c3aed;
+    --gd-accent-hover: #6d28d9;
+    --gd-accent-purple: #9333ea;
+    --gd-accent-pink: #ec4899;
+    --gd-accent-gradient: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);
+    --gd-text-primary: #f5f3ff;
+    --gd-text-muted: #948ba8;
+    --gd-text-accent: #c084fc;
+}
+
+/* Base Body & Container */
+.theme-graphic_designer {
+    background-color: var(--gd-bg-main);
+    color: var(--gd-text-primary);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Custom Geometric Flower Shape (as seen behind designer in the hero & testimonial) */
+.gd-flower-shape {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gd-flower-backdrop {
+    background: radial-gradient(circle at center, #8b5cf6 0%, #6d28d9 60%, #4c1d95 100%);
+    filter: drop-shadow(0 20px 40px rgba(124, 58, 237, 0.35));
+}
+
+/* Violet Glow Utilities */
+.gd-glow {
+    box-shadow: 0 0 40px -10px rgba(124, 58, 237, 0.45);
+}
+
+.gd-glow-sm {
+    box-shadow: 0 0 20px -5px rgba(124, 58, 237, 0.35);
+}
+
+.gd-glow-text {
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+/* Interactive Pill Button */
+.gd-btn-primary {
+    background: #7c3aed;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    padding: 0.75rem 1.625rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.45);
+}
+
+.gd-btn-primary:hover {
+    background: #6d28d9;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -5px rgba(124, 58, 237, 0.6);
+}
+
+.gd-btn-outline {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f5f3ff;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gd-btn-outline:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Service Row Cards (What do I offer?) */
+.gd-service-row {
+    background: rgba(20, 15, 41, 0.6);
+    border: 1px solid rgba(168, 85, 247, 0.12);
+    border-radius: 1.25rem;
+    padding: 1.75rem 2rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(8px);
+}
+
+.gd-service-row:hover {
+    background: rgba(30, 22, 64, 0.8);
+    border-color: rgba(168, 85, 247, 0.35);
+    transform: translateX(6px);
+    box-shadow: 0 12px 30px -10px rgba(124, 58, 237, 0.25);
+}
+
+.gd-service-row:hover .gd-arrow-icon {
+    background: #7c3aed;
+    color: #ffffff;
+    transform: rotate(45deg);
+}
+
+/* Project Card */
+.gd-project-card {
+    background: #150f2b;
+    border: 1px solid rgba(168, 85, 247, 0.14);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gd-project-card:hover {
+    border-color: rgba(168, 85, 247, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.3);
+}
+
+.gd-project-card:hover .gd-project-img {
+    transform: scale(1.04);
+}
+
+.gd-project-card:hover .gd-arrow-circle {
+    background: #7c3aed;
+    color: #ffffff;
+    transform: rotate(45deg);
+}
+
+/* Resume Cards */
+.gd-resume-card {
+    background: rgba(21, 15, 43, 0.7);
+    border: 1px solid rgba(168, 85, 247, 0.14);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.gd-resume-card:hover {
+    background: rgba(28, 20, 58, 0.85);
+    border-color: rgba(168, 85, 247, 0.3);
+    transform: translateY(-3px);
+}
+
+/* Skills Tool Cards */
+.gd-skill-badge {
+    background: #171131;
+    border: 1px solid rgba(168, 85, 247, 0.15);
+    border-radius: 1.25rem;
+    padding: 1.5rem 1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.gd-skill-badge:hover {
+    background: #211847;
+    border-color: rgba(168, 85, 247, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.25);
+}
+
+/* Stats Ribbon */
+.gd-stat-item {
+    position: relative;
+}
+
+.gd-stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+    .gd-stat-item:not(:last-child)::after {
+        display: none;
+    }
+}
+
+/* Marquee Ribbon */
+.gd-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: gdMarqueeScroll 28s linear infinite;
+}
+
+.gd-marquee-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes gdMarqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Watermark typography in footer/contact */
+.gd-watermark-text {
+    font-size: clamp(4rem, 12vw, 11rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: rgba(255, 255, 255, 0.02);
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   GRAPHIC DESIGNER THEME LIGHT MODE PERFECTION
+   Cosmic pastel & lavender canvas with electric violet & magenta accents.
+   ========================================================================== */
+html.light .theme-graphic_designer,
+[color-scheme="light"] .theme-graphic_designer,
+body.light-mode.theme-graphic_designer {
+    --gd-bg-main: #faf8ff;
+    --gd-bg-surface: #f3edfc;
+    --gd-bg-card: #ffffff;
+    --gd-bg-card-hover: #ffffff;
+    --gd-border-color: rgba(124, 58, 237, 0.12);
+    --gd-border-hover: rgba(124, 58, 237, 0.4);
+    --gd-text-primary: #0f172a;
+    --gd-text-muted: #475569;
+    --gd-text-accent: #7c3aed;
+    background-color: #faf8ff !important;
+    color: #0f172a !important;
+}
+
+/* Service row cards in light mode */
+html.light .gd-service-row,
+[color-scheme="light"] .gd-service-row {
+    background: #ffffff !important;
+    border: 1px solid rgba(124, 58, 237, 0.16) !important;
+    box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.06) !important;
+}
+html.light .gd-service-row:hover,
+[color-scheme="light"] .gd-service-row:hover {
+    border-color: #7c3aed !important;
+    box-shadow: 0 15px 35px -8px rgba(124, 58, 237, 0.18) !important;
+    transform: translateY(-2px);
+}
+html.light .gd-service-row h3,
+html.light .gd-service-row .text-white,
+[color-scheme="light"] .gd-service-row h3,
+[color-scheme="light"] .gd-service-row .text-white {
+    color: #0f172a !important;
+}
+html.light .gd-service-row p,
+[color-scheme="light"] .gd-service-row p {
+    color: #475569 !important;
+}
+
+/* Primary and outline buttons in light mode */
+html.light .gd-btn-primary,
+html.light .gd-btn-primary *,
+[color-scheme="light"] .gd-btn-primary,
+[color-scheme="light"] .gd-btn-primary * {
+    background-color: #7c3aed !important;
+    color: #ffffff !important;
+}
+
+html.light .gd-btn-outline,
+[color-scheme="light"] .gd-btn-outline {
+    background: #ffffff !important;
+    border-color: rgba(124, 58, 237, 0.35) !important;
+    color: #7c3aed !important;
+}
+html.light .gd-btn-outline:hover,
+[color-scheme="light"] .gd-btn-outline:hover {
+    background: #f5f3ff !important;
+    border-color: #7c3aed !important;
+    color: #6d28d9 !important;
+}
+
+/* Watermark text & Stat divider in light mode */
+html.light .gd-watermark-text,
+[color-scheme="light"] .gd-watermark-text {
+    color: rgba(124, 58, 237, 0.04) !important;
+}
+html.light .gd-stat-item:not(:last-child)::after,
+[color-scheme="light"] .gd-stat-item:not(:last-child)::after {
+    background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* =========================================================================
+   PORTFOLIO (MY LATEST WORKS) SECTION IN LIGHT MODE
+   ========================================================================= */
+html.light #works,
+[color-scheme="light"] #works,
+body.light-mode #works {
+    background-color: #f6f3fc !important;
+    border-top: 1px solid rgba(124, 58, 237, 0.12) !important;
+}
+
+html.light #works h2,
+[color-scheme="light"] #works h2 {
+    color: #0f172a !important;
+}
+
+html.light #works p,
+[color-scheme="light"] #works p {
+    color: #475569 !important;
+}
+
+html.light #works span.text-\[\#a855f7\],
+[color-scheme="light"] #works span.text-\[\#a855f7\] {
+    color: #7c3aed !important;
+    font-weight: 700 !important;
+}
+
+/* Portfolio Filter Tabs */
+html.light [data-gd-filter]:not(.bg-\[\#7c3aed\]),
+[color-scheme="light"] [data-gd-filter]:not(.bg-\[\#7c3aed\]) {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(124, 58, 237, 0.22) !important;
+    color: #475569 !important;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.04) !important;
+}
+
+html.light [data-gd-filter]:not(.bg-\[\#7c3aed\]):hover,
+[color-scheme="light"] [data-gd-filter]:not(.bg-\[\#7c3aed\]):hover {
+    background-color: #ede9fe !important;
+    color: #7c3aed !important;
+    border-color: #7c3aed !important;
+}
+
+html.light [data-gd-filter].bg-\[\#7c3aed\],
+[color-scheme="light"] [data-gd-filter].bg-\[\#7c3aed\] {
+    background-color: #7c3aed !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 20px -4px rgba(124, 58, 237, 0.45) !important;
+}
+
+/* Portfolio Project Cards */
+html.light .gd-project-card,
+[color-scheme="light"] .gd-project-card {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(124, 58, 237, 0.18) !important;
+    box-shadow: 0 10px 30px -5px rgba(124, 58, 237, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+}
+
+html.light .gd-project-card:hover,
+[color-scheme="light"] .gd-project-card:hover {
+    border-color: #7c3aed !important;
+    box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.22) !important;
+    transform: translateY(-6px);
+}
+
+html.light .gd-project-card h3,
+[color-scheme="light"] .gd-project-card h3 {
+    color: #0f172a !important;
+}
+
+html.light .gd-project-card:hover h3,
+[color-scheme="light"] .gd-project-card:hover h3 {
+    color: #7c3aed !important;
+}
+
+html.light .gd-project-card span.text-\[\#a855f7\],
+[color-scheme="light"] .gd-project-card span.text-\[\#a855f7\] {
+    color: #7c3aed !important;
+    font-weight: 700 !important;
+}
+
+html.light .gd-project-card .bg-gradient-to-t,
+[color-scheme="light"] .gd-project-card .bg-gradient-to-t {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0.4), transparent) !important;
+    opacity: 0.4 !important;
+}
+
+html.light .gd-project-card .gd-arrow-circle,
+[color-scheme="light"] .gd-project-card .gd-arrow-circle {
+    background-color: #f5f3ff !important;
+    border: 1px solid rgba(124, 58, 237, 0.25) !important;
+    color: #7c3aed !important;
+}
+
+html.light .gd-project-card:hover .gd-arrow-circle,
+[color-scheme="light"] .gd-project-card:hover .gd-arrow-circle {
+    background-color: #7c3aed !important;
+    color: #ffffff !important;
+    border-color: #7c3aed !important;
+}
+
+/* Explore More Projects Button in Works */
+html.light #works .mt-14 a,
+[color-scheme="light"] #works .mt-14 a {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(124, 58, 237, 0.3) !important;
+    color: #7c3aed !important;
+    box-shadow: 0 8px 25px -4px rgba(124, 58, 237, 0.12) !important;
+}
+
+html.light #works .mt-14 a:hover,
+[color-scheme="light"] #works .mt-14 a:hover {
+    background-color: #7c3aed !important;
+    color: #ffffff !important;
+    border-color: #7c3aed !important;
+}
+
+/* Skills and Blog sections in Light Mode */
+html.light #skills,
+html.light #blog,
+[color-scheme="light"] #skills,
+[color-scheme="light"] #blog {
+    background-color: #f6f3fc !important;
+    border-top: 1px solid rgba(124, 58, 237, 0.12) !important;
+}
+
+html.light #skills h2,
+html.light #blog h2,
+[color-scheme="light"] #skills h2,
+[color-scheme="light"] #blog h2 {
+    color: #0f172a !important;
+}
+
+html.light #skills p,
+html.light #blog p,
+[color-scheme="light"] #skills p,
+[color-scheme="light"] #blog p {
+    color: #475569 !important;
+}
+
+html.light .gd-skill-badge,
+[color-scheme="light"] .gd-skill-badge {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(124, 58, 237, 0.16) !important;
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.05) !important;
+}
+html.light .gd-skill-badge:hover,
+[color-scheme="light"] .gd-skill-badge:hover {
+    border-color: #7c3aed !important;
+    box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.15) !important;
+}
+html.light .gd-skill-badge .w-12,
+[color-scheme="light"] .gd-skill-badge .w-12 {
+    background-color: #f5f3ff !important;
+    border-color: rgba(124, 58, 237, 0.2) !important;
+}
+html.light .gd-skill-badge span,
+[color-scheme="light"] .gd-skill-badge span {
+    color: #0f172a !important;
+}
+
+html.light #blog article,
+[color-scheme="light"] #blog article {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(124, 58, 237, 0.16) !important;
+    box-shadow: 0 10px 30px -5px rgba(124, 58, 237, 0.06) !important;
+}
+html.light #blog article:hover,
+[color-scheme="light"] #blog article:hover {
+    border-color: #7c3aed !important;
+    box-shadow: 0 15px 35px -8px rgba(124, 58, 237, 0.18) !important;
+}
+html.light #blog article h3,
+[color-scheme="light"] #blog article h3 {
+    color: #0f172a !important;
+}
+
+/* =========================================================================
+   CAREER JOURNEY (MY RESUME) SECTION IN LIGHT MODE
+   ========================================================================= */
+html.light #resume,
+[color-scheme="light"] #resume,
+body.light-mode #resume {
+    background-color: #faf8ff !important;
+    border-top: 1px solid rgba(124, 58, 237, 0.1) !important;
+}
+
+html.light #resume h2,
+[color-scheme="light"] #resume h2 {
+    color: #0f172a !important;
+}
+
+html.light #resume p,
+[color-scheme="light"] #resume p {
+    color: #475569 !important;
+}
+
+html.light #resume span.text-\[\#a855f7\],
+[color-scheme="light"] #resume span.text-\[\#a855f7\] {
+    color: #7c3aed !important;
+    font-weight: 700 !important;
+}
+
+/* Column headers (Education, Work Experience) */
+html.light #resume .grid > div > div.flex.items-center,
+[color-scheme="light"] #resume .grid > div > div.flex.items-center {
+    color: #0f172a !important;
+}
+html.light #resume .grid > div > div.flex.items-center svg,
+[color-scheme="light"] #resume .grid > div > div.flex.items-center svg {
+    color: #7c3aed !important;
+}
+
+/* Resume Cards in Light Mode */
+html.light .gd-resume-card,
+[color-scheme="light"] .gd-resume-card {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(124, 58, 237, 0.18) !important;
+    box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+}
+
+html.light .gd-resume-card:hover,
+[color-scheme="light"] .gd-resume-card:hover {
+    background-color: #ffffff !important;
+    border-color: #7c3aed !important;
+    box-shadow: 0 15px 35px -8px rgba(124, 58, 237, 0.18) !important;
+    transform: translateY(-4px);
+}
+
+html.light .gd-resume-card h4,
+[color-scheme="light"] .gd-resume-card h4 {
+    color: #0f172a !important;
+}
+
+html.light .gd-resume-card:hover h4,
+[color-scheme="light"] .gd-resume-card:hover h4 {
+    color: #7c3aed !important;
+}
+
+html.light .gd-resume-card p,
+[color-scheme="light"] .gd-resume-card p {
+    color: #475569 !important;
+}
+
+html.light .gd-resume-card span.text-\[\#a855f7\],
+[color-scheme="light"] .gd-resume-card span.text-\[\#a855f7\] {
+    color: #7c3aed !important;
+    font-weight: 700 !important;
+}
+
+html.light .gd-resume-card span.bg-\[\#7c3aed\]\/20,
+[color-scheme="light"] .gd-resume-card span.bg-\[\#7c3aed\]\/20 {
+    background-color: #f5f3ff !important;
+    color: #7c3aed !important;
+    border: 1px solid rgba(124, 58, 237, 0.22) !important;
+}
+
+html.light .gd-resume-card span.text-slate-400,
+[color-scheme="light"] .gd-resume-card span.text-slate-400 {
+    color: #64748b !important;
+    font-weight: 600 !important;
+}
+
+/* =========================================================================
+   REACH OUT (GET IN TOUCH / CONTACT) SECTION IN LIGHT MODE
+   ========================================================================= */
+html.light #contact,
+[color-scheme="light"] #contact,
+body.light-mode #contact {
+    background-color: #f6f3fc !important;
+    border-top: 1px solid rgba(124, 58, 237, 0.12) !important;
+}
+
+html.light #contact h2,
+[color-scheme="light"] #contact h2 {
+    color: #0f172a !important;
+}
+
+html.light #contact p,
+[color-scheme="light"] #contact p {
+    color: #475569 !important;
+}
+
+html.light #contact span.text-\[\#a855f7\],
+[color-scheme="light"] #contact span.text-\[\#a855f7\] {
+    color: #7c3aed !important;
+    font-weight: 700 !important;
+}
+
+/* Contact info badges & texts on left */
+html.light #contact .gd-contact-badge,
+[color-scheme="light"] #contact .gd-contact-badge {
+    background-color: #f5f3ff !important;
+    border: 1px solid rgba(124, 58, 237, 0.22) !important;
+    color: #7c3aed !important;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.08) !important;
+}
+
+html.light #contact span.text-slate-400,
+[color-scheme="light"] #contact span.text-slate-400 {
+    color: #64748b !important;
+    font-weight: 600 !important;
+}
+
+html.light #contact a[href^="mailto:"],
+[color-scheme="light"] #contact a[href^="mailto:"],
+html.light #contact a[href^="tel:"],
+[color-scheme="light"] #contact a[href^="tel:"],
+html.light #contact .text-white {
+    color: #0f172a !important;
+}
+
+html.light #contact a[href^="mailto:"]:hover,
+[color-scheme="light"] #contact a[href^="mailto:"]:hover,
+html.light #contact a[href^="tel:"]:hover,
+[color-scheme="light"] #contact a[href^="tel:"]:hover {
+    color: #7c3aed !important;
+}
+
+/* Contact Form Card in Light Mode */
+html.light #contact .gd-contact-card,
+[color-scheme="light"] #contact .gd-contact-card {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(124, 58, 237, 0.18) !important;
+    box-shadow: 0 20px 50px -10px rgba(124, 58, 237, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Form labels */
+html.light #contact .gd-contact-card label,
+[color-scheme="light"] #contact .gd-contact-card label {
+    color: #1e1b4b !important;
+    font-weight: 700 !important;
+}
+
+/* Form inputs, textareas, selects */
+html.light #contact .gd-contact-card input,
+[color-scheme="light"] #contact .gd-contact-card input,
+html.light #contact .gd-contact-card textarea,
+[color-scheme="light"] #contact .gd-contact-card textarea,
+html.light #contact .gd-contact-card select,
+[color-scheme="light"] #contact .gd-contact-card select {
+    background-color: #fcfbfe !important;
+    border: 1px solid rgba(124, 58, 237, 0.22) !important;
+    color: #0f172a !important;
+}
+
+html.light #contact .gd-contact-card input::placeholder,
+[color-scheme="light"] #contact .gd-contact-card input::placeholder,
+html.light #contact .gd-contact-card textarea::placeholder,
+[color-scheme="light"] #contact .gd-contact-card textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+html.light #contact .gd-contact-card input:focus,
+[color-scheme="light"] #contact .gd-contact-card input:focus,
+html.light #contact .gd-contact-card textarea:focus,
+[color-scheme="light"] #contact .gd-contact-card textarea:focus,
+html.light #contact .gd-contact-card select:focus,
+[color-scheme="light"] #contact .gd-contact-card select:focus {
+    background-color: #ffffff !important;
+    border-color: #7c3aed !important;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15) !important;
+}
+
+html.light #contact .gd-contact-card select option,
+[color-scheme="light"] #contact .gd-contact-card select option {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+}
+
+/* Watermark typography in light mode */
+html.light #contact .gd-watermark-text,
+[color-scheme="light"] #contact .gd-watermark-text {
+    color: rgba(124, 58, 237, 0.05) !important;
+}
+
+/* =========================================================================
+   HEADER & FOOTER MENU HOVER WITH THEME COLOR IN LIGHT MODE
+   ========================================================================= */
+html.light #mainHeader nav a:hover,
+[color-scheme="light"] #mainHeader nav a:hover,
+body.light-mode #mainHeader nav a:hover {
+    color: #7c3aed !important;
+}
+
+html.light #mainHeader nav a.font-bold,
+[color-scheme="light"] #mainHeader nav a.font-bold,
+body.light-mode #mainHeader nav a.font-bold {
+    color: #7c3aed !important;
+}
+
+html.light footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]),
+[color-scheme="light"] footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]),
+body.light-mode footer a:hover:not(.btn-primary):not([class*="bg-"]):not([class*="-btn-"]) {
+    color: #7c3aed !important;
+}
+
+html.light footer ul li a,
+[color-scheme="light"] footer ul li a {
+    display: inline-block;
+    transition: all 0.2s ease !important;
+}
+
+html.light footer ul li a:hover,
+[color-scheme="light"] footer ul li a:hover,
+body.light-mode footer ul li a:hover {
+    color: #7c3aed !important;
+    transform: translateX(3px);
+}
+
+
+
+
+

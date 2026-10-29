@@ -1,0 +1,846 @@
+/* ==========================================================================
+   UI/UX Designer Theme Styles
+   Matches uploaded design: Pure pitch black & deep charcoal background,
+   electric neon lime green (#ccff00) accents, repeating ticker marquee ribbons,
+   half-black/half-lime circular hero backdrop, clean bordered cards, and sharp typography.
+   ========================================================================== */
+
+:root {
+    --uiux-bg-main: #080808;
+    --uiux-bg-surface: #101010;
+    --uiux-bg-card: #141414;
+    --uiux-bg-card-hover: #1c1c1c;
+    --uiux-border-color: rgba(255, 255, 255, 0.1);
+    --uiux-border-hover: rgba(204, 255, 0, 0.45);
+    --uiux-lime: #ccff00;
+    --uiux-lime-hover: #b8e600;
+    --uiux-lime-dim: rgba(204, 255, 0, 0.12);
+    --uiux-text-primary: #ffffff;
+    --uiux-text-muted: #8e8e8e;
+    --uiux-text-dark: #080808;
+}
+
+/* Base Body & Container */
+.theme-uiux_designer {
+    background-color: var(--uiux-bg-main);
+    color: var(--uiux-text-primary);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Neon Lime Glow */
+.uiux-glow-lime {
+    box-shadow: 0 0 35px -5px rgba(204, 255, 0, 0.35);
+}
+
+.uiux-glow-text {
+    text-shadow: 0 0 20px rgba(204, 255, 0, 0.35);
+}
+
+/* Primary Lime Pill Button */
+.uiux-btn-primary {
+    background: #ccff00;
+    color: #080808;
+    font-weight: 800;
+    font-size: 0.8125rem;
+    padding: 0.75rem 1.625rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 20px -4px rgba(204, 255, 0, 0.4);
+    letter-spacing: -0.01em;
+}
+
+.uiux-btn-primary:hover {
+    background: #b8e600;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -4px rgba(204, 255, 0, 0.55);
+}
+
+/* Outline Pill Button */
+.uiux-btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.25s ease;
+}
+
+.uiux-btn-outline:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ccff00;
+    transform: translateY(-2px);
+}
+
+/* Split Circle Backdrop (Half Black, Half Lime as seen in the uploaded hero image) */
+.uiux-split-circle {
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #181818 50%, #ccff00 50%);
+    position: absolute;
+    z-index: 1;
+    filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.7));
+}
+
+@media (min-width: 640px) {
+    .uiux-split-circle {
+        width: 440px;
+        height: 440px;
+    }
+}
+
+/* Section Divider Ticker Marquee (Repeating black ribbon with lime star/asterisk) */
+.uiux-marquee-ribbon {
+    background: #080808;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.875rem 0;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+}
+
+.uiux-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: uiuxMarquee 24s linear infinite;
+    align-items: center;
+}
+
+.uiux-marquee-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes uiuxMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Service Card (01 to 06) */
+.uiux-service-card {
+    background: #101010;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.uiux-service-card:hover {
+    background: #171717;
+    border-color: rgba(204, 255, 0, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.8);
+}
+
+.uiux-service-card:hover .uiux-arrow-btn {
+    background: #ccff00;
+    color: #080808;
+    transform: rotate(45deg);
+}
+
+/* Project Card (Alternating zigzag mockups as in screenshot) */
+.uiux-project-item {
+    background: #101010;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.75rem;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.uiux-project-item:hover {
+    border-color: rgba(204, 255, 0, 0.35);
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.9);
+}
+
+.uiux-project-item:hover .uiux-mockup-img {
+    transform: scale(1.03);
+}
+
+/* Tool Badges (Figma, XD, Sketch, etc.) */
+.uiux-tool-card {
+    background: #121212;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.25rem;
+    padding: 1.25rem 0.85rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+.uiux-tool-card:hover {
+    background: #1c1c1c;
+    border-color: rgba(204, 255, 0, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(204, 255, 0, 0.15);
+}
+
+/* Pricing Card */
+.uiux-pricing-card {
+    background: #101010;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    padding: 2.25rem;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.uiux-pricing-card.featured {
+    background: #141414;
+    border: 2px solid #ccff00;
+    box-shadow: 0 15px 40px -10px rgba(204, 255, 0, 0.25);
+    transform: scale(1.02);
+}
+
+.uiux-pricing-card:hover {
+    transform: translateY(-5px);
+}
+
+.uiux-pricing-card.featured:hover {
+    transform: scale(1.02) translateY(-5px);
+}
+
+/* ==========================================================================
+   UI/UX DESIGNER THEME LIGHT MODE PERFECTION
+   Minimal modern architectural off-white canvas with crisp dark-lime accents,
+   pure white cards, deep slate typography, and high-contrast readable elements.
+   ========================================================================== */
+html.light .theme-uiux_designer,
+[color-scheme="light"] .theme-uiux_designer,
+body.light-mode.theme-uiux_designer,
+html.light .uiux-page-wrapper,
+[color-scheme="light"] .uiux-page-wrapper,
+body.light-mode .uiux-page-wrapper {
+    --uiux-bg-main: #f9f9fb;
+    --uiux-bg-surface: #f1f2f6;
+    --uiux-bg-card: #ffffff;
+    --uiux-bg-card-hover: #ffffff;
+    --uiux-border-color: rgba(0, 0, 0, 0.08);
+    --uiux-border-hover: #84cc16;
+    --uiux-text-primary: #0f172a;
+    --uiux-text-muted: #475569;
+    background-color: #f9f9fb !important;
+    color: #0f172a !important;
+}
+
+/* Page wrapper container override */
+html.light .uiux-page-wrapper,
+[color-scheme="light"] .uiux-page-wrapper {
+    background-color: #f9f9fb !important;
+    color: #0f172a !important;
+}
+
+/* Ambient glow divs subdued in light mode */
+html.light .uiux-page-wrapper div[class*="blur-[160px]"],
+[color-scheme="light"] .uiux-page-wrapper div[class*="blur-[160px]"] {
+    opacity: 0.15 !important;
+}
+
+/* Section Backgrounds Alternation */
+html.light .uiux-page-wrapper section#hero,
+[color-scheme="light"] .uiux-page-wrapper section#hero,
+html.light .uiux-page-wrapper section#about,
+[color-scheme="light"] .uiux-page-wrapper section#about,
+html.light .uiux-page-wrapper section#services,
+[color-scheme="light"] .uiux-page-wrapper section#services,
+html.light .uiux-page-wrapper section#projects,
+[color-scheme="light"] .uiux-page-wrapper section#projects,
+html.light .uiux-page-wrapper section#pricing,
+[color-scheme="light"] .uiux-page-wrapper section#pricing,
+html.light .uiux-page-wrapper section#contact,
+[color-scheme="light"] .uiux-page-wrapper section#contact {
+    background-color: #f9f9fb !important;
+}
+
+html.light .uiux-page-wrapper section.bg-\[\#0c0c0c\],
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0c0c0c\],
+html.light .uiux-page-wrapper section#tools,
+[color-scheme="light"] .uiux-page-wrapper section#tools,
+html.light .uiux-page-wrapper section#blog,
+[color-scheme="light"] .uiux-page-wrapper section#blog,
+html.light .uiux-page-wrapper section.bg-\[\#0a0a0a\],
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0a0a0a\] {
+    background-color: #f1f2f6 !important;
+}
+
+/* High-contrast Lime Green Accents for Light Mode */
+html.light .uiux-page-wrapper span.text-\[\#ccff00\],
+[color-scheme="light"] .uiux-page-wrapper span.text-\[\#ccff00\],
+html.light .theme-uiux_designer span.text-\[\#ccff00\],
+[color-scheme="light"] .theme-uiux_designer span.text-\[\#ccff00\] {
+    color: #65a30d !important;
+    font-weight: 800 !important;
+}
+
+/* Typography across all sections */
+html.light .uiux-page-wrapper h1,
+html.light .uiux-page-wrapper h2,
+html.light .uiux-page-wrapper h3,
+html.light .uiux-page-wrapper h4,
+[color-scheme="light"] .uiux-page-wrapper h1,
+[color-scheme="light"] .uiux-page-wrapper h2,
+[color-scheme="light"] .uiux-page-wrapper h3,
+[color-scheme="light"] .uiux-page-wrapper h4 {
+    color: #0f172a !important;
+}
+
+html.light .uiux-page-wrapper p,
+[color-scheme="light"] .uiux-page-wrapper p {
+    color: #475569 !important;
+}
+
+/* 1. Header (Portfo Sticky Bar) */
+html.light .theme-uiux_designer #mainHeader,
+[color-scheme="light"] .theme-uiux_designer #mainHeader {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04) !important;
+}
+html.light .theme-uiux_designer #mainHeader nav a,
+[color-scheme="light"] .theme-uiux_designer #mainHeader nav a {
+    color: #475569 !important;
+}
+html.light .theme-uiux_designer #mainHeader nav a:hover,
+[color-scheme="light"] .theme-uiux_designer #mainHeader nav a:hover,
+html.light .theme-uiux_designer #mainHeader nav a.font-bold,
+[color-scheme="light"] .theme-uiux_designer #mainHeader nav a.font-bold {
+    color: #65a30d !important;
+}
+html.light #uiuxMobileToggle,
+[color-scheme="light"] #uiuxMobileToggle {
+    background-color: #f1f5f9 !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #0f172a !important;
+}
+html.light #uiuxMobileMenu,
+[color-scheme="light"] #uiuxMobileMenu {
+    border-top-color: rgba(0, 0, 0, 0.08) !important;
+}
+html.light #uiuxMobileMenu a,
+[color-scheme="light"] #uiuxMobileMenu a {
+    color: #334155 !important;
+}
+html.light #uiuxMobileMenu a.text-\[\#ccff00\],
+[color-scheme="light"] #uiuxMobileMenu a.text-\[\#ccff00\] {
+    background-color: rgba(101, 163, 13, 0.1) !important;
+    color: #65a30d !important;
+}
+
+/* 2. Hero Section */
+html.light .uiux-split-circle,
+[color-scheme="light"] .uiux-split-circle {
+    background: linear-gradient(90deg, #e2e8f0 50%, #ccff00 50%) !important;
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.08)) !important;
+}
+html.light #hero .lg\:border-white\/10,
+html.light #hero .border-white\/10,
+[color-scheme="light"] #hero .lg\:border-white\/10,
+[color-scheme="light"] #hero .border-white\/10 {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+html.light #hero span.font-black,
+[color-scheme="light"] #hero span.font-black {
+    color: #0f172a !important;
+}
+html.light #hero span.text-neutral-400,
+[color-scheme="light"] #hero span.text-neutral-400 {
+    color: #64748b !important;
+}
+
+/* 3. About Section */
+html.light .uiux-about-check-item,
+[color-scheme="light"] .uiux-about-check-item {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+}
+html.light .uiux-check-text,
+[color-scheme="light"] .uiux-check-text {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+}
+html.light #about .rounded-3xl.bg-\[\#121212\],
+[color-scheme="light"] #about .rounded-3xl.bg-\[\#121212\] {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08) !important;
+}
+html.light #about .bg-black\/80,
+[color-scheme="light"] #about .bg-black\/80 {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+html.light #about .bg-black\/80 .text-white,
+[color-scheme="light"] #about .bg-black\/80 .text-white {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+}
+html.light #about .bg-black\/80 .text-neutral-400,
+[color-scheme="light"] #about .bg-black\/80 .text-neutral-400 {
+    color: #64748b !important;
+}
+html.light #about .bg-black\/80 .text-\[\#ccff00\],
+[color-scheme="light"] #about .bg-black\/80 .text-\[\#ccff00\] {
+    color: #65a30d !important;
+    font-weight: 800 !important;
+}
+
+/* 4. Milestones Section */
+html.light .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-full.bg-\[\#171717\],
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-full.bg-\[\#171717\] {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+}
+html.light .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-full.bg-\[\#171717\] svg,
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-full.bg-\[\#171717\] svg {
+    color: #65a30d !important;
+}
+html.light .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-2xl.bg-\[\#121212\],
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-2xl.bg-\[\#121212\] {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+}
+html.light .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-2xl.bg-\[\#121212\] .text-white,
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-2xl.bg-\[\#121212\] .text-white {
+    color: #0f172a !important;
+}
+html.light .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-2xl.bg-\[\#121212\] .text-\[\#ccff00\],
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-2xl.bg-\[\#121212\] .text-\[\#ccff00\] {
+    color: #65a30d !important;
+}
+html.light .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-2xl.bg-\[\#121212\] .text-neutral-400,
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0c0c0c\] .rounded-2xl.bg-\[\#121212\] .text-neutral-400 {
+    color: #64748b !important;
+}
+
+/* 5. Services Section */
+html.light .uiux-service-card,
+[color-scheme="light"] .uiux-service-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04) !important;
+}
+html.light .uiux-service-card:hover,
+[color-scheme="light"] .uiux-service-card:hover {
+    background: #ffffff !important;
+    border-color: #84cc16 !important;
+    box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.08) !important;
+    transform: translateY(-4px);
+}
+html.light .uiux-service-card h3,
+[color-scheme="light"] .uiux-service-card h3 {
+    color: #0f172a !important;
+}
+html.light .uiux-service-card:hover h3,
+[color-scheme="light"] .uiux-service-card:hover h3 {
+    color: #65a30d !important;
+}
+html.light .uiux-service-card p,
+[color-scheme="light"] .uiux-service-card p {
+    color: #475569 !important;
+}
+html.light .uiux-service-card span.text-\[\#ccff00\],
+[color-scheme="light"] .uiux-service-card span.text-\[\#ccff00\] {
+    color: #65a30d !important;
+    font-weight: 800 !important;
+}
+html.light .uiux-service-card .uiux-arrow-btn,
+[color-scheme="light"] .uiux-service-card .uiux-arrow-btn {
+    background-color: #f1f5f9 !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #0f172a !important;
+}
+html.light .uiux-service-card:hover .uiux-arrow-btn,
+[color-scheme="light"] .uiux-service-card:hover .uiux-arrow-btn {
+    background-color: #ccff00 !important;
+    color: #080808 !important;
+    border-color: #ccff00 !important;
+}
+
+/* 6. Popular Tools Section */
+html.light .uiux-tool-card,
+[color-scheme="light"] .uiux-tool-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04) !important;
+}
+html.light .uiux-tool-card:hover,
+[color-scheme="light"] .uiux-tool-card:hover {
+    background: #ffffff !important;
+    border-color: #84cc16 !important;
+    box-shadow: 0 10px 25px -5px rgba(132, 204, 22, 0.2) !important;
+    transform: translateY(-4px);
+}
+html.light .uiux-tool-card .rounded-2xl.bg-\[\#171717\],
+[color-scheme="light"] .uiux-tool-card .rounded-2xl.bg-\[\#171717\] {
+    background: #f8fafc !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+html.light .uiux-tool-card .text-white,
+[color-scheme="light"] .uiux-tool-card .text-white {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+}
+html.light .uiux-tool-card .text-\[\#ccff00\],
+[color-scheme="light"] .uiux-tool-card .text-\[\#ccff00\] {
+    color: #65a30d !important;
+    font-weight: 800 !important;
+}
+
+/* 7. Projects Section */
+html.light .uiux-project-item,
+[color-scheme="light"] .uiux-project-item {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+}
+html.light .uiux-project-item:hover,
+[color-scheme="light"] .uiux-project-item:hover {
+    border-color: #84cc16 !important;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1) !important;
+}
+html.light .uiux-project-item span.text-\[\#ccff00\],
+[color-scheme="light"] .uiux-project-item span.text-\[\#ccff00\] {
+    color: #65a30d !important;
+    font-weight: 800 !important;
+}
+html.light .uiux-project-item h3,
+[color-scheme="light"] .uiux-project-item h3 {
+    color: #0f172a !important;
+}
+html.light .uiux-project-item:hover h3,
+[color-scheme="light"] .uiux-project-item:hover h3 {
+    color: #65a30d !important;
+}
+html.light .uiux-project-item p,
+[color-scheme="light"] .uiux-project-item p {
+    color: #475569 !important;
+}
+html.light .uiux-project-item .bg-\[\#181818\],
+[color-scheme="light"] .uiux-project-item .bg-\[\#181818\] {
+    background-color: #f8fafc !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+html.light .uiux-project-item a.text-white,
+[color-scheme="light"] .uiux-project-item a.text-white {
+    color: #0f172a !important;
+}
+html.light .uiux-project-item a.text-white:hover,
+[color-scheme="light"] .uiux-project-item a.text-white:hover {
+    color: #65a30d !important;
+}
+html.light .uiux-project-item a.text-white span.bg-white\/10,
+[color-scheme="light"] .uiux-project-item a.text-white span.bg-white\/10 {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 8. Testimonials Section */
+html.light .uiux-page-wrapper section.bg-\[\#0a0a0a\] .rounded-3xl.bg-\[\#111111\],
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0a0a0a\] .rounded-3xl.bg-\[\#111111\] {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04) !important;
+}
+html.light .uiux-page-wrapper section.bg-\[\#0a0a0a\] .text-\[\#ccff00\],
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0a0a0a\] .text-\[\#ccff00\] {
+    color: #eab308 !important;
+}
+html.light .uiux-page-wrapper section.bg-\[\#0a0a0a\] .text-neutral-300,
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0a0a0a\] .text-neutral-300 {
+    color: #334155 !important;
+}
+html.light .uiux-page-wrapper section.bg-\[\#0a0a0a\] h4.text-white,
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0a0a0a\] h4.text-white {
+    color: #0f172a !important;
+}
+html.light .uiux-page-wrapper section.bg-\[\#0a0a0a\] .text-neutral-400,
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0a0a0a\] .text-neutral-400 {
+    color: #64748b !important;
+}
+html.light .uiux-page-wrapper section.bg-\[\#0a0a0a\] .border-t.border-white\/10,
+[color-scheme="light"] .uiux-page-wrapper section.bg-\[\#0a0a0a\] .border-t.border-white\/10 {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 9. Pricing Section */
+html.light .uiux-pricing-card,
+[color-scheme="light"] .uiux-pricing-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05) !important;
+}
+html.light .uiux-pricing-card.featured,
+[color-scheme="light"] .uiux-pricing-card.featured {
+    background: #ffffff !important;
+    border: 2px solid #84cc16 !important;
+    box-shadow: 0 20px 45px -10px rgba(132, 204, 22, 0.25) !important;
+}
+html.light .uiux-pricing-card h3.text-white,
+[color-scheme="light"] .uiux-pricing-card h3.text-white {
+    color: #0f172a !important;
+}
+html.light .uiux-pricing-card.featured h3,
+[color-scheme="light"] .uiux-pricing-card.featured h3 {
+    color: #65a30d !important;
+    font-weight: 800 !important;
+}
+html.light .uiux-pricing-card .text-\[\#ccff00\],
+[color-scheme="light"] .uiux-pricing-card .text-\[\#ccff00\] {
+    color: #65a30d !important;
+    font-weight: 800 !important;
+}
+html.light .uiux-pricing-card .text-neutral-400,
+[color-scheme="light"] .uiux-pricing-card .text-neutral-400 {
+    color: #64748b !important;
+}
+html.light .uiux-pricing-card ul,
+[color-scheme="light"] .uiux-pricing-card ul {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+html.light .uiux-pricing-card ul li,
+[color-scheme="light"] .uiux-pricing-card ul li {
+    color: #334155 !important;
+}
+html.light .uiux-pricing-card .bg-white\/10,
+[color-scheme="light"] .uiux-pricing-card .bg-white\/10 {
+    background-color: #f1f5f9 !important;
+    color: #475569 !important;
+}
+
+/* 10. Contact Section */
+html.light #contact .rounded-2xl.bg-\[\#111111\],
+[color-scheme="light"] #contact .rounded-2xl.bg-\[\#111111\] {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+}
+/* Contact Section & Contact Page Cards (Left Border & Light Mode) */
+html.light .theme-uiux_designer .rounded-2xl.bg-\[\#111111\],
+html.light .theme-uiux_designer .rounded-3xl.bg-\[\#111111\],
+[color-scheme="light"] .theme-uiux_designer .rounded-2xl.bg-\[\#111111\],
+[color-scheme="light"] .theme-uiux_designer .rounded-3xl.bg-\[\#111111\],
+body.light-mode.theme-uiux_designer .rounded-2xl.bg-\[\#111111\],
+body.light-mode.theme-uiux_designer .rounded-3xl.bg-\[\#111111\] {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-left: 4px solid #65a30d !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+}
+html.light .theme-uiux_designer .rounded-2xl.bg-\[\#111111\] h4,
+html.light .theme-uiux_designer .rounded-3xl.bg-\[\#111111\] h4,
+html.light .theme-uiux_designer .rounded-2xl.bg-\[\#111111\] a,
+html.light .theme-uiux_designer .rounded-3xl.bg-\[\#111111\] a,
+[color-scheme="light"] .theme-uiux_designer .rounded-2xl.bg-\[\#111111\] h4,
+[color-scheme="light"] .theme-uiux_designer .rounded-3xl.bg-\[\#111111\] h4,
+[color-scheme="light"] .theme-uiux_designer .rounded-2xl.bg-\[\#111111\] a,
+[color-scheme="light"] .theme-uiux_designer .rounded-3xl.bg-\[\#111111\] a,
+body.light-mode.theme-uiux_designer .rounded-2xl.bg-\[\#111111\] h4,
+body.light-mode.theme-uiux_designer .rounded-3xl.bg-\[\#111111\] h4,
+body.light-mode.theme-uiux_designer .rounded-2xl.bg-\[\#111111\] a,
+body.light-mode.theme-uiux_designer .rounded-3xl.bg-\[\#111111\] a {
+    color: #0f172a !important;
+}
+html.light .theme-uiux_designer .rounded-2xl.bg-\[\#111111\] a:hover,
+html.light .theme-uiux_designer .rounded-3xl.bg-\[\#111111\] a:hover,
+[color-scheme="light"] .theme-uiux_designer .rounded-2xl.bg-\[\#111111\] a:hover,
+[color-scheme="light"] .theme-uiux_designer .rounded-3xl.bg-\[\#111111\] a:hover,
+body.light-mode.theme-uiux_designer .rounded-2xl.bg-\[\#111111\] a:hover,
+body.light-mode.theme-uiux_designer .rounded-3xl.bg-\[\#111111\] a:hover {
+    color: #65a30d !important;
+}
+html.light .theme-uiux_designer .rounded-2xl.bg-\[\#111111\] p,
+html.light .theme-uiux_designer .rounded-3xl.bg-\[\#111111\] p,
+[color-scheme="light"] .theme-uiux_designer .rounded-2xl.bg-\[\#111111\] p,
+[color-scheme="light"] .theme-uiux_designer .rounded-3xl.bg-\[\#111111\] p,
+body.light-mode.theme-uiux_designer .rounded-2xl.bg-\[\#111111\] p,
+body.light-mode.theme-uiux_designer .rounded-3xl.bg-\[\#111111\] p {
+    color: #475569 !important;
+}
+html.light .theme-uiux_designer .rounded-2xl.bg-\[\#111111\] span.text-\[\#ccff00\],
+html.light .theme-uiux_designer .rounded-3xl.bg-\[\#111111\] span.text-\[\#ccff00\],
+[color-scheme="light"] .theme-uiux_designer .rounded-2xl.bg-\[\#111111\] span.text-\[\#ccff00\],
+[color-scheme="light"] .theme-uiux_designer .rounded-3xl.bg-\[\#111111\] span.text-\[\#ccff00\],
+body.light-mode.theme-uiux_designer .rounded-2xl.bg-\[\#111111\] span.text-\[\#ccff00\],
+body.light-mode.theme-uiux_designer .rounded-3xl.bg-\[\#111111\] span.text-\[\#ccff00\] {
+    color: #65a30d !important;
+}
+html.light #contact label,
+[color-scheme="light"] #contact label {
+    color: #334155 !important;
+    font-weight: 600 !important;
+}
+html.light #contact input,
+html.light #contact textarea,
+html.light #contact select,
+[color-scheme="light"] #contact input,
+[color-scheme="light"] #contact textarea,
+[color-scheme="light"] #contact select {
+    background-color: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+}
+html.light #contact input:focus,
+html.light #contact textarea:focus,
+html.light #contact select:focus,
+[color-scheme="light"] #contact input:focus,
+[color-scheme="light"] #contact textarea:focus,
+[color-scheme="light"] #contact select:focus {
+    border-color: #84cc16 !important;
+    box-shadow: 0 0 0 3px rgba(132, 204, 22, 0.2) !important;
+    background-color: #ffffff !important;
+}
+html.light #contact select option,
+[color-scheme="light"] #contact select option {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+}
+
+/* 11. Blog Section */
+html.light #blog article.rounded-3xl.bg-\[\#111111\],
+[color-scheme="light"] #blog article.rounded-3xl.bg-\[\#111111\] {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04) !important;
+}
+html.light #blog article.rounded-3xl.bg-\[\#111111\]:hover,
+[color-scheme="light"] #blog article.rounded-3xl.bg-\[\#111111\]:hover {
+    border-color: #84cc16 !important;
+    box-shadow: 0 15px 35px -5px rgba(132, 204, 22, 0.15) !important;
+    transform: translateY(-4px);
+}
+html.light #blog article h3,
+[color-scheme="light"] #blog article h3 {
+    color: #0f172a !important;
+}
+html.light #blog article:hover h3,
+[color-scheme="light"] #blog article:hover h3 {
+    color: #65a30d !important;
+}
+html.light #blog article p,
+[color-scheme="light"] #blog article p {
+    color: #475569 !important;
+}
+html.light #blog article a.text-\[\#ccff00\],
+[color-scheme="light"] #blog article a.text-\[\#ccff00\] {
+    color: #65a30d !important;
+    font-weight: 800 !important;
+}
+
+/* 12. Footer Section */
+html.light .theme-uiux_designer footer,
+[color-scheme="light"] .theme-uiux_designer footer,
+body.light-mode.theme-uiux_designer footer {
+    background-color: #ffffff !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #64748b !important;
+}
+html.light .theme-uiux_designer footer h4,
+[color-scheme="light"] .theme-uiux_designer footer h4 {
+    color: #0f172a !important;
+}
+html.light .theme-uiux_designer footer a.group span.text-white,
+[color-scheme="light"] .theme-uiux_designer footer a.group span.text-white {
+    color: #0f172a !important;
+}
+html.light .theme-uiux_designer footer span.text-\[\#ccff00\],
+[color-scheme="light"] .theme-uiux_designer footer span.text-\[\#ccff00\] {
+    color: #65a30d !important;
+}
+html.light .theme-uiux_designer footer p,
+[color-scheme="light"] .theme-uiux_designer footer p {
+    color: #64748b !important;
+}
+html.light .theme-uiux_designer footer ul li a,
+[color-scheme="light"] .theme-uiux_designer footer ul li a {
+    color: #64748b !important;
+    transition: all 0.2s ease !important;
+}
+html.light .theme-uiux_designer footer ul li a:hover,
+[color-scheme="light"] .theme-uiux_designer footer ul li a:hover {
+    color: #65a30d !important;
+    transform: translateX(3px) !important;
+}
+html.light .theme-uiux_designer footer a[title="Back to top"],
+[color-scheme="light"] .theme-uiux_designer footer a[title="Back to top"] {
+    background-color: #f1f5f9 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    color: #0f172a !important;
+}
+html.light .theme-uiux_designer footer a[title="Back to top"]:hover,
+[color-scheme="light"] .theme-uiux_designer footer a[title="Back to top"]:hover {
+    background-color: #ccff00 !important;
+    color: #080808 !important;
+    border-color: #ccff00 !important;
+}
+
+/* 13. Primary and Outline Buttons */
+html.light .uiux-btn-primary,
+html.light .uiux-btn-primary *,
+[color-scheme="light"] .uiux-btn-primary,
+[color-scheme="light"] .uiux-btn-primary * {
+    background: #ccff00 !important;
+    color: #080808 !important;
+}
+
+html.light .uiux-btn-outline,
+[color-scheme="light"] .uiux-btn-outline {
+    background: #ffffff !important;
+    border: 1.5px solid #0f172a !important;
+    color: #0f172a !important;
+}
+html.light .uiux-btn-outline:hover,
+[color-scheme="light"] .uiux-btn-outline:hover {
+    background: #ccff00 !important;
+    border-color: #ccff00 !important;
+    color: #080808 !important;
+}
+
+/* 14. FAQ Page Accordion in Light Mode */
+html.light .theme-uiux_designer #uiuxFaqContainer [data-faq-item],
+[color-scheme="light"] .theme-uiux_designer #uiuxFaqContainer [data-faq-item] {
+    background-color: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+}
+html.light .theme-uiux_designer #uiuxFaqContainer [data-faq-item] h3,
+[color-scheme="light"] .theme-uiux_designer #uiuxFaqContainer [data-faq-item] h3 {
+    color: #0f172a !important;
+}
+html.light .theme-uiux_designer #uiuxFaqContainer [data-faq-item]:hover h3,
+[color-scheme="light"] .theme-uiux_designer #uiuxFaqContainer [data-faq-item]:hover h3 {
+    color: #65a30d !important;
+}
+html.light .theme-uiux_designer #uiuxFaqContainer [data-faq-item] .faq-collapse,
+[color-scheme="light"] .theme-uiux_designer #uiuxFaqContainer [data-faq-item] .faq-collapse {
+    color: #475569 !important;
+}
+html.light .theme-uiux_designer #uiuxFaqContainer .faq-icon,
+[color-scheme="light"] .theme-uiux_designer #uiuxFaqContainer .faq-icon {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: #0f172a !important;
+}
+
+

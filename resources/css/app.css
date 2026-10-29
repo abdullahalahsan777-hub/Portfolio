@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* Import Modular Separated CSS Files */
+@import './frontend/frontend.css';
+@import './frontend/scroll_animations.css';
+@import './frontend/graphic_designer.css';
+@import './frontend/developer.css';
+@import './frontend/uiux_designer.css';
+@import './frontend/app_developer.css';
+@import './frontend/app_software_developer.css';
+@import './frontend/digital_designer_illustrator.css';
+@import './admin/admin.css';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+:root {
+    color-scheme: light dark;
+}
+
+html.light, [color-scheme="light"] {
+    color-scheme: light;
+}
+
+html.dark, [color-scheme="dark"] {
+    color-scheme: dark;
+}

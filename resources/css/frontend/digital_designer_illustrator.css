@@ -1,0 +1,327 @@
+/* ==========================================================================
+   DIGITAL DESIGNER & ILLUSTRATOR THEME STYLES
+   Minimalist Silver-Stone Grey (#cfd3d8) & Rose Poppy Botanical Accent (#e26d9b)
+   ========================================================================== */
+
+/* Glassmorphism Frosted Stone Card */
+.illustrator-card {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 12px 30px -10px rgba(18, 19, 22, 0.07);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.illustrator-card:hover {
+    border-color: rgba(226, 109, 155, 0.5);
+    box-shadow: 0 18px 40px -12px rgba(226, 109, 155, 0.2);
+    transform: translateY(-4px);
+}
+
+/* Primary Button */
+.btn-illustrator {
+    background: #111215;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.btn-illustrator:hover {
+    background: #e26d9b;
+    color: #ffffff;
+    box-shadow: 0 10px 25px -5px rgba(226, 109, 155, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Follow Me continuous marquee */
+@keyframes followTickerScroll {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+}
+
+.animate-follow-ticker {
+    display: flex;
+    width: 200%;
+    animation: followTickerScroll 22s linear infinite;
+}
+
+.animate-follow-ticker:hover {
+    animation-play-state: paused;
+}
+
+/* ==========================================================================
+   Dark Mode Overrides for Digital Designer & Illustrator Theme
+   Ultra-Dark Pitch Obsidian (#07080b), Midnight Charcoal (#0e1015),
+   and Luminous Poppy Rose Accent (#e26d9b)
+   ========================================================================== */
+html.dark .theme-digital_designer_illustrator,
+[color-scheme="dark"] .theme-digital_designer_illustrator,
+html.dark body.theme-digital_designer_illustrator,
+[color-scheme="dark"] body.theme-digital_designer_illustrator,
+html.dark .ddi-page-wrap,
+[color-scheme="dark"] .ddi-page-wrap {
+    background-color: #07080b !important;
+    color: #f1f5f9 !important;
+}
+
+html.dark .illustrator-card,
+[color-scheme="dark"] .illustrator-card {
+    background: #0e1015 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.6) !important;
+}
+
+html.dark .illustrator-card:hover,
+[color-scheme="dark"] .illustrator-card:hover {
+    border-color: rgba(226, 109, 155, 0.5) !important;
+    box-shadow: 0 20px 45px -12px rgba(226, 109, 155, 0.25) !important;
+}
+
+/* Header in Dark Mode */
+html.dark #mainHeader,
+[color-scheme="dark"] #mainHeader {
+    background-color: rgba(9, 10, 13, 0.94) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark #mainHeader nav a,
+[color-scheme="dark"] #mainHeader nav a {
+    color: #cbd5e1 !important;
+}
+
+html.dark #mainHeader nav a:hover,
+[color-scheme="dark"] #mainHeader nav a:hover {
+    color: #e26d9b !important;
+}
+
+/* Footer in Dark Mode */
+html.dark footer,
+[color-scheme="dark"] footer {
+    background-color: #050608 !important;
+    color: #94a3b8 !important;
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark footer h4,
+[color-scheme="dark"] footer h4,
+html.dark footer a,
+[color-scheme="dark"] footer a {
+    color: #e2e8f0;
+}
+
+html.dark footer a:hover,
+[color-scheme="dark"] footer a:hover {
+    color: #e26d9b;
+}
+
+/* Footer Social Buttons in Dark Mode (Scoped to Digital Designer theme) */
+html.dark .theme-digital_designer_illustrator .footer-social-btn,
+[color-scheme="dark"] .theme-digital_designer_illustrator .footer-social-btn {
+    background-color: #12141a !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+}
+
+html.dark .theme-digital_designer_illustrator .footer-social-btn:hover,
+[color-scheme="dark"] .theme-digital_designer_illustrator .footer-social-btn:hover {
+    background-color: #e26d9b !important;
+    border-color: #e26d9b !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 20px rgba(226, 109, 155, 0.45) !important;
+    transform: translateY(-2px);
+}
+
+/* Technical Toolkit / Software & Creative Stack in Dark Mode */
+html.dark .toolkit-section,
+[color-scheme="dark"] .toolkit-section {
+    background-color: #06070a !important;
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .software-card,
+[color-scheme="dark"] .software-card {
+    background-color: #0d0f14 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.7) !important;
+}
+
+html.dark .software-card:hover,
+[color-scheme="dark"] .software-card:hover {
+    border-color: rgba(226, 109, 155, 0.55) !important;
+    background-color: #12151d !important;
+    box-shadow: 0 15px 35px -5px rgba(226, 109, 155, 0.2) !important;
+    transform: translateY(-4px);
+}
+
+html.dark .software-card h4,
+[color-scheme="dark"] .software-card h4 {
+    color: #ffffff !important;
+}
+
+/* Portfolio & Selected Works Cards in Dark Mode */
+html.dark .portfolio-card,
+[color-scheme="dark"] .portfolio-card {
+    background-color: #0c0e13 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.7) !important;
+}
+
+html.dark .portfolio-card:hover,
+[color-scheme="dark"] .portfolio-card:hover {
+    border-color: rgba(226, 109, 155, 0.55) !important;
+    box-shadow: 0 20px 45px -10px rgba(226, 109, 155, 0.2) !important;
+}
+
+html.dark .portfolio-card-canvas,
+[color-scheme="dark"] .portfolio-card-canvas {
+    background: radial-gradient(circle at 85% 15%, rgba(226, 109, 155, 0.15), transparent 45%), radial-gradient(circle at 20% 80%, rgba(25, 18, 30, 0.9), #07080a) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .portfolio-card h3,
+[color-scheme="dark"] .portfolio-card h3 {
+    color: #ffffff !important;
+}
+
+html.dark .portfolio-card p,
+[color-scheme="dark"] .portfolio-card p {
+    color: #94a3b8 !important;
+}
+
+html.dark .portfolio-arrow-btn,
+[color-scheme="dark"] .portfolio-arrow-btn {
+    background-color: #15171f !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+}
+
+html.dark .portfolio-arrow-btn:hover,
+[color-scheme="dark"] .portfolio-arrow-btn:hover {
+    background-color: #e26d9b !important;
+    border-color: #e26d9b !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 16px rgba(226, 109, 155, 0.4) !important;
+}
+
+/* ==========================================================================
+   DIGITAL DESIGNER & ILLUSTRATOR THEME LIGHT MODE PERFECTION
+   Minimalist Silver-Stone Grey (#cfd3d8) & Rose Poppy Botanical Accent (#e26d9b)
+   ========================================================================== */
+html.light .theme-digital_designer_illustrator,
+[color-scheme="light"] .theme-digital_designer_illustrator,
+body.light-mode.theme-digital_designer_illustrator {
+    background-color: #cfd3d8 !important;
+    color: #14161b !important;
+}
+
+html.light .illustrator-card,
+[color-scheme="light"] .illustrator-card {
+    background: rgba(255, 255, 255, 0.75) !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 12px 30px -10px rgba(18, 19, 22, 0.07) !important;
+}
+html.light .illustrator-card:hover,
+[color-scheme="light"] .illustrator-card:hover {
+    border-color: rgba(226, 109, 155, 0.5) !important;
+    box-shadow: 0 18px 40px -12px rgba(226, 109, 155, 0.2) !important;
+}
+
+/* Button Perfection in Light & Dark Mode */
+html.light .btn-illustrator,
+[color-scheme="light"] .btn-illustrator {
+    background-color: #111215 !important;
+    color: #ffffff !important;
+}
+
+html.light .btn-illustrator *,
+[color-scheme="light"] .btn-illustrator * {
+    color: #ffffff !important;
+}
+
+html.light .btn-illustrator:hover,
+[color-scheme="light"] .btn-illustrator:hover {
+    background-color: #e26d9b !important;
+    color: #ffffff !important;
+}
+
+html.light .btn-illustrator:hover *,
+[color-scheme="light"] .btn-illustrator:hover * {
+    color: #ffffff !important;
+}
+
+/* Pill Button */
+.ddi-btn-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    background-color: #111215;
+    color: #ffffff !important;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ddi-btn-pill *,
+html.light .ddi-btn-pill,
+html.light .ddi-btn-pill *,
+[color-scheme="light"] .ddi-btn-pill,
+[color-scheme="light"] .ddi-btn-pill * {
+    color: #ffffff !important;
+}
+
+.ddi-btn-pill:hover {
+    background-color: #e26d9b !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(226, 109, 155, 0.3);
+}
+
+/* Software & Stack Cards in Light Mode */
+html.light .software-card .w-14 span,
+[color-scheme="light"] .software-card .w-14 span {
+    color: inherit;
+}
+
+html.light .software-card .w-14 span.\!text-white,
+[color-scheme="light"] .software-card .w-14 span.\!text-white {
+    color: #ffffff !important;
+}
+
+/* Portfolio Card Generative Canvas in Light Mode */
+html.light .portfolio-card-canvas,
+[color-scheme="light"] .portfolio-card-canvas {
+    color: #ffffff !important;
+}
+
+html.light .portfolio-card-canvas h4,
+[color-scheme="light"] .portfolio-card-canvas h4,
+html.light .portfolio-card-canvas .font-editorial,
+[color-scheme="light"] .portfolio-card-canvas .font-editorial {
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+html.light .portfolio-card-canvas span:not(.text-\[\#e26d9b\]):not(.\!text-\[\#e26d9b\]),
+[color-scheme="light"] .portfolio-card-canvas span:not(.text-\[\#e26d9b\]):not(.\!text-\[\#e26d9b\]) {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+html.light .portfolio-card-canvas .text-\[\#e26d9b\],
+html.light .portfolio-card-canvas .\!text-\[\#e26d9b\],
+[color-scheme="light"] .portfolio-card-canvas .text-\[\#e26d9b\],
+[color-scheme="light"] .portfolio-card-canvas .\!text-\[\#e26d9b\] {
+    color: #e26d9b !important;
+}
+
+html.light .portfolio-card-canvas i,
+[color-scheme="light"] .portfolio-card-canvas i {
+    color: #ffffff !important;
+}
+
+

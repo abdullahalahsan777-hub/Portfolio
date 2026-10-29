@@ -1,0 +1,470 @@
+/* ==========================================================================
+   APP & SOFTWARE DEVELOPER THEME STYLES (Amber Orange #ff6b00 & Onyx #080808)
+   ========================================================================== */
+
+/* Watermark backdrop text */
+.watermark-text {
+    font-size: clamp(4rem, 15vw, 12rem);
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.025);
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: 0.1em;
+    line-height: 1;
+}
+
+/* Orange bracket pill badge */
+.badge-bracket-orange {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ff6b00;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.badge-bracket-orange::before {
+    content: '[';
+    color: #ff6b00;
+    font-weight: 900;
+}
+.badge-bracket-orange::after {
+    content: ']';
+    color: #ff6b00;
+    font-weight: 900;
+}
+
+/* Glassmorphism Card for Software Dev theme */
+.software-card {
+    background: linear-gradient(180deg, rgba(22, 22, 22, 0.9) 0%, rgba(12, 12, 12, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.software-card:hover {
+    border-color: rgba(255, 107, 0, 0.5);
+    box-shadow: 0 15px 35px -10px rgba(255, 107, 0, 0.25), 0 0 15px rgba(255, 107, 0, 0.1);
+    transform: translateY(-4px);
+}
+
+/* Orange primary button */
+.btn-orange-primary {
+    background: linear-gradient(135deg, #ff6b00 0%, #e05600 100%);
+    color: #ffffff;
+    box-shadow: 0 8px 25px -4px rgba(255, 107, 0, 0.45);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-orange-primary:hover {
+    background: linear-gradient(135deg, #ff7a1a 0%, #ff6b00 100%);
+    box-shadow: 0 12px 30px -4px rgba(255, 107, 0, 0.65);
+    transform: scale(1.02);
+}
+
+/* Orange outlined button */
+.btn-orange-outline {
+    background: rgba(18, 18, 18, 0.8);
+    color: #ffffff;
+    border: 1px solid rgba(255, 107, 0, 0.4);
+    transition: all 0.3s ease;
+}
+.btn-orange-outline:hover {
+    background: #ff6b00;
+    color: #ffffff;
+    border-color: #ff6b00;
+    box-shadow: 0 8px 20px -4px rgba(255, 107, 0, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Continuous running statement ticker */
+@keyframes textTickerScroll {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+}
+.animate-text-ticker {
+    display: flex;
+    width: 200%;
+    animation: textTickerScroll 28s linear infinite;
+}
+.animate-text-ticker:hover {
+    animation-play-state: paused;
+}
+
+/* ==========================================================================
+   APP & SOFTWARE DEVELOPER THEME LIGHT MODE PERFECTION
+   Warm modern off-white canvas with vibrant amber orange & deep slate accents.
+   ========================================================================== */
+html.light .theme-app_software_developer,
+[color-scheme="light"] .theme-app_software_developer,
+body.light-mode.theme-app_software_developer {
+    background-color: #fdfcfb !important;
+    color: #0f172a !important;
+}
+
+/* Cards in light mode */
+html.light .software-card,
+html.light .soft-card,
+[color-scheme="light"] .software-card,
+[color-scheme="light"] .soft-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(255, 107, 0, 0.18) !important;
+    box-shadow: 0 10px 30px -8px rgba(255, 107, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+    color: #0f172a !important;
+}
+html.light .software-card:hover,
+html.light .soft-card:hover,
+[color-scheme="light"] .software-card:hover,
+[color-scheme="light"] .soft-card:hover {
+    border-color: #ff6b00 !important;
+    box-shadow: 0 15px 35px -8px rgba(255, 107, 0, 0.25) !important;
+    transform: translateY(-4px);
+}
+html.light .software-card h3,
+html.light .soft-card h3,
+html.light .software-card .text-white,
+html.light .soft-card .text-white,
+[color-scheme="light"] .software-card h3,
+[color-scheme="light"] .soft-card h3,
+[color-scheme="light"] .software-card .text-white,
+[color-scheme="light"] .soft-card .text-white {
+    color: #0f172a !important;
+}
+html.light .software-card p,
+html.light .soft-card p,
+[color-scheme="light"] .software-card p,
+[color-scheme="light"] .soft-card p {
+    color: #475569 !important;
+}
+
+/* Watermark text in light mode */
+html.light .watermark-text,
+[color-scheme="light"] .watermark-text {
+    color: rgba(0, 0, 0, 0.035) !important;
+}
+
+/* Orange primary buttons in light mode */
+html.light .btn-orange-primary,
+html.light .btn-soft-orange,
+html.light .btn-orange-primary *,
+html.light .btn-soft-orange *,
+[color-scheme="light"] .btn-orange-primary,
+[color-scheme="light"] .btn-soft-orange,
+[color-scheme="light"] .btn-orange-primary *,
+[color-scheme="light"] .btn-soft-orange * {
+    background: linear-gradient(135deg, #ff6b00 0%, #e05600 100%) !important;
+    color: #ffffff !important;
+}
+
+/* Orange outline button in light mode */
+html.light .btn-orange-outline,
+[color-scheme="light"] .btn-orange-outline {
+    background: #ffffff !important;
+    color: #ea580c !important;
+    border-color: rgba(255, 107, 0, 0.45) !important;
+}
+html.light .btn-orange-outline:hover,
+[color-scheme="light"] .btn-orange-outline:hover {
+    background: #ff6b00 !important;
+    color: #ffffff !important;
+    border-color: #ff6b00 !important;
+}
+
+/* ==========================================================================
+   APP & SOFTWARE DEVELOPER: FOOTER SOCIAL ICONS HOVER & LIGHT MODE
+   ========================================================================== */
+/* Base Footer Social Icons Transition & Dark Mode Hover */
+.app-software-developer-footer a.footer-social-btn,
+.theme-app_software_developer footer a.footer-social-btn,
+.theme-app_software_developer footer .rounded-full.bg-\[\#121212\],
+body.theme-app_software_developer footer .rounded-full.bg-\[\#121212\] {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.app-software-developer-footer a.footer-social-btn:hover,
+.theme-app_software_developer footer a.footer-social-btn:hover,
+.theme-app_software_developer footer .rounded-full.bg-\[\#121212\]:hover,
+body.theme-app_software_developer footer .rounded-full.bg-\[\#121212\]:hover {
+    background-color: #ff6b00 !important;
+    border-color: #ff6b00 !important;
+    color: #ffffff !important;
+    transform: scale(1.18) translateY(-3px) !important;
+    box-shadow: 0 8px 24px rgba(255, 107, 0, 0.55) !important;
+}
+.app-software-developer-footer a.footer-social-btn:hover svg,
+.theme-app_software_developer footer a.footer-social-btn:hover svg,
+.theme-app_software_developer footer .rounded-full.bg-\[\#121212\]:hover svg,
+body.theme-app_software_developer footer .rounded-full.bg-\[\#121212\]:hover svg {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+}
+
+/* Light Mode Footer Social Icons */
+html.light .app-software-developer-footer a.footer-social-btn,
+html.light .theme-app_software_developer footer a.footer-social-btn,
+html.light .theme-app_software_developer footer .rounded-full.bg-\[\#121212\],
+[color-scheme="light"] .app-software-developer-footer a.footer-social-btn,
+[color-scheme="light"] .theme-app_software_developer footer a.footer-social-btn,
+[color-scheme="light"] .theme-app_software_developer footer .rounded-full.bg-\[\#121212\],
+body.light-mode .app-software-developer-footer a.footer-social-btn,
+body.light-mode.theme-app_software_developer footer a.footer-social-btn,
+body.light-mode.theme-app_software_developer footer .rounded-full.bg-\[\#121212\] {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #334155 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+html.light .app-software-developer-footer a.footer-social-btn svg,
+html.light .theme-app_software_developer footer a.footer-social-btn svg,
+html.light .theme-app_software_developer footer .rounded-full.bg-\[\#121212\] svg,
+[color-scheme="light"] .app-software-developer-footer a.footer-social-btn svg,
+[color-scheme="light"] .theme-app_software_developer footer a.footer-social-btn svg,
+[color-scheme="light"] .theme-app_software_developer footer .rounded-full.bg-\[\#121212\] svg,
+body.light-mode .app-software-developer-footer a.footer-social-btn svg,
+body.light-mode.theme-app_software_developer footer a.footer-social-btn svg,
+body.light-mode.theme-app_software_developer footer .rounded-full.bg-\[\#121212\] svg {
+    color: #334155 !important;
+    fill: #334155 !important;
+    transition: all 0.3s ease !important;
+}
+html.light .app-software-developer-footer a.footer-social-btn:hover,
+html.light .theme-app_software_developer footer a.footer-social-btn:hover,
+html.light .theme-app_software_developer footer .rounded-full.bg-\[\#121212\]:hover,
+[color-scheme="light"] .app-software-developer-footer a.footer-social-btn:hover,
+[color-scheme="light"] .theme-app_software_developer footer a.footer-social-btn:hover,
+[color-scheme="light"] .theme-app_software_developer footer .rounded-full.bg-\[\#121212\]:hover,
+body.light-mode .app-software-developer-footer a.footer-social-btn:hover,
+body.light-mode.theme-app_software_developer footer a.footer-social-btn:hover,
+body.light-mode.theme-app_software_developer footer .rounded-full.bg-\[\#121212\]:hover {
+    background-color: #ff6b00 !important;
+    border-color: #ff6b00 !important;
+    color: #ffffff !important;
+    transform: scale(1.18) translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(255, 107, 0, 0.55) !important;
+}
+html.light .app-software-developer-footer a.footer-social-btn:hover svg,
+html.light .theme-app_software_developer footer a.footer-social-btn:hover svg,
+html.light .theme-app_software_developer footer .rounded-full.bg-\[\#121212\]:hover svg,
+[color-scheme="light"] .app-software-developer-footer a.footer-social-btn:hover svg,
+[color-scheme="light"] .theme-app_software_developer footer a.footer-social-btn:hover svg,
+[color-scheme="light"] .theme-app_software_developer footer .rounded-full.bg-\[\#121212\]:hover svg,
+body.light-mode .app-software-developer-footer a.footer-social-btn:hover svg,
+body.light-mode.theme-app_software_developer footer a.footer-social-btn:hover svg,
+body.light-mode.theme-app_software_developer footer .rounded-full.bg-\[\#121212\]:hover svg {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+}
+
+/* Light Mode Back to top button in App & Software Developer footer */
+html.light .app-software-developer-footer a[title="Back to top"],
+html.light .theme-app_software_developer footer a[title="Back to top"],
+[color-scheme="light"] .app-software-developer-footer a[title="Back to top"],
+[color-scheme="light"] .theme-app_software_developer footer a[title="Back to top"],
+body.light-mode.theme-app_software_developer footer a[title="Back to top"] {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #ff6b00 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.3s ease !important;
+}
+html.light .app-software-developer-footer a[title="Back to top"]:hover,
+html.light .theme-app_software_developer footer a[title="Back to top"]:hover,
+[color-scheme="light"] .app-software-developer-footer a[title="Back to top"]:hover,
+[color-scheme="light"] .theme-app_software_developer footer a[title="Back to top"]:hover,
+body.light-mode.theme-app_software_developer footer a[title="Back to top"]:hover {
+    background-color: #ff6b00 !important;
+    border-color: #ff6b00 !important;
+    color: #ffffff !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 20px rgba(255, 107, 0, 0.45) !important;
+}
+
+/* Footer menu links hover with theme orange */
+html.light .app-software-developer-footer ul li a,
+html.light .theme-app_software_developer footer ul li a,
+[color-scheme="light"] .app-software-developer-footer ul li a,
+[color-scheme="light"] .theme-app_software_developer footer ul li a,
+body.light-mode.theme-app_software_developer footer ul li a {
+    color: #64748b !important;
+    transition: all 0.2s ease !important;
+}
+html.light .app-software-developer-footer ul li a:hover,
+html.light .theme-app_software_developer footer ul li a:hover,
+[color-scheme="light"] .app-software-developer-footer ul li a:hover,
+[color-scheme="light"] .theme-app_software_developer footer ul li a:hover,
+body.light-mode.theme-app_software_developer footer ul li a:hover {
+    color: #ff6b00 !important;
+    transform: translateX(3px) !important;
+}
+
+/* ==========================================================================
+   APP & SOFTWARE DEVELOPER: HEADER & TOP BAR LIGHT MODE
+   ========================================================================== */
+html.light .theme-app_software_developer .bg-\[\#0a0a0a\],
+[color-scheme="light"] .theme-app_software_developer .bg-\[\#0a0a0a\],
+body.light-mode.theme-app_software_developer .bg-\[\#0a0a0a\] {
+    background-color: #f1f5f9 !important;
+    border-color: rgba(0, 0, 0, 0.06) !important;
+    color: #64748b !important;
+}
+
+html.light .theme-app_software_developer header#mainHeader,
+[color-scheme="light"] .theme-app_software_developer header#mainHeader,
+body.light-mode.theme-app_software_developer header#mainHeader {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .theme-app_software_developer header#mainHeader a span.font-extrabold,
+[color-scheme="light"] .theme-app_software_developer header#mainHeader a span.font-extrabold,
+body.light-mode.theme-app_software_developer header#mainHeader a span.font-extrabold {
+    color: #0f172a !important;
+}
+
+html.light .theme-app_software_developer header#mainHeader nav a,
+[color-scheme="light"] .theme-app_software_developer header#mainHeader nav a,
+body.light-mode.theme-app_software_developer header#mainHeader nav a {
+    color: #475569 !important;
+}
+
+html.light .theme-app_software_developer header#mainHeader nav a:hover,
+html.light .theme-app_software_developer header#mainHeader nav a.text-\[\#ff6b00\],
+[color-scheme="light"] .theme-app_software_developer header#mainHeader nav a:hover,
+[color-scheme="light"] .theme-app_software_developer header#mainHeader nav a.text-\[\#ff6b00\],
+body.light-mode.theme-app_software_developer header#mainHeader nav a:hover,
+body.light-mode.theme-app_software_developer header#mainHeader nav a.text-\[\#ff6b00\] {
+    color: #ff6b00 !important;
+}
+
+html.light .theme-app_software_developer #softMobileMenu,
+[color-scheme="light"] .theme-app_software_developer #softMobileMenu,
+body.light-mode.theme-app_software_developer #softMobileMenu {
+    background-color: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .theme-app_software_developer #softMobileMenu a,
+[color-scheme="light"] .theme-app_software_developer #softMobileMenu a,
+body.light-mode.theme-app_software_developer #softMobileMenu a {
+    color: #0f172a !important;
+}
+
+html.light .theme-app_software_developer #softMobileToggle,
+[color-scheme="light"] .theme-app_software_developer #softMobileToggle,
+body.light-mode.theme-app_software_developer #softMobileToggle {
+    background-color: #f1f5f9 !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: #0f172a !important;
+}
+
+/* ==========================================================================
+   APP & SOFTWARE DEVELOPER: ALL SECTIONS LIGHT MODE BACKGROUNDS & TEXT
+   ========================================================================== */
+html.light .theme-app_software_developer section,
+[color-scheme="light"] .theme-app_software_developer section,
+body.light-mode.theme-app_software_developer section {
+    background-color: #f8fafc !important;
+    background-image: none !important;
+    border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+html.light .theme-app_software_developer section:nth-of-type(even),
+[color-scheme="light"] .theme-app_software_developer section:nth-of-type(even),
+body.light-mode.theme-app_software_developer section:nth-of-type(even) {
+    background-color: #ffffff !important;
+}
+
+/* Section Headings */
+html.light .theme-app_software_developer section h1,
+html.light .theme-app_software_developer section h2,
+html.light .theme-app_software_developer section h3,
+html.light .theme-app_software_developer section h4,
+[color-scheme="light"] .theme-app_software_developer section h1,
+[color-scheme="light"] .theme-app_software_developer section h2,
+[color-scheme="light"] .theme-app_software_developer section h3,
+[color-scheme="light"] .theme-app_software_developer section h4 {
+    color: #0f172a !important;
+}
+
+/* Paragraphs & Muted text */
+html.light .theme-app_software_developer section p,
+html.light .theme-app_software_developer section .text-neutral-400,
+html.light .theme-app_software_developer section .text-neutral-300,
+html.light .theme-app_software_developer section .text-neutral-200,
+[color-scheme="light"] .theme-app_software_developer section p,
+[color-scheme="light"] .theme-app_software_developer section .text-neutral-400,
+[color-scheme="light"] .theme-app_software_developer section .text-neutral-300,
+[color-scheme="light"] .theme-app_software_developer section .text-neutral-200 {
+    color: #475569 !important;
+}
+
+/* Stat Counter Badges in About Section */
+html.light .theme-app_software_developer .p-4.rounded-2xl.bg-\[\#111111\],
+[color-scheme="light"] .theme-app_software_developer .p-4.rounded-2xl.bg-\[\#111111\] {
+    background-color: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Secondary Action Buttons (e.g., View Projects) */
+html.light .theme-app_software_developer a.bg-white\/5,
+[color-scheme="light"] .theme-app_software_developer a.bg-white\/5,
+body.light-mode.theme-app_software_developer a.bg-white\/5 {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    color: #0f172a !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+html.light .theme-app_software_developer a.bg-white\/5:hover,
+[color-scheme="light"] .theme-app_software_developer a.bg-white\/5:hover,
+body.light-mode.theme-app_software_developer a.bg-white\/5:hover {
+    background-color: #f1f5f9 !important;
+    border-color: #ff6b00 !important;
+    color: #ff6b00 !important;
+}
+
+/* Contact Form Inputs */
+html.light .theme-app_software_developer input,
+html.light .theme-app_software_developer textarea,
+[color-scheme="light"] .theme-app_software_developer input,
+[color-scheme="light"] .theme-app_software_developer textarea {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    color: #0f172a !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+}
+html.light .theme-app_software_developer input::placeholder,
+html.light .theme-app_software_developer textarea::placeholder,
+[color-scheme="light"] .theme-app_software_developer input::placeholder,
+[color-scheme="light"] .theme-app_software_developer textarea::placeholder {
+    color: #94a3b8 !important;
+}
+html.light .theme-app_software_developer input:focus,
+html.light .theme-app_software_developer textarea:focus,
+[color-scheme="light"] .theme-app_software_developer input:focus,
+[color-scheme="light"] .theme-app_software_developer textarea:focus {
+    border-color: #ff6b00 !important;
+    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15) !important;
+}
+
+/* Testimonial slider navigation buttons in light mode */
+html.light .testimonials-prev-btn,
+html.light .testimonials-next-btn,
+[color-scheme="light"] .testimonials-prev-btn,
+[color-scheme="light"] .testimonials-next-btn {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    color: #0f172a !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+}
+html.light .testimonials-prev-btn:hover,
+html.light .testimonials-next-btn:hover,
+[color-scheme="light"] .testimonials-prev-btn:hover,
+[color-scheme="light"] .testimonials-next-btn:hover {
+    background-color: #ff6b00 !important;
+    border-color: #ff6b00 !important;
+    color: #ffffff !important;
+}
+
+
+

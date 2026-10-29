@@ -1,0 +1,98 @@
+/* ==========================================================================
+   GLOBAL SCROLL ANIMATION ENGINE (All Frontend Themes)
+   Buttery 60/120fps hardware-accelerated scroll-reveal animations.
+   Supports automatic section & card reveals with staggered delays.
+   ========================================================================== */
+
+:root {
+    --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --reveal-duration: 0.85s;
+}
+
+/* Base Initial State for all elements waiting to be scrolled into view */
+.reveal-init {
+    opacity: 0;
+    will-change: transform, opacity;
+    transition-property: opacity, transform;
+    transition-duration: var(--reveal-duration);
+    transition-timing-function: var(--reveal-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Revealed Active State */
+.reveal-init.revealed {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg) !important;
+}
+
+/* Animation Variants */
+
+/* 1. Fade Up (Default for Cards, Headings, Paragraphs) */
+.reveal-init.reveal-fade-up,
+.reveal-init:not([class*="reveal-fade-"]):not([class*="reveal-scale"]):not([class*="reveal-zoom"]):not([class*="reveal-flip"]) {
+    transform: translate3d(0, 40px, 0);
+}
+
+/* 2. Fade Down (For Top Header Badges & Breadcrumbs) */
+.reveal-init.reveal-fade-down {
+    transform: translate3d(0, -32px, 0);
+}
+
+/* 3. Fade Left (Enters from Left side) */
+.reveal-init.reveal-fade-left {
+    transform: translate3d(-48px, 0, 0);
+}
+
+/* 4. Fade Right (Enters from Right side) */
+.reveal-init.reveal-fade-right {
+    transform: translate3d(48px, 0, 0);
+}
+
+/* 5. Scale Up (For circular badges, avatars, spotlight cards) */
+.reveal-init.reveal-scale {
+    transform: translate3d(0, 24px, 0) scale(0.92);
+}
+
+/* 6. Zoom In (For hero graphics and showcase images) */
+.reveal-init.reveal-zoom-in {
+    transform: scale(0.88);
+}
+
+/* 7. Subtle 3D Tilt Up (For modern tech cards) */
+.reveal-init.reveal-flip-up {
+    transform: perspective(1000px) rotateX(12deg) translate3d(0, 36px, 0);
+    transform-origin: center bottom;
+}
+
+/* Smooth Section Level Container Reveal */
+section.section-reveal-init {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+    transition: opacity 0.9s var(--reveal-ease), transform 0.9s var(--reveal-ease);
+    will-change: opacity, transform;
+}
+
+section.section-reveal-init.section-revealed {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
+}
+
+/* Staggered Delay Utilities for Manual Tagging */
+.reveal-delay-50  { --reveal-delay: 50ms; }
+.reveal-delay-100 { --reveal-delay: 100ms; }
+.reveal-delay-150 { --reveal-delay: 150ms; }
+.reveal-delay-200 { --reveal-delay: 200ms; }
+.reveal-delay-250 { --reveal-delay: 250ms; }
+.reveal-delay-300 { --reveal-delay: 300ms; }
+.reveal-delay-400 { --reveal-delay: 400ms; }
+.reveal-delay-500 { --reveal-delay: 500ms; }
+
+/* Accessibility: Gracefully disable motion when requested by the OS */
+@media (prefers-reduced-motion: reduce) {
+    .reveal-init,
+    section.section-reveal-init {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

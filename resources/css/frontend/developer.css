@@ -1,0 +1,466 @@
+/* ==========================================================================
+   Developer Theme Styles
+   Matches uploaded Developer design: Deep tech pitch black (#070707),
+   vibrant neon emerald/mint green (#00ff88), geometric tech cube logo (GLINT),
+   circular skill graphs, highlighted emerald service cards, and sharp typography.
+   ========================================================================== */
+
+:root {
+    --dev-bg-main: #070707;
+    --dev-bg-surface: #0e0e0e;
+    --dev-bg-card: #121212;
+    --dev-bg-card-hover: #181818;
+    --dev-border-color: rgba(255, 255, 255, 0.08);
+    --dev-border-hover: rgba(0, 255, 136, 0.45);
+    --dev-accent-primary: #00ff88;
+    --dev-accent-hover: #00df76;
+    --dev-accent-glow: rgba(0, 255, 136, 0.35);
+    --dev-text-primary: #ffffff;
+    --dev-text-muted: #8c8c8c;
+    --dev-text-dark: #070707;
+}
+
+.theme-developer {
+    background-color: var(--dev-bg-main);
+    color: var(--dev-text-primary);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Emerald Neon Glow Utilities */
+.dev-glow-emerald {
+    box-shadow: 0 0 35px -5px rgba(0, 255, 136, 0.35);
+}
+
+.dev-glow-text {
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+/* Primary Emerald Button */
+.dev-btn-primary {
+    background: #00ff88;
+    color: #070707;
+    font-weight: 800;
+    font-size: 0.8125rem;
+    padding: 0.8rem 1.75rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 25px -4px rgba(0, 255, 136, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.dev-btn-primary:hover {
+    background: #00df76;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -4px rgba(0, 255, 136, 0.6);
+}
+
+/* Outline Emerald Button */
+.dev-btn-outline {
+    background: transparent;
+    border: 1px solid rgba(0, 255, 136, 0.4);
+    color: #00ff88;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    padding: 0.75rem 1.625rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.25s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.dev-btn-outline:hover {
+    background: rgba(0, 255, 136, 0.12);
+    border-color: #00ff88;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Developer Repeating Marquee Ribbon */
+.dev-marquee-ribbon {
+    background: #070707;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.875rem 0;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+}
+
+.dev-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: devMarquee 26s linear infinite;
+    align-items: center;
+}
+
+.dev-marquee-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes devMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Circular Skill Gauge */
+.dev-skill-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #101010;
+    border: 3px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 20px -5px rgba(0, 0, 0, 0.8);
+    transition: all 0.3s ease;
+}
+
+.dev-skill-circle::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    padding: 3px;
+    background: conic-gradient(#00ff88 var(--skill-percent, 80%), transparent 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+.dev-skill-circle:hover {
+    transform: scale(1.05);
+    border-color: rgba(0, 255, 136, 0.4);
+    box-shadow: 0 0 25px -5px rgba(0, 255, 136, 0.4);
+}
+
+/* Service Card Components */
+.dev-service-card {
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    padding: 2.25rem;
+    transition: all 0.3s ease;
+}
+
+.dev-service-card:hover {
+    border-color: rgba(0, 255, 136, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px -10px rgba(0, 255, 136, 0.2);
+}
+
+/* Highlighted Emerald Service Card (as seen in screenshot center) */
+.dev-service-card.highlighted {
+    background: linear-gradient(135deg, #00ff88 0%, #00df76 100%);
+    color: #070707;
+    border: none;
+    box-shadow: 0 15px 40px -8px rgba(0, 255, 136, 0.5);
+    transform: scale(1.03);
+}
+
+.dev-service-card.highlighted:hover {
+    transform: scale(1.03) translateY(-4px);
+}
+
+/* Pricing Card Components */
+.dev-pricing-card {
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.dev-pricing-card:hover {
+    border-color: rgba(0, 255, 136, 0.35);
+    transform: translateY(-4px);
+}
+
+.dev-pricing-card.featured {
+    background: linear-gradient(135deg, #00ff88 0%, #00df76 100%);
+    color: #070707;
+    border: none;
+    transform: scale(1.04);
+    box-shadow: 0 20px 45px -10px rgba(0, 255, 136, 0.5);
+}
+
+.dev-pricing-card.featured:hover {
+    transform: scale(1.04) translateY(-4px);
+}
+
+/* ==========================================================================
+   DEVELOPER THEME LIGHT MODE PERFECTION
+   Clean, crisp tech white & slate canvas with electric emerald mint accents.
+   ========================================================================== */
+html.light .theme-developer,
+[color-scheme="light"] .theme-developer,
+body.light-mode.theme-developer {
+    --dev-bg-main: #f8fafc;
+    --dev-bg-surface: #f1f5f9;
+    --dev-bg-card: #ffffff;
+    --dev-bg-card-hover: #ffffff;
+    --dev-border-color: rgba(0, 0, 0, 0.08);
+    --dev-border-hover: #00ff88;
+    --dev-text-primary: #0f172a;
+    --dev-text-muted: #475569;
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+/* Service cards in light mode */
+html.light .dev-service-card:not(.highlighted),
+[color-scheme="light"] .dev-service-card:not(.highlighted) {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 255, 136, 0.28) !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 0 15px rgba(0, 255, 136, 0.06) !important;
+    color: #0f172a !important;
+}
+html.light .dev-service-card:not(.highlighted):hover,
+[color-scheme="light"] .dev-service-card:not(.highlighted):hover {
+    border-color: #00ff88 !important;
+    box-shadow: 0 15px 35px -8px rgba(0, 255, 136, 0.25) !important;
+    transform: translateY(-4px);
+}
+html.light .dev-service-card:not(.highlighted) h3,
+[color-scheme="light"] .dev-service-card:not(.highlighted) h3 {
+    color: #0f172a !important;
+}
+html.light .dev-service-card:not(.highlighted) p,
+[color-scheme="light"] .dev-service-card:not(.highlighted) p {
+    color: #475569 !important;
+}
+
+/* Pricing section & cards in light mode */
+html.light #pricing,
+[color-scheme="light"] #pricing,
+body.light-mode #pricing {
+    background-color: #f1f5f9 !important;
+}
+
+html.light #pricing h2,
+[color-scheme="light"] #pricing h2 {
+    color: #0f172a !important;
+}
+
+html.light #pricing span.text-\[\#00ff88\],
+[color-scheme="light"] #pricing span.text-\[\#00ff88\] {
+    color: #059669 !important;
+}
+
+html.light .dev-pricing-card:not(.featured),
+[color-scheme="light"] .dev-pricing-card:not(.featured) {
+    background: #ffffff !important;
+    border: 1px solid rgba(5, 150, 105, 0.22) !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 0 15px rgba(5, 150, 105, 0.04) !important;
+    color: #0f172a !important;
+}
+
+html.light .dev-pricing-card:not(.featured):hover,
+[color-scheme="light"] .dev-pricing-card:not(.featured):hover {
+    border-color: #059669 !important;
+    box-shadow: 0 20px 40px -10px rgba(5, 150, 105, 0.18), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+    transform: translateY(-4px);
+}
+
+html.light .dev-pricing-card:not(.featured) h3,
+html.light .dev-pricing-card:not(.featured) .text-white,
+[color-scheme="light"] .dev-pricing-card:not(.featured) h3,
+[color-scheme="light"] .dev-pricing-card:not(.featured) .text-white {
+    color: #0f172a !important;
+}
+
+html.light .dev-pricing-card:not(.featured) span.text-\[\#00ff88\],
+[color-scheme="light"] .dev-pricing-card:not(.featured) span.text-\[\#00ff88\] {
+    color: #059669 !important;
+}
+
+html.light .dev-pricing-card:not(.featured) span.text-neutral-400,
+[color-scheme="light"] .dev-pricing-card:not(.featured) span.text-neutral-400 {
+    color: #64748b !important;
+}
+
+html.light .dev-pricing-card:not(.featured) ul,
+[color-scheme="light"] .dev-pricing-card:not(.featured) ul {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .dev-pricing-card:not(.featured) li,
+[color-scheme="light"] .dev-pricing-card:not(.featured) li {
+    color: #334155 !important;
+}
+
+html.light .dev-pricing-card:not(.featured) .dev-feature-check,
+[color-scheme="light"] .dev-pricing-card:not(.featured) .dev-feature-check {
+    background-color: #ecfdf5 !important;
+    color: #059669 !important;
+    border: 1px solid rgba(5, 150, 105, 0.25) !important;
+}
+
+html.light .dev-pricing-card:not(.featured) .dev-btn-outline,
+[color-scheme="light"] .dev-pricing-card:not(.featured) .dev-btn-outline {
+    border: 1.5px solid #059669 !important;
+    color: #059669 !important;
+    font-weight: 800 !important;
+}
+
+html.light .dev-pricing-card:not(.featured) .dev-btn-outline:hover,
+[color-scheme="light"] .dev-pricing-card:not(.featured) .dev-btn-outline:hover {
+    background: #059669 !important;
+    color: #ffffff !important;
+    border-color: #059669 !important;
+}
+
+/* Circular skill gauges in light mode */
+html.light .dev-skill-circle,
+[color-scheme="light"] .dev-skill-circle {
+    background: #ffffff !important;
+    border: 3px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05) !important;
+}
+html.light .dev-skill-circle span,
+[color-scheme="light"] .dev-skill-circle span {
+    color: #0f172a !important;
+}
+
+/* Marquee ribbon in light mode */
+html.light .dev-marquee-ribbon,
+[color-scheme="light"] .dev-marquee-ribbon {
+    background: #ffffff !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #0f172a !important;
+}
+html.light .dev-marquee-track span,
+[color-scheme="light"] .dev-marquee-track span {
+    color: #0f172a !important;
+}
+
+/* Outline button in light mode */
+html.light .dev-btn-outline,
+[color-scheme="light"] .dev-btn-outline {
+    background: transparent !important;
+    border: 1px solid #059669 !important;
+    color: #059669 !important;
+}
+html.light .dev-btn-outline:hover,
+[color-scheme="light"] .dev-btn-outline:hover {
+    background: #ecfdf5 !important;
+    border-color: #047857 !important;
+    color: #047857 !important;
+}
+
+/* =========================================================================
+   DEVELOPER THEME HERO SECTION IN LIGHT MODE
+   ========================================================================= */
+html.light .theme-developer .dev-page-wrapper,
+[color-scheme="light"] .theme-developer .dev-page-wrapper,
+body.light-mode.theme-developer .dev-page-wrapper {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+html.light .theme-developer #hero,
+[color-scheme="light"] .theme-developer #hero,
+body.light-mode.theme-developer #hero {
+    background-color: #f8fafc !important;
+}
+
+/* Hero lead tag badge */
+html.light .dev-hero-tag,
+[color-scheme="light"] .dev-hero-tag {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(5, 150, 105, 0.3) !important;
+    color: #059669 !important;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.08) !important;
+}
+html.light .dev-hero-tag span.bg-\[\#00ff88\],
+[color-scheme="light"] .dev-hero-tag span.bg-\[\#00ff88\] {
+    background-color: #059669 !important;
+}
+
+/* Hero Title */
+html.light .dev-hero-title,
+[color-scheme="light"] .dev-hero-title {
+    color: #0f172a !important;
+}
+html.light .dev-hero-title span.text-\[\#00ff88\],
+[color-scheme="light"] .dev-hero-title span.text-\[\#00ff88\] {
+    color: #059669 !important;
+}
+
+/* Hero Description */
+html.light .dev-hero-desc,
+[color-scheme="light"] .dev-hero-desc {
+    color: #475569 !important;
+}
+
+/* Dot matrix accent */
+html.light .dev-hero-dots span.bg-\[\#00ff88\],
+[color-scheme="light"] .dev-hero-dots span.bg-\[\#00ff88\] {
+    background-color: #059669 !important;
+}
+html.light .dev-hero-dots span.bg-\[\#00ff88\]\/60,
+[color-scheme="light"] .dev-hero-dots span.bg-\[\#00ff88\]\/60 {
+    background-color: rgba(5, 150, 105, 0.6) !important;
+}
+html.light .dev-hero-dots span.bg-\[\#00ff88\]\/30,
+[color-scheme="light"] .dev-hero-dots span.bg-\[\#00ff88\]\/30 {
+    background-color: rgba(5, 150, 105, 0.3) !important;
+}
+html.light .dev-hero-line,
+[color-scheme="light"] .dev-hero-line {
+    background-color: rgba(0, 0, 0, 0.12) !important;
+}
+html.light .dev-hero-badge-text,
+[color-scheme="light"] .dev-hero-badge-text {
+    color: #64748b !important;
+    font-weight: 700 !important;
+}
+
+/* Right column rings & portrait container */
+html.light .dev-hero-ring-1,
+[color-scheme="light"] .dev-hero-ring-1 {
+    border-color: rgba(0, 0, 0, 0.06) !important;
+}
+html.light .dev-hero-ring-2,
+[color-scheme="light"] .dev-hero-ring-2 {
+    border-color: rgba(5, 150, 105, 0.25) !important;
+}
+html.light .dev-hero-img-box,
+[color-scheme="light"] .dev-hero-img-box {
+    background-color: #ffffff !important;
+    border-color: rgba(5, 150, 105, 0.25) !important;
+    box-shadow: 0 25px 60px -15px rgba(5, 150, 105, 0.18), 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Floating Experience Badge (Highlighted in User Screenshot) */
+html.light .dev-hero-exp-badge,
+[color-scheme="light"] .dev-hero-exp-badge,
+body.light-mode .dev-hero-exp-badge {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(5, 150, 105, 0.35) !important;
+    box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.12), 0 4px 10px -2px rgba(5, 150, 105, 0.15) !important;
+    backdrop-filter: blur(12px) !important;
+}
+html.light .dev-badge-icon,
+[color-scheme="light"] .dev-badge-icon,
+body.light-mode .dev-badge-icon {
+    color: #059669 !important;
+}
+html.light .dev-badge-text,
+[color-scheme="light"] .dev-badge-text,
+body.light-mode .dev-badge-text {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+}
+
+

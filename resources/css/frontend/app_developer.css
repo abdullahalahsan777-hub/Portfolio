@@ -1,0 +1,990 @@
+/* ==========================================================================
+   APP DEVELOPER THEME STYLES (Crimson Red #ff0033 & Pitch Black #070707)
+   ========================================================================== */
+
+.font-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.04em;
+}
+
+.font-display {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Continuous infinite marquee */
+@keyframes marqueeScroll {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-marquee-red {
+    display: flex;
+    width: 200%;
+    animation: marqueeScroll 20s linear infinite;
+}
+
+.animate-marquee-red:hover {
+    animation-play-state: paused;
+}
+
+/* Ambient pulsing radial spotlight */
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        opacity: 0.25;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.45;
+        transform: scale(1.06);
+    }
+}
+
+.pulse-ambient {
+    animation: pulseGlow 7s ease-in-out infinite;
+}
+
+/* Glassmorphism Card Utility */
+.app-card {
+    background: linear-gradient(180deg, rgba(22, 22, 22, 0.85) 0%, rgba(11, 11, 11, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.8);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-card:hover {
+    border-color: rgba(255, 0, 51, 0.5);
+    box-shadow: 0 15px 35px -10px rgba(255, 0, 51, 0.25), 0 0 15px rgba(255, 0, 51, 0.1);
+    transform: translateY(-4px);
+}
+
+/* Red Pill Primary CTA Button */
+.btn-pill-red {
+    background: linear-gradient(135deg, #ff0033 0%, #e60026 100%);
+    color: #ffffff;
+    box-shadow: 0 8px 25px -4px rgba(255, 0, 51, 0.5);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-pill-red:hover {
+    background: linear-gradient(135deg, #ff1a44 0%, #ff0033 100%);
+    box-shadow: 0 12px 30px -4px rgba(255, 0, 51, 0.7);
+    transform: scale(1.03);
+}
+
+.btn-pill-red:active {
+    transform: scale(0.98);
+}
+
+/* 3D Metallic Medal Badges for Follow Us Ribbon */
+.metallic-badge {
+    background: radial-gradient(circle at 35% 30%, #3a3a3a 0%, #1c1c1c 55%, #0a0a0a 100%);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.35), inset 0 -2px 6px rgba(0, 0, 0, 0.8), 0 10px 25px rgba(0, 0, 0, 0.7);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.metallic-badge:hover {
+    border-color: #ff0033;
+    box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.5), 0 0 25px rgba(255, 0, 51, 0.6), 0 12px 30px rgba(0, 0, 0, 0.9);
+    transform: translateY(-6px) scale(1.08);
+}
+
+/* Soft fade for developer hero portrait cutout */
+.hero-portrait-mask {
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+/* ==========================================================================
+   APP DEVELOPER THEME LIGHT MODE PERFECTION
+   Light crimson-tinted crisp white canvas with vibrant red & onyx accents,
+   pure white cards, clear typography, and theme color hovers for icons and menus.
+   ========================================================================== */
+html.light .theme-app_developer,
+[color-scheme="light"] .theme-app_developer,
+body.light-mode.theme-app_developer {
+    background-color: #fffafb !important;
+    color: #0f172a !important;
+}
+
+/* Ambient glow divs subdued in light mode */
+html.light .theme-app_developer div[class*="blur-[170px]"],
+html.light .theme-app_developer div[class*="blur-[200px]"],
+html.light .theme-app_developer div[class*="blur-[140px]"],
+[color-scheme="light"] .theme-app_developer div[class*="blur-[170px]"],
+[color-scheme="light"] .theme-app_developer div[class*="blur-[200px]"],
+[color-scheme="light"] .theme-app_developer div[class*="blur-[140px]"] {
+    opacity: 0.12 !important;
+}
+
+/* Alternating Section Backgrounds */
+html.light .theme-app_developer section.bg-gradient-to-b,
+[color-scheme="light"] .theme-app_developer section.bg-gradient-to-b {
+    background-image: linear-gradient(to bottom, #ffffff, #fffafb) !important;
+}
+
+html.light .theme-app_developer section#about,
+[color-scheme="light"] .theme-app_developer section#about,
+html.light .theme-app_developer section#portfolio,
+[color-scheme="light"] .theme-app_developer section#portfolio,
+html.light .theme-app_developer section#skills,
+[color-scheme="light"] .theme-app_developer section#skills,
+html.light .theme-app_developer section#pricing,
+[color-scheme="light"] .theme-app_developer section#pricing,
+html.light .theme-app_developer section.border-t.border-white\/5,
+[color-scheme="light"] .theme-app_developer section.border-t.border-white\/5 {
+    background-color: #fbf3f4 !important;
+}
+
+html.light .theme-app_developer section#services,
+[color-scheme="light"] .theme-app_developer section#services,
+html.light .theme-app_developer section#resume,
+[color-scheme="light"] .theme-app_developer section#resume,
+html.light .theme-app_developer section#testimonials,
+[color-scheme="light"] .theme-app_developer section#testimonials,
+html.light .theme-app_developer section#contact,
+[color-scheme="light"] .theme-app_developer section#contact {
+    background-color: #fffafb !important;
+}
+
+/* Typography across all sections */
+html.light .theme-app_developer h1,
+html.light .theme-app_developer h2,
+html.light .theme-app_developer h3,
+html.light .theme-app_developer h4,
+[color-scheme="light"] .theme-app_developer h1,
+[color-scheme="light"] .theme-app_developer h2,
+[color-scheme="light"] .theme-app_developer h3,
+[color-scheme="light"] .theme-app_developer h4 {
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer h2.text-\[\#ff0033\],
+html.light .theme-app_developer h1.text-\[\#ff0033\],
+html.light .theme-app_developer span.text-\[\#ff0033\],
+html.light .theme-app_developer a.text-\[\#ff0033\],
+html.light .theme-app_developer a.text-\[\#ff0033\] span,
+html.light .theme-app_developer a.text-\[\#ff0033\] *,
+[color-scheme="light"] .theme-app_developer h2.text-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer h1.text-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer span.text-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer a.text-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer a.text-\[\#ff0033\] span,
+[color-scheme="light"] .theme-app_developer a.text-\[\#ff0033\] *,
+body.light-mode.theme-app_developer h2.text-\[\#ff0033\],
+body.light-mode.theme-app_developer h1.text-\[\#ff0033\],
+body.light-mode.theme-app_developer span.text-\[\#ff0033\],
+body.light-mode.theme-app_developer a.text-\[\#ff0033\],
+body.light-mode.theme-app_developer a.text-\[\#ff0033\] span,
+body.light-mode.theme-app_developer a.text-\[\#ff0033\] * {
+    color: #ff0033 !important;
+}
+
+html.light .theme-app_developer p,
+[color-scheme="light"] .theme-app_developer p {
+    color: #475569 !important;
+}
+
+/* App cards in light mode (Portfolio & Blog Cards - Screenshots 1 & 2 fix) */
+html.light .app-card,
+[color-scheme="light"] .app-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(255, 0, 51, 0.16) !important;
+    box-shadow: 0 10px 30px -8px rgba(255, 0, 51, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+    color: #0f172a !important;
+}
+
+html.light .app-card:hover,
+[color-scheme="light"] .app-card:hover {
+    border-color: rgba(255, 0, 51, 0.5) !important;
+    box-shadow: 0 15px 35px -8px rgba(255, 0, 51, 0.2) !important;
+    transform: translateY(-4px);
+}
+
+html.light .app-card h3,
+html.light .app-card h3.text-white,
+[color-scheme="light"] .app-card h3,
+[color-scheme="light"] .app-card h3.text-white {
+    color: #0f172a !important;
+}
+
+html.light .app-card p,
+[color-scheme="light"] .app-card p {
+    color: #475569 !important;
+}
+
+html.light .theme-app_developer .app-card .border-t,
+html.light .theme-app_developer .rounded-3xl .border-t,
+[color-scheme="light"] .theme-app_developer .app-card .border-t,
+[color-scheme="light"] .theme-app_developer .rounded-3xl .border-t,
+body.light-mode.theme-app_developer .app-card .border-t,
+body.light-mode.theme-app_developer .rounded-3xl .border-t {
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .theme-app_developer .app-card .border-t span:not(.text-\[\#ff0033\]):not(.text-\[\#ff0033\] *),
+html.light .theme-app_developer .rounded-3xl .border-t span:not(.text-\[\#ff0033\]):not(.text-\[\#ff0033\] *),
+[color-scheme="light"] .theme-app_developer .app-card .border-t span:not(.text-\[\#ff0033\]):not(.text-\[\#ff0033\] *),
+[color-scheme="light"] .theme-app_developer .rounded-3xl .border-t span:not(.text-\[\#ff0033\]):not(.text-\[\#ff0033\] *),
+body.light-mode.theme-app_developer .app-card .border-t span:not(.text-\[\#ff0033\]):not(.text-\[\#ff0033\] *),
+body.light-mode.theme-app_developer .rounded-3xl .border-t span:not(.text-\[\#ff0033\]):not(.text-\[\#ff0033\] *) {
+    color: #64748b !important;
+}
+
+/* 1. About Section Stat Cards & Mosaic (Screenshot 4 fix) */
+html.light .theme-app_developer .rounded-3xl.bg-\[\#0f0f0f\],
+html.light .theme-app_developer .rounded-3xl.bg-\[\#111111\],
+html.light .theme-app_developer .bg-\[\#0f0f0f\],
+[color-scheme="light"] .theme-app_developer .rounded-3xl.bg-\[\#0f0f0f\],
+[color-scheme="light"] .theme-app_developer .rounded-3xl.bg-\[\#111111\],
+[color-scheme="light"] .theme-app_developer .bg-\[\#0f0f0f\],
+body.light-mode.theme-app_developer .rounded-3xl.bg-\[\#0f0f0f\],
+body.light-mode.theme-app_developer .rounded-3xl.bg-\[\#111111\],
+body.light-mode.theme-app_developer .bg-\[\#0f0f0f\] {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .theme-app_developer .rounded-3xl.bg-\[\#0f0f0f\] span.text-white:not(.bg-\[\#ff0033\]),
+html.light .theme-app_developer .rounded-3xl.bg-\[\#111111\] span.text-white:not(.bg-\[\#ff0033\]),
+[color-scheme="light"] .theme-app_developer .rounded-3xl.bg-\[\#0f0f0f\] span.text-white:not(.bg-\[\#ff0033\]),
+[color-scheme="light"] .theme-app_developer .rounded-3xl.bg-\[\#111111\] span.text-white:not(.bg-\[\#ff0033\]),
+body.light-mode.theme-app_developer .rounded-3xl.bg-\[\#0f0f0f\] span.text-white:not(.bg-\[\#ff0033\]),
+body.light-mode.theme-app_developer .rounded-3xl.bg-\[\#111111\] span.text-white:not(.bg-\[\#ff0033\]) {
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer .rounded-3xl.bg-\[\#0f0f0f\] span.text-\[\#ff0033\],
+html.light .theme-app_developer .rounded-3xl.bg-\[\#111111\] span.text-\[\#ff0033\],
+html.light .theme-app_developer .rounded-3xl span.text-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer .rounded-3xl.bg-\[\#0f0f0f\] span.text-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer .rounded-3xl.bg-\[\#111111\] span.text-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer .rounded-3xl span.text-\[\#ff0033\],
+body.light-mode.theme-app_developer .rounded-3xl.bg-\[\#0f0f0f\] span.text-\[\#ff0033\],
+body.light-mode.theme-app_developer .rounded-3xl.bg-\[\#111111\] span.text-\[\#ff0033\],
+body.light-mode.theme-app_developer .rounded-3xl span.text-\[\#ff0033\] {
+    color: #ff0033 !important;
+}
+
+/* Explicit Category Badges in Light & Dark Mode */
+html.light .theme-app_developer span.bg-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer span.bg-\[\#ff0033\],
+body.light-mode.theme-app_developer span.bg-\[\#ff0033\] {
+    background-color: #ff0033 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+/* Metadata Key-Value Info Pills (Screenshot 5 fix) */
+html.light .theme-app_developer .rounded-xl.bg-\[\#111111\],
+[color-scheme="light"] .theme-app_developer .rounded-xl.bg-\[\#111111\],
+body.light-mode.theme-app_developer .rounded-xl.bg-\[\#111111\] {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+}
+
+html.light .theme-app_developer .rounded-xl.bg-\[\#111111\] .text-white:not(.bg-\[\#ff0033\]),
+html.light .theme-app_developer .rounded-xl.bg-\[\#111111\] span.text-white:not(.bg-\[\#ff0033\]),
+[color-scheme="light"] .theme-app_developer .rounded-xl.bg-\[\#111111\] .text-white:not(.bg-\[\#ff0033\]),
+[color-scheme="light"] .theme-app_developer .rounded-xl.bg-\[\#111111\] span.text-white:not(.bg-\[\#ff0033\]),
+body.light-mode.theme-app_developer .rounded-xl.bg-\[\#111111\] .text-white:not(.bg-\[\#ff0033\]),
+body.light-mode.theme-app_developer .rounded-xl.bg-\[\#111111\] span.text-white:not(.bg-\[\#ff0033\]) {
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer .rounded-xl.bg-\[\#111111\] .text-neutral-400,
+html.light .theme-app_developer .rounded-xl.bg-\[\#111111\] .text-neutral-500,
+html.light .theme-app_developer .rounded-xl.bg-\[\#111111\] span.text-neutral-500,
+[color-scheme="light"] .theme-app_developer .rounded-xl.bg-\[\#111111\] .text-neutral-400,
+[color-scheme="light"] .theme-app_developer .rounded-xl.bg-\[\#111111\] .text-neutral-500,
+[color-scheme="light"] .theme-app_developer .rounded-xl.bg-\[\#111111\] span.text-neutral-500,
+body.light-mode.theme-app_developer .rounded-xl.bg-\[\#111111\] .text-neutral-400,
+body.light-mode.theme-app_developer .rounded-xl.bg-\[\#111111\] .text-neutral-500,
+body.light-mode.theme-app_developer .rounded-xl.bg-\[\#111111\] span.text-neutral-500 {
+    color: #64748b !important;
+}
+
+/* Hero "HELLO, I AM" pill & Freelance Contracts card (Screenshot 1 fix) */
+html.light .theme-app_developer .bg-\[\#180508\],
+[color-scheme="light"] .theme-app_developer .bg-\[\#180508\] {
+    background: #fff1f2 !important;
+    border: 1px solid rgba(255, 0, 51, 0.35) !important;
+    color: #ff0033 !important;
+    box-shadow: 0 4px 15px rgba(255, 0, 51, 0.12) !important;
+}
+
+html.light .theme-app_developer .bg-\[\#180508\] span,
+html.light .theme-app_developer .bg-\[\#180508\] *,
+[color-scheme="light"] .theme-app_developer .bg-\[\#180508\] span,
+[color-scheme="light"] .theme-app_developer .bg-\[\#180508\] * {
+    color: #ff0033 !important;
+}
+
+/* Category Badges on Portfolio Cards & Blog Cards */
+html.light .theme-app_developer span.bg-\[\#ff0033\],
+html.light .theme-app_developer span.bg-\[\#ff0033\] *,
+[color-scheme="light"] .theme-app_developer span.bg-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer span.bg-\[\#ff0033\] * {
+    background-color: #ff0033 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(255, 0, 51, 0.35) !important;
+}
+
+/* Red Metrics Achievement Counter Banner (Screenshot 3 fix) */
+html.light .theme-app_developer div.bg-\[\#ff0033\],
+html.light .theme-app_developer div.bg-\[\#ff0033\] *,
+html.light .theme-app_developer div.bg-\[\#ff0033\] span,
+[color-scheme="light"] .theme-app_developer div.bg-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer div.bg-\[\#ff0033\] *,
+[color-scheme="light"] .theme-app_developer div.bg-\[\#ff0033\] span {
+    color: #ffffff !important;
+}
+
+/* Header Action Buttons (DOWNLOAD CV & LET'S TALK) & Logo Emblem (Screenshot 1 fix) */
+html.light .theme-app_developer a.bg-\[\#ff0033\],
+html.light .theme-app_developer a.bg-\[\#ff0033\] *,
+html.light .theme-app_developer header a[class*="from-\[\#ff0033\]"],
+html.light .theme-app_developer header a[class*="from-\[\#ff0033\]"] *,
+html.light .theme-app_developer header a[class*="bg-gradient-to-r"],
+html.light .theme-app_developer header a[class*="bg-gradient-to-r"] *,
+[color-scheme="light"] .theme-app_developer a.bg-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer a.bg-\[\#ff0033\] *,
+[color-scheme="light"] .theme-app_developer header a[class*="from-\[\#ff0033\]"],
+[color-scheme="light"] .theme-app_developer header a[class*="from-\[\#ff0033\]"] *,
+[color-scheme="light"] .theme-app_developer header a[class*="bg-gradient-to-r"],
+[color-scheme="light"] .theme-app_developer header a[class*="bg-gradient-to-r"] * {
+    color: #ffffff !important;
+}
+
+html.light .theme-app_developer #mainHeader a.group div[class*="bg-gradient-to-tr"],
+[color-scheme="light"] .theme-app_developer #mainHeader a.group div[class*="bg-gradient-to-tr"] {
+    color: #ffffff !important;
+}
+
+html.light .theme-app_developer #mainHeader a.group span.font-extrabold,
+[color-scheme="light"] .theme-app_developer #mainHeader a.group span.font-extrabold {
+    color: #0f172a !important;
+}
+
+/* 2. Contact Section & Contact Info Cards (Left Border & Light Mode) */
+html.light .theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\],
+[color-scheme="light"] .theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\],
+body.light-mode.theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-left: 4px solid #ff0033 !important;
+    box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light .theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .rounded-xl.bg-\[\#1c080b\],
+[color-scheme="light"] .theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .rounded-xl.bg-\[\#1c080b\],
+body.light-mode.theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .rounded-xl.bg-\[\#1c080b\] {
+    background: #fee2e2 !important;
+    color: #ff0033 !important;
+}
+
+html.light .theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .text-white,
+[color-scheme="light"] .theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .text-white,
+body.light-mode.theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .text-white {
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .text-neutral-400,
+html.light .theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .text-neutral-500,
+[color-scheme="light"] .theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .text-neutral-400,
+[color-scheme="light"] .theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .text-neutral-500,
+body.light-mode.theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .text-neutral-400,
+body.light-mode.theme-app_developer .rounded-2xl.bg-\[\#0f0f0f\] .text-neutral-500 {
+    color: #64748b !important;
+}
+
+html.light .theme-app_developer #contact form input,
+html.light .theme-app_developer #contact form textarea,
+html.light .theme-app_developer #contact form select,
+[color-scheme="light"] .theme-app_developer #contact form input,
+[color-scheme="light"] .theme-app_developer #contact form textarea,
+[color-scheme="light"] .theme-app_developer #contact form select {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer #contact form input:focus,
+html.light .theme-app_developer #contact form textarea:focus,
+html.light .theme-app_developer #contact form select:focus,
+[color-scheme="light"] .theme-app_developer #contact form input:focus,
+[color-scheme="light"] .theme-app_developer #contact form textarea:focus,
+[color-scheme="light"] .theme-app_developer #contact form select:focus {
+    border-color: #ff0033 !important;
+    box-shadow: 0 0 0 3px rgba(255, 0, 51, 0.2) !important;
+    background: #ffffff !important;
+}
+
+/* 3. Follow Us Section & Social Icons (Screenshot 3 fix) */
+html.light .metallic-badge,
+[color-scheme="light"] .metallic-badge {
+    background: radial-gradient(circle at 35% 30%, #ffffff 0%, #f8fafc 55%, #f1f5f9 100%) !important;
+    border: 2px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06), inset 0 2px 4px rgba(255, 255, 255, 0.9) !important;
+    color: #0f172a !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.light .metallic-badge *,
+[color-scheme="light"] .metallic-badge * {
+    color: #0f172a !important;
+    transition: color 0.3s ease !important;
+}
+
+/* THEME COLOR HOVER FOR CIRCULAR ICONS! */
+html.light .metallic-badge:hover,
+[color-scheme="light"] .metallic-badge:hover {
+    background: #ff0033 !important;
+    border-color: #ff0033 !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 25px rgba(255, 0, 51, 0.45), 0 0 15px rgba(255, 0, 51, 0.3) !important;
+    transform: translateY(-6px) scale(1.08) !important;
+}
+
+html.light .metallic-badge:hover *,
+[color-scheme="light"] .metallic-badge:hover * {
+    color: #ffffff !important;
+}
+
+/* 4. Red primary pill button in light mode */
+html.light .btn-pill-red,
+html.light .btn-pill-red *,
+[color-scheme="light"] .btn-pill-red,
+[color-scheme="light"] .btn-pill-red * {
+    background: linear-gradient(135deg, #ff0033 0%, #e60026 100%) !important;
+    color: #ffffff !important;
+}
+
+/* 5. Header Top Bar in Light Mode (Screenshot 3 fix) */
+html.light .theme-app_developer .bg-\[\#0a0a0a\].border-b,
+[color-scheme="light"] .theme-app_developer .bg-\[\#0a0a0a\].border-b,
+body.light-mode.theme-app_developer .bg-\[\#0a0a0a\].border-b {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #475569 !important;
+}
+
+html.light .theme-app_developer .bg-\[\#0a0a0a\].border-b a:not(.bg-\[\#ff0033\]),
+html.light .theme-app_developer .bg-\[\#0a0a0a\].border-b a:not(.bg-\[\#ff0033\]) span,
+html.light .theme-app_developer .bg-\[\#0a0a0a\].border-b span:not(.text-\[\#ff0033\]):not(.bg-\[\#ff0033\]),
+[color-scheme="light"] .theme-app_developer .bg-\[\#0a0a0a\].border-b a:not(.bg-\[\#ff0033\]),
+[color-scheme="light"] .theme-app_developer .bg-\[\#0a0a0a\].border-b a:not(.bg-\[\#ff0033\]) span,
+[color-scheme="light"] .theme-app_developer .bg-\[\#0a0a0a\].border-b span:not(.text-\[\#ff0033\]):not(.bg-\[\#ff0033\]),
+body.light-mode.theme-app_developer .bg-\[\#0a0a0a\].border-b a:not(.bg-\[\#ff0033\]),
+body.light-mode.theme-app_developer .bg-\[\#0a0a0a\].border-b a:not(.bg-\[\#ff0033\]) span,
+body.light-mode.theme-app_developer .bg-\[\#0a0a0a\].border-b span:not(.text-\[\#ff0033\]):not(.bg-\[\#ff0033\]) {
+    color: #475569 !important;
+}
+
+/* Header DOWNLOAD CV Red Pill Button (Screenshot 1 fix) */
+html.light .theme-app_developer a.bg-\[\#ff0033\],
+html.light .theme-app_developer a.bg-\[\#ff0033\] span,
+html.light .theme-app_developer a.bg-\[\#ff0033\] *,
+[color-scheme="light"] .theme-app_developer a.bg-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer a.bg-\[\#ff0033\] span,
+[color-scheme="light"] .theme-app_developer a.bg-\[\#ff0033\] *,
+body.light-mode.theme-app_developer a.bg-\[\#ff0033\],
+body.light-mode.theme-app_developer a.bg-\[\#ff0033\] span,
+body.light-mode.theme-app_developer a.bg-\[\#ff0033\] * {
+    background-color: #ff0033 !important;
+    color: #ffffff !important;
+}
+
+html.light .theme-app_developer a.bg-\[\#ff0033\]:hover,
+[color-scheme="light"] .theme-app_developer a.bg-\[\#ff0033\]:hover,
+body.light-mode.theme-app_developer a.bg-\[\#ff0033\]:hover {
+    background-color: #e60026 !important;
+    color: #ffffff !important;
+}
+
+html.light .theme-app_developer .bg-\[\#0a0a0a\].border-b a:hover,
+html.light .theme-app_developer .bg-\[\#0a0a0a\].border-b a:hover span,
+[color-scheme="light"] .theme-app_developer .bg-\[\#0a0a0a\].border-b a:hover,
+[color-scheme="light"] .theme-app_developer .bg-\[\#0a0a0a\].border-b a:hover span,
+body.light-mode.theme-app_developer .bg-\[\#0a0a0a\].border-b a:hover,
+body.light-mode.theme-app_developer .bg-\[\#0a0a0a\].border-b a:hover span {
+    color: #ff0033 !important;
+}
+
+html.light .theme-app_developer .bg-\[\#0a0a0a\].border-b span.text-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer .bg-\[\#0a0a0a\].border-b span.text-\[\#ff0033\],
+body.light-mode.theme-app_developer .bg-\[\#0a0a0a\].border-b span.text-\[\#ff0033\] {
+    color: #ff0033 !important;
+}
+
+html.light .theme-app_developer .bg-\[\#0a0a0a\].border-b .border-r,
+[color-scheme="light"] .theme-app_developer .bg-\[\#0a0a0a\].border-b .border-r,
+body.light-mode.theme-app_developer .bg-\[\#0a0a0a\].border-b .border-r {
+    border-right-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 6. Header Navigation in Light Mode (THEME COLOR MENU HOVER) */
+html.light .theme-app_developer #mainHeader,
+[color-scheme="light"] .theme-app_developer #mainHeader {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light .theme-app_developer #mainHeader nav a,
+[color-scheme="light"] .theme-app_developer #mainHeader nav a {
+    color: #475569 !important;
+    transition: color 0.2s ease !important;
+}
+
+html.light .theme-app_developer #mainHeader nav a:hover,
+[color-scheme="light"] .theme-app_developer #mainHeader nav a:hover {
+    color: #ff0033 !important;
+}
+
+html.light .theme-app_developer #mainHeader nav a.text-\[\#ff0033\],
+[color-scheme="light"] .theme-app_developer #mainHeader nav a.text-\[\#ff0033\] {
+    color: #ff0033 !important;
+    font-weight: 800 !important;
+}
+
+/* 7. Hero Social Icons next to HIRE ME button (Screenshot 1 fix) */
+html.light .theme-app_developer .rounded-xl.bg-\[\#141414\],
+[color-scheme="light"] .theme-app_developer .rounded-xl.bg-\[\#141414\],
+body.light-mode.theme-app_developer .rounded-xl.bg-\[\#141414\] {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    color: #0f172a !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.25s ease !important;
+}
+
+html.light .theme-app_developer .rounded-xl.bg-\[\#141414\] svg,
+[color-scheme="light"] .theme-app_developer .rounded-xl.bg-\[\#141414\] svg,
+body.light-mode.theme-app_developer .rounded-xl.bg-\[\#141414\] svg {
+    color: #0f172a !important;
+    fill: #0f172a !important;
+    transition: all 0.25s ease !important;
+}
+
+html.light .theme-app_developer .rounded-xl.bg-\[\#141414\]:hover,
+[color-scheme="light"] .theme-app_developer .rounded-xl.bg-\[\#141414\]:hover,
+body.light-mode.theme-app_developer .rounded-xl.bg-\[\#141414\]:hover {
+    background-color: #ff0033 !important;
+    border-color: #ff0033 !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 20px rgba(255, 0, 51, 0.4) !important;
+    transform: translateY(-2px) scale(1.05) !important;
+}
+
+html.light .theme-app_developer .rounded-xl.bg-\[\#141414\]:hover svg,
+[color-scheme="light"] .theme-app_developer .rounded-xl.bg-\[\#141414\]:hover svg,
+body.light-mode.theme-app_developer .rounded-xl.bg-\[\#141414\]:hover svg {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+}
+
+/* 8. FAQ Section in Light Mode ("HAVE ANY QUESTIONS?" - Screenshot 2 fix) */
+html.light .theme-app_developer section#faq,
+[color-scheme="light"] .theme-app_developer section#faq,
+body.light-mode.theme-app_developer section#faq {
+    background-color: #fbf3f4 !important;
+}
+
+html.light .theme-app_developer #faq h2,
+[color-scheme="light"] .theme-app_developer #faq h2,
+body.light-mode.theme-app_developer #faq h2 {
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer #faq button,
+html.light .theme-app_developer #faq button span,
+html.light .theme-app_developer #faq button .font-display,
+[color-scheme="light"] .theme-app_developer #faq button,
+[color-scheme="light"] .theme-app_developer #faq button span,
+[color-scheme="light"] .theme-app_developer #faq button .font-display,
+body.light-mode.theme-app_developer #faq button,
+body.light-mode.theme-app_developer #faq button span,
+body.light-mode.theme-app_developer #faq button .font-display {
+    color: #0f172a !important;
+    transition: color 0.2s ease !important;
+}
+
+html.light .theme-app_developer #faq button:hover,
+html.light .theme-app_developer #faq button:hover span,
+html.light .theme-app_developer #faq button:hover .font-display,
+[color-scheme="light"] .theme-app_developer #faq button:hover,
+[color-scheme="light"] .theme-app_developer #faq button:hover span,
+[color-scheme="light"] .theme-app_developer #faq button:hover .font-display,
+body.light-mode.theme-app_developer #faq button:hover,
+body.light-mode.theme-app_developer #faq button:hover span,
+body.light-mode.theme-app_developer #faq button:hover .font-display {
+    color: #ff0033 !important;
+}
+
+html.light .theme-app_developer #faq button span[id*="faq-icon-"],
+[color-scheme="light"] .theme-app_developer #faq button span[id*="faq-icon-"],
+body.light-mode.theme-app_developer #faq button span[id*="faq-icon-"] {
+    color: #ff0033 !important;
+}
+
+html.light .theme-app_developer #faq div[id*="faq-item-"],
+[color-scheme="light"] .theme-app_developer #faq div[id*="faq-item-"],
+body.light-mode.theme-app_developer #faq div[id*="faq-item-"] {
+    color: #475569 !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 9. Footer in Light Mode (Brand Logo & Social Icons - Screenshot 3 fix) */
+html.light .theme-app_developer footer,
+[color-scheme="light"] .theme-app_developer footer,
+body.light-mode.theme-app_developer footer {
+    background-color: #ffffff !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #64748b !important;
+}
+
+html.light .theme-app_developer footer a.group span.text-white,
+[color-scheme="light"] .theme-app_developer footer a.group span.text-white,
+body.light-mode.theme-app_developer footer a.group span.text-white {
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer footer a.group div,
+[color-scheme="light"] .theme-app_developer footer a.group div {
+    color: #ffffff !important;
+}
+
+html.light .theme-app_developer footer h4,
+[color-scheme="light"] .theme-app_developer footer h4,
+body.light-mode.theme-app_developer footer h4 {
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer footer ul li a,
+[color-scheme="light"] .theme-app_developer footer ul li a,
+body.light-mode.theme-app_developer footer ul li a {
+    color: #64748b !important;
+    transition: all 0.2s ease !important;
+}
+
+html.light .theme-app_developer footer ul li a:hover,
+[color-scheme="light"] .theme-app_developer footer ul li a:hover,
+body.light-mode.theme-app_developer footer ul li a:hover {
+    color: #ff0033 !important;
+    transform: translateX(3px) !important;
+}
+
+html.light .theme-app_developer footer .rounded-full.bg-\[\#121212\],
+[color-scheme="light"] .theme-app_developer footer .rounded-full.bg-\[\#121212\],
+body.light-mode.theme-app_developer footer .rounded-full.bg-\[\#121212\] {
+    background: #f1f5f9 !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #334155 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.3s ease !important;
+}
+
+html.light .theme-app_developer footer .rounded-full.bg-\[\#121212\] svg,
+[color-scheme="light"] .theme-app_developer footer .rounded-full.bg-\[\#121212\] svg,
+body.light-mode.theme-app_developer footer .rounded-full.bg-\[\#121212\] svg {
+    color: #334155 !important;
+    fill: #334155 !important;
+    transition: all 0.3s ease !important;
+}
+
+html.light .theme-app_developer footer .rounded-full.bg-\[\#121212\]:hover,
+[color-scheme="light"] .theme-app_developer footer .rounded-full.bg-\[\#121212\]:hover,
+body.light-mode.theme-app_developer footer .rounded-full.bg-\[\#121212\]:hover {
+    background: #ff0033 !important;
+    border-color: #ff0033 !important;
+    color: #ffffff !important;
+    transform: scale(1.15) !important;
+    box-shadow: 0 6px 20px rgba(255, 0, 51, 0.45) !important;
+}
+
+html.light .theme-app_developer footer .rounded-full.bg-\[\#121212\]:hover svg,
+[color-scheme="light"] .theme-app_developer footer .rounded-full.bg-\[\#121212\]:hover svg,
+body.light-mode.theme-app_developer footer .rounded-full.bg-\[\#121212\]:hover svg {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+}
+
+html.light .theme-app_developer footer a[title="Back to top"],
+[color-scheme="light"] .theme-app_developer footer a[title="Back to top"],
+body.light-mode.theme-app_developer footer a[title="Back to top"] {
+    background-color: #f1f5f9 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer footer a[title="Back to top"]:hover,
+[color-scheme="light"] .theme-app_developer footer a[title="Back to top"]:hover,
+body.light-mode.theme-app_developer footer a[title="Back to top"]:hover {
+    background-color: #ff0033 !important;
+    color: #ffffff !important;
+    border-color: #ff0033 !important;
+}
+
+/* 10. Services Cards, Circular Icon Badge & Read More Button in Light Mode */
+/* Top Circular Icon Badge: Normal state is soft crimson blush; Hover is solid crimson */
+html.light .theme-app_developer #services .rounded-full.bg-\[\#1c080b\],
+[color-scheme="light"] .theme-app_developer #services .rounded-full.bg-\[\#1c080b\],
+body.light-mode.theme-app_developer #services .rounded-full.bg-\[\#1c080b\] {
+    background-color: #fff1f2 !important;
+    border: 2px solid #ff0033 !important;
+    color: #ff0033 !important;
+    box-shadow: 0 4px 15px rgba(255, 0, 51, 0.12) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.light .theme-app_developer #services .app-card:hover .rounded-full.bg-\[\#1c080b\],
+html.light .theme-app_developer #services .rounded-full.bg-\[\#1c080b\]:hover,
+[color-scheme="light"] .theme-app_developer #services .app-card:hover .rounded-full.bg-\[\#1c080b\],
+[color-scheme="light"] .theme-app_developer #services .rounded-full.bg-\[\#1c080b\]:hover,
+body.light-mode.theme-app_developer #services .app-card:hover .rounded-full.bg-\[\#1c080b\],
+body.light-mode.theme-app_developer #services .rounded-full.bg-\[\#1c080b\]:hover {
+    background-color: #ff0033 !important;
+    border-color: #ff0033 !important;
+    color: #ffffff !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 8px 25px rgba(255, 0, 51, 0.45) !important;
+}
+
+/* Read More Button Normal State: Soft blush red pill with red border and red text */
+html.light .theme-app_developer #services .app-card a.rounded-full,
+[color-scheme="light"] .theme-app_developer #services .app-card a.rounded-full,
+body.light-mode.theme-app_developer #services .app-card a.rounded-full {
+    background-color: #fff1f2 !important;
+    border: 1px solid rgba(255, 0, 51, 0.35) !important;
+    color: #ff0033 !important;
+    box-shadow: 0 2px 8px rgba(255, 0, 51, 0.08) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.light .theme-app_developer #services .app-card a.rounded-full span,
+html.light .theme-app_developer #services .app-card a.rounded-full *,
+[color-scheme="light"] .theme-app_developer #services .app-card a.rounded-full span,
+[color-scheme="light"] .theme-app_developer #services .app-card a.rounded-full *,
+body.light-mode.theme-app_developer #services .app-card a.rounded-full span,
+body.light-mode.theme-app_developer #services .app-card a.rounded-full * {
+    color: #ff0033 !important;
+}
+
+/* Read More Button Hover State: Solid Crimson Red with PURE WHITE text */
+html.light .theme-app_developer #services .app-card a.rounded-full:hover,
+html.light .theme-app_developer #services .app-card:hover a.rounded-full,
+[color-scheme="light"] .theme-app_developer #services .app-card a.rounded-full:hover,
+[color-scheme="light"] .theme-app_developer #services .app-card:hover a.rounded-full,
+body.light-mode.theme-app_developer #services .app-card a.rounded-full:hover,
+body.light-mode.theme-app_developer #services .app-card:hover a.rounded-full {
+    background-color: #ff0033 !important;
+    border-color: #ff0033 !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(255, 0, 51, 0.45) !important;
+    transform: translateY(-2px) !important;
+}
+
+html.light .theme-app_developer #services .app-card a.rounded-full:hover span,
+html.light .theme-app_developer #services .app-card a.rounded-full:hover *,
+html.light .theme-app_developer #services .app-card:hover a.rounded-full span,
+html.light .theme-app_developer #services .app-card:hover a.rounded-full *,
+[color-scheme="light"] .theme-app_developer #services .app-card a.rounded-full:hover span,
+[color-scheme="light"] .theme-app_developer #services .app-card a.rounded-full:hover *,
+[color-scheme="light"] .theme-app_developer #services .app-card:hover a.rounded-full span,
+[color-scheme="light"] .theme-app_developer #services .app-card:hover a.rounded-full *,
+body.light-mode.theme-app_developer #services .app-card a.rounded-full:hover span,
+body.light-mode.theme-app_developer #services .app-card a.rounded-full:hover *,
+body.light-mode.theme-app_developer #services .app-card:hover a.rounded-full span,
+body.light-mode.theme-app_developer #services .app-card:hover a.rounded-full * {
+    color: #ffffff !important;
+}
+
+/* 11. Skills Section progress bar track in light mode */
+html.light .theme-app_developer #skills .rounded-full.bg-black\/80,
+[color-scheme="light"] .theme-app_developer #skills .rounded-full.bg-black\/80,
+body.light-mode.theme-app_developer #skills .rounded-full.bg-black\/80 {
+    background-color: #e2e8f0 !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 12. Resume timeline dot ring & Follow us heading in light mode */
+html.light .theme-app_developer #resume .ring-\[\#070707\],
+[color-scheme="light"] .theme-app_developer #resume .ring-\[\#070707\],
+body.light-mode.theme-app_developer #resume .ring-\[\#070707\] {
+    --tw-ring-color: #fffafb !important;
+    box-shadow: 0 0 0 4px #fffafb !important;
+}
+
+html.light .theme-app_developer section h3.text-neutral-200,
+[color-scheme="light"] .theme-app_developer section h3.text-neutral-200,
+body.light-mode.theme-app_developer section h3.text-neutral-200 {
+    color: #0f172a !important;
+}
+
+/* 13. Inner Pages (About, Contact, Blog, Portfolio, etc.) Light Mode Backgrounds */
+html.light .theme-app_developer div.bg-\[\#070707\],
+[color-scheme="light"] .theme-app_developer div.bg-\[\#070707\],
+body.light-mode.theme-app_developer div.bg-\[\#070707\] {
+    background-color: #fffafb !important;
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer section.bg-\[\#0a0a0a\],
+[color-scheme="light"] .theme-app_developer section.bg-\[\#0a0a0a\],
+body.light-mode.theme-app_developer section.bg-\[\#0a0a0a\] {
+    background-color: #fffafb !important;
+}
+
+html.light .theme-app_developer section.bg-gradient-to-b.from-\[\#0a0a0a\].to-\[\#070707\],
+[color-scheme="light"] .theme-app_developer section.bg-gradient-to-b.from-\[\#0a0a0a\].to-\[\#070707\],
+body.light-mode.theme-app_developer section.bg-gradient-to-b.from-\[\#0a0a0a\].to-\[\#070707\] {
+    background-image: linear-gradient(to bottom, #ffffff, #fffafb) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 14. Blog Detail Page Light Mode Styling (Screenshot 5 fix) */
+html.light .theme-app_developer .bg-\[\#160507\],
+[color-scheme="light"] .theme-app_developer .bg-\[\#160507\],
+body.light-mode.theme-app_developer .bg-\[\#160507\] {
+    background-color: #fff1f2 !important;
+    border-color: rgba(255, 0, 51, 0.35) !important;
+    color: #ff0033 !important;
+}
+
+html.light .theme-app_developer .bg-\[\#160507\] span,
+[color-scheme="light"] .theme-app_developer .bg-\[\#160507\] span,
+body.light-mode.theme-app_developer .bg-\[\#160507\] span {
+    color: #ff0033 !important;
+}
+
+html.light .theme-app_developer article.bg-\[\#0a0a0a\],
+[color-scheme="light"] .theme-app_developer article.bg-\[\#0a0a0a\],
+body.light-mode.theme-app_developer article.bg-\[\#0a0a0a\] {
+    background-color: #fffafb !important;
+}
+
+html.light .theme-app_developer article .prose,
+html.light .theme-app_developer article .prose-invert,
+[color-scheme="light"] .theme-app_developer article .prose,
+[color-scheme="light"] .theme-app_developer article .prose-invert,
+body.light-mode.theme-app_developer article .prose,
+body.light-mode.theme-app_developer article .prose-invert {
+    color: #334155 !important;
+}
+
+html.light .theme-app_developer article .prose p.text-lg,
+html.light .theme-app_developer article p.text-lg.font-semibold,
+[color-scheme="light"] .theme-app_developer article p.text-lg.font-semibold,
+body.light-mode.theme-app_developer article p.text-lg.font-semibold {
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer article .whitespace-pre-line,
+[color-scheme="light"] .theme-app_developer article .whitespace-pre-line,
+body.light-mode.theme-app_developer article .whitespace-pre-line {
+    color: #475569 !important;
+}
+
+/* 15. Contact Page Form & Info Cards in Light Mode */
+html.light .theme-app_developer .bg-\[\#1c080b\],
+[color-scheme="light"] .theme-app_developer .bg-\[\#1c080b\],
+body.light-mode.theme-app_developer .bg-\[\#1c080b\] {
+    background-color: #fff1f2 !important;
+    color: #ff0033 !important;
+    border: 1px solid rgba(255, 0, 51, 0.25) !important;
+}
+
+html.light .theme-app_developer form input.bg-black\/50,
+html.light .theme-app_developer form textarea.bg-black\/50,
+[color-scheme="light"] .theme-app_developer form input.bg-black\/50,
+[color-scheme="light"] .theme-app_developer form textarea.bg-black\/50,
+body.light-mode.theme-app_developer form input.bg-black\/50,
+body.light-mode.theme-app_developer form textarea.bg-black\/50 {
+    background-color: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer form input.bg-black\/50:focus,
+html.light .theme-app_developer form textarea.bg-black\/50:focus,
+[color-scheme="light"] .theme-app_developer form input.bg-black\/50:focus,
+[color-scheme="light"] .theme-app_developer form textarea.bg-black\/50:focus,
+body.light-mode.theme-app_developer form input.bg-black\/50:focus,
+body.light-mode.theme-app_developer form textarea.bg-black\/50:focus {
+    background-color: #ffffff !important;
+    border-color: #ff0033 !important;
+    box-shadow: 0 0 0 3px rgba(255, 0, 51, 0.15) !important;
+}
+
+html.light .theme-app_developer form label,
+[color-scheme="light"] .theme-app_developer form label,
+body.light-mode.theme-app_developer form label {
+    color: #334155 !important;
+}
+
+/* 16. FAQ Page items in Light Mode */
+html.light .theme-app_developer [data-faq-item],
+[color-scheme="light"] .theme-app_developer [data-faq-item],
+body.light-mode.theme-app_developer [data-faq-item] {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+}
+
+html.light .theme-app_developer [data-faq-item] h3,
+[color-scheme="light"] .theme-app_developer [data-faq-item] h3,
+body.light-mode.theme-app_developer [data-faq-item] h3 {
+    color: #0f172a !important;
+}
+
+html.light .theme-app_developer [data-faq-item]:hover h3,
+[color-scheme="light"] .theme-app_developer [data-faq-item]:hover h3,
+body.light-mode.theme-app_developer [data-faq-item]:hover h3 {
+    color: #ff0033 !important;
+}
+
+html.light .theme-app_developer [data-faq-item] p,
+[color-scheme="light"] .theme-app_developer [data-faq-item] p,
+body.light-mode.theme-app_developer [data-faq-item] p {
+    color: #475569 !important;
+    border-top-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 17. Universal Cards & Borders on All App Developer Pages in Light Mode */
+html.light .theme-app_developer .border-white\/5,
+html.light .theme-app_developer .border-white\/10,
+[color-scheme="light"] .theme-app_developer .border-white\/5,
+[color-scheme="light"] .theme-app_developer .border-white\/10,
+body.light-mode.theme-app_developer .border-white\/5,
+body.light-mode.theme-app_developer .border-white\/10 {
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .theme-app_developer .text-neutral-400,
+html.light .theme-app_developer .text-neutral-300,
+[color-scheme="light"] .theme-app_developer .text-neutral-400,
+[color-scheme="light"] .theme-app_developer .text-neutral-300,
+body.light-mode.theme-app_developer .text-neutral-400,
+body.light-mode.theme-app_developer .text-neutral-300 {
+    color: #475569 !important;
+}
+
+html.light .theme-app_developer .text-neutral-500,
+[color-scheme="light"] .theme-app_developer .text-neutral-500,
+body.light-mode.theme-app_developer .text-neutral-500 {
+    color: #64748b !important;
+}

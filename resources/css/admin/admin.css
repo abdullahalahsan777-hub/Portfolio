@@ -1,0 +1,112 @@
+/* ==========================================================================
+   Admin Panel Dedicated Styles
+   Modern dark obsidian styling, glassmorphic widgets, sleek tables, theme switcher
+   cards, and polished form controls.
+   ========================================================================== */
+
+:root {
+    --admin-bg-body: #060a12;
+    --admin-bg-sidebar: #09101d;
+    --admin-bg-card: #0d1627;
+    --admin-border: rgba(255, 255, 255, 0.08);
+    --admin-border-focus: rgba(99, 102, 241, 0.5);
+    --admin-primary: #6366f1;
+    --admin-primary-hover: #4f46e5;
+}
+
+.admin-body {
+    background-color: var(--admin-bg-body);
+    color: #e2e8f0;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Admin Card Component */
+.admin-card {
+    background: var(--admin-bg-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Admin Input Fields */
+.admin-input {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--admin-border);
+    color: #ffffff;
+    border-radius: 0.75rem;
+    padding: 0.65rem 1rem;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.admin-input:focus {
+    outline: none;
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+/* Admin Table */
+.admin-table-head {
+    background: rgba(0, 0, 0, 0.4);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+}
+
+.admin-table-row {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.2s ease;
+}
+
+.admin-table-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Theme Selector Card Highlights */
+.admin-theme-radio:checked + .admin-theme-card {
+    border-color: #6366f1;
+    box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.4);
+}
+
+/* Page Elements Two-Column Side-by-Side Layout */
+.page-elements-wrapper {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 320px !important;
+    gap: 1.75rem !important;
+    align-items: start !important;
+    width: 100% !important;
+}
+
+.page-elements-main {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+.page-elements-sidebar {
+    width: 320px !important;
+    min-width: 320px !important;
+    position: sticky !important;
+    top: 5.5rem !important;
+    z-index: 20 !important;
+}
+
+@media (min-width: 1440px) {
+    .page-elements-wrapper {
+        grid-template-columns: minmax(0, 980px) 320px !important;
+        gap: 2rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-elements-wrapper {
+        grid-template-columns: 1fr !important;
+    }
+
+    .page-elements-sidebar {
+        width: 100% !important;
+        min-width: 0 !important;
+        position: static !important;
+    }
+}
+
