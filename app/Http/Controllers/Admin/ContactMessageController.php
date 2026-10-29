@@ -419,9 +419,16 @@ class ContactMessageController extends Controller
     /**
      * Move message to Trash (SoftDelete).
      */
-    public function destroy(ContactMessage $message): RedirectResponse
+    public function destroy(ContactMessage $message): RedirectResponse|JsonResponse
     {
         $message->delete();
+
+        if (request()->wantsJson() || request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Message moved to Trash.',
+            ]);
+        }
 
         flash()->delete('Message moved to Trash.');
 
@@ -431,10 +438,17 @@ class ContactMessageController extends Controller
     /**
      * Restore message from Trash.
      */
-    public function restore($id): RedirectResponse
+    public function restore($id): RedirectResponse|JsonResponse
     {
         $message = ContactMessage::onlyTrashed()->findOrFail($id);
         $message->restore();
+
+        if (request()->wantsJson() || request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Message restored successfully from Trash.',
+            ]);
+        }
 
         flash()->success('Message restored successfully from Trash.');
 
@@ -444,10 +458,17 @@ class ContactMessageController extends Controller
     /**
      * Permanently delete message from Trash.
      */
-    public function forceDelete($id): RedirectResponse
+    public function forceDelete($id): RedirectResponse|JsonResponse
     {
         $message = ContactMessage::onlyTrashed()->findOrFail($id);
         $message->forceDelete();
+
+        if (request()->wantsJson() || request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Message permanently deleted.',
+            ]);
+        }
 
         flash()->delete('Message permanently deleted.');
 
@@ -464,5 +485,68 @@ class ContactMessageController extends Controller
         flash()->success('Trash emptied successfully.');
 
         return redirect()->back();
+    }
+
+    /**
+     * Perform batch actions on multiple messages.
+     */
+    public function batchAction(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'ids'    => 'required|array|min:1',
+            'ids.*'  => 'integer',
+            'action' => 'required|string|in:mark_read,mark_unread,trash,restore,force_delete,star,unstar',
+        ]);
+
+        $ids = $validated['ids'];
+        $action = $validated['action'];
+        $count = count($ids);
+
+        switch ($action) {
+            case 'mark_read':
+                ContactMessage::whereIn('id', $ids)->update(['is_read' => true]);
+                $msg = "{$count} messages marked as read.";
+                break;
+
+            case 'mark_unread':
+                ContactMessage::whereIn('id', $ids)->update(['is_read' => false]);
+                $msg = "{$count} messages marked as unread.";
+                break;
+
+            case 'trash':
+                ContactMessage::whereIn('id', $ids)->delete();
+                $msg = "{$count} messages moved to Trash.";
+                break;
+
+            case 'restore':
+                ContactMessage::onlyTrashed()->whereIn('id', $ids)->restore();
+                $msg = "{$count} messages restored from Trash.";
+                break;
+
+            case 'force_delete':
+                ContactMessage::onlyTrashed()->whereIn('id', $ids)->forceDelete();
+                $msg = "{$count} messages permanently deleted.";
+                break;
+
+            case 'star':
+                ContactMessage::whereIn('id', $ids)->update(['is_important' => true, 'type' => 'important']);
+                $msg = "{$count} messages starred as important.";
+                break;
+
+            case 'unstar':
+                ContactMessage::whereIn('id', $ids)->update(['is_important' => false]);
+                $msg = "{$count} messages unstarred.";
+                break;
+
+            default:
+                $msg = "Action completed.";
+        }
+
+        return response()->json([
+            'success' => true,
+            'action'  => $action,
+            'count'   => $count,
+            'message' => $msg,
+        ]);
     }
 }
