@@ -19,8 +19,6 @@
             </p>
         </div>
     </section>
-
-    <!-- Blog Posts Grid (Matching design with clean white card body) -->
     <section class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             @php

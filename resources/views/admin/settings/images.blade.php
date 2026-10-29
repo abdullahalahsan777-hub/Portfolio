@@ -16,7 +16,6 @@
             class="space-y-8">
             @csrf
 
-            <!-- 4 Image Cards Grid (Matching 2nd Image Layout) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-6">
 
                 <!-- 1. Software Logo Card -->

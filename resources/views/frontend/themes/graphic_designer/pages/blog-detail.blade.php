@@ -69,8 +69,6 @@
 
         </div>
     </article>
-
-    <!-- Footer matching uploaded design image -->
     @include('frontend.themes.graphic_designer.partials.footer')
 
 </div>

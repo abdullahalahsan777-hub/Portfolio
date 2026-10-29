@@ -85,7 +85,7 @@
                         class="w-full px-4 py-2.5 rounded-xl bg-[#060b13] border border-white/10 text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/30 transition-all font-medium">
                         <option value="open"
                             {{ ($contents['faq_first_open'] ?? 'open') === 'open' ? 'selected' : '' }}>First Question
-                            Open by Default (Matching Screenshot)</option>
+                            Open by Default</option>
                         <option value="closed"
                             {{ ($contents['faq_first_open'] ?? '') === 'closed' ? 'selected' : '' }}>All Questions
                             Collapsed by Default</option>

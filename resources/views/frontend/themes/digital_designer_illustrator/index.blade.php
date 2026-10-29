@@ -222,8 +222,6 @@
     </style>
 </head>
 <body class="theme-digital_designer_illustrator antialiased selection:bg-[#e26d9b] selection:text-white min-h-screen relative overflow-x-clip">
-
-    <!-- Standardized Sticky Main Header (Preserved as requested) -->
     @include('frontend.themes.digital_designer_illustrator.partials.header')
 
     <main class="relative">
@@ -244,8 +242,6 @@
             <div class="absolute top-20 right-0 sm:right-6 lg:right-16 w-80 sm:w-[420px] lg:w-[520px] pointer-events-none opacity-50 dark:opacity-25 animate-float-2 z-0">
                 <img src="{{ asset('blayden/img/backgrounds/1200x1200_bg02.webp') }}" alt="Background Art" class="w-full h-auto">
             </div>
-
-            <!-- Optional Botanical Poppy Accent (matching image preview) -->
             <div class="absolute -top-6 right-2 sm:right-8 lg:right-20 w-44 sm:w-64 lg:w-80 pointer-events-none z-10 opacity-85 drop-shadow-lg">
                 <img src="{{ !empty($settings['hero_accent_image']) ? asset($settings['hero_accent_image']) : asset('images/digital_designer_illustrator/flower.jpg') }}" alt="Poppy Bloom" class="w-full h-auto object-contain">
             </div>
@@ -603,8 +599,6 @@
                                             </div>
                                         @endif
                                     </div>
-
-                                    <!-- Bottom Natural 3D Asset Image (Matching Template Mockup) -->
                                     <div class="pt-6 mt-auto flex items-end justify-center overflow-hidden">
                                         <img 
                                             src="{{ $templateImg }}" 
@@ -974,8 +968,6 @@
         </section>
 
     </main>
-
-    <!-- Standardized Sticky Main Footer (Preserved as requested) -->
     @include('frontend.themes.digital_designer_illustrator.partials.footer')
 
     <!-- AJAX Form Handling -->

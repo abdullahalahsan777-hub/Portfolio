@@ -2,12 +2,12 @@
 
 @section('title', 'Dashboard Overview')
 @section('page_title', 'Dashboard Overview')
-@section('page_subtitle', 'Full-spectrum Telemetry, Subsystem Metrics & Real-time Platform Reporting')
+@section('page_subtitle', 'System Metrics & Operations Overview')
 
 @section('content')
     <div class="space-y-8">
 
-        <!-- 1. Executive Telemetry & System Status Banner -->
+        <!-- System Status Banner -->
         <div
             class="p-6 rounded-3xl bg-gradient-to-r from-[#09101d] via-[#0d1627] to-[#09101d] border border-white/10 shadow-2xl relative overflow-hidden">
             <div class="absolute -top-24 -right-24 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
@@ -77,10 +77,9 @@
                         @endif
                     </div>
 
-                    <h2 class="text-xl lg:text-2xl font-extrabold text-white tracking-tight">Platform Operations & Telemetry
-                        Center</h2>
+                    <h2 class="text-xl lg:text-2xl font-extrabold text-white tracking-tight">Platform Overview & System Status</h2>
                     <p class="text-xs text-slate-400 max-w-2xl leading-relaxed">
-                        Live system metrics tracking <strong
+                        System status tracking <strong
                             class="text-indigo-400">{{ $stats['total_content_assets'] }}</strong> content assets,
                         <strong class="text-cyan-400">{{ $stats['total_users'] }}</strong> registered user accounts,
                         <strong class="text-emerald-400">{{ $stats['total_messages'] }}</strong> client inquiries, and
@@ -89,9 +88,7 @@
                     </p>
                 </div>
 
-                <!-- Right Telemetry Chips & Fast Controls -->
                 <div class="flex flex-wrap lg:flex-col items-start lg:items-end gap-3 shrink-0">
-                    <!-- Stack Spec Badges -->
                     <div class="flex flex-wrap items-center gap-2">
                         <span
                             class="px-2.5 py-1 rounded-lg bg-[#0090e7]/10 border border-[#0090e7]/30 text-[10px] font-mono text-[#0090e7] font-semibold"
@@ -413,10 +410,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                         </svg>
-                        Subsystems & Resource Telemetry
+                        Content & Resources Overview
                     </h3>
-                    <p class="text-xs text-slate-400">Comprehensive inventory and breakdown across all portfolio modules
-                    </p>
+                    <p class="text-xs text-slate-400">Inventory and breakdown across all portfolio modules</p>
                 </div>
                 <a href="{{ route('admin.website.content') }}"
                     class="text-xs font-mono text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
@@ -777,10 +773,8 @@
             </div>
         </div>
 
-        <!-- 5. Dual Telemetry Column: Content Production Streams vs System Users & Security Log -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-            <!-- Left Column: Content Production Streams (Projects & Blog) -->
             <div class="lg:col-span-6 space-y-6">
                 <!-- Recent Portfolio Projects -->
 
@@ -850,7 +844,6 @@
                 </div>
             </div>
 
-            <!-- Right Column: User Accounts & Security Telemetry -->
             <div class="lg:col-span-6 space-y-6">
                 <!-- Recent Blog Articles -->
                 <div class="p-6 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-4">
@@ -1012,7 +1005,6 @@
                 </div>
             </div>
 
-            <!-- Right Column: User Accounts & Security Telemetry -->
             <div class="lg:col-span-6 space-y-6">
                 <!-- Server & Environment Specifications Card -->
                 <div class="p-6 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-4">

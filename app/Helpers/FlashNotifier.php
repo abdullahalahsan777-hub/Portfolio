@@ -40,16 +40,14 @@ class FlashNotifier
 
         $finalTitle = $title ?? ($defaultTitles[$normalizedLevel] ?? ucfirst($normalizedLevel));
 
-        // 1. Direct session key for quick access: session('success'), session('danger'), etc.
+        // Flash to session keys
         Session::flash($normalizedLevel, $message);
         Session::flash("flash_{$normalizedLevel}", $message);
 
-        // 2. Backward compatibility keys
         Session::flash('flash_notification.message', $message);
         Session::flash('flash_notification.level', $normalizedLevel);
         Session::flash('flash_notification.title', $finalTitle);
 
-        // 3. Structured queue for multiple toasts in a single request
         $existing = Session::get('toastr_notifications', []);
         $existing[] = [
             'type'    => $normalizedLevel,

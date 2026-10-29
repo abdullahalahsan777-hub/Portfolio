@@ -136,7 +136,7 @@ class SiteSetting extends Model
         ];
     }
     /**
-     * Get default website content elements for a given theme matching the template images.
+     * Get default website content elements for a given theme.
      */
     public static function getThemeContentDefaults(string $theme): array
     {

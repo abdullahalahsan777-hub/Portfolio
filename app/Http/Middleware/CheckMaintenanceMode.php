@@ -24,7 +24,7 @@ class CheckMaintenanceMode
             return $next($request);
         }
 
-        // 1. Always allow Admin Panel and Authentication endpoints
+        // Allow admin and authentication endpoints
         if (
             $request->is('admin') ||
             $request->is('admin/*') ||
@@ -43,12 +43,12 @@ class CheckMaintenanceMode
             return $next($request);
         }
 
-        // 2. Allow admin to preview live frontend only if explicit query string ?preview=1 is provided
+        // Allow authenticated admin preview with ?preview=1
         if ($request->has('preview') && Auth::check() && Auth::user()->isAdmin()) {
             return $next($request);
         }
 
-        // 3. For public frontend routes and regular user panel, respond with 503 Service Unavailable
+        // Return 503 maintenance page for public frontend
         $title = SiteSetting::get('maintenance_title', 'System Upgrade in Progress');
         $message = SiteSetting::get('maintenance_message', 'The frontend portfolio and client services are temporarily paused while our infrastructure undergoes a scheduled performance upgrade. We apologize for the inconvenience and will be fully operational shortly.');
         $estimatedTime = SiteSetting::get('maintenance_estimated_time', 'Estimated duration: 15–30 minutes');

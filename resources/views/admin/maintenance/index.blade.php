@@ -264,11 +264,10 @@
         </div>
     </div>
 
-    <!-- 4. SYSTEM & SERVER TELEMETRY -->
     <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-4">
         <div class="border-b border-white/10 pb-4">
             <span class="text-xs font-mono uppercase tracking-widest text-indigo-400">Diagnostics</span>
-            <h2 class="text-xl font-bold text-white mt-1">Server Telemetry &amp; Environment Diagnostics</h2>
+            <h2 class="text-xl font-bold text-white mt-1">Server Information &amp; Diagnostics</h2>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

@@ -118,8 +118,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Footer matching uploaded design image -->
     @include('frontend.themes.uiux_designer.partials.footer')
 
 </div>

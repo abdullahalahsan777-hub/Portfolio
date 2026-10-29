@@ -39,7 +39,6 @@
 
     <div class="flex items-center justify-between gap-3 sm:gap-4 flex-nowrap w-full">
 
-        <!-- Left: Status & Active Theme Badge (Top) + Count (Bottom, where arrow points) -->
         <div class="flex items-center gap-3.5 min-w-0 flex-1">
             <div class="relative shrink-0 flex items-center justify-center">
                 <span id="tfStatusDot" class="w-3.5 h-3.5 rounded-full inline-block shrink-0"

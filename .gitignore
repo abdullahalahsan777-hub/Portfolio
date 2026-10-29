@@ -1,8 +1,3 @@
-# Environment & Secrets (NEVER COMMIT SENSITIVE FILES)
-.env
-.env.*
-!.env.example
-
 # Logs
 *.log
 npm-debug.log*

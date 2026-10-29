@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <style>
-        /* Dark Obsidian Select2 Custom Styling */
+        /* Dark Select2 Styling */
         .select2-container {
             width: 100% !important;
             font-family: inherit;
@@ -219,9 +219,7 @@
             text-align: center;
         }
 
-        /* -------------------------------------------------------------------------
-         * Dark Obsidian Summernote WYSIWYG Custom Theme
-         * ------------------------------------------------------------------------- */
+        /* Dark Summernote Theme */
         .note-editor.note-frame {
             border: 1px solid rgba(255, 255, 255, 0.12) !important;
             border-radius: 0.875rem !important;
@@ -1010,7 +1008,6 @@
                     </div>
                 </div>
                 <div class="p-1 text-slate-400 group-hover:text-white shrink-0">
-                    <!-- 3 Vertical Dots icon as in image -->
                     <svg class="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
                         <path
                             d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />

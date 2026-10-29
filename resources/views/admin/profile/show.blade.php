@@ -39,12 +39,10 @@
             <!-- Cover Art Banner with Active Theme Gradient & Mesh Glow -->
             <div class="h-48 sm:h-56 relative overflow-hidden transition-all duration-500"
                 style="background: {{ $themeGradient ?? 'linear-gradient(135deg, #450a0a 0%, #881337 40%, #09101d 100%)' }};">
-                <!-- Dynamic Theme Radial Glow Accents (Inspired directly from active theme main color) -->
                 <div class="absolute inset-0 pointer-events-none"
                     style="background: radial-gradient(circle at 18% 30%, {{ $themeColor }}66 0%, transparent 55%), radial-gradient(circle at 82% 65%, {{ $themeColor }}35 0%, transparent 60%), radial-gradient(circle at 50% 100%, #09101d 0%, transparent 80%);">
                 </div>
 
-                <!-- Decorative Mesh Grid Lines -->
                 <div class="absolute inset-0 opacity-20 pointer-events-none"
                     style="background-image: radial-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 1px); background-size: 22px 22px;">
                 </div>

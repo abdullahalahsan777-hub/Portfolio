@@ -7,10 +7,6 @@
 @endonce
 
 <style>
-    /* =========================================================================
-     * Toastr Pro Dark Mode Design System
-     * Deep Obsidian Glassmorphic Palette for all 6 statuses
-     * ========================================================================= */
     :root {
         /* Dark Mode Core Palette */
         --toaster-dark-bg: #0b1120;

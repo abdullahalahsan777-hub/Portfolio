@@ -130,8 +130,6 @@
                             <span class="w-2 h-2 rounded-full bg-[#ff6b00] animate-pulse"></span>
                             <span>{{ $settings['hero_tag'] ?? 'EXPERT DEVELOPER' }}</span>
                         </div>
-
-                        <!-- Stacked Headline matching image -->
                         <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black font-display uppercase tracking-tight text-white leading-none">
                             {{ $settings['hero_title_line1'] ?? ($settings['hero_title'] ?? 'App & Software') }}<br>
                             <span class="text-white">{{ $settings['hero_title_line2'] ?? ($settings['hero_subtitle'] ?? 'Developer') }}</span>
@@ -141,8 +139,6 @@
                         <p class="text-sm sm:text-base text-neutral-400 max-w-xl leading-relaxed">
                             {{ $settings['hero_description'] ?? 'Architecting resilient software systems, native & cross-platform mobile apps, and scalable cloud microservices engineered for high velocity and sub-second performance.' }}
                         </p>
-
-                        <!-- CTA Button matching image -->
                         <div class="pt-4 flex flex-wrap items-center gap-5">
                             <a href="{{ $settings['hero_cta_url'] ?? route('contact') }}" class="btn-orange-outline inline-flex items-center gap-3 px-8 py-4 rounded-xl text-xs font-black uppercase tracking-wider font-display">
                                 <span>{{ $settings['hero_cta_text'] ?? 'Contact Me' }}</span>
@@ -154,8 +150,6 @@
                         </div>
 
                     </div>
-
-                    <!-- Right: Developer Studio Portrait (Matching Reference Image) -->
                     <div class="lg:col-span-5 relative flex items-center justify-center">
                         <div class="relative w-full max-w-md">
                             <!-- Amber Rim Glow Backdrop -->
@@ -580,7 +574,6 @@
                         <div class="soft-card rounded-2xl overflow-hidden group">
                             <div class="relative h-56 overflow-hidden bg-black/80">
                                 <img src="{{ $post['image'] }}" alt="{{ $post['title'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <!-- Orange Category Badge matching image -->
                                 <span class="absolute top-4 left-4 px-3 py-1 rounded bg-[#ff6b00] text-white text-[10px] font-mono font-bold uppercase tracking-wider shadow-md">
                                     {{ $post['category'] }}
                                 </span>

@@ -261,7 +261,7 @@ class WebsiteContentController extends Controller
         }
         $explicitSection = $request->input('section');
 
-        // 1. Handle any uploaded image files
+        // Process file uploads
         $uploadedKeys = [];
         foreach ($request->allFiles() as $fileKey => $file) {
             if ($file && $file->isValid()) {
@@ -291,7 +291,7 @@ class WebsiteContentController extends Controller
             }
         }
 
-        // 2. Handle all text / textarea / URL input fields
+        // Process text and data inputs
         $ignoredKeys = ['_token', '_method', 'theme', 'section_name', 'page', 'section'];
         foreach ($request->except($ignoredKeys) as $key => $value) {
             if (str_ends_with($key, '_file') || in_array($key, $uploadedKeys, true)) {

@@ -636,7 +636,6 @@
             <!-- Bottom Stats & Pagination (Datalist Card Footer) -->
             <div
                 class="pt-5 mt-4 grid grid-cols-1 border-t border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <!-- Bottom Left: Pro Telemetry Info & Page Status Badges -->
                 <div id="showingCountContainer" class="flex flex-wrap items-center justify-center gap-2.5">
                     @if ($notifications->total() > 0)
                         <!-- Primary Range Badge -->

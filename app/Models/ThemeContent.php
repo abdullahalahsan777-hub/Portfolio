@@ -162,7 +162,7 @@ class ThemeContent extends Model
                 'hero_cta2_text'         => 'Download CV',
                 'hero_cta2_url'          => '#resume',
 
-                // Stats Bar (4 exact figures from template image)
+                // Stats
                 'experience_years'       => '+12',
                 'experience_years_label' => 'Year of Experience',
                 'completed_projects'     => '+250',

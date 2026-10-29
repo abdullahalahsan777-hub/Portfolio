@@ -21,40 +21,32 @@ class PortfolioController extends Controller
      */
     public function index(Request $request): View
     {
-        // 1. Determine active theme (Priority: query string > session > admin setting > 'developer')
         $defaultTheme = SiteSetting::get('active_theme', 'developer');
         $activeTheme = $request->query('theme', session('user_theme', $defaultTheme));
 
-        // Validate allowed themes
         $allowedThemes = ['developer', 'graphic_designer', 'uiux_designer', 'app_developer', 'app_software_developer', 'digital_designer_illustrator'];
         if (! in_array($activeTheme, $allowedThemes, true)) {
             $activeTheme = 'developer';
         }
 
-        // 2. Fetch all site settings as key-value pairs
         $settings = SiteSetting::all()->pluck('value', 'key')->toArray();
 
-        // 3. Fetch services (all + current theme)
         $services = Service::whereIn('theme', ['all', $activeTheme])
             ->orderBy('sort_order')
             ->get();
 
-        // 4. Fetch projects
         $projects = Project::whereIn('theme', ['all', $activeTheme])
             ->orderBy('sort_order')
             ->get();
 
-        // 5. Fetch skills
         $skills = Skill::whereIn('theme', ['all', $activeTheme])
             ->orderBy('sort_order')
             ->get();
 
-        // 6. Fetch pricing plans
         $pricingPlans = PricingPlan::whereIn('theme', ['all', $activeTheme])
             ->orderBy('sort_order')
             ->get();
 
-        // 7. Fetch testimonials
         $testimonials = Testimonial::whereIn('theme', ['all', $activeTheme])
             ->orderBy('sort_order')
             ->get();

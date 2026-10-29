@@ -78,7 +78,7 @@ class AuthController extends Controller
             ]);
 
             if (Auth::user()->isAdmin()) {
-                flash()->info('Welcome Admin! System diagnostics & server controls are active.');
+                flash()->info('Welcome back, Admin!');
 
                 return redirect()->intended(route('admin.dashboard'));
             }

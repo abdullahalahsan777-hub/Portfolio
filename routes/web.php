@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Frontend Portfolio (Theme controlled strictly via Admin Settings)
+// Public Frontend Routes
 Route::get('/', [PortfolioController::class, 'index'])->name('home');
 Route::get('/about', [PortfolioController::class, 'about'])->name('about');
 Route::get('/portfolio', [PortfolioController::class, 'portfolio'])->name('portfolio');
@@ -37,7 +37,7 @@ Route::get('/contact', [PortfolioController::class, 'contact'])->name('contact')
 Route::post('/contact', [PortfolioController::class, 'submitContact'])->name('contact.submit');
 Route::get('/download-cv', [PortfolioController::class, 'downloadCv'])->name('cv.download');
 
-// Route aliases for frontend sections & backwards compatibility
+// Legacy Route Aliases
 Route::get('/projects', [PortfolioController::class, 'portfolio'])->name('project');
 Route::get('/services', [PortfolioController::class, 'index'])->name('service');
 Route::get('/resume', [PortfolioController::class, 'index'])->name('resume');
@@ -127,7 +127,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         Route::delete('/{notification}', [AdminNotificationController::class, 'destroy'])->name('destroy');
     });
 
-    // Settings Sub-modules (Separate files and separate submits per page)
+    // Settings Routes
     Route::prefix('settings')->name('settings.')->group(function () {
         Route::get('/', [AdminSettingController::class, 'index'])->name('index');
 

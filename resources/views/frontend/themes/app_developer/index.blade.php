@@ -6,7 +6,7 @@
     <title>{{ $settings['site_title'] ?? 'Alex Rivera — Full Stack & App Developer' }}</title>
     <meta name="description" content="Portfolio of Alex Rivera, elite Full Stack Developer and Mobile App Architect specializing in iOS, Android, Flutter, React Native, and high-concurrency cloud backend architectures.">
 
-    <!-- Google Fonts: Bebas Neue (Condensed Headlines matching reference), Outfit (Modern Display), Plus Jakarta Sans (Readable Body), JetBrains Mono (Telemetry) -->
+    <!-- Google Fonts: Bebas Neue Outfit (Modern Display), Plus Jakarta Sans (Readable Body), JetBrains Mono (Telemetry) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -129,20 +129,10 @@
     </style>
 </head>
 <body class="theme-app_developer bg-[#070707] text-[#ffffff] min-h-screen antialiased selection:bg-[#ff0033] selection:text-white font-['Plus_Jakarta_Sans'] overflow-x-clip relative">
-
-    <!-- Sticky Main Header (Kept consistent with other themes as requested) -->
     @include('frontend.themes.app_developer.partials.header')
 
     <main>
-        <!-- =========================================================================
-             1. HERO SECTION (Polished to Expert Standards matching Reference Image)
-             - Small vertical rail indicators on far left
-             - HELLO, I AM pill tag
-             - ALEX RIVERA in Crimson Red & FULL STACK DEVELOPER in Pure White (Bebas Neue)
-             - Fluid bio paragraph
-             - Red pill button HIRE ME with circular arrow
-             - Free-standing Developer portrait with deep crimson ambient backlight
-             ========================================================================= -->
+        <!-- Hero Section -->
         <section class="relative pt-8 pb-16 lg:pt-14 lg:pb-24 overflow-hidden bg-gradient-to-b from-[#0a0a0a] via-[#070707] to-[#0a0a0a]">
             <!-- Atmospheric Red Ambient Spotlights -->
             <div class="absolute top-1/4 -left-36 w-[550px] h-[550px] bg-[#ff0033]/15 rounded-full blur-[170px] pointer-events-none pulse-ambient"></div>
@@ -153,8 +143,6 @@
                     
                     <!-- Left: Hero Text & Information -->
                     <div class="lg:col-span-7 relative">
-                        
-                        <!-- Mini Rail Marker Dots on the Far Left (Matches Reference Image) -->
                         <div class="hidden sm:flex flex-col items-center gap-3 absolute -left-7 top-4">
                             <span class="w-1.5 h-1.5 rounded-full bg-[#ff0033] shadow-[0_0_6px_#ff0033]"></span>
                             <span class="w-1.5 h-1.5 rounded-full bg-white/20"></span>
@@ -167,8 +155,6 @@
                                 <span class="w-2 h-2 rounded-full bg-[#ff0033] animate-ping"></span>
                                 <span>HELLO, I AM</span>
                             </div>
-
-                            <!-- Impactful Title Stack (Condensed Bebas Neue Matching Reference Image) -->
                             <div class="space-y-1">
                                 <h2 class="text-5xl sm:text-7xl lg:text-8xl font-black font-headline uppercase tracking-wide text-[#ff0033] leading-none drop-shadow-sm">
                                     {{ $settings['hero_title'] ?? 'ALEX RIVERA' }}
@@ -216,8 +202,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Right: Developer Hero Portrait (Seamless cutout with crimson rim backlight matching reference image) -->
                     <div class="lg:col-span-5 relative flex items-center justify-center">
                         <div class="relative w-full max-w-lg">
                             <!-- Radiant Crimson Rim Spotlight -->
@@ -241,7 +225,6 @@
 
         <!-- =========================================================================
              3. ABOUT SECTION ("WHO AM I ?")
-             Left: 4-Element Mosaic Collage matching reference image
              - Collab Team Photo
              - 15k PROJECT COMPLETED (Red & White font)
              - 99 OUR HAPPY CLIENTS
@@ -346,7 +329,6 @@
 
         <!-- =========================================================================
              4. SERVICES SECTION ("THE BEST SERVICE PROCESS")
-             6 Dark Sleek Cards with Red Circular Icons & Centered Layout matching image
              ========================================================================= -->
         <section id="services" class="py-20 lg:py-28 relative bg-[#070707] border-t border-white/5">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -364,8 +346,6 @@
                         <span class="w-5 h-5 rounded-full bg-black/30 flex items-center justify-center text-white text-[10px]">&rarr;</span>
                     </a>
                 </div>
-
-                <!-- 6 Service Cards Grid (Centered icons and clean cards matching reference image) -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @forelse($services as $service)
                         <div class="app-card p-8 rounded-3xl flex flex-col items-center text-center justify-between group">
@@ -534,7 +514,6 @@
 
         <!-- =========================================================================
              7. SKILLS SECTION ("OUR SKILLS")
-             Progress bars with Red Glowing Indicators Matching Reference
              ========================================================================= -->
         <section id="skills" class="py-20 lg:py-28 relative bg-[#0a0a0a] border-t border-white/5">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -569,7 +548,6 @@
         </section>
 
         <!-- =========================================================================
-             8. ACHIEVEMENT COUNTER BANNER (Vibrant Red Banner Matching Reference)
              5 Stat Columns with Crisp Divider Lines
              ========================================================================= -->
         <div class="w-full bg-[#ff0033] py-12 shadow-2xl shadow-[#ff0033]/30 font-display border-y border-[#ff1a3c]">
@@ -597,7 +575,6 @@
 
         <!-- =========================================================================
              9. FAQ SECTION ("HAVE ANY QUESTIONS?")
-             Interactive Accordion matching Reference Image
              ========================================================================= -->
         <section id="faq" class="py-20 lg:py-28 relative bg-[#070707]">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -693,7 +670,6 @@
         <!-- =========================================================================
              11. CONTACT SECTION ("GET IN TOUCH NOW")
              Left: Info cards with red left border, Right: Sleek contact form
-             Header with vertical divider matching reference image
              ========================================================================= -->
         <section id="contact" class="py-20 lg:py-28 relative bg-[#070707] border-t border-white/5">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -789,7 +765,6 @@
 
         <!-- =========================================================================
              12. "FOLLOW US" CIRCULAR 3D METALLIC BADGES RIBBON
-             Row of 6 Metallic Circular Showcase Badges with Chrome Rings matching image
              ========================================================================= -->
         <section class="py-16 bg-[#0a0a0a] border-t border-white/5 relative overflow-hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8 relative z-10">
@@ -797,8 +772,6 @@
                 <h3 class="text-2xl sm:text-3xl font-black font-headline uppercase tracking-widest text-neutral-200">
                     FOLLOW US
                 </h3>
-
-                <!-- 6 Circular 3D Metallic Emblems matching reference image -->
                 <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
                     
                     <!-- GitHub -->
@@ -837,8 +810,6 @@
         </section>
 
     </main>
-
-    <!-- Footer (Kept consistent with other themes as requested) -->
     @include('frontend.themes.app_developer.partials.footer')
 
     <!-- Interactive Scripts for FAQ Accordion -->

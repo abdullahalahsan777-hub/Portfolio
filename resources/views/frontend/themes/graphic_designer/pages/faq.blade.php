@@ -96,7 +96,7 @@
                 });
             </script>
 
-            <!-- Still Have Questions CTA (Matching Screenshot) -->
+            <!-- Still Have Questions CTA -->
             <div class="mt-16 p-8 sm:p-12 rounded-3xl bg-[#181233] border border-[#a855f7]/30 text-center space-y-4 shadow-xl">
                 <span class="text-xs font-mono font-bold text-[#a855f7] uppercase tracking-wider block">
                     {{ $settings['faq_cta_tag'] ?? 'CUSTOM REQUIREMENTS' }}
@@ -117,8 +117,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Footer matching uploaded design image -->
     @include('frontend.themes.graphic_designer.partials.footer')
 
 </div>

@@ -215,11 +215,6 @@
 <body
     class="bg-[#f0f3f8] dark:bg-[#05070c] text-[#0f172a] dark:text-slate-100 min-h-screen relative flex items-center justify-center p-4 sm:p-6 overflow-x-hidden font-['Plus_Jakarta_Sans'] selection:bg-[#e26d9b] selection:text-white transition-colors duration-300">
 
-    <!-- =========================================================================
-             CREATIVE THINKING CANVAS (Dual Dark/Light Design & Development Symphony)
-             ========================================================================= -->
-
-    <!-- 1. Background Grid & Geometry -->
     <div class="fixed inset-0 blueprint-grid pointer-events-none opacity-80 transition-opacity duration-500"></div>
 
     <!-- 2. Dual Ambient Lighting (Designer Rose on Left / Developer Emerald on Right) -->
@@ -232,9 +227,6 @@
         class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-r from-[#e26d9b]/5 via-[#6366f1]/8 to-[#00ff88]/5 rounded-full blur-[130px] pointer-events-none">
     </div>
 
-    <!-- =========================================================================
-             3. INNOVATIVE LEFT ARTIFACT: 3D SPATIAL VECTOR & TOKEN ENGINE
-             ========================================================================= -->
     <div
         class="fixed left-5 lg:left-8 2xl:left-14 top-1/2 -translate-y-1/2 hidden xl:block w-84 2xl:w-92 pointer-events-none select-none z-10 anim-float-left">
         <div
@@ -400,9 +392,6 @@
         </div>
     </div>
 
-    <!-- =========================================================================
-             4. INNOVATIVE RIGHT ARTIFACT: REACTIVE CLOUD ARCHITECTURE & GLASS IDE
-             ========================================================================= -->
     <div
         class="fixed right-5 lg:right-8 2xl:right-14 top-1/2 -translate-y-1/2 hidden xl:block w-88 2xl:w-96 pointer-events-none select-none z-10 anim-float-right">
         <div
@@ -529,9 +518,7 @@
         </div>
     </div>
 
-    <!-- =========================================================================
-             CENTRAL LOGIN PORTAL (Clean, Focused, Database Retrieved)
-             ========================================================================= -->
+    <!-- Main Login Card -->
     <div class="w-full max-w-md relative z-20 space-y-6">
 
         <!-- Brand Header (Retrieved from Database) -->

@@ -232,7 +232,7 @@ class SettingController extends Controller
     }
 
     /**
-     * 4. Social Media Settings Page (Matching 3rd Image)
+     * Social Media Settings Page.
      */
     public function social(): View
     {

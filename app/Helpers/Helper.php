@@ -73,17 +73,14 @@ if (! function_exists('uploadFile')) {
      */
     function uploadFile($file, string $path = 'uploads', ?string $prefix = null): string|false
     {
-        // 1. Validate the uploaded file
         if (! $file instanceof UploadedFile || ! $file->isValid()) {
             Log::error('uploadFile: Invalid file upload.');
 
             return false;
         }
 
-        // 2. Build destination directory absolute path
         $destinationPath = public_path($path);
 
-        // 3. Create directory if it doesn't exist (with recursive creation)
         if (! is_dir($destinationPath)) {
             if (! mkdir($destinationPath, 0755, true) && ! is_dir($destinationPath)) {
                 Log::error("uploadFile: Failed to create directory: {$destinationPath}");
@@ -92,19 +89,16 @@ if (! function_exists('uploadFile')) {
             }
         }
 
-        // 4. Ensure directory is writable
         if (! is_writable($destinationPath)) {
             Log::error("uploadFile: Directory is not writable: {$destinationPath}");
 
             return false;
         }
 
-        // 5. Generate a unique filename
         $extension = $file->getClientOriginalExtension() ?: $file->guessExtension() ?: 'bin';
         $filename = ($prefix ? $prefix.'-' : '').date('ymd').rand(100000, 999999).'.'.$extension;
         $fullFilePath = $destinationPath.DIRECTORY_SEPARATOR.$filename;
 
-        // 6. Move the file
         try {
             $file->move($destinationPath, $filename);
         } catch (\Throwable $e) {
@@ -113,14 +107,12 @@ if (! function_exists('uploadFile')) {
             return false;
         }
 
-        // 7. Verify the file actually exists
         if (! file_exists($fullFilePath)) {
             Log::error("uploadFile: File does not exist after move: {$fullFilePath}");
 
             return false;
         }
 
-        // 8. Return the normalized relative path for database storage
         $cleanPath = trim(str_replace('\\', '/', $path), '/');
 
         return $cleanPath.'/'.$filename;
@@ -141,7 +133,6 @@ if (! function_exists('uploadImage')) {
      */
     function uploadImage($image, string $path = 'uploads', int $maxWidth = 0, int $maxHeight = 0, int $quality = 85, ?string $prefix = null): string|false
     {
-        // 1. Validate file
         if (! $image instanceof UploadedFile || ! $image->isValid()) {
             Log::error('uploadImage: Invalid image upload.');
 
@@ -151,19 +142,16 @@ if (! function_exists('uploadImage')) {
         $mimeType = $image->getMimeType();
         $sourcePath = $image->getRealPath();
 
-        // 2. Handle SVG separately (no GD processing needed)
         if ($mimeType === 'image/svg+xml') {
-            return uploadFile($image, $path, $prefix); // reuse uploadFile for SVG
+            return uploadFile($image, $path, $prefix);
         }
 
-        // 3. Ensure GD supports WebP
         if (! function_exists('imagewebp')) {
             Log::error('uploadImage: GD does not support WebP.');
 
             return false;
         }
 
-        // 4. Create source image resource based on MIME type
         switch ($mimeType) {
             case 'image/jpeg':
                 $sourceImage = imagecreatefromjpeg($sourcePath);
@@ -189,15 +177,12 @@ if (! function_exists('uploadImage')) {
             return false;
         }
 
-        // 5. Convert palette images to true color
         imagepalettetotruecolor($sourceImage);
 
         $origWidth = imagesx($sourceImage);
         $origHeight = imagesy($sourceImage);
 
-        // 6. Resize/crop if dimensions are provided
         if ($maxWidth > 0 && $maxHeight > 0) {
-            // Calculate proportional resize dimensions
             $widthRatio = $origWidth / $maxWidth;
             $heightRatio = $origHeight / $maxHeight;
 
@@ -209,12 +194,10 @@ if (! function_exists('uploadImage')) {
                 $newWidth = (int) round($origWidth / $heightRatio);
             }
 
-            // Resize to fit inside the box
             $resizedImage = imagecreatetruecolor($newWidth, $newHeight);
             imagecopyresampled($resizedImage, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
             unset($sourceImage);
 
-            // Crop from center to exactly $maxWidth x $maxHeight
             $cropX = max(0, ($newWidth - $maxWidth) / 2);
             $cropY = max(0, ($newHeight - $maxHeight) / 2);
 
@@ -222,16 +205,13 @@ if (! function_exists('uploadImage')) {
             imagecopyresampled($finalImage, $resizedImage, 0, 0, $cropX, $cropY, $maxWidth, $maxHeight, $maxWidth, $maxHeight);
             unset($resizedImage);
         } else {
-            // No resizing: keep original dimensions
             $finalImage = $sourceImage;
             $maxWidth = $origWidth;
             $maxHeight = $origHeight;
         }
 
-        // 7. Generate a unique filename with .webp extension
         $filename = ($prefix ? $prefix.'-' : '').date('ymd').rand(100000, 999999).'.webp';
 
-        // 8. Save to a temporary file first
         $tempPath = sys_get_temp_dir().DIRECTORY_SEPARATOR.$filename;
         if (! imagewebp($finalImage, $tempPath, $quality)) {
             Log::error('uploadImage: Failed to create WebP image.');
@@ -241,12 +221,11 @@ if (! function_exists('uploadImage')) {
         }
         unset($finalImage);
 
-        // 9. Prepare destination directory
         $destinationPath = public_path($path);
         if (! is_dir($destinationPath)) {
             if (! mkdir($destinationPath, 0755, true) && ! is_dir($destinationPath)) {
                 Log::error("uploadImage: Failed to create directory: {$destinationPath}");
-                unlink($tempPath); // clean up temp file
+                unlink($tempPath);
 
                 return false;
             }
@@ -259,23 +238,20 @@ if (! function_exists('uploadImage')) {
             return false;
         }
 
-        // 10. Move the temp file to its final destination
         $finalFilePath = $destinationPath.DIRECTORY_SEPARATOR.$filename;
         if (! rename($tempPath, $finalFilePath)) {
             Log::error("uploadImage: Failed to move file from {$tempPath} to {$finalFilePath}");
-            unlink($tempPath); // clean up
+            unlink($tempPath);
 
             return false;
         }
 
-        // 11. Verify the file exists
         if (! file_exists($finalFilePath)) {
             Log::error("uploadImage: File does not exist after move: {$finalFilePath}");
 
             return false;
         }
 
-        // 12. Return the relative path for database storage
         return $path.'/'.$filename;
     }
 }
@@ -377,10 +353,6 @@ if (! function_exists('inWordEn')) {
         return $negative ? 'minus '.$result : $result;
     }
 }
-
-/* ------------------------------------------------------------------------- */
-/* Additional helper functions commonly used in web applications */
-/* ------------------------------------------------------------------------- */
 
 if (! function_exists('formatDate')) {
     /**

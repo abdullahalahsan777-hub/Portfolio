@@ -28,9 +28,7 @@ class NotificationService
      */
     public static function registerListeners(): void
     {
-        // =====================================================================
-        // 1. Contact Messages / Inquiries Module
-        // =====================================================================
+        // Contact messages listener
         ContactMessage::created(function (ContactMessage $item) {
             $subject = $item->subject ?: ($item->service_type ?: 'General Inquiry');
             Notification::record([

@@ -387,7 +387,6 @@
                                     @endif
                                 </p>
 
-                                <!-- Telemetry Footer -->
                                 <div class="flex items-center gap-3 text-[11px] font-mono text-slate-500 pt-1">
                                     <span>Joined {{ $user->created_at->diffForHumans() }}</span>
                                     <span>•</span>
@@ -514,10 +513,9 @@
                 @endforelse
             </div>
 
-            <!-- Bottom Stats & Pagination (Datalist Card Footer matching Notifications) -->
+            <!-- Pagination & Page Count -->
             <div
                 class="pt-5 mt-4 border-t border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <!-- Bottom Left: Pro Telemetry Info & Page Status Badges -->
                 <div id="showingCountContainer" class="flex flex-wrap items-center justify-center gap-2.5">
                     @if ($users->total() > 0)
                         <!-- Primary Range Badge -->

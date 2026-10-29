@@ -572,8 +572,6 @@
                             class="w-8 h-8 rounded-full bg-[#181818] border border-white/10 hover:border-[#00ff88] text-neutral-400 hover:text-[#00ff88] flex items-center justify-center transition-colors">›</button>
                     </div>
                 </div>
-
-                <!-- 3 Blog Cards (Matching image with image on top and white card on bottom) -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     @foreach ($blogPosts as $post)
                         <article

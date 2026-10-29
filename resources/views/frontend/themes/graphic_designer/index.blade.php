@@ -680,8 +680,6 @@
                         {{ $settings['testimonials_description'] ?? 'What creative directors and product leaders say about working together.' }}
                     </p>
                 </div>
-
-                <!-- Testimonial Content Grid (Matching uploaded screenshot: reviews on left, pointing designer on right) -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
                     <!-- Left 8 cols: Testimonial Cards Slider -->
