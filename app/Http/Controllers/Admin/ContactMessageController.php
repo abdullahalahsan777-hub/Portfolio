@@ -185,15 +185,109 @@ class ContactMessageController extends Controller
     }
 
     /**
+     * Upload an attachment asynchronously in the background.
+     */
+    public function uploadAttachment(Request $request): JsonResponse
+    {
+        $request->validate([
+            'file'    => 'required|file|max:20480',
+            'temp_id' => 'nullable|string|max:64',
+        ]);
+
+        $file = $request->file('file');
+        $originalName = $file->getClientOriginalName();
+        $extension = strtolower($file->getClientOriginalExtension());
+        $mimeType = $file->getMimeType() ?: 'application/octet-stream';
+        $sizeBytes = $file->getSize();
+        $size = $sizeBytes >= 1048576 
+            ? round($sizeBytes / 1048576, 1).' MB' 
+            : round($sizeBytes / 1024, 1).' KB';
+
+        // Store persistently in public storage folder
+        $storedPath = $file->store('attachments', 'public');
+        $url = asset('storage/'.$storedPath);
+
+        $attachment = [
+            'name'      => $originalName,
+            'path'      => $storedPath,
+            'url'       => $url,
+            'size'      => $size,
+            'mime'      => $mimeType,
+            'extension' => $extension,
+            'disk'      => 'public',
+        ];
+
+        // If temp_id is supplied, append attachment to draft immediately
+        $tempId = $request->input('temp_id');
+        if (!empty($tempId)) {
+            $draft = ContactMessage::withTrashed()->firstOrNew(['temp_id' => $tempId]);
+            if ($draft->trashed()) {
+                $draft->restore();
+            }
+            if (!$draft->exists) {
+                $draft->name = 'Draft Recipient';
+                $draft->email = 'draft@recipient.local';
+                $draft->subject = '(Draft Subject)';
+                $draft->message = '';
+                $draft->is_read = true;
+            }
+            $existing = is_array($draft->attachments) ? $draft->attachments : [];
+            $existing[] = $attachment;
+            $draft->attachments = $existing;
+            $draft->type = 'draft';
+            $draft->save();
+        }
+
+        return response()->json([
+            'success'    => true,
+            'message'    => 'Attachment uploaded in background.',
+            'attachment' => $attachment,
+        ]);
+    }
+
+    /**
+     * Delete an uploaded attachment in the background.
+     */
+    public function deleteAttachment(Request $request): JsonResponse
+    {
+        $request->validate([
+            'path'    => 'required|string',
+            'temp_id' => 'nullable|string',
+        ]);
+
+        $path = $request->input('path');
+        $tempId = $request->input('temp_id');
+
+        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($path);
+        }
+
+        if (!empty($tempId)) {
+            $draft = ContactMessage::where('temp_id', $tempId)->first();
+            if ($draft && is_array($draft->attachments)) {
+                $filtered = array_values(array_filter($draft->attachments, fn($att) => ($att['path'] ?? '') !== $path));
+                $draft->attachments = $filtered;
+                $draft->save();
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Attachment removed.',
+        ]);
+    }
+
+    /**
      * Autosave draft by temporary ID on composer keyup.
      */
     public function autosaveDraft(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'temp_id' => 'required|string|max:64',
-            'to'      => 'nullable|string|max:255',
-            'subject' => 'nullable|string|max:255',
-            'body'    => 'nullable|string',
+            'temp_id'     => 'required|string|max:64',
+            'to'          => 'nullable|string|max:255',
+            'subject'     => 'nullable|string|max:255',
+            'body'        => 'nullable|string',
+            'attachments' => 'nullable',
         ]);
 
         $tempId = $validated['temp_id'];
@@ -213,6 +307,17 @@ class ContactMessageController extends Controller
         $draft->message = $validated['body'] ?? '';
         $draft->type = 'draft';
         $draft->is_read = true;
+
+        if ($request->has('attachments')) {
+            $atts = $request->input('attachments');
+            if (is_string($atts)) {
+                $atts = json_decode($atts, true) ?: [];
+            }
+            if (is_array($atts)) {
+                $draft->attachments = $atts;
+            }
+        }
+
         $draft->save();
 
         return response()->json([
@@ -231,33 +336,52 @@ class ContactMessageController extends Controller
     public function reply(Request $request, ?ContactMessage $message = null): JsonResponse|RedirectResponse
     {
         $validated = $request->validate([
-            'to'         => 'required|email',
-            'subject'    => 'required|string|max:255',
-            'body'       => 'required|string',
-            'cc'         => 'nullable|string',
-            'bcc'        => 'nullable|string',
-            'temp_id'    => 'nullable|string|max:64',
-            'attachment' => 'nullable|file|max:10240',
+            'to'          => 'required|email',
+            'subject'     => 'required|string|max:255',
+            'body'        => 'required|string',
+            'cc'          => 'nullable|string',
+            'bcc'         => 'nullable|string',
+            'temp_id'     => 'nullable|string|max:64',
+            'attachment'  => 'nullable|file|max:20480',
+            'attachments' => 'nullable',
         ]);
 
         try {
-            $attachmentInfo = null;
+            $allAttachments = [];
 
-            // Handle file upload persistently for queued asynchronous mail delivery
+            // 1. Process attachments from background uploads (passed via JSON string or array)
+            if ($request->filled('attachments')) {
+                $raw = $request->input('attachments');
+                if (is_string($raw)) {
+                    $raw = json_decode($raw, true) ?: [];
+                }
+                if (is_array($raw)) {
+                    $allAttachments = $raw;
+                }
+            }
+
+            // 2. Process legacy or direct file upload input if provided
             if ($request->hasFile('attachment') && $request->file('attachment')->isValid()) {
                 $file = $request->file('attachment');
                 $originalName = $file->getClientOriginalName();
+                $extension = strtolower($file->getClientOriginalExtension());
                 $mimeType = $file->getMimeType() ?: 'application/octet-stream';
-                $size = round($file->getSize() / 1024, 1).' KB';
+                $sizeBytes = $file->getSize();
+                $size = $sizeBytes >= 1048576 
+                    ? round($sizeBytes / 1048576, 1).' MB' 
+                    : round($sizeBytes / 1024, 1).' KB';
 
-                // Save to local storage disk (storage/app/private/mail-attachments)
-                $storedPath = $file->store('mail-attachments', 'local');
+                $storedPath = $file->store('attachments', 'public');
+                $url = asset('storage/'.$storedPath);
 
-                $attachmentInfo = [
-                    'path' => $storedPath,
-                    'name' => $originalName,
-                    'mime' => $mimeType,
-                    'size' => $size,
+                $allAttachments[] = [
+                    'path'      => $storedPath,
+                    'name'      => $originalName,
+                    'url'       => $url,
+                    'mime'      => $mimeType,
+                    'size'      => $size,
+                    'extension' => $extension,
+                    'disk'      => 'public',
                 ];
             }
 
@@ -275,7 +399,7 @@ class ContactMessageController extends Controller
             $siteName = SiteSetting::get('site_name', SiteSetting::get('site_title', config('app.name', 'Portfolio Studio')));
             $senderUser = Auth::user();
 
-            // 1. Save or update record: type = 'sent', remove temp_id
+            // 1. Save or update record: type = 'sent', remove temp_id, save attachments
             $tempId = $request->input('temp_id');
             $sentRecord = null;
 
@@ -284,12 +408,18 @@ class ContactMessageController extends Controller
             }
 
             if ($sentRecord) {
+                // Merge any previously attached files on the draft with newly passed attachments
+                if (empty($allAttachments) && !empty($sentRecord->attachments)) {
+                    $allAttachments = $sentRecord->attachments;
+                }
+
                 $sentRecord->type = 'sent';
                 $sentRecord->temp_id = null; // Removed temporary ID
                 $sentRecord->email = $validated['to'];
                 $sentRecord->name = explode('@', $validated['to'])[0];
                 $sentRecord->subject = $validated['subject'];
                 $sentRecord->message = $validated['body'];
+                $sentRecord->attachments = $allAttachments;
                 $sentRecord->is_read = true;
                 $sentRecord->save();
             } else {
@@ -300,6 +430,7 @@ class ContactMessageController extends Controller
                     'message'      => $validated['body'],
                     'type'         => 'sent',
                     'temp_id'      => null,
+                    'attachments'  => $allAttachments,
                     'is_read'      => true,
                     'service_type' => $message ? $message->service_type : 'Direct Reply',
                 ]);
@@ -324,7 +455,7 @@ class ContactMessageController extends Controller
                 'bcc'             => $bccs,
             ];
 
-            $mailable = new InquiryReplyMail($mailData, $attachmentInfo);
+            $mailable = new InquiryReplyMail($mailData, $allAttachments);
             $pendingMail = Mail::to($validated['to']);
 
             if (!empty($ccs)) {

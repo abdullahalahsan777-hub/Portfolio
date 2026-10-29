@@ -19,6 +19,7 @@ class ContactMessage extends Model
         'temp_id',
         'is_important',
         'message',
+        'attachments',
         'is_read',
     ];
 
@@ -27,7 +28,16 @@ class ContactMessage extends Model
         return [
             'is_read' => 'boolean',
             'is_important' => 'boolean',
+            'attachments' => 'array',
         ];
+    }
+
+    /**
+     * Determine if message has attachments.
+     */
+    public function hasAttachments(): bool
+    {
+        return !empty($this->attachments) && is_array($this->attachments) && count($this->attachments) > 0;
     }
 
     /**

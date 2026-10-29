@@ -86,14 +86,27 @@ class InquiryReplyMail extends Mailable implements ShouldQueue
      */
     public function attachments(): array
     {
-        if (!empty($this->attachmentInfo) && !empty($this->attachmentInfo['path'])) {
-            return [
-                Attachment::fromStorageDisk('local', $this->attachmentInfo['path'])
-                    ->as($this->attachmentInfo['name'] ?? 'attachment')
-                    ->withMime($this->attachmentInfo['mime'] ?? 'application/octet-stream'),
-            ];
+        $attachments = [];
+
+        if (!empty($this->attachmentInfo)) {
+            // Check if single attachment or list of attachments
+            $items = isset($this->attachmentInfo['path']) ? [$this->attachmentInfo] : $this->attachmentInfo;
+
+            foreach ($items as $item) {
+                if (empty($item['path'])) {
+                    continue;
+                }
+
+                $disk = $item['disk'] ?? (str_starts_with($item['path'], 'attachments') ? 'public' : 'local');
+
+                if (\Illuminate\Support\Facades\Storage::disk($disk)->exists($item['path'])) {
+                    $attachments[] = Attachment::fromStorageDisk($disk, $item['path'])
+                        ->as($item['name'] ?? basename($item['path']))
+                        ->withMime($item['mime'] ?? 'application/octet-stream');
+                }
+            }
         }
 
-        return [];
+        return $attachments;
     }
 }

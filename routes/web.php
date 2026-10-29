@@ -111,6 +111,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Inquiries / Messages Module
     Route::get('/messages', [AdminMessageController::class, 'index'])->name('messages.index');
     Route::post('/messages/batch', [AdminMessageController::class, 'batchAction'])->name('messages.batch');
+    Route::post('/messages/upload-attachment', [AdminMessageController::class, 'uploadAttachment'])->name('messages.uploadAttachment');
+    Route::post('/messages/delete-attachment', [AdminMessageController::class, 'deleteAttachment'])->name('messages.deleteAttachment');
     Route::post('/messages/autosave-draft', [AdminMessageController::class, 'autosaveDraft'])->name('messages.autosaveDraft');
     Route::post('/messages/send-compose', [AdminMessageController::class, 'sendCompose'])->name('messages.sendCompose');
     Route::post('/messages/empty-trash', [AdminMessageController::class, 'emptyTrash'])->name('messages.emptyTrash');

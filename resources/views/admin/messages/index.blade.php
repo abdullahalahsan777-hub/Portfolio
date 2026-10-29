@@ -593,6 +593,75 @@
                                     <div class="snippet-text truncate text-[11px] text-slate-400 font-normal font-sans opacity-85 mt-0.5">
                                         {{ Str::limit(strip_tags($msg->message), 140) }}
                                     </div>
+
+                                    <!-- Line 3: Attachment Chips (Gmail Dark Mode Style) -->
+                                    @if (!empty($msg->attachments) && is_array($msg->attachments) && count($msg->attachments) > 0)
+                                        <div class="flex items-center gap-2 mt-2 flex-wrap" onclick="event.stopPropagation()">
+                                            @foreach($msg->attachments as $att)
+                                                @php
+                                                    $ext = strtolower($att['extension'] ?? pathinfo($att['name'] ?? '', PATHINFO_EXTENSION));
+                                                    $isImage = in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg']);
+                                                    $isPdf = $ext === 'pdf';
+                                                    $isDoc = in_array($ext, ['doc', 'docx', 'txt', 'rtf']);
+                                                    $isSpreadsheet = in_array($ext, ['xls', 'xlsx', 'csv']);
+                                                    $isArchive = in_array($ext, ['zip', 'rar', '7z', 'tar', 'gz']);
+                                                    $fileUrl = $att['url'] ?? (!empty($att['path']) ? asset('storage/'.$att['path']) : '#');
+                                                    $shortName = Str::limit($att['name'] ?? 'attachment', 22);
+                                                @endphp
+                                                <a href="{{ $fileUrl }}" target="_blank" download="{{ $att['name'] ?? 'file' }}"
+                                                    title="{{ $att['name'] ?? 'Attachment' }} ({{ $att['size'] ?? 'file' }})"
+                                                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-white/10 bg-[#0d1627] hover:bg-white/[0.08] hover:border-white/20 transition-all text-xs group/chip shadow-sm cursor-pointer select-none">
+                                                    
+                                                    @if ($isImage)
+                                                        <!-- Image red/coral icon with landscape/mountain (Gmail Dark Mode) -->
+                                                        <span class="w-4 h-4 rounded bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
+                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                            </svg>
+                                                        </span>
+                                                    @elseif ($isPdf)
+                                                        <!-- PDF red badge icon (Gmail Dark Mode) -->
+                                                        <span class="px-1 py-0.5 rounded text-[8px] font-black font-mono uppercase bg-rose-600 text-white shrink-0 tracking-tight leading-none">
+                                                            PDF
+                                                        </span>
+                                                    @elseif ($isDoc)
+                                                        <span class="w-4 h-4 rounded bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                            </svg>
+                                                        </span>
+                                                    @elseif ($isSpreadsheet)
+                                                        <span class="w-4 h-4 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                    d="M3 10h18M3 14h18m-9-4v8m-7 4h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                            </svg>
+                                                        </span>
+                                                    @elseif ($isArchive)
+                                                        <span class="w-4 h-4 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
+                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                                                            </svg>
+                                                        </span>
+                                                    @else
+                                                        <span class="w-4 h-4 rounded bg-slate-500/20 text-slate-400 flex items-center justify-center shrink-0">
+                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                                            </svg>
+                                                        </span>
+                                                    @endif
+
+                                                    <span class="text-[11px] font-medium text-slate-300 group-hover/chip:text-white truncate max-w-[150px]">
+                                                        {{ $shortName }}
+                                                    </span>
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <!-- 5. Right End: Timestamp by Default, Hover Action Buttons on Mouse Over (FIXED POSITION - ZERO JUMPING) -->
@@ -939,8 +1008,8 @@
                     <!-- Hidden Temporary ID for keyup Autosave -->
                     <input type="hidden" name="temp_id" id="composer_temp_id" value="">
                     <input type="hidden" name="message_id" id="composer_reply_message_id" value="">
-
-                    <!-- To Row -->
+                    <input type="hidden" name="attachments" id="composer_attachments_json" value="[]">
+<!-- To Row -->
                     <div id="row_to" class="px-4 py-2 border-b flex items-center gap-2">
                         <span class="text-xs font-medium select-none w-8 composer-label">To</span>
                         <input type="email" name="to" id="composer_to_input" required
@@ -987,62 +1056,11 @@
                             placeholder="Write your email here..." onkeyup="triggerDebouncedAutosave()"></textarea>
                     </div>
 
-                    <!-- Attachment preview chip -->
-                    <div id="attachment_preview_chip"
-                        class="hidden px-4 py-2 border-t flex items-center justify-between text-xs composer-chip">
-                        <div class="flex items-center gap-2 truncate">
-                            <svg class="w-3.5 h-3.5 text-blue-500 shrink-0" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                            </svg>
-                            <span id="attachment_name" class="font-medium truncate max-w-[280px]">file.pdf</span>
-                            <span id="attachment_size" class="text-[10px] opacity-60 font-mono"></span>
-                        </div>
-                        <button type="button" onclick="removeAttachment()" title="Remove file"
-                            class="opacity-60 hover:opacity-100 hover:text-rose-400 text-xs px-1 font-bold cursor-pointer">&times;</button>
+                    <!-- Background Uploaded Attachment preview chips -->
+                    <div id="composer_attachments_container"
+                        class="hidden px-4 py-2.5 border-t flex flex-wrap items-center gap-2 text-xs composer-chip">
+                        <!-- Dynamic attachment chips rendered by uploadAttachmentsInBackground -->
                     </div>
-
-                    <!-- Footer Toolbar -->
-                    <div id="composer_footer" class="px-4 py-3 border-t flex items-center justify-between">
-                        <div class="flex items-center gap-2.5">
-                            <button type="submit" id="send_submit_btn"
-                                class="px-5 py-2 text-xs sm:text-sm font-semibold rounded-full bg-[#0b57d0] hover:bg-[#0842a0] text-white shadow-md transition-all flex items-center gap-1.5 cursor-pointer">
-                                <span id="send_btn_label">Send</span>
-                                <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                                </svg>
-                            </button>
-
-                            <!-- Attach file button -->
-                            <button type="button" onclick="triggerAttachmentPicker()" title="Attach file"
-                                class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer composer-icon-btn">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                                </svg>
-                            </button>
-                            <input type="file" id="composer_attachment_input" name="attachment" class="hidden"
-                                onchange="handleAttachmentSelected(this)">
-
-                            <span id="autosave_status_text"
-                                class="text-[11px] font-mono text-slate-500 hidden sm:inline-block"></span>
-                        </div>
-
-                        <!-- Delete draft button -->
-                        <button type="button" onclick="discardComposerDraft()" title="Discard draft"
-                            class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer composer-icon-btn hover:text-rose-400">
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
 
     @push('scripts')
@@ -1066,7 +1084,7 @@
                 document.getElementById('composer_reply_message_id').value = '';
                 document.getElementById('composer_modal_title').textContent = 'New Message';
                 document.getElementById('composer_autosave_badge').classList.add('hidden');
-                document.getElementById('attachment_preview_chip').classList.add('hidden');
+                composerAttachments = []; renderComposerAttachmentChips();
 
                 modal.classList.remove('hidden');
                 modal.className = 'fixed bottom-0 right-4 sm:right-8 z-50 transition-all duration-200';
@@ -1193,7 +1211,7 @@
 
             function removeAttachment() {
                 document.getElementById('composer_attachment_input').value = '';
-                document.getElementById('attachment_preview_chip').classList.add('hidden');
+                composerAttachments = []; renderComposerAttachmentChips();
             }
 
             function discardComposerDraft() {
@@ -1230,7 +1248,8 @@
                                 temp_id: tempId,
                                 to: to,
                                 subject: subject,
-                                body: body
+                                body: body,
+                                attachments: composerAttachments
                             })
                         });
 
@@ -1268,6 +1287,7 @@
                 formData.append('body', body);
                 formData.append('cc', cc);
                 formData.append('bcc', bcc);
+                formData.append('attachments', JSON.stringify(composerAttachments));
 
                 const fileInput = document.getElementById('composer_attachment_input');
                 if (fileInput && fileInput.files[0]) {
@@ -1634,6 +1654,128 @@
                     window.location.reload();
                 }
             }
-        </script>
+        
+            // Composer background uploaded attachments state
+            let composerAttachments = [];
+
+            function renderComposerAttachmentChips() {
+                const container = document.getElementById('composer_attachments_container');
+                const hiddenInput = document.getElementById('composer_attachments_json');
+                if (!container) return;
+
+                hiddenInput.value = JSON.stringify(composerAttachments);
+
+                if (composerAttachments.length === 0) {
+                    container.classList.add('hidden');
+                    container.innerHTML = '';
+                    return;
+                }
+
+                container.classList.remove('hidden');
+                container.innerHTML = composerAttachments.map((att, idx) => {
+                    const ext = (att.extension || att.name.split('.').pop()).toLowerCase();
+                    const isPdf = ext === 'pdf';
+                    const isImg = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'].includes(ext);
+
+                    let iconHtml = '';
+                    if (isImg) {
+                        iconHtml = `<span class="w-4 h-4 rounded bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
+                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </span>`;
+                    } else if (isPdf) {
+                        iconHtml = `<span class="px-1 py-0.5 rounded text-[8px] font-black font-mono uppercase bg-rose-600 text-white shrink-0 tracking-tight leading-none">PDF</span>`;
+                    } else {
+                        iconHtml = `<span class="w-4 h-4 rounded bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
+                            </svg>
+                        </span>`;
+                    }
+
+                    return `
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-[#0d1627] text-slate-200 text-xs shadow-sm">
+                            ${iconHtml}
+                            <span class="font-medium truncate max-w-[150px]">${att.name}</span>
+                            <span class="text-[10px] text-slate-400 font-mono">(${att.size})</span>
+                            <button type="button" onclick="removeComposerAttachment(${idx})" class="ml-1 text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer" title="Remove">&times;</button>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Asynchronous Background File Upload to Server Folder
+            async function uploadAttachmentsInBackground(input) {
+                if (!input.files || input.files.length === 0) return;
+
+                const tempId = document.getElementById('composer_temp_id').value;
+                const statusText = document.getElementById('autosave_status_text');
+                statusText.textContent = 'Uploading file in background...';
+                statusText.classList.remove('hidden');
+
+                for (let i = 0; i < input.files.length; i++) {
+                    const file = input.files[i];
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    if (tempId) formData.append('temp_id', tempId);
+
+                    try {
+                        const res = await fetch("{{ route('admin.messages.uploadAttachment') }}", {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: formData
+                        });
+
+                        const data = await res.json();
+                        if (data.success && data.attachment) {
+                            composerAttachments.push(data.attachment);
+                            renderComposerAttachmentChips();
+                            triggerDebouncedAutosave();
+                            if (typeof toastr !== 'undefined') {
+                                toastr.success(`Attached ${data.attachment.name}`);
+                            }
+                        }
+                    } catch (err) {
+                        console.error('Attachment upload failed:', err);
+                    }
+                }
+
+                input.value = '';
+                statusText.textContent = 'Attachment uploaded';
+                setTimeout(() => { statusText.classList.add('hidden'); }, 2000);
+            }
+
+            // Remove attachment from composer and backend folder
+            async function removeComposerAttachment(idx) {
+                const att = composerAttachments[idx];
+                if (!att) return;
+
+                const tempId = document.getElementById('composer_temp_id').value;
+                composerAttachments.splice(idx, 1);
+                renderComposerAttachmentChips();
+                triggerDebouncedAutosave();
+
+                try {
+                    await fetch("{{ route('admin.messages.deleteAttachment') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            path: att.path,
+                            temp_id: tempId
+                        })
+                    });
+                } catch (err) {
+                    console.error('Attachment delete failed:', err);
+                }
+            }
+</script>
     @endpush
 @endsection
