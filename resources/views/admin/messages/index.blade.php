@@ -294,8 +294,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
 
             <!-- =====================================================================
-                     LEFT MAIN COLUMN: Filter Card + Data Table + Pagination
-                     ===================================================================== -->
+                                             LEFT MAIN COLUMN: Filter Card + Data Table + Pagination
+                                             ===================================================================== -->
             <div class="lg:col-span-3 space-y-6">
 
                 <!-- Filter Box (Matching User Management) -->
@@ -388,10 +388,10 @@
                 <div class="p-4 sm:p-6 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-3">
 
                     <!-- Top List Toolbar -->
-                    <div class="flex flex-wrap items-center justify-between gap-3 px-2 py-1.5 border-b border-white/5">
-                        <div class="flex items-center gap-2 sm:gap-3">
+                    <div class="flex flex-wrap items-center justify-between gap-3 px-3 py-2 border-b border-white/5 bg-white/[0.01] rounded-t-2xl">
+                        <div class="flex items-center gap-2.5 sm:gap-3">
                             <!-- Master Select All Checkbox -->
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center">
                                 <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll(this)"
                                     class="w-4 h-4 rounded border-white/20 bg-black/40 text-indigo-500 focus:ring-0 focus:ring-offset-0 cursor-pointer"
                                     title="Select all messages on this page">
@@ -406,13 +406,39 @@
                                 </svg>
                             </a>
 
+                            <!-- Folder Header Name (Requested: Header Name of Top) -->
+                            <div class="flex items-center gap-2 pl-2 border-l border-white/10">
+                                <span class="text-xs sm:text-sm font-bold text-white tracking-tight flex items-center gap-2">
+                                    @if ($currentType === 'inbox')
+                                        <span>📥 Inbox</span>
+                                        @if ($counts['unread_inbox'] > 0)
+                                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                                {{ $counts['unread_inbox'] }} New
+                                            </span>
+                                        @endif
+                                    @elseif($currentType === 'sent')
+                                        <span>📤 Sent Correspondence</span>
+                                    @elseif($currentType === 'draft')
+                                        <span>📝 Drafts</span>
+                                    @elseif($currentType === 'important')
+                                        <span>⭐ Important &bull; VIP</span>
+                                    @elseif($currentType === 'trash')
+                                        <span>🗑️ Trash Bin</span>
+                                    @else
+                                        <span>📬 All Mail</span>
+                                    @endif
+                                </span>
+                            </div>
+
                             <!-- Batch Actions Bar (Hidden by default, shown when 1+ selected) -->
                             <div id="batch_actions_bar" class="hidden items-center gap-1.5 pl-2 border-l border-white/10">
-                                <span id="batch_selected_count" class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-bold">
+                                <span id="batch_selected_count"
+                                    class="text-[11px] font-mono px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-bold">
                                     0 selected
                                 </span>
 
-                                <button type="button" onclick="executeBatchAction('mark_read')" title="Mark selected as read"
+                                <button type="button" onclick="executeBatchAction('mark_read')"
+                                    title="Mark selected as read"
                                     class="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer">
                                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -420,7 +446,8 @@
                                     </svg>
                                 </button>
 
-                                <button type="button" onclick="executeBatchAction('mark_unread')" title="Mark selected as unread"
+                                <button type="button" onclick="executeBatchAction('mark_unread')"
+                                    title="Mark selected as unread"
                                     class="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer">
                                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -429,7 +456,8 @@
                                 </button>
 
                                 @if ($currentType === 'trash')
-                                    <button type="button" onclick="executeBatchAction('restore')" title="Restore selected"
+                                    <button type="button" onclick="executeBatchAction('restore')"
+                                        title="Restore selected"
                                         class="p-1.5 rounded-lg text-emerald-400 hover:bg-emerald-500/10 transition-colors cursor-pointer">
                                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -437,7 +465,8 @@
                                         </svg>
                                     </button>
 
-                                    <button type="button" onclick="executeBatchAction('force_delete')" title="Delete permanently"
+                                    <button type="button" onclick="executeBatchAction('force_delete')"
+                                        title="Delete permanently"
                                         class="p-1.5 rounded-lg text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer">
                                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -445,7 +474,8 @@
                                         </svg>
                                     </button>
                                 @else
-                                    <button type="button" onclick="executeBatchAction('trash')" title="Move selected to Trash"
+                                    <button type="button" onclick="executeBatchAction('trash')"
+                                        title="Move selected to Trash"
                                         class="p-1.5 rounded-lg text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer">
                                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -484,7 +514,8 @@
                     </div>
 
                     <!-- Gmail-Style Message Row List Container -->
-                    <div id="messages_list_container" class="divide-y divide-white/[0.06] border border-white/10 rounded-2xl overflow-hidden bg-[#070d18]/60 backdrop-blur-sm">
+                    <div id="messages_list_container"
+                        class="divide-y divide-white/[0.06] border border-white/10 rounded-2xl overflow-hidden bg-[#070d18]/60 backdrop-blur-sm">
                         @forelse($messages as $msg)
                             @php
                                 $isToday = $msg->created_at->isToday();
@@ -498,99 +529,91 @@
                                 }
                             @endphp
 
-                            <div class="message-row group relative flex items-center gap-2 sm:gap-3.5 px-3 sm:px-4 py-3 hover:bg-white/[0.04] transition-colors cursor-pointer select-none {{ !$msg->is_read && $msg->type === 'inbox' ? 'bg-indigo-500/[0.03] is-unread' : 'is-read' }}"
-                                id="msg_row_{{ $msg->id }}"
-                                data-id="{{ $msg->id }}"
+                            <div class="message-row group relative flex items-center gap-2.5 sm:gap-3.5 px-3 sm:px-4 py-3 hover:bg-white/[0.04] transition-colors cursor-pointer select-none {{ !$msg->is_read && $msg->type === 'inbox' ? 'bg-indigo-500/[0.03] is-unread' : 'is-read' }}"
+                                id="msg_row_{{ $msg->id }}" data-id="{{ $msg->id }}"
                                 onclick="handleRowClick(event, '{{ route('admin.messages.show', $msg) }}')">
 
-                                <!-- 1. Drag Grip Dots (::: 6 dots like Gmail) -->
-                                <div class="text-slate-600 group-hover:text-slate-400 select-none opacity-30 group-hover:opacity-100 transition-opacity hidden sm:flex flex-col gap-0.5 shrink-0 cursor-grab"
-                                    title="Drag message">
-                                    <svg class="w-2.5 h-3.5 text-slate-500" viewBox="0 0 6 10" fill="currentColor">
-                                        <circle cx="1.5" cy="1.5" r="1" />
-                                        <circle cx="4.5" cy="1.5" r="1" />
-                                        <circle cx="1.5" cy="5" r="1" />
-                                        <circle cx="4.5" cy="5" r="1" />
-                                        <circle cx="1.5" cy="8.5" r="1" />
-                                        <circle cx="4.5" cy="8.5" r="1" />
-                                    </svg>
-                                </div>
-
-                                <!-- 2. Checkbox -->
-                                <input type="checkbox"
-                                    value="{{ $msg->id }}"
+                                <!-- 1. Checkbox (Left draggable icon completely removed) -->
+                                <input type="checkbox" value="{{ $msg->id }}"
                                     class="msg-checkbox w-4 h-4 rounded border-white/20 bg-black/40 text-indigo-500 focus:ring-0 focus:ring-offset-0 cursor-pointer shrink-0"
-                                    onclick="event.stopPropagation();"
-                                    onchange="updateBatchToolbar()">
+                                    onclick="event.stopPropagation();" onchange="updateBatchToolbar()">
 
-                                <!-- 3. Star / Important Toggle Button -->
+                                <!-- 2. Star / Important Toggle Button -->
                                 <button type="button"
                                     onclick="event.stopPropagation(); toggleMessageImportant({{ $msg->id }}, this)"
                                     title="{{ $msg->isImportant() ? 'Remove from Important' : 'Mark as Important (Applies to all mail from this sender)' }}"
                                     class="star-toggle-btn p-1 rounded hover:bg-white/10 transition-transform active:scale-90 cursor-pointer shrink-0">
                                     <svg class="w-4 h-4 {{ $msg->isImportant() ? 'text-yellow-400 fill-yellow-400' : 'text-slate-600 hover:text-slate-400' }}"
-                                        fill="{{ $msg->isImportant() ? 'currentColor' : 'none' }}"
-                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        fill="{{ $msg->isImportant() ? 'currentColor' : 'none' }}" viewBox="0 0 24 24"
+                                        stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.784.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                                     </svg>
                                 </button>
 
-                                <!-- 4. Sender Column (Fixed Width Truncate) -->
-                                <div class="w-28 sm:w-40 md:w-48 shrink-0 truncate flex items-center gap-1.5">
+                                <!-- 3. Sender Column (Fixed Width Truncate) -->
+                                <div class="w-28 sm:w-40 md:w-44 shrink-0 truncate flex items-center gap-1.5">
                                     @if ($msg->type === 'sent')
                                         <span class="sender-name font-semibold text-slate-200 truncate">me</span>
-                                        <span class="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 shrink-0">Sent</span>
+                                        <span
+                                            class="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 shrink-0">Sent</span>
                                     @elseif($msg->type === 'draft')
                                         <span class="sender-name font-semibold text-rose-400 truncate">Draft</span>
-                                        <span class="text-[9px] font-mono text-slate-400 truncate hidden md:inline">to: {{ $msg->email }}</span>
+                                        <span class="text-[9px] font-mono text-slate-400 truncate hidden md:inline">to:
+                                            {{ $msg->email }}</span>
                                     @else
-                                        <span class="sender-name truncate {{ !$msg->is_read ? 'text-white font-bold' : 'text-slate-300 font-medium' }}">
+                                        <span
+                                            class="sender-name truncate {{ !$msg->is_read ? 'text-white font-bold' : 'text-slate-300 font-medium' }}">
                                             {{ $msg->name ?: 'Visitor' }}
                                         </span>
-                                        @if(!$msg->is_read)
-                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" title="Unread"></span>
+                                        @if (!$msg->is_read)
+                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"
+                                                title="Unread"></span>
                                         @endif
                                     @endif
                                 </div>
 
-                                <!-- 5. Subject & Preview Snippet (Single Line with Separator) -->
-                                <div class="flex-1 min-w-0 flex items-center text-xs truncate mr-2 sm:mr-4">
-                                    <!-- Emoji detection in subject if present -->
-                                    @if (str_starts_with(trim($msg->subject ?? ''), '🚀'))
-                                        <span class="mr-1 select-none">🚀</span>
-                                    @elseif (str_starts_with(trim($msg->subject ?? ''), '⚠️') || str_starts_with(trim($msg->subject ?? ''), '[Maintenance'))
-                                        <span class="mr-1 select-none">⚠️</span>
-                                    @endif
+                                <!-- 4. Subject (Line 1) & Preview Snippet (Line 2) in Two Lines -->
+                                <div class="flex-1 min-w-0 flex flex-col justify-center mr-2 sm:mr-4 overflow-hidden py-0.5">
+                                    <!-- Line 1: Subject -->
+                                    <div class="flex items-center gap-1.5 truncate">
+                                        @if (str_starts_with(trim($msg->subject ?? ''), '🚀'))
+                                            <span class="select-none text-xs">🚀</span>
+                                        @elseif (str_starts_with(trim($msg->subject ?? ''), '⚠️') || str_starts_with(trim($msg->subject ?? ''), '[Maintenance'))
+                                            <span class="select-none text-xs">⚠️</span>
+                                        @endif
 
-                                    <span class="subject-text truncate shrink-0 {{ !$msg->is_read && $msg->type === 'inbox' ? 'text-white font-bold' : 'text-slate-200 font-medium' }}">
-                                        {{ $msg->subject ?: ($msg->service_type ?: '(No Subject)') }}
-                                    </span>
+                                        <span
+                                            class="subject-text truncate text-xs {{ !$msg->is_read && $msg->type === 'inbox' ? 'text-white font-bold' : 'text-slate-200 font-semibold' }}">
+                                            {{ $msg->subject ?: ($msg->service_type ?: '(No Subject)') }}
+                                        </span>
+                                    </div>
 
-                                    <span class="text-slate-600 mx-2 select-none shrink-0">—</span>
-
-                                    <span class="snippet-text truncate text-slate-400 font-normal font-sans opacity-85">
-                                        {{ Str::limit(strip_tags($msg->message), 110) }}
-                                    </span>
+                                    <!-- Line 2: Message preview snippet -->
+                                    <div class="snippet-text truncate text-[11px] text-slate-400 font-normal font-sans opacity-85 mt-0.5">
+                                        {{ Str::limit(strip_tags($msg->message), 140) }}
+                                    </div>
                                 </div>
 
-                                <!-- 6. Right End: Timestamp by Default, Hover Action Buttons on Mouse Over -->
-                                <div class="shrink-0 text-right min-w-[85px] sm:min-w-[125px] flex items-center justify-end">
+                                <!-- 5. Right End: Timestamp by Default, Hover Action Buttons on Mouse Over (FIXED POSITION - ZERO JUMPING) -->
+                                <div class="w-32 sm:w-36 shrink-0 relative h-8 flex items-center justify-end">
 
-                                    <!-- DEFAULT STATE: Timestamp (Visible normally, HIDDEN on group-hover) -->
-                                    <span class="msg-time text-[11px] font-mono text-slate-400 group-hover:hidden transition-opacity whitespace-nowrap">
+                                    <!-- DEFAULT STATE: Timestamp (Visible normally, FADES OUT on hover with ZERO layout shift) -->
+                                    <span
+                                        class="msg-time absolute right-0 text-[11px] font-mono text-slate-400 group-hover:opacity-0 transition-opacity duration-150 pointer-events-none whitespace-nowrap">
                                         {{ $displayDate }}
                                     </span>
 
-                                    <!-- HOVER STATE: Action Buttons (HIDDEN by default, REVEALED on group-hover) -->
-                                    <div class="msg-actions hidden group-hover:flex items-center gap-1 shrink-0" onclick="event.stopPropagation()">
+                                    <!-- HOVER STATE: Action Buttons (Hidden normally, FADES IN on hover in exact spot with ZERO layout shift) -->
+                                    <div class="msg-actions absolute right-0 flex items-center gap-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-150"
+                                        onclick="event.stopPropagation()">
                                         @if ($msg->trashed())
                                             <!-- Trash Mode: Restore Button -->
-                                            <button type="button"
-                                                onclick="restoreSingleMessage({{ $msg->id }})"
+                                            <button type="button" onclick="restoreSingleMessage({{ $msg->id }})"
                                                 title="Restore message to mailbox"
                                                 class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-emerald-400 hover:text-white hover:bg-emerald-500/20 transition-all cursor-pointer">
-                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                                 </svg>
@@ -601,59 +624,63 @@
                                                 onclick="forceDeleteSingleMessage({{ $msg->id }})"
                                                 title="Delete permanently"
                                                 class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-rose-400 hover:text-white hover:bg-rose-500/20 transition-all cursor-pointer">
-                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                 </svg>
                                             </button>
                                         @else
-                                            <!-- 1. Archive / View Details (Matching Screenshot Icon 1) -->
+                                            <!-- 1. Archive / View Details -->
                                             <a href="{{ route('admin.messages.show', $msg) }}"
                                                 title="View message details"
                                                 class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-all cursor-pointer">
-                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                                                 </svg>
                                             </a>
 
-                                            <!-- 2. Delete / Move to Trash (Matching Screenshot Icon 2) -->
-                                            <button type="button"
-                                                onclick="deleteSingleMessage({{ $msg->id }})"
+                                            <!-- 2. Delete / Move to Trash -->
+                                            <button type="button" onclick="deleteSingleMessage({{ $msg->id }})"
                                                 title="Move to Trash"
                                                 class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-all cursor-pointer">
-                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                 </svg>
                                             </button>
 
-                                            <!-- 3. Mark as Read / Unread (Matching Screenshot Icon 3) -->
-                                            <button type="button"
-                                                onclick="toggleMessageRead({{ $msg->id }}, this)"
+                                            <!-- 3. Mark as Read / Unread -->
+                                            <button type="button" onclick="toggleMessageRead({{ $msg->id }}, this)"
                                                 title="{{ $msg->is_read ? 'Mark as Unread' : 'Mark as Read' }}"
                                                 class="read-toggle-btn w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-all cursor-pointer">
                                                 @if ($msg->is_read)
                                                     <!-- Closed envelope icon (to mark as unread) -->
-                                                    <svg class="w-4 h-4 envelope-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <svg class="w-4 h-4 envelope-icon" fill="none" viewBox="0 0 24 24"
+                                                        stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                             d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                                     </svg>
                                                 @else
                                                     <!-- Open envelope icon with dot (to mark as read) -->
-                                                    <svg class="w-4 h-4 envelope-icon text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <svg class="w-4 h-4 envelope-icon text-indigo-400" fill="none" viewBox="0 0 24 24"
+                                                        stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                             d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5" />
                                                     </svg>
                                                 @endif
                                             </button>
 
-                                            <!-- 4. Quick Reply via Composer (Matching Screenshot Icon 4) -->
+                                            <!-- 4. Quick Reply via Composer -->
                                             <button type="button"
                                                 onclick="openReplyComposer('{{ e($msg->email) }}', '{{ e($msg->name) }}', 'Re: {{ e($msg->subject ?: 'Inquiry') }}', '{{ $msg->id }}')"
                                                 title="Quick Reply via Email"
                                                 class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-all cursor-pointer">
-                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
                                                 </svg>
@@ -665,7 +692,8 @@
                             </div>
                         @empty
                             <div class="py-14 text-center text-slate-400 font-mono">
-                                <div class="w-12 h-12 mx-auto mb-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl text-slate-400">
+                                <div
+                                    class="w-12 h-12 mx-auto mb-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-xl text-slate-400">
                                     @if ($currentType === 'trash')
                                         🗑️
                                     @elseif($currentType === 'draft')
@@ -696,7 +724,8 @@
 
                     <!-- Pagination Container (Tailwind Pro-Grade Pagination) -->
                     @if ($messages->hasPages() || $messages->total() > 0)
-                        <div class="pt-3 border-t border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono text-slate-400">
+                        <div
+                            class="pt-3 border-t border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono text-slate-400">
                             <div>
                                 Showing <span class="text-white font-bold">{{ $messages->firstItem() ?? 0 }}</span>
                                 to <span class="text-white font-bold">{{ $messages->lastItem() ?? 0 }}</span>
@@ -712,8 +741,8 @@
             </div>
 
             <!-- =====================================================================
-                     RIGHT SIDEBAR: Mailbox Folders Menu & Quick Composer Trigger
-                     ===================================================================== -->
+                                             RIGHT SIDEBAR: Mailbox Folders Menu & Quick Composer Trigger
+                                             ===================================================================== -->
             <div class="lg:col-span-1 space-y-5">
 
                 <!-- Primary Compose Button Card -->
@@ -840,8 +869,8 @@
     </div>
 
     <!-- =========================================================================
-             POPUP EMAIL COMPOSER (Supports Temporary ID Autosave & Background Queue)
-             ========================================================================= -->
+                                     POPUP EMAIL COMPOSER (Supports Temporary ID Autosave & Background Queue)
+                                     ========================================================================= -->
     <div id="mail_composer_modal" class="hidden fixed z-50 transition-all duration-200">
         <div id="composer_window"
             class="w-[580px] max-w-[95vw] rounded-t-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 composer-dark">
@@ -1351,7 +1380,7 @@
                 const saved = localStorage.getItem('composer_theme') || 'dark';
                 setComposerTheme(saved);
             });
-        
+
             // Navigate to message on row click (ignore clicks on interactive child elements)
             function handleRowClick(e, url) {
                 if (e.target.closest('button, input, a, form, .msg-actions, .star-toggle-btn')) {
@@ -1410,10 +1439,12 @@
 
             // Execute batch action (mark read, mark unread, trash, restore, force_delete)
             async function executeBatchAction(action) {
-                const checked = Array.from(document.querySelectorAll('.msg-checkbox:checked')).map(cb => parseInt(cb.value));
+                const checked = Array.from(document.querySelectorAll('.msg-checkbox:checked')).map(cb => parseInt(cb
+                    .value));
                 if (checked.length === 0) return;
 
-                if (action === 'force_delete' && !confirm(`Permanently delete ${checked.length} selected messages? This cannot be undone.`)) {
+                if (action === 'force_delete' && !confirm(
+                        `Permanently delete ${checked.length} selected messages? This cannot be undone.`)) {
                     return;
                 }
                 if (action === 'trash' && !confirm(`Move ${checked.length} selected messages to Trash?`)) {
@@ -1518,7 +1549,9 @@
                             'Accept': 'application/json',
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         },
-                        body: JSON.stringify({ _method: 'DELETE' })
+                        body: JSON.stringify({
+                            _method: 'DELETE'
+                        })
                     });
 
                     const data = await res.json();
@@ -1580,7 +1613,9 @@
                             'Accept': 'application/json',
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         },
-                        body: JSON.stringify({ _method: 'DELETE' })
+                        body: JSON.stringify({
+                            _method: 'DELETE'
+                        })
                     });
 
                     const data = await res.json();
@@ -1599,6 +1634,6 @@
                     window.location.reload();
                 }
             }
-</script>
+        </script>
     @endpush
 @endsection
