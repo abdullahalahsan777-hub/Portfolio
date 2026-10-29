@@ -468,17 +468,6 @@ class ContactMessageController extends Controller
 
             $pendingMail->queue($mailable);
 
-            // Record notification for admin stream
-            Notification::record([
-                'user_id'    => Auth::id(),
-                'type'       => 'reply',
-                'title'      => 'Email Sent (Queued)',
-                'message'    => 'Sent reply to '.$validated['to'].' on subject "'.$validated['subject'].'"',
-                'action_url' => route('admin.messages.show', $sentRecord->id),
-                'icon'       => 'send',
-                'color'      => 'emerald',
-            ]);
-
             $successMsg = 'Reply email queued successfully for '.$validated['to'].'. Dispatched to background queue for sequential sending.';
 
             if ($request->wantsJson() || $request->ajax()) {

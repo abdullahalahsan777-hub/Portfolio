@@ -23,13 +23,17 @@ class NotificationService
 
     /**
      * Register model event listeners for lifecycle changes.
-     * Note: Website Group modules (Service, Project, Skill, Resume, Pricing, Testimonial, Blog, FAQ, WebsiteContent)
-     * record their notifications directly in their respective controllers.
+     * Only inbound events (e.g. new visitor inquiries) trigger administrative notifications.
      */
     public static function registerListeners(): void
     {
-        // Contact messages listener
+        // Inbound visitor inquiries listener (broadcast to administrators)
         ContactMessage::created(function (ContactMessage $item) {
+            // Only notify for incoming visitor inquiries (skip composer drafts and sent correspondence)
+            if (in_array($item->type, ['draft', 'sent'])) {
+                return;
+            }
+
             $subject = $item->subject ?: ($item->service_type ?: 'General Inquiry');
             Notification::record([
                 'user_id'   => null, // Broadcast to all admins
@@ -39,33 +43,6 @@ class NotificationService
                 'action_url'=> self::safeRoute('admin.messages.show', $item->id),
                 'icon'      => 'mail',
                 'color'     => 'indigo',
-            ]);
-        });
-
-        ContactMessage::updated(function (ContactMessage $item) {
-            if ($item->wasChanged('is_read')) {
-                $status = $item->is_read ? 'Read' : 'Unread';
-                Notification::record([
-                    'user_id'   => Auth::id() ?? null,
-                    'type'      => 'inquiry',
-                    'title'     => "Inquiry Marked as {$status}",
-                    'message'   => "Inquiry from '{$item->name}' ({$item->email}) was marked as {$status}.",
-                    'action_url'=> self::safeRoute('admin.messages.show', $item->id),
-                    'icon'      => 'mail',
-                    'color'     => $item->is_read ? 'emerald' : 'amber',
-                ]);
-            }
-        });
-
-        ContactMessage::deleted(function (ContactMessage $item) {
-            Notification::record([
-                'user_id'       => Auth::id() ?? null,
-                'type'          => 'inquiry',
-                'title'         => 'Inquiry Deleted',
-                'message'       => "Inquiry from '{$item->name}' ({$item->email}) was removed.",
-                'action_url'    => self::safeRoute('admin.messages.index'),
-                'icon'          => 'mail',
-                'color'         => 'rose',
             ]);
         });
     }

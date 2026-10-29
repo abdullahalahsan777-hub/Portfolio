@@ -1712,8 +1712,18 @@
                     const newest = latest[0];
                     if (newest && newest.id !== knownLatestNotificationId) {
                         knownLatestNotificationId = newest.id;
-                        playNotificationChime();
-                        showLiveToast(newest);
+
+                        // Only show live popup toast for genuine inbound events (not local UI actions or status updates)
+                        const isSelfOrStatusUpdate = newest.title && (
+                            newest.title.toLowerCase().includes('marked as') ||
+                            newest.title.toLowerCase().includes('deleted') ||
+                            newest.title.toLowerCase().includes('email sent')
+                        );
+
+                        if (!isSelfOrStatusUpdate) {
+                            playNotificationChime();
+                            showLiveToast(newest);
+                        }
 
                         // If dropdown is open, re-render
                         const menu = document.getElementById('topbarNotificationMenu');
