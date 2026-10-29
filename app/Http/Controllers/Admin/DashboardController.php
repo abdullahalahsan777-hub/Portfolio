@@ -111,6 +111,7 @@ class DashboardController extends Controller
             'server_status'     => SiteSetting::get('server_status', 'up'),
 
             // Server telemetry
+            'app_version'       => config('app.version', '1.0.0'),
             'php_version'       => PHP_VERSION,
             'laravel_version'   => App::version(),
             'app_env'           => config('app.env'),

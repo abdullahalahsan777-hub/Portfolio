@@ -57,6 +57,17 @@
                             Env: <span class="text-white font-semibold">{{ ucfirst($stats['app_env']) }}</span>
                         </span>
 
+                        <!-- Version Release Pill -->
+                        <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#0090e7]/15 text-[#0090e7] border border-[#0090e7]/30 shadow-sm shadow-[#0090e7]/10"
+                            title="Official Release Version">
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                            </svg>
+                            Version: <strong>v{{ $stats['app_version'] ?? config('app.version', '1.0.0') }}</strong>
+                        </span>
+
                         @if ($stats['unread_notifications'] > 0)
                             <a href="{{ route('admin.notifications.index') }}"
                                 class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-500/15 text-rose-300 border border-rose-500/30 hover:bg-rose-500/25 transition-all">
@@ -82,6 +93,11 @@
                 <div class="flex flex-wrap lg:flex-col items-start lg:items-end gap-3 shrink-0">
                     <!-- Stack Spec Badges -->
                     <div class="flex flex-wrap items-center gap-2">
+                        <span
+                            class="px-2.5 py-1 rounded-lg bg-[#0090e7]/10 border border-[#0090e7]/30 text-[10px] font-mono text-[#0090e7] font-semibold"
+                            title="Official Release Version">
+                            Release <span class="font-bold">v{{ $stats['app_version'] ?? config('app.version', '1.0.0') }}</span>
+                        </span>
                         <span
                             class="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[10px] font-mono text-slate-300">
                             PHP <span class="text-indigo-300 font-bold">{{ $stats['php_version'] }}</span>
@@ -1018,6 +1034,15 @@
                     </div>
 
                     <div class="space-y-2.5 text-xs">
+                        <div class="flex items-center justify-between py-1.5 border-b border-white/5">
+                            <span class="text-slate-400 font-mono">Portfolio Release</span>
+                            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#0090e7]/15 border border-[#0090e7]/30 text-[#0090e7] font-mono font-bold text-[11px]">
+                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                </svg>
+                                v{{ $stats['app_version'] ?? config('app.version', '1.0.0') }}
+                            </span>
+                        </div>
                         <div class="flex items-center justify-between py-1.5 border-b border-white/5">
                             <span class="text-slate-400 font-mono">PHP Runtime</span>
                             <span class="text-white font-mono font-bold">{{ $stats['php_version'] }}</span>
