@@ -1385,15 +1385,21 @@
                         closeComposer();
                         removeAttachment();
 
-                        // Show toastr notification
+                        try {
+                            sessionStorage.setItem('pending_toastr', JSON.stringify({
+                                type: 'success',
+                                message: data.message || 'Email queued successfully!',
+                                title: 'Success'
+                            }));
+                        } catch (e) {}
+
                         if (typeof toastr !== 'undefined') {
                             toastr.success(data.message || 'Email queued successfully!');
                         }
 
-                        // Refresh table to reflect sent mail
                         setTimeout(() => {
                             window.location.reload();
-                        }, 800);
+                        }, 700);
                     } else {
                         throw new Error(data.message || 'Failed to queue email.');
                     }

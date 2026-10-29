@@ -803,30 +803,40 @@
                     closeComposer();
                     removeAttachment();
 
-                    // Show success alert
-                    alertBox.className =
-                        'p-4 rounded-2xl text-xs flex items-center justify-between transition-all bg-emerald-500/10 border border-emerald-500/20 text-emerald-300';
-                    alertText.innerHTML = `
-                    <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>${data.message || 'Reply sent successfully!'}</span>
-                `;
-                    alertBox.classList.remove('hidden');
+                    // Show success in toastr
+                    if (typeof toastr !== 'undefined') {
+                        toastr.success(data.message || 'Reply email queued successfully!');
+                        if (alertBox) alertBox.classList.add('hidden');
+                    } else if (alertBox && alertText) {
+                        alertBox.className =
+                            'p-4 rounded-2xl text-xs flex items-center justify-between transition-all bg-emerald-500/10 border border-emerald-500/20 text-emerald-300';
+                        alertText.innerHTML = `
+                        <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>${data.message || 'Reply sent successfully!'}</span>
+                    `;
+                        alertBox.classList.remove('hidden');
+                    }
                 } else {
                     throw new Error(data.message || 'Failed to send reply email.');
                 }
             } catch (err) {
                 console.error(err);
-                alertBox.className =
-                    'p-4 rounded-2xl text-xs flex items-center justify-between transition-all bg-rose-500/10 border border-rose-500/20 text-rose-300';
-                alertText.innerHTML = `
-                <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>${err.message}. You can switch to your default email app via the arrow dropdown.</span>
-            `;
-                alertBox.classList.remove('hidden');
+                if (typeof toastr !== 'undefined') {
+                    toastr.error(err.message || 'Failed to send reply email.');
+                    if (alertBox) alertBox.classList.add('hidden');
+                } else if (alertBox && alertText) {
+                    alertBox.className =
+                        'p-4 rounded-2xl text-xs flex items-center justify-between transition-all bg-rose-500/10 border border-rose-500/20 text-rose-300';
+                    alertText.innerHTML = `
+                    <svg class="w-4 h-4 text-rose-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>${err.message}. You can switch to your default email app via the arrow dropdown.</span>
+                `;
+                    alertBox.classList.remove('hidden');
+                }
             } finally {
                 sendBtn.disabled = false;
                 btnLabel.textContent = 'Send';

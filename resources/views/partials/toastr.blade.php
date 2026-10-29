@@ -416,5 +416,18 @@
                 toastr.error({!! json_encode($error) !!}, 'Validation Error');
             @endforeach
         @endif
+
+        // Check for pending toastr stored in sessionStorage across page reloads
+        try {
+            const pendingToast = sessionStorage.getItem('pending_toastr');
+            if (pendingToast) {
+                sessionStorage.removeItem('pending_toastr');
+                const parsed = JSON.parse(pendingToast);
+                if (parsed && parsed.message) {
+                    const fn = toastr[parsed.type] || toastr.success;
+                    fn(parsed.message, parsed.title || '');
+                }
+            }
+        } catch (e) {}
     })();
 </script>
