@@ -108,10 +108,16 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('pricing', AdminPricingController::class);
     Route::resource('testimonials', AdminTestimonialController::class);
 
-    // Inquiries / Messages
+    // Inquiries / Messages Module
     Route::get('/messages', [AdminMessageController::class, 'index'])->name('messages.index');
+    Route::post('/messages/autosave-draft', [AdminMessageController::class, 'autosaveDraft'])->name('messages.autosaveDraft');
+    Route::post('/messages/send-compose', [AdminMessageController::class, 'sendCompose'])->name('messages.sendCompose');
+    Route::post('/messages/empty-trash', [AdminMessageController::class, 'emptyTrash'])->name('messages.emptyTrash');
+    Route::post('/messages/{id}/restore', [AdminMessageController::class, 'restore'])->name('messages.restore');
+    Route::delete('/messages/{id}/force-delete', [AdminMessageController::class, 'forceDelete'])->name('messages.forceDelete');
     Route::get('/messages/{message}', [AdminMessageController::class, 'show'])->name('messages.show');
     Route::post('/messages/{message}/toggle-read', [AdminMessageController::class, 'toggleRead'])->name('messages.toggleRead');
+    Route::post('/messages/{message}/toggle-important', [AdminMessageController::class, 'toggleImportant'])->name('messages.toggleImportant');
     Route::post('/messages/{message}/reply', [AdminMessageController::class, 'reply'])->name('messages.reply');
     Route::get('/messages/{message}/preview-reply', [AdminMessageController::class, 'previewReply'])->name('messages.previewReply');
     Route::delete('/messages/{message}', [AdminMessageController::class, 'destroy'])->name('messages.destroy');

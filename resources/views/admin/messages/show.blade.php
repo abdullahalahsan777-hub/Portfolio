@@ -374,13 +374,16 @@
             <div id="composer_body_section" class="flex flex-col">
                 <form id="mail_composer_form" onsubmit="sendReplyViaAjax(event)" class="flex flex-col">
                     @csrf
+                    <!-- Temporary ID for keyup autosave -->
+                    <input type="hidden" name="temp_id" id="composer_temp_id" value="">
 
                     <!-- "To" Field Row -->
                     <div id="row_to" class="px-4 py-2 border-b flex items-center gap-2">
                         <span class="text-xs font-medium select-none w-8 composer-label">To</span>
                         <input type="email" name="to" id="composer_to_input" required
                             value="{{ $message->email }}"
-                            class="flex-1 bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 composer-input">
+                            class="flex-1 bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 composer-input"
+                            onkeyup="triggerDebouncedAutosave()">
                         <div class="flex items-center gap-2 text-xs select-none composer-label">
                             <button type="button" onclick="toggleCcRow()"
                                 class="hover:underline font-medium cursor-pointer">Cc</button>
@@ -394,7 +397,8 @@
                         <span class="text-xs font-medium select-none w-8 composer-label">Cc</span>
                         <input type="text" name="cc" id="composer_cc_input"
                             placeholder="Recipients (comma separated)"
-                            class="flex-1 bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 composer-input">
+                            class="flex-1 bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 composer-input"
+                            onkeyup="triggerDebouncedAutosave()">
                     </div>
 
                     <!-- Bcc Row (collapsible) -->
@@ -402,7 +406,8 @@
                         <span class="text-xs font-medium select-none w-8 composer-label">Bcc</span>
                         <input type="text" name="bcc" id="composer_bcc_input"
                             placeholder="Recipients (comma separated)"
-                            class="flex-1 bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 composer-input">
+                            class="flex-1 bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 composer-input"
+                            onkeyup="triggerDebouncedAutosave()">
                     </div>
 
                     <!-- Subject Field Row -->
@@ -410,14 +415,16 @@
                         <input type="text" name="subject" id="composer_subject_input" required
                             value="Re: {{ $message->subject ?: ($message->service_type ?: 'Portfolio Inquiry') }}"
                             placeholder="Subject"
-                            class="w-full bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 font-medium composer-input">
+                            class="w-full bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 font-medium composer-input"
+                            onkeyup="triggerDebouncedAutosave()">
                     </div>
 
                     <!-- Main Message Body Textarea -->
                     <div id="row_body" class="p-4 flex-1">
                         <textarea name="body" id="composer_text_body" rows="11" required
                             class="w-full border-0 focus:outline-none focus:ring-0 p-0 text-xs sm:text-sm leading-relaxed resize-none font-sans composer-textarea"
-                            placeholder="Write your email reply here...">Hi {{ $message->name }},&#10;&#10;Thank you for reaching out regarding {{ $message->service_type ?? 'your project' }}.&#10;&#10;&#10;Best regards,&#10;{{ auth()->user()->name ?? 'Alex Rivera' }}</textarea>
+                            placeholder="Write your email reply here..."
+                            onkeyup="triggerDebouncedAutosave()">Hi {{ $message->name }},&#10;&#10;Thank you for reaching out regarding {{ $message->service_type ?? 'your project' }}.&#10;&#10;&#10;Best regards,&#10;{{ auth()->user()->name ?? 'Alex Rivera' }}</textarea>
                     </div>
 
                     <!-- Attachment preview chip -->
@@ -554,11 +561,48 @@
             setComposerTheme(savedTheme);
         });
 
+        let autosaveTimer = null;
+
+        function triggerDebouncedAutosave() {
+            clearTimeout(autosaveTimer);
+            autosaveTimer = setTimeout(async () => {
+                const tempId = document.getElementById('composer_temp_id')?.value;
+                if (!tempId) return;
+
+                const to = document.getElementById('composer_to_input')?.value;
+                const subject = document.getElementById('composer_subject_input')?.value;
+                const body = document.getElementById('composer_text_body')?.value;
+
+                try {
+                    await fetch("{{ route('admin.messages.autosaveDraft') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            temp_id: tempId,
+                            to: to,
+                            subject: subject,
+                            body: body
+                        })
+                    });
+                } catch (err) {
+                    console.log('Autosave paused');
+                }
+            }, 600);
+        }
+
         function openComposer() {
             const modal = document.getElementById('mail_composer_modal');
             const win = document.getElementById('composer_window');
             const bodySection = document.getElementById('composer_body_section');
             const snippet = document.getElementById('composer_minimized_snippet');
+
+            if (!document.getElementById('composer_temp_id').value) {
+                document.getElementById('composer_temp_id').value = 'temp_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+            }
 
             modal.classList.remove('hidden');
             modal.className = 'fixed bottom-0 right-4 sm:right-8 z-50 transition-all duration-200';
@@ -568,6 +612,9 @@
             snippet.classList.add('hidden');
             isComposerMinimized = false;
             isComposerMaximized = false;
+
+            // Trigger initial draft save
+            triggerDebouncedAutosave();
 
             // Focus on body
             setTimeout(() => {
@@ -720,8 +767,10 @@
             const body = document.getElementById('composer_text_body').value;
             const cc = document.getElementById('composer_cc_input')?.value || '';
             const bcc = document.getElementById('composer_bcc_input')?.value || '';
+            const tempId = document.getElementById('composer_temp_id')?.value || '';
 
             const formData = new FormData();
+            formData.append('temp_id', tempId);
             formData.append('to', to);
             formData.append('subject', subject);
             formData.append('body', body);

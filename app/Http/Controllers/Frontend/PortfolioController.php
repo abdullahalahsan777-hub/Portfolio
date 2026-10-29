@@ -351,6 +351,17 @@ class PortfolioController extends Controller
             'message' => 'required|string|min:5|max:5000',
         ]);
 
+        // Check if this sender's email address has an importance badge or was previously marked important
+        $hasImportance = ContactMessage::withTrashed()
+            ->where('email', $validated['email'])
+            ->where(function ($q) {
+                $q->where('is_important', true)->orWhere('type', 'important');
+            })
+            ->exists();
+
+        $validated['type'] = $hasImportance ? 'important' : 'inbox';
+        $validated['is_important'] = $hasImportance;
+
         ContactMessage::create($validated);
 
         if ($request->wantsJson() || $request->ajax()) {
