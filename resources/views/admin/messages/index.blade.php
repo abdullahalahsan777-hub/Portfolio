@@ -294,8 +294,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
 
             <!-- =====================================================================
-                                             LEFT MAIN COLUMN: Filter Card + Data Table + Pagination
-                                             ===================================================================== -->
+                            LEFT MAIN COLUMN: Filter Card + Data Table + Pagination
+                            ===================================================================== -->
             <div class="lg:col-span-3 space-y-6">
 
                 <!-- Filter Box (Matching User Management) -->
@@ -370,12 +370,11 @@
 
                         <!-- Per Page (Default 10 items) -->
                         <div>
-                            <label class="block text-[10px] font-mono uppercase tracking-wider text-slate-400 mb-1">Items
-                                Per Page</label>
+                            <label class="block text-[10px] font-mono uppercase tracking-wider text-slate-400 mb-1">Per
+                                Page</label>
                             <select name="per_page" onchange="this.form.submit()"
                                 class="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer">
-                                <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10 Per Page (Default)
-                                </option>
+                                <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10 Per Page</option>
                                 <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25 Per Page</option>
                                 <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50 Per Page</option>
                                 <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100 Per Page</option>
@@ -388,7 +387,8 @@
                 <div class="p-4 sm:p-6 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-3">
 
                     <!-- Top List Toolbar -->
-                    <div class="flex flex-wrap items-center justify-between gap-3 px-3 py-2 border-b border-white/5 bg-white/[0.01] rounded-t-2xl">
+                    <div
+                        class="flex flex-wrap items-center justify-between gap-3 px-3 py-2 border-b border-white/5 bg-white/[0.01] rounded-t-2xl">
                         <div class="flex items-center gap-2.5 sm:gap-3">
                             <!-- Master Select All Checkbox -->
                             <div class="flex items-center">
@@ -408,44 +408,52 @@
 
                             <!-- Folder Header Name (Theme SVG Icons) -->
                             <div class="flex items-center gap-2 pl-2 border-l border-white/10">
-                                <span class="text-xs sm:text-sm font-bold text-white tracking-tight flex items-center gap-2">
+                                <span
+                                    class="text-xs sm:text-sm font-bold text-white tracking-tight flex items-center gap-2">
                                     @if ($currentType === 'inbox')
-                                        <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                                         </svg>
                                         <span>Inbox</span>
                                         @if ($counts['unread_inbox'] > 0)
-                                            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                            <span
+                                                class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
                                                 {{ $counts['unread_inbox'] }} New
                                             </span>
                                         @endif
                                     @elseif($currentType === 'sent')
-                                        <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                         </svg>
                                         <span>Sent Correspondence</span>
                                     @elseif($currentType === 'draft')
-                                        <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                         </svg>
                                         <span>Drafts</span>
                                     @elseif($currentType === 'important')
-                                        <svg class="w-4 h-4 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-4 h-4 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.784.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                                         </svg>
                                         <span>Important &bull; VIP</span>
                                     @elseif($currentType === 'trash')
-                                        <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg>
                                         <span>Trash Bin</span>
                                     @else
-                                        <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                         </svg>
@@ -598,7 +606,8 @@
                                 </div>
 
                                 <!-- 4. Subject (Line 1) & Preview Snippet (Line 2) in Two Lines -->
-                                <div class="flex-1 min-w-0 flex flex-col justify-center mr-2 sm:mr-4 overflow-hidden py-0.5">
+                                <div
+                                    class="flex-1 min-w-0 flex flex-col justify-center mr-2 sm:mr-4 overflow-hidden py-0.5">
                                     <!-- Line 1: Subject -->
                                     <div class="flex items-center gap-1.5 truncate">
                                         @if (str_starts_with(trim($msg->subject ?? ''), '🚀'))
@@ -614,72 +623,104 @@
                                     </div>
 
                                     <!-- Line 2: Message preview snippet -->
-                                    <div class="snippet-text truncate text-[11px] text-slate-400 font-normal font-sans opacity-85 mt-0.5">
+                                    <div
+                                        class="snippet-text truncate text-[11px] text-slate-400 font-normal font-sans opacity-85 mt-0.5">
                                         {{ Str::limit(strip_tags($msg->message), 140) }}
                                     </div>
 
                                     <!-- Line 3: Attachment Chips (Gmail Dark Mode Style) -->
                                     @if (!empty($msg->attachments) && is_array($msg->attachments) && count($msg->attachments) > 0)
-                                        <div class="flex items-center gap-2 mt-2 flex-wrap" onclick="event.stopPropagation()">
-                                            @foreach($msg->attachments as $att)
+                                        <div class="flex items-center gap-2 mt-2 flex-wrap"
+                                            onclick="event.stopPropagation()">
+                                            @foreach ($msg->attachments as $att)
                                                 @php
-                                                    $ext = strtolower($att['extension'] ?? pathinfo($att['name'] ?? '', PATHINFO_EXTENSION));
-                                                    $isImage = in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg']);
+                                                    $ext = strtolower(
+                                                        $att['extension'] ??
+                                                            pathinfo($att['name'] ?? '', PATHINFO_EXTENSION),
+                                                    );
+                                                    $isImage = in_array($ext, [
+                                                        'jpg',
+                                                        'jpeg',
+                                                        'png',
+                                                        'webp',
+                                                        'gif',
+                                                        'svg',
+                                                    ]);
                                                     $isPdf = $ext === 'pdf';
                                                     $isDoc = in_array($ext, ['doc', 'docx', 'txt', 'rtf']);
                                                     $isSpreadsheet = in_array($ext, ['xls', 'xlsx', 'csv']);
                                                     $isArchive = in_array($ext, ['zip', 'rar', '7z', 'tar', 'gz']);
-                                                    $fileUrl = $att['url'] ?? (!empty($att['path']) ? asset('storage/'.$att['path']) : '#');
+                                                    $fileUrl =
+                                                        $att['url'] ??
+                                                        (!empty($att['path']) ? asset('storage/' . $att['path']) : '#');
                                                     $shortName = Str::limit($att['name'] ?? 'attachment', 22);
                                                 @endphp
-                                                <a href="{{ $fileUrl }}" target="_blank" download="{{ $att['name'] ?? 'file' }}"
+                                                <a href="{{ $fileUrl }}" target="_blank"
+                                                    download="{{ $att['name'] ?? 'file' }}"
                                                     title="{{ $att['name'] ?? 'Attachment' }} ({{ $att['size'] ?? 'file' }})"
                                                     class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-white/10 bg-[#0d1627] hover:bg-white/[0.08] hover:border-white/20 transition-all text-xs group/chip shadow-sm cursor-pointer select-none">
-                                                    
+
                                                     @if ($isImage)
                                                         <!-- Image red/coral icon with landscape/mountain (Gmail Dark Mode) -->
-                                                        <span class="w-4 h-4 rounded bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
-                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        <span
+                                                            class="w-4 h-4 rounded bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
+                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24"
+                                                                stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
                                                                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                             </svg>
                                                         </span>
                                                     @elseif ($isPdf)
                                                         <!-- PDF red badge icon (Gmail Dark Mode) -->
-                                                        <span class="px-1 py-0.5 rounded text-[8px] font-black font-mono uppercase bg-rose-600 text-white shrink-0 tracking-tight leading-none">
+                                                        <span
+                                                            class="px-1 py-0.5 rounded text-[8px] font-black font-mono uppercase bg-rose-600 text-white shrink-0 tracking-tight leading-none">
                                                             PDF
                                                         </span>
                                                     @elseif ($isDoc)
-                                                        <span class="w-4 h-4 rounded bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
-                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        <span
+                                                            class="w-4 h-4 rounded bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24"
+                                                                stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
                                                                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                                             </svg>
                                                         </span>
                                                     @elseif ($isSpreadsheet)
-                                                        <span class="w-4 h-4 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        <span
+                                                            class="w-4 h-4 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24"
+                                                                stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
                                                                     d="M3 10h18M3 14h18m-9-4v8m-7 4h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                             </svg>
                                                         </span>
                                                     @elseif ($isArchive)
-                                                        <span class="w-4 h-4 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
-                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        <span
+                                                            class="w-4 h-4 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
+                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24"
+                                                                stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
                                                                     d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                                                             </svg>
                                                         </span>
                                                     @else
-                                                        <span class="w-4 h-4 rounded bg-slate-500/20 text-slate-400 flex items-center justify-center shrink-0">
-                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        <span
+                                                            class="w-4 h-4 rounded bg-slate-500/20 text-slate-400 flex items-center justify-center shrink-0">
+                                                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24"
+                                                                stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
                                                                     d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                                                             </svg>
                                                         </span>
                                                     @endif
 
-                                                    <span class="text-[11px] font-medium text-slate-300 group-hover/chip:text-white truncate max-w-[150px]">
+                                                    <span
+                                                        class="text-[11px] font-medium text-slate-300 group-hover/chip:text-white truncate max-w-[150px]">
                                                         {{ $shortName }}
                                                     </span>
                                                 </a>
@@ -754,14 +795,16 @@
                                                     <!-- Closed envelope icon (to mark as unread) -->
                                                     <svg class="w-4 h-4 envelope-icon" fill="none" viewBox="0 0 24 24"
                                                         stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
                                                             d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                                     </svg>
                                                 @else
                                                     <!-- Open envelope icon with dot (to mark as read) -->
-                                                    <svg class="w-4 h-4 envelope-icon text-indigo-400" fill="none" viewBox="0 0 24 24"
-                                                        stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    <svg class="w-4 h-4 envelope-icon text-indigo-400" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
                                                             d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5" />
                                                     </svg>
                                                 @endif
@@ -785,35 +828,42 @@
                             </div>
                         @empty
                             <div class="py-14 text-center text-slate-400 font-mono">
-                                <div class="w-12 h-12 mx-auto mb-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400">
+                                <div
+                                    class="w-12 h-12 mx-auto mb-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400">
                                     @if ($currentType === 'trash')
-                                        <svg class="w-6 h-6 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-6 h-6 text-rose-400" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                                                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg>
                                     @elseif($currentType === 'draft')
-                                        <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                         </svg>
                                     @elseif($currentType === 'sent')
-                                        <svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                                                 d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                         </svg>
                                     @elseif($currentType === 'important')
-                                        <svg class="w-6 h-6 text-yellow-400 fill-yellow-400/20" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-6 h-6 text-yellow-400 fill-yellow-400/20" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                                                 d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.784.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                                         </svg>
                                     @else
-                                        <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                                                 d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                                         </svg>
                                     @endif
                                 </div>
-                                <p class="text-sm font-semibold text-white">No messages found in {{ ucfirst($currentType) }}</p>
+                                <p class="text-sm font-semibold text-white">No messages found in
+                                    {{ ucfirst($currentType) }}</p>
                                 <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
                                     @if (!empty($search))
                                         No results match your search keywords.
@@ -848,8 +898,8 @@
             </div>
 
             <!-- =====================================================================
-                                             RIGHT SIDEBAR: Mailbox Folders Menu & Quick Composer Trigger
-                                             ===================================================================== -->
+                                                             RIGHT SIDEBAR: Mailbox Folders Menu & Quick Composer Trigger
+                                                             ===================================================================== -->
             <div class="lg:col-span-1 space-y-5">
 
                 <!-- Primary Compose Button Card -->
@@ -875,7 +925,8 @@
                         <a href="{{ route('admin.messages.index', ['type' => 'inbox']) }}"
                             class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'inbox' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'inbox' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-white/5 text-slate-400 group-hover:text-indigo-400 group-hover:bg-indigo-500/10' }} transition-colors">
+                                <div
+                                    class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'inbox' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-white/5 text-slate-400 group-hover:text-indigo-400 group-hover:bg-indigo-500/10' }} transition-colors">
                                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
@@ -897,7 +948,8 @@
                         <a href="{{ route('admin.messages.index', ['type' => 'draft']) }}"
                             class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'draft' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'draft' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-white/5 text-slate-400 group-hover:text-amber-400 group-hover:bg-amber-500/10' }} transition-colors">
+                                <div
+                                    class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'draft' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-white/5 text-slate-400 group-hover:text-amber-400 group-hover:bg-amber-500/10' }} transition-colors">
                                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -915,7 +967,8 @@
                         <a href="{{ route('admin.messages.index', ['type' => 'sent']) }}"
                             class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'sent' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'sent' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-white/5 text-slate-400 group-hover:text-emerald-400 group-hover:bg-emerald-500/10' }} transition-colors">
+                                <div
+                                    class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'sent' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-white/5 text-slate-400 group-hover:text-emerald-400 group-hover:bg-emerald-500/10' }} transition-colors">
                                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
@@ -930,8 +983,10 @@
                         <a href="{{ route('admin.messages.index', ['type' => 'important']) }}"
                             class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'important' ? 'bg-yellow-500/15 text-yellow-300 border border-yellow-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'important' ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30' : 'bg-white/5 text-slate-400 group-hover:text-yellow-400 group-hover:bg-yellow-500/10' }} transition-colors">
-                                    <svg class="w-3.5 h-3.5 {{ $currentType === 'important' ? 'fill-yellow-400 text-yellow-400' : 'fill-none' }}" viewBox="0 0 24 24" stroke="currentColor">
+                                <div
+                                    class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'important' ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30' : 'bg-white/5 text-slate-400 group-hover:text-yellow-400 group-hover:bg-yellow-500/10' }} transition-colors">
+                                    <svg class="w-3.5 h-3.5 {{ $currentType === 'important' ? 'fill-yellow-400 text-yellow-400' : 'fill-none' }}"
+                                        viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.784.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                                     </svg>
@@ -948,7 +1003,8 @@
                         <a href="{{ route('admin.messages.index', ['type' => 'all']) }}"
                             class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'all' ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'all' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-white/5 text-slate-400 group-hover:text-indigo-400 group-hover:bg-indigo-500/10' }} transition-colors">
+                                <div
+                                    class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'all' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'bg-white/5 text-slate-400 group-hover:text-indigo-400 group-hover:bg-indigo-500/10' }} transition-colors">
                                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -963,7 +1019,8 @@
                         <a href="{{ route('admin.messages.index', ['type' => 'trash']) }}"
                             class="group flex items-center justify-between px-3 py-2 rounded-xl transition-all {{ $currentType === 'trash' ? 'bg-rose-500/15 text-rose-300 border border-rose-500/30 font-bold shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }}">
                             <div class="flex items-center gap-2.5">
-                                <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'trash' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-white/5 text-slate-400 group-hover:text-rose-400 group-hover:bg-rose-500/10' }} transition-colors">
+                                <div
+                                    class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ $currentType === 'trash' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-white/5 text-slate-400 group-hover:text-rose-400 group-hover:bg-rose-500/10' }} transition-colors">
                                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -1006,8 +1063,8 @@
     </div>
 
     <!-- =========================================================================
-                                     POPUP EMAIL COMPOSER (Supports Temporary ID Autosave & Background Queue)
-                                     ========================================================================= -->
+                                                     POPUP EMAIL COMPOSER (Supports Temporary ID Autosave & Background Queue)
+                                                     ========================================================================= -->
     <div id="mail_composer_modal" class="hidden fixed z-50 transition-all duration-200">
         <div id="composer_window"
             class="w-[580px] max-w-[95vw] rounded-t-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 composer-dark">
@@ -1077,7 +1134,7 @@
                     <input type="hidden" name="temp_id" id="composer_temp_id" value="">
                     <input type="hidden" name="message_id" id="composer_reply_message_id" value="">
                     <input type="hidden" name="attachments" id="composer_attachments_json" value="[]">
-<!-- To Row -->
+                    <!-- To Row -->
                     <div id="row_to" class="px-4 py-2 border-b flex items-center gap-2">
                         <span class="text-xs font-medium select-none w-8 composer-label">To</span>
                         <input type="email" name="to" id="composer_to_input" required
@@ -1129,646 +1186,649 @@
                         class="hidden px-4 py-2.5 border-t flex flex-wrap items-center gap-2 text-xs composer-chip">
                         <!-- Dynamic attachment chips rendered by uploadAttachmentsInBackground -->
                     </div>
-    </div>
+            </div>
 
-    @push('scripts')
-        <script>
-            let isComposerMinimized = false;
-            let isComposerMaximized = false;
-            let autosaveTimer = null;
+            @push('scripts')
+                <script>
+                    let isComposerMinimized = false;
+                    let isComposerMaximized = false;
+                    let autosaveTimer = null;
 
-            function generateTempId() {
-                return 'temp_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
-            }
-
-            function openNewComposer() {
-                const modal = document.getElementById('mail_composer_modal');
-                const win = document.getElementById('composer_window');
-                const bodySection = document.getElementById('composer_body_section');
-                const snippet = document.getElementById('composer_minimized_snippet');
-
-                document.getElementById('mail_composer_form').reset();
-                document.getElementById('composer_temp_id').value = generateTempId();
-                document.getElementById('composer_reply_message_id').value = '';
-                document.getElementById('composer_modal_title').textContent = 'New Message';
-                document.getElementById('composer_autosave_badge').classList.add('hidden');
-                composerAttachments = []; renderComposerAttachmentChips();
-
-                modal.classList.remove('hidden');
-                modal.className = 'fixed bottom-0 right-4 sm:right-8 z-50 transition-all duration-200';
-                win.classList.remove('w-72');
-                win.classList.add('w-[580px]');
-                bodySection.classList.remove('hidden');
-                snippet.classList.add('hidden');
-                isComposerMinimized = false;
-                isComposerMaximized = false;
-
-                setTimeout(() => {
-                    document.getElementById('composer_to_input')?.focus();
-                }, 150);
-            }
-
-            function openReplyComposer(email, name, subject, messageId) {
-                openNewComposer();
-                document.getElementById('composer_to_input').value = email;
-                document.getElementById('composer_subject_input').value = subject;
-                document.getElementById('composer_reply_message_id').value = messageId;
-                document.getElementById('composer_modal_title').textContent = 'Reply to ' + name;
-                document.getElementById('composer_text_body').value =
-                    `Hi ${name},\n\nThank you for reaching out!\n\n\nBest regards,\n{{ auth()->user()->name ?? 'Alex Rivera' }}`;
-
-                triggerDebouncedAutosave();
-
-                setTimeout(() => {
-                    document.getElementById('composer_text_body')?.focus();
-                }, 150);
-            }
-
-            function closeComposer(e) {
-                if (e) e.stopPropagation();
-                document.getElementById('mail_composer_modal').classList.add('hidden');
-            }
-
-            function toggleMinimizeComposer(e) {
-                if (e) e.stopPropagation();
-                const win = document.getElementById('composer_window');
-                const bodySection = document.getElementById('composer_body_section');
-                const snippet = document.getElementById('composer_minimized_snippet');
-                const toInput = document.getElementById('composer_to_input');
-
-                if (!isComposerMinimized) {
-                    bodySection.classList.add('hidden');
-                    snippet.textContent = '— ' + (toInput.value || 'Draft');
-                    snippet.classList.remove('hidden');
-                    win.classList.remove('w-[580px]');
-                    win.classList.add('w-72');
-                    isComposerMinimized = true;
-                } else {
-                    bodySection.classList.remove('hidden');
-                    snippet.classList.add('hidden');
-                    win.classList.remove('w-72');
-                    win.classList.add('w-[580px]');
-                    isComposerMinimized = false;
-                }
-            }
-
-            function handleHeaderBarClick(e) {
-                if (isComposerMinimized) {
-                    toggleMinimizeComposer(e);
-                }
-            }
-
-            function toggleMaximizeComposer(e) {
-                if (e) e.stopPropagation();
-                const modal = document.getElementById('mail_composer_modal');
-                const win = document.getElementById('composer_window');
-                const bodySection = document.getElementById('composer_body_section');
-                const snippet = document.getElementById('composer_minimized_snippet');
-
-                if (isComposerMinimized) {
-                    bodySection.classList.remove('hidden');
-                    snippet.classList.add('hidden');
-                    isComposerMinimized = false;
-                }
-
-                if (!isComposerMaximized) {
-                    modal.className =
-                        'fixed inset-4 sm:inset-10 z-50 flex items-center justify-center transition-all duration-200';
-                    win.className =
-                        'w-full h-full max-w-4xl rounded-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 ' +
-                        (win.classList.contains('composer-light') ? 'composer-light' : 'composer-dark');
-                    isComposerMaximized = true;
-                } else {
-                    modal.className = 'fixed bottom-0 right-4 sm:right-8 z-50 transition-all duration-200';
-                    win.className =
-                        'w-[580px] max-w-[95vw] rounded-t-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 ' +
-                        (win.classList.contains('composer-light') ? 'composer-light' : 'composer-dark');
-                    isComposerMaximized = false;
-                }
-            }
-
-            function toggleCcRow() {
-                const row = document.getElementById('composer_cc_row');
-                row.classList.toggle('hidden');
-                if (!row.classList.contains('hidden')) {
-                    document.getElementById('composer_cc_input').focus();
-                }
-            }
-
-            function toggleBccRow() {
-                const row = document.getElementById('composer_bcc_row');
-                row.classList.toggle('hidden');
-                if (!row.classList.contains('hidden')) {
-                    document.getElementById('composer_bcc_input').focus();
-                }
-            }
-
-            function triggerAttachmentPicker() {
-                document.getElementById('composer_attachment_input').click();
-            }
-
-            function handleAttachmentSelected(input) {
-                if (input.files && input.files[0]) {
-                    const file = input.files[0];
-                    const chip = document.getElementById('attachment_preview_chip');
-                    document.getElementById('attachment_name').textContent = file.name;
-                    document.getElementById('attachment_size').textContent = `(${ (file.size / 1024).toFixed(1) } KB)`;
-                    chip.classList.remove('hidden');
-                }
-            }
-
-            function removeAttachment() {
-                document.getElementById('composer_attachment_input').value = '';
-                composerAttachments = []; renderComposerAttachmentChips();
-            }
-
-            function discardComposerDraft() {
-                if (confirm('Discard this composer draft?')) {
-                    closeComposer();
-                    removeAttachment();
-                }
-            }
-
-            // Keyup Autosave with Temporary ID
-            function triggerDebouncedAutosave() {
-                clearTimeout(autosaveTimer);
-                const statusText = document.getElementById('autosave_status_text');
-                statusText.textContent = 'Saving draft...';
-                statusText.classList.remove('hidden');
-
-                autosaveTimer = setTimeout(async () => {
-                    const tempId = document.getElementById('composer_temp_id').value;
-                    if (!tempId) return;
-
-                    const to = document.getElementById('composer_to_input').value;
-                    const subject = document.getElementById('composer_subject_input').value;
-                    const body = document.getElementById('composer_text_body').value;
-
-                    try {
-                        const res = await fetch("{{ route('admin.messages.autosaveDraft') }}", {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            },
-                            body: JSON.stringify({
-                                temp_id: tempId,
-                                to: to,
-                                subject: subject,
-                                body: body,
-                                attachments: composerAttachments
-                            })
-                        });
-
-                        const data = await res.json();
-                        if (data.success) {
-                            statusText.textContent = `Draft saved at ${data.saved_at}`;
-                            const badge = document.getElementById('composer_autosave_badge');
-                            badge.classList.remove('hidden');
-                        }
-                    } catch (err) {
-                        statusText.textContent = 'Autosave paused';
+                    function generateTempId() {
+                        return 'temp_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
                     }
-                }, 600);
-            }
 
-            // Send Mail (Queued in Background, Removes temp_id, Sets type to 'sent')
-            async function sendComposerMail(e) {
-                e.preventDefault();
+                    function openNewComposer() {
+                        const modal = document.getElementById('mail_composer_modal');
+                        const win = document.getElementById('composer_window');
+                        const bodySection = document.getElementById('composer_body_section');
+                        const snippet = document.getElementById('composer_minimized_snippet');
 
-                const sendBtn = document.getElementById('send_submit_btn');
-                const btnLabel = document.getElementById('send_btn_label');
+                        document.getElementById('mail_composer_form').reset();
+                        document.getElementById('composer_temp_id').value = generateTempId();
+                        document.getElementById('composer_reply_message_id').value = '';
+                        document.getElementById('composer_modal_title').textContent = 'New Message';
+                        document.getElementById('composer_autosave_badge').classList.add('hidden');
+                        composerAttachments = [];
+                        renderComposerAttachmentChips();
 
-                const tempId = document.getElementById('composer_temp_id').value;
-                const messageId = document.getElementById('composer_reply_message_id').value;
-                const to = document.getElementById('composer_to_input').value;
-                const subject = document.getElementById('composer_subject_input').value;
-                const body = document.getElementById('composer_text_body').value;
-                const cc = document.getElementById('composer_cc_input')?.value || '';
-                const bcc = document.getElementById('composer_bcc_input')?.value || '';
-
-                const formData = new FormData();
-                formData.append('temp_id', tempId);
-                formData.append('to', to);
-                formData.append('subject', subject);
-                formData.append('body', body);
-                formData.append('cc', cc);
-                formData.append('bcc', bcc);
-                formData.append('attachments', JSON.stringify(composerAttachments));
-
-                const fileInput = document.getElementById('composer_attachment_input');
-                if (fileInput && fileInput.files[0]) {
-                    formData.append('attachment', fileInput.files[0]);
-                }
-
-                sendBtn.disabled = true;
-                btnLabel.innerHTML =
-                    `<svg class="animate-spin h-3.5 w-3.5 text-white inline-block mr-1" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg> Queueing...`;
-
-                const targetUrl = messageId ? `{{ url('admin/messages') }}/${messageId}/reply` :
-                    `{{ route('admin.messages.sendCompose') }}`;
-
-                try {
-                    const response = await fetch(targetUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: formData
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok && data.success) {
-                        closeComposer();
-                        removeAttachment();
-
-                        try {
-                            sessionStorage.setItem('pending_toastr', JSON.stringify({
-                                type: 'success',
-                                message: data.message || 'Email queued successfully!',
-                                title: 'Success'
-                            }));
-                        } catch (e) {}
-
-                        if (typeof toastr !== 'undefined') {
-                            toastr.success(data.message || 'Email queued successfully!');
-                        }
+                        modal.classList.remove('hidden');
+                        modal.className = 'fixed bottom-0 right-4 sm:right-8 z-50 transition-all duration-200';
+                        win.classList.remove('w-72');
+                        win.classList.add('w-[580px]');
+                        bodySection.classList.remove('hidden');
+                        snippet.classList.add('hidden');
+                        isComposerMinimized = false;
+                        isComposerMaximized = false;
 
                         setTimeout(() => {
-                            window.location.reload();
-                        }, 700);
-                    } else {
-                        throw new Error(data.message || 'Failed to queue email.');
+                            document.getElementById('composer_to_input')?.focus();
+                        }, 150);
                     }
-                } catch (err) {
-                    alert(err.message || 'Email sending failed.');
-                } finally {
-                    sendBtn.disabled = false;
-                    btnLabel.textContent = 'Send';
-                }
-            }
 
-            // Toggle Important Star on Row
-            async function toggleMessageImportant(id, btn) {
-                try {
-                    const res = await fetch(`{{ url('admin/messages') }}/${id}/toggle-important`, {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    });
+                    function openReplyComposer(email, name, subject, messageId) {
+                        openNewComposer();
+                        document.getElementById('composer_to_input').value = email;
+                        document.getElementById('composer_subject_input').value = subject;
+                        document.getElementById('composer_reply_message_id').value = messageId;
+                        document.getElementById('composer_modal_title').textContent = 'Reply to ' + name;
+                        document.getElementById('composer_text_body').value =
+                            `Hi ${name},\n\nThank you for reaching out!\n\n\nBest regards,\n{{ auth()->user()->name ?? 'Alex Rivera' }}`;
 
-                    const data = await res.json();
-                    if (data.success) {
-                        const svg = btn.querySelector('svg');
-                        if (data.is_important) {
-                            svg.className.baseVal = 'w-4 h-4 text-yellow-400 fill-yellow-400';
-                            svg.setAttribute('fill', 'currentColor');
+                        triggerDebouncedAutosave();
+
+                        setTimeout(() => {
+                            document.getElementById('composer_text_body')?.focus();
+                        }, 150);
+                    }
+
+                    function closeComposer(e) {
+                        if (e) e.stopPropagation();
+                        document.getElementById('mail_composer_modal').classList.add('hidden');
+                    }
+
+                    function toggleMinimizeComposer(e) {
+                        if (e) e.stopPropagation();
+                        const win = document.getElementById('composer_window');
+                        const bodySection = document.getElementById('composer_body_section');
+                        const snippet = document.getElementById('composer_minimized_snippet');
+                        const toInput = document.getElementById('composer_to_input');
+
+                        if (!isComposerMinimized) {
+                            bodySection.classList.add('hidden');
+                            snippet.textContent = '— ' + (toInput.value || 'Draft');
+                            snippet.classList.remove('hidden');
+                            win.classList.remove('w-[580px]');
+                            win.classList.add('w-72');
+                            isComposerMinimized = true;
                         } else {
-                            svg.className.baseVal = 'w-4 h-4 text-slate-600 hover:text-slate-400';
-                            svg.setAttribute('fill', 'none');
-                        }
-
-                        if (typeof toastr !== 'undefined') {
-                            toastr.info(data.message);
+                            bodySection.classList.remove('hidden');
+                            snippet.classList.add('hidden');
+                            win.classList.remove('w-72');
+                            win.classList.add('w-[580px]');
+                            isComposerMinimized = false;
                         }
                     }
-                } catch (err) {
-                    console.error('Error toggling importance:', err);
-                }
-            }
 
-            // Theme toggle in composer
-            function setComposerTheme(theme) {
-                const win = document.getElementById('composer_window');
-                const sun = document.getElementById('theme_icon_sun');
-                const moon = document.getElementById('theme_icon_moon');
+                    function handleHeaderBarClick(e) {
+                        if (isComposerMinimized) {
+                            toggleMinimizeComposer(e);
+                        }
+                    }
 
-                if (theme === 'light') {
-                    win.classList.remove('composer-dark');
-                    win.classList.add('composer-light');
-                    sun?.classList.add('hidden');
-                    moon?.classList.remove('hidden');
-                    localStorage.setItem('composer_theme', 'light');
-                } else {
-                    win.classList.remove('composer-light');
-                    win.classList.add('composer-dark');
-                    sun?.classList.remove('hidden');
-                    moon?.classList.add('hidden');
-                    localStorage.setItem('composer_theme', 'dark');
-                }
-            }
+                    function toggleMaximizeComposer(e) {
+                        if (e) e.stopPropagation();
+                        const modal = document.getElementById('mail_composer_modal');
+                        const win = document.getElementById('composer_window');
+                        const bodySection = document.getElementById('composer_body_section');
+                        const snippet = document.getElementById('composer_minimized_snippet');
 
-            function toggleComposerTheme(e) {
-                if (e) e.stopPropagation();
-                const win = document.getElementById('composer_window');
-                const current = win.classList.contains('composer-light') ? 'light' : 'dark';
-                setComposerTheme(current === 'light' ? 'dark' : 'light');
-            }
+                        if (isComposerMinimized) {
+                            bodySection.classList.remove('hidden');
+                            snippet.classList.add('hidden');
+                            isComposerMinimized = false;
+                        }
 
-            document.addEventListener('DOMContentLoaded', () => {
-                const saved = localStorage.getItem('composer_theme') || 'dark';
-                setComposerTheme(saved);
-            });
-
-            // Navigate to message on row click (ignore clicks on interactive child elements)
-            function handleRowClick(e, url) {
-                if (e.target.closest('button, input, a, form, .msg-actions, .star-toggle-btn')) {
-                    return;
-                }
-                window.location.href = url;
-            }
-
-            // Master Select All Checkbox
-            function toggleSelectAll(master) {
-                const checkboxes = document.querySelectorAll('.msg-checkbox');
-                checkboxes.forEach(cb => {
-                    cb.checked = master.checked;
-                    const row = cb.closest('.message-row');
-                    if (row) {
-                        if (master.checked) {
-                            row.classList.add('bg-indigo-950/30');
+                        if (!isComposerMaximized) {
+                            modal.className =
+                                'fixed inset-4 sm:inset-10 z-50 flex items-center justify-center transition-all duration-200';
+                            win.className =
+                                'w-full h-full max-w-4xl rounded-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 ' +
+                                (win.classList.contains('composer-light') ? 'composer-light' : 'composer-dark');
+                            isComposerMaximized = true;
                         } else {
-                            row.classList.remove('bg-indigo-950/30');
+                            modal.className = 'fixed bottom-0 right-4 sm:right-8 z-50 transition-all duration-200';
+                            win.className =
+                                'w-[580px] max-w-[95vw] rounded-t-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 ' +
+                                (win.classList.contains('composer-light') ? 'composer-light' : 'composer-dark');
+                            isComposerMaximized = false;
                         }
                     }
-                });
-                updateBatchToolbar();
-            }
 
-            // Update Batch Actions Toolbar visibility and count
-            function updateBatchToolbar() {
-                const checked = document.querySelectorAll('.msg-checkbox:checked');
-                const bar = document.getElementById('batch_actions_bar');
-                const countBadge = document.getElementById('batch_selected_count');
-                const master = document.getElementById('selectAllCheckbox');
-
-                if (countBadge) {
-                    countBadge.textContent = `${checked.length} selected`;
-                }
-
-                if (checked.length > 0) {
-                    bar?.classList.remove('hidden');
-                    bar?.classList.add('flex');
-                } else {
-                    bar?.classList.add('hidden');
-                    bar?.classList.remove('flex');
-                    if (master) master.checked = false;
-                }
-
-                // Highlight selected rows
-                document.querySelectorAll('.message-row').forEach(row => {
-                    const cb = row.querySelector('.msg-checkbox');
-                    if (cb && cb.checked) {
-                        row.classList.add('bg-indigo-950/30');
-                    } else {
-                        row.classList.remove('bg-indigo-950/30');
+                    function toggleCcRow() {
+                        const row = document.getElementById('composer_cc_row');
+                        row.classList.toggle('hidden');
+                        if (!row.classList.contains('hidden')) {
+                            document.getElementById('composer_cc_input').focus();
+                        }
                     }
-                });
-            }
 
-            // Execute batch action (mark read, mark unread, trash, restore, force_delete)
-            async function executeBatchAction(action) {
-                const checked = Array.from(document.querySelectorAll('.msg-checkbox:checked')).map(cb => parseInt(cb
-                    .value));
-                if (checked.length === 0) return;
+                    function toggleBccRow() {
+                        const row = document.getElementById('composer_bcc_row');
+                        row.classList.toggle('hidden');
+                        if (!row.classList.contains('hidden')) {
+                            document.getElementById('composer_bcc_input').focus();
+                        }
+                    }
 
-                if (action === 'force_delete' && !confirm(
-                        `Permanently delete ${checked.length} selected messages? This cannot be undone.`)) {
-                    return;
-                }
-                if (action === 'trash' && !confirm(`Move ${checked.length} selected messages to Trash?`)) {
-                    return;
-                }
+                    function triggerAttachmentPicker() {
+                        document.getElementById('composer_attachment_input').click();
+                    }
 
-                try {
-                    const res = await fetch("{{ route('admin.messages.batch') }}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            ids: checked,
-                            action: action
-                        })
+                    function handleAttachmentSelected(input) {
+                        if (input.files && input.files[0]) {
+                            const file = input.files[0];
+                            const chip = document.getElementById('attachment_preview_chip');
+                            document.getElementById('attachment_name').textContent = file.name;
+                            document.getElementById('attachment_size').textContent = `(${ (file.size / 1024).toFixed(1) } KB)`;
+                            chip.classList.remove('hidden');
+                        }
+                    }
+
+                    function removeAttachment() {
+                        document.getElementById('composer_attachment_input').value = '';
+                        composerAttachments = [];
+                        renderComposerAttachmentChips();
+                    }
+
+                    function discardComposerDraft() {
+                        if (confirm('Discard this composer draft?')) {
+                            closeComposer();
+                            removeAttachment();
+                        }
+                    }
+
+                    // Keyup Autosave with Temporary ID
+                    function triggerDebouncedAutosave() {
+                        clearTimeout(autosaveTimer);
+                        const statusText = document.getElementById('autosave_status_text');
+                        statusText.textContent = 'Saving draft...';
+                        statusText.classList.remove('hidden');
+
+                        autosaveTimer = setTimeout(async () => {
+                            const tempId = document.getElementById('composer_temp_id').value;
+                            if (!tempId) return;
+
+                            const to = document.getElementById('composer_to_input').value;
+                            const subject = document.getElementById('composer_subject_input').value;
+                            const body = document.getElementById('composer_text_body').value;
+
+                            try {
+                                const res = await fetch("{{ route('admin.messages.autosaveDraft') }}", {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: JSON.stringify({
+                                        temp_id: tempId,
+                                        to: to,
+                                        subject: subject,
+                                        body: body,
+                                        attachments: composerAttachments
+                                    })
+                                });
+
+                                const data = await res.json();
+                                if (data.success) {
+                                    statusText.textContent = `Draft saved at ${data.saved_at}`;
+                                    const badge = document.getElementById('composer_autosave_badge');
+                                    badge.classList.remove('hidden');
+                                }
+                            } catch (err) {
+                                statusText.textContent = 'Autosave paused';
+                            }
+                        }, 600);
+                    }
+
+                    // Send Mail (Queued in Background, Removes temp_id, Sets type to 'sent')
+                    async function sendComposerMail(e) {
+                        e.preventDefault();
+
+                        const sendBtn = document.getElementById('send_submit_btn');
+                        const btnLabel = document.getElementById('send_btn_label');
+
+                        const tempId = document.getElementById('composer_temp_id').value;
+                        const messageId = document.getElementById('composer_reply_message_id').value;
+                        const to = document.getElementById('composer_to_input').value;
+                        const subject = document.getElementById('composer_subject_input').value;
+                        const body = document.getElementById('composer_text_body').value;
+                        const cc = document.getElementById('composer_cc_input')?.value || '';
+                        const bcc = document.getElementById('composer_bcc_input')?.value || '';
+
+                        const formData = new FormData();
+                        formData.append('temp_id', tempId);
+                        formData.append('to', to);
+                        formData.append('subject', subject);
+                        formData.append('body', body);
+                        formData.append('cc', cc);
+                        formData.append('bcc', bcc);
+                        formData.append('attachments', JSON.stringify(composerAttachments));
+
+                        const fileInput = document.getElementById('composer_attachment_input');
+                        if (fileInput && fileInput.files[0]) {
+                            formData.append('attachment', fileInput.files[0]);
+                        }
+
+                        sendBtn.disabled = true;
+                        btnLabel.innerHTML =
+                            `<svg class="animate-spin h-3.5 w-3.5 text-white inline-block mr-1" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg> Queueing...`;
+
+                        const targetUrl = messageId ? `{{ url('admin/messages') }}/${messageId}/reply` :
+                            `{{ route('admin.messages.sendCompose') }}`;
+
+                        try {
+                            const response = await fetch(targetUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: formData
+                            });
+
+                            const data = await response.json();
+
+                            if (response.ok && data.success) {
+                                closeComposer();
+                                removeAttachment();
+
+                                try {
+                                    sessionStorage.setItem('pending_toastr', JSON.stringify({
+                                        type: 'success',
+                                        message: data.message || 'Email queued successfully!',
+                                        title: 'Success'
+                                    }));
+                                } catch (e) {}
+
+                                if (typeof toastr !== 'undefined') {
+                                    toastr.success(data.message || 'Email queued successfully!');
+                                }
+
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 700);
+                            } else {
+                                throw new Error(data.message || 'Failed to queue email.');
+                            }
+                        } catch (err) {
+                            alert(err.message || 'Email sending failed.');
+                        } finally {
+                            sendBtn.disabled = false;
+                            btnLabel.textContent = 'Send';
+                        }
+                    }
+
+                    // Toggle Important Star on Row
+                    async function toggleMessageImportant(id, btn) {
+                        try {
+                            const res = await fetch(`{{ url('admin/messages') }}/${id}/toggle-important`, {
+                                method: 'POST',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                }
+                            });
+
+                            const data = await res.json();
+                            if (data.success) {
+                                const svg = btn.querySelector('svg');
+                                if (data.is_important) {
+                                    svg.className.baseVal = 'w-4 h-4 text-yellow-400 fill-yellow-400';
+                                    svg.setAttribute('fill', 'currentColor');
+                                } else {
+                                    svg.className.baseVal = 'w-4 h-4 text-slate-600 hover:text-slate-400';
+                                    svg.setAttribute('fill', 'none');
+                                }
+
+                                if (typeof toastr !== 'undefined') {
+                                    toastr.info(data.message);
+                                }
+                            }
+                        } catch (err) {
+                            console.error('Error toggling importance:', err);
+                        }
+                    }
+
+                    // Theme toggle in composer
+                    function setComposerTheme(theme) {
+                        const win = document.getElementById('composer_window');
+                        const sun = document.getElementById('theme_icon_sun');
+                        const moon = document.getElementById('theme_icon_moon');
+
+                        if (theme === 'light') {
+                            win.classList.remove('composer-dark');
+                            win.classList.add('composer-light');
+                            sun?.classList.add('hidden');
+                            moon?.classList.remove('hidden');
+                            localStorage.setItem('composer_theme', 'light');
+                        } else {
+                            win.classList.remove('composer-light');
+                            win.classList.add('composer-dark');
+                            sun?.classList.remove('hidden');
+                            moon?.classList.add('hidden');
+                            localStorage.setItem('composer_theme', 'dark');
+                        }
+                    }
+
+                    function toggleComposerTheme(e) {
+                        if (e) e.stopPropagation();
+                        const win = document.getElementById('composer_window');
+                        const current = win.classList.contains('composer-light') ? 'light' : 'dark';
+                        setComposerTheme(current === 'light' ? 'dark' : 'light');
+                    }
+
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const saved = localStorage.getItem('composer_theme') || 'dark';
+                        setComposerTheme(saved);
                     });
 
-                    const data = await res.json();
-                    if (data.success) {
-                        if (typeof toastr !== 'undefined') {
-                            toastr.success(data.message);
+                    // Navigate to message on row click (ignore clicks on interactive child elements)
+                    function handleRowClick(e, url) {
+                        if (e.target.closest('button, input, a, form, .msg-actions, .star-toggle-btn')) {
+                            return;
                         }
-                        window.location.reload();
+                        window.location.href = url;
                     }
-                } catch (err) {
-                    console.error('Batch action error:', err);
-                }
-            }
 
-            // Toggle Read / Unread Status via AJAX
-            async function toggleMessageRead(id, btn) {
-                try {
-                    const res = await fetch(`{{ url('admin/messages') }}/${id}/toggle-read`, {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    // Master Select All Checkbox
+                    function toggleSelectAll(master) {
+                        const checkboxes = document.querySelectorAll('.msg-checkbox');
+                        checkboxes.forEach(cb => {
+                            cb.checked = master.checked;
+                            const row = cb.closest('.message-row');
+                            if (row) {
+                                if (master.checked) {
+                                    row.classList.add('bg-indigo-950/30');
+                                } else {
+                                    row.classList.remove('bg-indigo-950/30');
+                                }
+                            }
+                        });
+                        updateBatchToolbar();
+                    }
+
+                    // Update Batch Actions Toolbar visibility and count
+                    function updateBatchToolbar() {
+                        const checked = document.querySelectorAll('.msg-checkbox:checked');
+                        const bar = document.getElementById('batch_actions_bar');
+                        const countBadge = document.getElementById('batch_selected_count');
+                        const master = document.getElementById('selectAllCheckbox');
+
+                        if (countBadge) {
+                            countBadge.textContent = `${checked.length} selected`;
                         }
-                    });
 
-                    const data = await res.json();
-                    if (data.success) {
-                        const row = document.getElementById(`msg_row_${id}`);
-                        if (row) {
-                            const senderName = row.querySelector('.sender-name');
-                            const subjectText = row.querySelector('.subject-text');
+                        if (checked.length > 0) {
+                            bar?.classList.remove('hidden');
+                            bar?.classList.add('flex');
+                        } else {
+                            bar?.classList.add('hidden');
+                            bar?.classList.remove('flex');
+                            if (master) master.checked = false;
+                        }
 
-                            if (data.is_read) {
-                                row.classList.remove('bg-indigo-500/[0.03]', 'is-unread');
-                                row.classList.add('is-read');
-                                senderName?.classList.remove('font-bold', 'text-white');
-                                senderName?.classList.add('font-medium', 'text-slate-300');
-                                subjectText?.classList.remove('font-bold', 'text-white');
-                                subjectText?.classList.add('font-medium', 'text-slate-200');
+                        // Highlight selected rows
+                        document.querySelectorAll('.message-row').forEach(row => {
+                            const cb = row.querySelector('.msg-checkbox');
+                            if (cb && cb.checked) {
+                                row.classList.add('bg-indigo-950/30');
+                            } else {
+                                row.classList.remove('bg-indigo-950/30');
+                            }
+                        });
+                    }
 
-                                btn.title = 'Mark as Unread';
-                                btn.innerHTML = `
+                    // Execute batch action (mark read, mark unread, trash, restore, force_delete)
+                    async function executeBatchAction(action) {
+                        const checked = Array.from(document.querySelectorAll('.msg-checkbox:checked')).map(cb => parseInt(cb
+                            .value));
+                        if (checked.length === 0) return;
+
+                        if (action === 'force_delete' && !confirm(
+                                `Permanently delete ${checked.length} selected messages? This cannot be undone.`)) {
+                            return;
+                        }
+                        if (action === 'trash' && !confirm(`Move ${checked.length} selected messages to Trash?`)) {
+                            return;
+                        }
+
+                        try {
+                            const res = await fetch("{{ route('admin.messages.batch') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    ids: checked,
+                                    action: action
+                                })
+                            });
+
+                            const data = await res.json();
+                            if (data.success) {
+                                if (typeof toastr !== 'undefined') {
+                                    toastr.success(data.message);
+                                }
+                                window.location.reload();
+                            }
+                        } catch (err) {
+                            console.error('Batch action error:', err);
+                        }
+                    }
+
+                    // Toggle Read / Unread Status via AJAX
+                    async function toggleMessageRead(id, btn) {
+                        try {
+                            const res = await fetch(`{{ url('admin/messages') }}/${id}/toggle-read`, {
+                                method: 'POST',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                }
+                            });
+
+                            const data = await res.json();
+                            if (data.success) {
+                                const row = document.getElementById(`msg_row_${id}`);
+                                if (row) {
+                                    const senderName = row.querySelector('.sender-name');
+                                    const subjectText = row.querySelector('.subject-text');
+
+                                    if (data.is_read) {
+                                        row.classList.remove('bg-indigo-500/[0.03]', 'is-unread');
+                                        row.classList.add('is-read');
+                                        senderName?.classList.remove('font-bold', 'text-white');
+                                        senderName?.classList.add('font-medium', 'text-slate-300');
+                                        subjectText?.classList.remove('font-bold', 'text-white');
+                                        subjectText?.classList.add('font-medium', 'text-slate-200');
+
+                                        btn.title = 'Mark as Unread';
+                                        btn.innerHTML = `
                                     <svg class="w-4 h-4 envelope-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
                                 `;
-                            } else {
-                                row.classList.add('bg-indigo-500/[0.03]', 'is-unread');
-                                row.classList.remove('is-read');
-                                senderName?.classList.add('font-bold', 'text-white');
-                                senderName?.classList.remove('font-medium', 'text-slate-300');
-                                subjectText?.classList.add('font-bold', 'text-white');
-                                subjectText?.classList.remove('font-medium', 'text-slate-200');
+                                    } else {
+                                        row.classList.add('bg-indigo-500/[0.03]', 'is-unread');
+                                        row.classList.remove('is-read');
+                                        senderName?.classList.add('font-bold', 'text-white');
+                                        senderName?.classList.remove('font-medium', 'text-slate-300');
+                                        subjectText?.classList.add('font-bold', 'text-white');
+                                        subjectText?.classList.remove('font-medium', 'text-slate-200');
 
-                                btn.title = 'Mark as Read';
-                                btn.innerHTML = `
+                                        btn.title = 'Mark as Read';
+                                        btn.innerHTML = `
                                     <svg class="w-4 h-4 envelope-icon text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5" />
                                     </svg>
                                 `;
+                                    }
+                                }
+
+                                if (typeof toastr !== 'undefined') {
+                                    toastr.info(data.message);
+                                }
                             }
-                        }
-
-                        if (typeof toastr !== 'undefined') {
-                            toastr.info(data.message);
+                        } catch (err) {
+                            console.error('Error toggling read status:', err);
                         }
                     }
-                } catch (err) {
-                    console.error('Error toggling read status:', err);
-                }
-            }
 
-            // Delete single message via hover trash button (smooth fade animation)
-            async function deleteSingleMessage(id) {
-                if (!confirm('Move this message to Trash?')) return;
+                    // Delete single message via hover trash button (smooth fade animation)
+                    async function deleteSingleMessage(id) {
+                        if (!confirm('Move this message to Trash?')) return;
 
-                try {
-                    const res = await fetch(`{{ url('admin/messages') }}/${id}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            _method: 'DELETE'
-                        })
-                    });
+                        try {
+                            const res = await fetch(`{{ url('admin/messages') }}/${id}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    _method: 'DELETE'
+                                })
+                            });
 
-                    const data = await res.json();
-                    if (data.success) {
-                        const row = document.getElementById(`msg_row_${id}`);
-                        if (row) {
-                            row.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-                            row.style.opacity = '0';
-                            row.style.transform = 'translateX(30px)';
-                            setTimeout(() => row.remove(), 300);
-                        }
-                        if (typeof toastr !== 'undefined') {
-                            toastr.success(data.message || 'Message moved to Trash');
-                        }
-                    }
-                } catch (err) {
-                    window.location.reload();
-                }
-            }
-
-            // Restore single message from Trash
-            async function restoreSingleMessage(id) {
-                try {
-                    const res = await fetch(`{{ url('admin/messages') }}/${id}/restore`, {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    });
-
-                    const data = await res.json();
-                    if (data.success) {
-                        const row = document.getElementById(`msg_row_${id}`);
-                        if (row) {
-                            row.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-                            row.style.opacity = '0';
-                            row.style.transform = 'translateX(-30px)';
-                            setTimeout(() => row.remove(), 300);
-                        }
-                        if (typeof toastr !== 'undefined') {
-                            toastr.success(data.message);
+                            const data = await res.json();
+                            if (data.success) {
+                                const row = document.getElementById(`msg_row_${id}`);
+                                if (row) {
+                                    row.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                                    row.style.opacity = '0';
+                                    row.style.transform = 'translateX(30px)';
+                                    setTimeout(() => row.remove(), 300);
+                                }
+                                if (typeof toastr !== 'undefined') {
+                                    toastr.success(data.message || 'Message moved to Trash');
+                                }
+                            }
+                        } catch (err) {
+                            window.location.reload();
                         }
                     }
-                } catch (err) {
-                    window.location.reload();
-                }
-            }
 
-            // Force delete single message
-            async function forceDeleteSingleMessage(id) {
-                if (!confirm('Permanently delete this message forever? This cannot be undone.')) return;
+                    // Restore single message from Trash
+                    async function restoreSingleMessage(id) {
+                        try {
+                            const res = await fetch(`{{ url('admin/messages') }}/${id}/restore`, {
+                                method: 'POST',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                }
+                            });
 
-                try {
-                    const res = await fetch(`{{ url('admin/messages') }}/${id}/force-delete`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            _method: 'DELETE'
-                        })
-                    });
-
-                    const data = await res.json();
-                    if (data.success) {
-                        const row = document.getElementById(`msg_row_${id}`);
-                        if (row) {
-                            row.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-                            row.style.opacity = '0';
-                            setTimeout(() => row.remove(), 300);
-                        }
-                        if (typeof toastr !== 'undefined') {
-                            toastr.success(data.message);
+                            const data = await res.json();
+                            if (data.success) {
+                                const row = document.getElementById(`msg_row_${id}`);
+                                if (row) {
+                                    row.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                                    row.style.opacity = '0';
+                                    row.style.transform = 'translateX(-30px)';
+                                    setTimeout(() => row.remove(), 300);
+                                }
+                                if (typeof toastr !== 'undefined') {
+                                    toastr.success(data.message);
+                                }
+                            }
+                        } catch (err) {
+                            window.location.reload();
                         }
                     }
-                } catch (err) {
-                    window.location.reload();
-                }
-            }
-        
-            // Composer background uploaded attachments state
-            let composerAttachments = [];
 
-            function renderComposerAttachmentChips() {
-                const container = document.getElementById('composer_attachments_container');
-                const hiddenInput = document.getElementById('composer_attachments_json');
-                if (!container) return;
+                    // Force delete single message
+                    async function forceDeleteSingleMessage(id) {
+                        if (!confirm('Permanently delete this message forever? This cannot be undone.')) return;
 
-                hiddenInput.value = JSON.stringify(composerAttachments);
+                        try {
+                            const res = await fetch(`{{ url('admin/messages') }}/${id}/force-delete`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    _method: 'DELETE'
+                                })
+                            });
 
-                if (composerAttachments.length === 0) {
-                    container.classList.add('hidden');
-                    container.innerHTML = '';
-                    return;
-                }
+                            const data = await res.json();
+                            if (data.success) {
+                                const row = document.getElementById(`msg_row_${id}`);
+                                if (row) {
+                                    row.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                                    row.style.opacity = '0';
+                                    setTimeout(() => row.remove(), 300);
+                                }
+                                if (typeof toastr !== 'undefined') {
+                                    toastr.success(data.message);
+                                }
+                            }
+                        } catch (err) {
+                            window.location.reload();
+                        }
+                    }
 
-                container.classList.remove('hidden');
-                container.innerHTML = composerAttachments.map((att, idx) => {
-                    const ext = (att.extension || att.name.split('.').pop()).toLowerCase();
-                    const isPdf = ext === 'pdf';
-                    const isImg = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'].includes(ext);
+                    // Composer background uploaded attachments state
+                    let composerAttachments = [];
 
-                    let iconHtml = '';
-                    if (isImg) {
-                        iconHtml = `<span class="w-4 h-4 rounded bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
+                    function renderComposerAttachmentChips() {
+                        const container = document.getElementById('composer_attachments_container');
+                        const hiddenInput = document.getElementById('composer_attachments_json');
+                        if (!container) return;
+
+                        hiddenInput.value = JSON.stringify(composerAttachments);
+
+                        if (composerAttachments.length === 0) {
+                            container.classList.add('hidden');
+                            container.innerHTML = '';
+                            return;
+                        }
+
+                        container.classList.remove('hidden');
+                        container.innerHTML = composerAttachments.map((att, idx) => {
+                            const ext = (att.extension || att.name.split('.').pop()).toLowerCase();
+                            const isPdf = ext === 'pdf';
+                            const isImg = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'].includes(ext);
+
+                            let iconHtml = '';
+                            if (isImg) {
+                                iconHtml = `<span class="w-4 h-4 rounded bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
                             <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
                         </span>`;
-                    } else if (isPdf) {
-                        iconHtml = `<span class="px-1 py-0.5 rounded text-[8px] font-black font-mono uppercase bg-rose-600 text-white shrink-0 tracking-tight leading-none">PDF</span>`;
-                    } else {
-                        iconHtml = `<span class="w-4 h-4 rounded bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+                            } else if (isPdf) {
+                                iconHtml =
+                                    `<span class="px-1 py-0.5 rounded text-[8px] font-black font-mono uppercase bg-rose-600 text-white shrink-0 tracking-tight leading-none">PDF</span>`;
+                            } else {
+                                iconHtml = `<span class="w-4 h-4 rounded bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
                             <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/>
                             </svg>
                         </span>`;
-                    }
+                            }
 
-                    return `
+                            return `
                         <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-[#0d1627] text-slate-200 text-xs shadow-sm">
                             ${iconHtml}
                             <span class="font-medium truncate max-w-[150px]">${att.name}</span>
@@ -1776,80 +1836,82 @@
                             <button type="button" onclick="removeComposerAttachment(${idx})" class="ml-1 text-slate-400 hover:text-rose-400 text-xs font-bold cursor-pointer" title="Remove">&times;</button>
                         </div>
                     `;
-                }).join('');
-            }
+                        }).join('');
+                    }
 
-            // Asynchronous Background File Upload to Server Folder
-            async function uploadAttachmentsInBackground(input) {
-                if (!input.files || input.files.length === 0) return;
+                    // Asynchronous Background File Upload to Server Folder
+                    async function uploadAttachmentsInBackground(input) {
+                        if (!input.files || input.files.length === 0) return;
 
-                const tempId = document.getElementById('composer_temp_id').value;
-                const statusText = document.getElementById('autosave_status_text');
-                statusText.textContent = 'Uploading file in background...';
-                statusText.classList.remove('hidden');
+                        const tempId = document.getElementById('composer_temp_id').value;
+                        const statusText = document.getElementById('autosave_status_text');
+                        statusText.textContent = 'Uploading file in background...';
+                        statusText.classList.remove('hidden');
 
-                for (let i = 0; i < input.files.length; i++) {
-                    const file = input.files[i];
-                    const formData = new FormData();
-                    formData.append('file', file);
-                    if (tempId) formData.append('temp_id', tempId);
+                        for (let i = 0; i < input.files.length; i++) {
+                            const file = input.files[i];
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            if (tempId) formData.append('temp_id', tempId);
 
-                    try {
-                        const res = await fetch("{{ route('admin.messages.uploadAttachment') }}", {
-                            method: 'POST',
-                            headers: {
-                                'Accept': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            },
-                            body: formData
-                        });
+                            try {
+                                const res = await fetch("{{ route('admin.messages.uploadAttachment') }}", {
+                                    method: 'POST',
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: formData
+                                });
 
-                        const data = await res.json();
-                        if (data.success && data.attachment) {
-                            composerAttachments.push(data.attachment);
-                            renderComposerAttachmentChips();
-                            triggerDebouncedAutosave();
-                            if (typeof toastr !== 'undefined') {
-                                toastr.success(`Attached ${data.attachment.name}`);
+                                const data = await res.json();
+                                if (data.success && data.attachment) {
+                                    composerAttachments.push(data.attachment);
+                                    renderComposerAttachmentChips();
+                                    triggerDebouncedAutosave();
+                                    if (typeof toastr !== 'undefined') {
+                                        toastr.success(`Attached ${data.attachment.name}`);
+                                    }
+                                }
+                            } catch (err) {
+                                console.error('Attachment upload failed:', err);
                             }
                         }
-                    } catch (err) {
-                        console.error('Attachment upload failed:', err);
+
+                        input.value = '';
+                        statusText.textContent = 'Attachment uploaded';
+                        setTimeout(() => {
+                            statusText.classList.add('hidden');
+                        }, 2000);
                     }
-                }
 
-                input.value = '';
-                statusText.textContent = 'Attachment uploaded';
-                setTimeout(() => { statusText.classList.add('hidden'); }, 2000);
-            }
+                    // Remove attachment from composer and backend folder
+                    async function removeComposerAttachment(idx) {
+                        const att = composerAttachments[idx];
+                        if (!att) return;
 
-            // Remove attachment from composer and backend folder
-            async function removeComposerAttachment(idx) {
-                const att = composerAttachments[idx];
-                if (!att) return;
+                        const tempId = document.getElementById('composer_temp_id').value;
+                        composerAttachments.splice(idx, 1);
+                        renderComposerAttachmentChips();
+                        triggerDebouncedAutosave();
 
-                const tempId = document.getElementById('composer_temp_id').value;
-                composerAttachments.splice(idx, 1);
-                renderComposerAttachmentChips();
-                triggerDebouncedAutosave();
-
-                try {
-                    await fetch("{{ route('admin.messages.deleteAttachment') }}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            path: att.path,
-                            temp_id: tempId
-                        })
-                    });
-                } catch (err) {
-                    console.error('Attachment delete failed:', err);
-                }
-            }
-</script>
-    @endpush
-@endsection
+                        try {
+                            await fetch("{{ route('admin.messages.deleteAttachment') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    path: att.path,
+                                    temp_id: tempId
+                                })
+                            });
+                        } catch (err) {
+                            console.error('Attachment delete failed:', err);
+                        }
+                    }
+                </script>
+            @endpush
+        @endsection
