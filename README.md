@@ -2,6 +2,8 @@
 
 > **Complete multi theme portfolio with admin panel to mantainance everythings.**
 
+[![Current Version](https://img.shields.io/badge/Version-v1.0.0-0090e7?style=for-the-badge&logo=git&logoColor=white)](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.0.0)
+[![Release Status](https://img.shields.io/badge/Release-Stable-emerald?style=for-the-badge)](https://github.com/abdullahalahsan777-hub/Portfolio/releases)
 [![Laravel 12](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
 [![PHP 8.2+](https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
 [![Tailwind CSS 3.4](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
@@ -13,6 +15,7 @@
 
 ## 📖 Table of Contents
 
+- [Version & Release Information](#-version--release-information)
 - [About The Software](#-about-the-software)
 - [Signature Themes](#-signature-themes)
 - [Key Features](#-key-features)
@@ -31,8 +34,22 @@
   - [8. Queue & Background Processing](#8-queue--background-processing)
 - [Project Directory Structure](#-project-directory-structure)
 - [Security Best Practices](#-security-best-practices)
+- [Version History & Changelog](#-version-history--changelog)
 - [Troubleshooting & FAQ](#-troubleshooting--faq)
 - [License](#-license)
+
+---
+
+## 📦 Version & Release Information
+
+| Metric | Details |
+| :--- | :--- |
+| **Current Stable Version** | **`v1.0.0`** |
+| **Release Date** | October 29, 2026 |
+| **Git Tag** | [`v1.0.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.0.0) |
+| **Release Status** | Production-Ready (LTS) |
+| **Laravel Compatibility** | Laravel `12.x` / PHP `8.2+` |
+| **Default Branch** | [`main`](https://github.com/abdullahalahsan777-hub/Portfolio/tree/main) |
 
 ---
 
@@ -424,6 +441,24 @@ portfolio/
    chmod -R 775 storage bootstrap/cache
    ```
 5. **Secure Cookies & HTTPS**: When deploying to production with SSL, set `SESSION_SECURE_COOKIE=true` in `.env`.
+
+---
+
+## 📜 Version History & Changelog
+
+### [`v1.0.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.0.0) — *Official Public Release* (October 2026)
+
+- **Multi-Theme Engine**: 6 distinct frontend portfolio personas (`developer`, `digital_designer_illustrator`, `graphic_designer`, `uiux_designer`, `app_developer`, `app_software_developer`).
+- **Obsidian Dark Admin Panel**: Handcrafted dark glassmorphic control center (`#09101d`) with real-time statistics and responsive sidebar navigation.
+- **Brand & Logo Studio**:
+  - Vector Software Logo & Mini Monogram uploads.
+  - Browser Favicon (`.ico`/`.svg`) and Avatar Placeholders.
+  - **Two-Word Logo**: Dynamic primary and accent wordmarks with real-time browser preview, monogram initials generator, and optional custom graphic upload.
+- **Dynamic Page Elements CMS**: Live editor for static subviews and database-driven dynamic section cards across all 8 pages (Home, About, Services, Projects, Resume, Blog, FAQ, Contact).
+- **Toastr Notification System**: 6 distinct status levels (`Success`, `Warning`, `Danger`, `Error`, `Info`, `Important`) with custom SVG squircle icons and animated countdown bars.
+- **Inquiries & Message Hub**: AJAX contact form lead capture with unread status tracking and direct email reply integration.
+- **System Maintenance Mode**: Instant GUI toggle to take frontend offline with customized downtime message and ETA banner.
+- **Zero Missing Config Key Compliance**: 100% of optional framework environment variables declared with safe fallbacks in `.env` and `.env.example`.
 
 ---
 
