@@ -28,8 +28,8 @@ class DashboardController extends Controller
      */
     public function index(): View
     {
-        $totalMessages = ContactMessage::count();
-        $unreadMessages = ContactMessage::where('is_read', false)->count();
+        $totalMessages = ContactMessage::where('type', 'inbox')->count();
+        $unreadMessages = ContactMessage::where('type', 'inbox')->where('is_read', false)->count();
         $readMessages = $totalMessages - $unreadMessages;
         $readPercentage = $totalMessages > 0 ? round(($readMessages / $totalMessages) * 100, 1) : 100;
 
@@ -147,7 +147,7 @@ class DashboardController extends Controller
             'notification_read_percentage' => $notifReadPercentage,
         ];
 
-        $recentMessages        = ContactMessage::latest()->take(6)->get();
+        $recentMessages        = ContactMessage::where('type', 'inbox')->latest()->take(6)->get();
         $recentProjects        = Project::latest()->take(5)->get();
         $recentArticles        = BlogPost::latest()->take(6)->get();
         $recentUsers           = User::latest()->take(5)->get();
