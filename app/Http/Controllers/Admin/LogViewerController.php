@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -211,7 +212,7 @@ class LogViewerController extends Controller
     }
 
     /**
-     * Clear / empty a specific log file or all log files.
+     * Clear / empty both Browser and Laravel log files (or specified file).
      */
     public function clear(Request $request): RedirectResponse
     {
@@ -224,7 +225,14 @@ class LogViewerController extends Controller
                     File::put($fileInfo['path'], '');
                 }
             }
-            flash()->success('All log files have been successfully cleared.');
+            // Also explicitly guarantee standard files are cleared if they exist
+            $standardPaths = [storage_path('logs/laravel.log'), storage_path('logs/browser.log')];
+            foreach ($standardPaths as $p) {
+                if (File::exists($p)) {
+                    File::put($p, '');
+                }
+            }
+            flash()->success('Both Browser and Laravel diagnostic log files have been successfully cleared.');
         } elseif (isset($available[$target])) {
             File::put($available[$target]['path'], '');
             flash()->success("Log file '{$target}' has been successfully cleared.");
@@ -232,23 +240,67 @@ class LogViewerController extends Controller
             flash()->warning('Specified log file not found.');
         }
 
-        return redirect()->back();
+        return redirect()->route('admin.logs.index');
     }
 
     /**
-     * Download a log file.
+     * Download log file(s).
+     * Combines all data from both Browser and Laravel log files,
+     * sorted descending by datetime, named "System & Browser Diagnostics.log".
      */
-    public function download(Request $request): BinaryFileResponse|RedirectResponse
+    public function download(Request $request): Response|BinaryFileResponse|RedirectResponse
     {
-        $fileName = $request->query('file', 'laravel.log');
+        $fileName = $request->query('file');
         $available = $this->getAvailableLogFiles();
 
-        if (!isset($available[$fileName])) {
-            flash()->warning("Log file '{$fileName}' does not exist.");
-            return redirect()->back();
+        // If a specific individual file was requested (and not 'all')
+        if (!empty($fileName) && $fileName !== 'all' && isset($available[$fileName])) {
+            return response()->download($available[$fileName]['path'], $fileName);
         }
 
-        return response()->download($available[$fileName]['path'], $fileName);
+        // Combine both Browser and Laravel (and any other available) logs
+        $filesToRead = [];
+        foreach ($available as $name => $meta) {
+            $filesToRead[$name] = $meta['path'];
+        }
+
+        // Parse and sort descending by date/time
+        $allEntries = $this->parseLogFiles($filesToRead);
+
+        $output = "================================================================================\n";
+        $output .= " SYSTEM & BROWSER DIAGNOSTICS LOG EXPORT\n";
+        $output .= " Exported At      : " . now()->format('Y-m-d H:i:s T') . "\n";
+        $output .= " Total Entries    : " . $allEntries->count() . "\n";
+        $output .= " Sources Included : Laravel Backend (laravel.log) & Browser Console (browser.log)\n";
+        $output .= " Order            : Date & Time Descending (Newest First)\n";
+        $output .= "================================================================================\n\n";
+
+        foreach ($allEntries as $entry) {
+            $output .= sprintf(
+                "[%s] %s.%s: %s\n",
+                $entry['timestamp_raw'],
+                $entry['environment'] ?? ($entry['is_browser'] ? 'browser' : 'local'),
+                $entry['level'],
+                $entry['message']
+            );
+
+            if (!empty($entry['context_json'])) {
+                $output .= "[context] " . $entry['context_json'] . "\n";
+            }
+
+            if (!empty($entry['stack_trace'])) {
+                $output .= "[stacktrace]\n" . $entry['stack_trace'] . "\n";
+            }
+
+            $output .= "\n";
+        }
+
+        $downloadName = 'System & Browser Diagnostics.log';
+
+        return response($output, 200, [
+            'Content-Type'        => 'text/plain; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="' . $downloadName . '"',
+        ]);
     }
 
     /**
