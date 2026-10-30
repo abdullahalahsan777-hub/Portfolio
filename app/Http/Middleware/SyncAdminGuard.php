@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,13 +16,15 @@ class SyncAdminGuard
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::guard('web')->check()) {
+            /** @var User|null $user */
             $user = Auth::guard('web')->user();
-            if ($user && $user->isAdmin()) {
+            if ($user instanceof User && $user->isAdmin()) {
                 Auth::guard('admin')->setUser($user);
             }
         } elseif (Auth::guard('admin')->check()) {
+            /** @var User|null $user */
             $user = Auth::guard('admin')->user();
-            if ($user && $user->isAdmin()) {
+            if ($user instanceof User && $user->isAdmin()) {
                 Auth::guard('web')->setUser($user);
             }
         }
@@ -29,3 +32,5 @@ class SyncAdminGuard
         return $next($request);
     }
 }
+
+

@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\CheckMaintenanceMode;
+use App\Http\Middleware\SyncAdminGuard;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -20,8 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'log/browser-error',
         ]);
         $middleware->web(append: [
-            \App\Http\Middleware\CheckMaintenanceMode::class,
-            \App\Http\Middleware\SyncAdminGuard::class,
+            CheckMaintenanceMode::class,
+            SyncAdminGuard::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
@@ -33,9 +37,9 @@ return Application::configure(basePath: dirname(__DIR__))
                 $url = $request ? $request->fullUrl() : 'CLI';
                 $method = $request ? $request->method() : 'CLI';
                 $ip = $request ? $request->ip() : 'N/A';
-                $userId = auth()->id() ?? 'Guest';
+                $userId = Auth::id() ?? 'Guest';
 
-                \Illuminate\Support\Facades\Log::error(
+                Log::error(
                     sprintf(
                         "[Application Error] %s: %s in %s:%d | Route: %s | Action: %s | Method: %s | URL: %s | User: %s | IP: %s",
                         get_class($e),
