@@ -2,7 +2,7 @@
 
 > Complete multi-theme portfolio with admin panel to maintain everything.
 
-[![Current Version](https://img.shields.io/badge/Version-v1.0.0-0090e7?style=flat-square&logo=git&logoColor=white)](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.0.0)
+[![Current Version](https://img.shields.io/badge/Version-v1.1.1-0090e7?style=flat-square&logo=git&logoColor=white)](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.1)
 [![Release Status](https://img.shields.io/badge/Release-Stable-emerald?style=flat-square)](https://github.com/abdullahalahsan777-hub/Portfolio/releases)
 [![Laravel 12](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com)
 [![PHP 8.2+](https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
@@ -30,8 +30,10 @@
   - [4. Two-Word Logo Configuration](#4-two-word-logo-configuration)
   - [5. Page Elements Management](#5-page-elements-management)
   - [6. Message & Inquiry Center](#6-message--inquiry-center)
-  - [7. Performance & Cache Optimization](#7-performance--cache-optimization)
-  - [8. Queue & Background Processing](#8-queue--background-processing)
+  - [7. System & Browser Diagnostics Hub](#7-system--browser-diagnostics-hub)
+  - [8. Social Authentication (Google & Facebook)](#8-social-authentication-google--facebook)
+  - [9. Performance & Cache Optimization](#9-performance--cache-optimization)
+  - [10. Queue & Background Processing](#10-queue--background-processing)
 - [Directory Structure](#directory-structure)
 - [Security Best Practices](#security-best-practices)
 - [Changelog](#changelog)
@@ -44,10 +46,10 @@
 
 | Metric | Details |
 | :--- | :--- |
-| **Current Stable Version** | **`v1.0.0`** |
-| **Release Date** | October 29, 2026 |
-| **Git Tag** | [`v1.0.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.0.0) |
-| **Release Status** | Production-Ready (LTS) |
+| **Current Stable Version** | **`v1.1.1`** |
+| **Release Date** | October 30, 2026 |
+| **Git Tag** | [`v1.1.1`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.1) |
+| **Release Status** | **Stable** (Production-Ready) |
 | **Laravel Compatibility** | Laravel `12.x` / PHP `8.2+` |
 | **Default Branch** | [`main`](https://github.com/abdullahalahsan777-hub/Portfolio/tree/main) |
 
@@ -57,7 +59,7 @@
 
 **Portfolio Studio** is a self-hosted personal portfolio and content management system designed for software developers, digital designers, illustrators, and creators.
 
-The platform provides **6 switchable frontend themes** combined with an **integrated Admin Control Panel**. Content elements — including headlines, counter metrics, portfolio projects, blog posts, brand logos, wordmarks, FAQ items, and customer inquiries — are manageable directly from the web interface without touching code.
+The platform provides **6 switchable frontend themes** combined with an **integrated Admin Control Panel**. Content elements — including headlines, counter metrics, portfolio projects, blog posts, brand logos, wordmarks, FAQ items, customer inquiries, and real-time runtime diagnostics — are manageable directly from the web interface without touching code.
 
 ---
 
@@ -84,18 +86,32 @@ The application includes 6 themes with dedicated navigation structures, typograp
 - Persistent user theme preferences saved in session and database.
 
 ### 2. Admin Control Panel
-- Clean dark interface (`#09101d`) with responsive sidebar navigation.
-- Real-time stat counters: inquiries, projects, articles, users, and server status.
+- Clean dark obsidian interface (`#09101d`) with responsive sidebar navigation.
+- Real-time stat counters: inquiries, projects, articles, users, server status, and runtime diagnostics.
 - Quick navigation shortcuts with keyboard-friendly workflows.
 
-### 3. Brand Assets & Logo Configuration
+### 3. System & Browser Diagnostics Hub (`/admin/logs`)
+- **Dual-Engine Log Capture**: Tracks backend runtime controller exceptions (`laravel.log`) and client-side browser JavaScript console errors (`browser.log`) via an automated frontend beacon.
+- **Two-Row Diagnostic Metric Cards**:
+  - **Row 1 (Severity & Volumes)**: Total Captured, Exceptions / Errors, Warnings, Browser Errors, Info & Notices.
+  - **Row 2 (Runtime & Health)**: Today's Activity, Laravel Backend logs, Runtime Stack (`PHP 8.2 • Laravel v12`), Environment & Debug Mode status, Storage Footprint (`MB`).
+- **Interactive Three-Column Filter Card**:
+  - `SEARCHBOX`: Full-text keyword search across messages, stack traces, and JSON context.
+  - `SOURCES`: Filter by *All Sources*, *Laravel Backend*, *Browser Console*, or individual log files.
+  - `STATUS`: Instant severity filter by *All Status*, *Today's Activity*, *Error / Critical*, *Warning*, *Browser*, *Backend*, *Info*, or *Debug*.
+- **Obsidian Pro Pagination**: First, Prev, page number pills with glowing active indicator, Next, Last, and custom per-page selector (`10`, `20`, `50`, `100`).
+- **Unified Descending Export**: Single-click download of all combined log entries sorted descending by date/time into `System & Browser Diagnostics.log`.
+- **Dual-File Purge**: Single-click clear emptying both `browser.log` and `laravel.log` simultaneously.
+- **Diagnostics Tools**: Expandable stack traces with one-click "Copy Trace" clipboard button and formatted JSON context inspector.
+
+### 4. Brand Assets & Logo Configuration
 - **Software Logo**: Upload vector SVG or high-resolution PNG for desktop branding.
 - **Browser Favicon**: Upload `.ico` or `.svg` browser tab icons.
 - **Mini Logo**: Compact monogram icon for mobile headers and collapsed states.
 - **Default Avatar**: Upload default profile placeholder photos.
 - **Two-Word Logo**: Configure primary and accent wordmarks (e.g., `Abdullah` + `Ahsan.`) with real-time live preview and initials monogram generation.
 
-### 4. Page Elements CMS (`admin/pages`)
+### 5. Page Elements CMS (`/admin/pages`)
 Edit both static subviews and dynamic database-driven sections across all 8 main pages:
 - **Home**: Hero, About, Counter Stats, Services, Projects, Resume, Skills, Pricing, Blog, FAQ, Testimonials, Footer.
 - **About**: Narrative Bio, Philosophy, Metric Cards, Milestone Highlights.
@@ -106,17 +122,23 @@ Edit both static subviews and dynamic database-driven sections across all 8 main
 - **FAQ**: Accordion Q&A items with category filters.
 - **Contact**: Interactive contact cards (Email, WhatsApp, Phone, Location) and AJAX lead capture form.
 
-### 5. Lead Capture & Inquiries Manager
-- Real-time contact form with client-side and server-side validation.
-- Unread badge indicators, detail modals, status tracking (New, Read, Replied), and direct email reply triggers.
+### 6. Communications & Mailbox Suite (`/admin/messages`)
+- **Gmail-Inspired Inbox Layout**: Clean dark mode design with two-line subject and message preview, hover action buttons, and unread badges.
+- **Attachment Storage & Display**: Background folder upload with chip badges for PDF, PNG, JPG, and documents.
+- **Sequential Queue Email Reply**: Reply with CC, BCC, and file attachments dispatched via background queue.
+- **Mobile-Responsive Email Templates**: All transactional and reply email templates optimized for desktop, tablet, and mobile mail clients.
 
-### 6. Toastr Notification System
+### 7. Toastr Notification System
 - 6 notification statuses: `Success`, `Warning`, `Danger`, `Error`, `Info`, `Important`.
-- Custom SVG icons, dark theme styling, animated countdown bars, and automatic timeout handling.
+- Custom SVG icons, dark theme styling, animated countdown bars, and automatic duplicate prevention.
 
-### 7. System Maintenance Mode
+### 8. System Maintenance Mode
 - Instant GUI toggle to place public frontend into maintenance while preserving admin access.
 - Customizable downtime headline, explanatory narrative, and estimated restoration duration.
+
+### 9. Social Authentication (OAuth 2.0)
+- Single-click social login via **Google** and **Facebook** OAuth using Laravel Socialite.
+- Automatic account provisioning and profile photo synchronization.
 
 ---
 
@@ -131,6 +153,7 @@ Edit both static subviews and dynamic database-driven sections across all 8 main
 - **Form UI Enhancement**: Select2
 - **Icons**: Phosphor Icons & Custom SVG Iconography
 - **Notifications**: Toastr 2.x
+- **Social Login**: Laravel Socialite
 
 ---
 
@@ -192,7 +215,7 @@ Open `.env` in your text editor and set your local database credentials:
 
 ```env
 APP_NAME="Portfolio Studio"
-APP_VERSION=1.0.0
+APP_VERSION=1.1.1
 APP_ENV=local
 APP_DEBUG=true
 APP_URL=http://127.0.0.1:8000
@@ -332,13 +355,45 @@ Control content blocks across all 8 core website pages under **Page Elements** (
 
 Access inquiries submitted via frontend contact forms under **Messages** (`/admin/messages`):
 - View sender's Name, Email, Phone, Subject, and Full Message.
-- Track read/unread statuses with badge counts.
-- Click **Reply via Email** to open your default email client with the sender pre-filled.
-- Delete or archive processed inquiries.
+- Gmail-inspired two-line preview with attachment chips.
+- Direct reply with CC, BCC, and document attachments dispatched to background queue.
+- Toastr notifications on successful queued dispatch.
 
 ---
 
-### 7. Performance & Cache Optimization
+### 7. System & Browser Diagnostics Hub
+
+Monitor runtime errors and frontend console events under **System Logs** (`/admin/logs`):
+- **Live Monitoring**: Real-time view of backend controller exceptions and client browser console errors.
+- **Two-Row Diagnostic Cards**: Monitor counts across all severity levels, 24-hour activity, runtime stack, environment, and disk footprint.
+- **One-Click Download**: Export all logs combined in datetime-descending order as `System & Browser Diagnostics.log`.
+- **One-Click Clear**: Empty both `browser.log` and `laravel.log` simultaneously.
+- **Instant Refresh**: Reload both log files fresh (`?source=all`).
+
+---
+
+### 8. Social Authentication (Google & Facebook)
+
+Configure OAuth credentials in `.env` to enable single-click social login:
+
+```env
+# Google OAuth
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+GOOGLE_REDIRECT_URI="${APP_URL}/auth/google/callback"
+
+# Facebook OAuth
+FACEBOOK_CLIENT_ID="your-facebook-app-id"
+FACEBOOK_CLIENT_SECRET="your-facebook-app-secret"
+FACEBOOK_REDIRECT_URI="${APP_URL}/auth/facebook/callback"
+```
+
+1. **Google Console**: Obtain credentials from [Google Cloud Console > Credentials](https://console.cloud.google.com/apis/credentials).
+2. **Facebook Developers**: Create an app and obtain credentials from [Meta for Developers](https://developers.facebook.com/apps/).
+
+---
+
+### 9. Performance & Cache Optimization
 
 When deploying updates or modifying configuration, execute these standard cache commands:
 
@@ -360,9 +415,9 @@ php artisan optimize
 
 ---
 
-### 8. Queue & Background Processing
+### 10. Queue & Background Processing
 
-For asynchronous mail sending (e.g. password resets or notifications via `QUEUE_CONNECTION=database`):
+For asynchronous email dispatch and background tasks:
 
 ```bash
 php artisan queue:work --tries=3 --timeout=90
@@ -374,41 +429,46 @@ php artisan queue:work --tries=3 --timeout=90
 
 ```plaintext
 portfolio/
+├── _ide_stubs.php              # Global IDE Autocompletion & Type Inference Stubs
 ├── app/
+│   ├── Helpers/
+│   │   └── Helper.php          # Global Application Helper Utilities (currentUser, flash, etc.)
 │   ├── Http/
 │   │   ├── Controllers/
-│   │   │   ├── Admin/          # Admin Suite (Pages, Settings, Blog, Messages, etc.)
-│   │   │   ├── Auth/           # Authentication Controllers (Login, Password Reset)
+│   │   │   ├── Admin/          # Admin Suite (Pages, Settings, Logs, Blog, Messages, etc.)
+│   │   │   ├── Auth/           # Authentication Controllers (Login, Socialite, Password Reset)
 │   │   │   └── Frontend/       # Multi-Theme Frontend Routing & Inquiries
-│   │   └── Middleware/         # Admin Authentication & Role Verification
+│   │   └── Middleware/         # Admin Authentication, Maintenance & Guard Syncing
+│   ├── Mail/                   # Mailable Classes (InquiryReplyMail, etc.)
 │   ├── Models/                 # Eloquent Models (Project, Service, Blog, SiteSetting, etc.)
 │   └── Notifications/          # Email & Database Notifications
-├── config/                     # Framework & App Configurations (Cache, Database, Auth, etc.)
+├── config/                     # Framework & App Configurations (Cache, Logging, Auth, etc.)
 ├── database/
 │   ├── migrations/             # Database Schema Migrations
 │   └── seeders/                # Demo Content & Admin Seeders
 ├── public/
 │   ├── images/defaults/        # Default Logos, Favicons, and Placeholders
-│   ├── uploads/                # User Uploaded Media (Projects, Avatars, Settings)
+│   ├── uploads/                # User Uploaded Media (Projects, Avatars, Attachments)
 │   └── build/                  # Compiled Production Vite Assets
 ├── resources/
 │   ├── css/                    # Tailwind CSS Architecture
 │   ├── js/                     # Application Scripts & Tooling
 │   └── views/
-│       ├── admin/              # Admin Panel Views
-│       ├── auth/               # Login & Password Recovery Views
+│       ├── admin/
+│       │   ├── components/     # Reusable UI (Pro Pagination, etc.)
+│       │   ├── logs/           # Unified System & Browser Diagnostics Interface
+│       │   ├── messages/       # Inquiries & Mailbox Center
+│       │   └── pages/          # 8-Page CMS Elements
+│       ├── auth/               # Login, Socialite & Password Recovery Views
+│       ├── emails/             # Mobile-Responsive HTML Email Templates
 │       ├── frontend/
 │       │   └── themes/         # 6 Switchable Theme Layouts & Partials
-│       │       ├── app_developer/
-│       │       ├── app_software_developer/
-│       │       ├── developer/
-│       │       ├── digital_designer_illustrator/
-│       │       ├── graphic_designer/
-│       │       └── uiux_designer/
-│       └── partials/           # Toastr Notifications & Global Partials
+│       └── partials/           # Browser Error Beacon, Toastr & Global Partials
 ├── routes/
-│   ├── web.php                 # Public Frontend & Protected Admin Routes
+│   ├── web.php                 # Public Frontend, Socialite & Protected Admin Routes
 │   └── console.php             # Custom Artisan Maintenance Commands
+├── storage/
+│   └── logs/                   # Unified Logs (laravel.log, browser.log)
 ├── .env.example                # Documented Environment Variable Blueprint
 ├── composer.json               # PHP Dependencies
 ├── package.json                # Frontend Dependencies & Vite Scripts
@@ -433,7 +493,37 @@ portfolio/
 
 ## Changelog
 
-### [`v1.0.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.0.0) — *Official Public Release* (October 2026)
+### [`v1.1.1`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.1) — *Stable Release* (October 30, 2026)
+
+- **Diagnostics UI Refinement**:
+  - Reorganized diagnostic metrics into **two dedicated rows of 5 cards** covering log severity distributions and runtime health (`PHP 8.2 • Laravel v12.0`, Environment/Debug status, storage footprint).
+  - Streamlined toolbar: Removed manual test error buttons to maintain a clean production view.
+  - Added one-click **Download** combining both Browser and Laravel log data sorted descending by datetime as `System & Browser Diagnostics.log`.
+  - Added dual-file **Clear** emptying both `browser.log` and `laravel.log` simultaneously.
+  - Enhanced **Refresh** button to reload and fetch all live log data across both engines.
+  - Added `today` and `backend` status filter options.
+
+### [`v1.1.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.0) — *Feature Release* (October 30, 2026)
+
+- **System & Browser Diagnostics Suite**:
+  - Implemented dual-engine logging capturing all backend controller exceptions and frontend JavaScript errors.
+  - Automated client browser error logging beacon with rate limiting and CSRF protection.
+  - Filter card with full-text searchbox, source selection, and severity level filtering.
+  - Obsidian Pro pagination component with first, prev, next, last, and active page pills.
+- **Mailbox & Inquiry Overhaul**:
+  - Redesigned Inquiries Index with dark mode, two-line preview, and hover action triggers.
+  - Attachment upload support for PDF, PNG, JPG files with folder organization and chip badges.
+  - Sequential background queue email reply dispatch with Toastr integration.
+  - Dashboard inquiries stream filtered specifically for inbox inquiries.
+- **Mobile-Responsive Email Templates**:
+  - Overhauled all notification and reply email templates for seamless responsiveness across mobile, tablet, and desktop clients.
+- **Developer Experience & IDE Stubs**:
+  - Added `_ide_stubs.php` resolving `isAdmin` and `Auth::user()` type inference across all IDEs.
+  - Added `currentUser(): ?User` helper in base `Controller` and `app/Helpers/Helper.php`.
+- **Socialite Authentication**:
+  - Integrated Google and Facebook OAuth sign-in workflows with automatic user provisioning.
+
+### [`v1.0.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.0.0) — *Official Public Release* (October 29, 2026)
 
 - **Multi-Theme Engine**: 6 distinct frontend portfolio personas (`developer`, `digital_designer_illustrator`, `graphic_designer`, `uiux_designer`, `app_developer`, `app_software_developer`).
 - **Admin Control Panel**: Dark control center with real-time statistics and responsive sidebar navigation.
