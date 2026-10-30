@@ -7,6 +7,7 @@ use App\Mail\InquiryReplyMail;
 use App\Models\ContactMessage;
 use App\Models\Notification;
 use App\Models\SiteSetting;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -398,6 +399,7 @@ class ContactMessageController extends Controller
             }
 
             $siteName = SiteSetting::get('site_name', SiteSetting::get('site_title', config('app.name', 'Portfolio Studio')));
+            /** @var User|null $senderUser */
             $senderUser = Auth::user();
 
             // 1. Save or update record: type = 'sent', remove temp_id, save attachments
@@ -450,7 +452,7 @@ class ContactMessageController extends Controller
                 'originalSubject' => $message ? ($message->subject ?: ($message->service_type ?: 'General Inquiry')) : null,
                 'originalMessage' => $message ? $message->message : null,
                 'senderName'      => $senderUser->name ?? $siteName,
-                'senderTitle'     => ($senderUser && $senderUser->isAdmin()) ? 'Lead Administrator & Specialist' : 'Portfolio Team',
+                'senderTitle'     => ($senderUser instanceof User && $senderUser->isAdmin()) ? 'Lead Administrator & Specialist' : 'Portfolio Team',
                 'websiteUrl'      => url('/'),
                 'cc'              => $ccs,
                 'bcc'             => $bccs,
@@ -511,6 +513,7 @@ class ContactMessageController extends Controller
     public function previewReply(ContactMessage $message)
     {
         $siteName = SiteSetting::get('site_name', SiteSetting::get('site_title', config('app.name', 'Portfolio Studio')));
+        /** @var User|null $senderUser */
         $senderUser = Auth::user();
 
         $mail = new InquiryReplyMail([
@@ -525,7 +528,7 @@ class ContactMessageController extends Controller
             'originalSubject' => $message->subject ?: ($message->service_type ?: 'General Inquiry'),
             'originalMessage' => $message->message,
             'senderName'      => $senderUser->name ?? $siteName,
-            'senderTitle'     => ($senderUser && $senderUser->isAdmin()) ? 'Lead Administrator & Specialist' : 'Portfolio Team',
+            'senderTitle'     => ($senderUser instanceof User && $senderUser->isAdmin()) ? 'Lead Administrator & Specialist' : 'Portfolio Team',
             'websiteUrl'      => url('/'),
         ], [
             'path' => null,
