@@ -57,6 +57,11 @@ class LogViewerController extends Controller
         // Parse entries from the targeted files
         $allEntries = $this->parseLogFiles($filesToRead);
 
+        $todayStr = now()->toDateString();
+        $todayCount = $allEntries->filter(function ($entry) use ($todayStr) {
+            return isset($entry['timestamp_raw']) && str_starts_with($entry['timestamp_raw'], $todayStr);
+        })->count();
+
         // Compute summary counts before level and keyword filtering
         $stats = [
             'total'         => $allEntries->count(),
@@ -65,8 +70,15 @@ class LogViewerController extends Controller
             'info'          => $allEntries->whereIn('level', ['INFO', 'NOTICE'])->count(),
             'debug'         => $allEntries->where('level', 'DEBUG')->count(),
             'browser'       => $allEntries->where('is_browser', true)->count(),
+            'backend'       => $allEntries->where('is_browser', false)->count(),
+            'today'         => $todayCount,
             'file_count'    => count($logFiles),
             'total_size_mb' => round(array_sum(array_column($logFiles, 'size_bytes')) / 1024 / 1024, 2),
+            'php_version'   => 'PHP ' . PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION,
+            'laravel_ver'   => 'v' . app()->version(),
+            'environment'   => strtoupper(app()->environment()),
+            'debug_mode'    => config('app.debug'),
+            'last_recorded' => $allEntries->first()['time_ago'] ?? 'None',
         ];
 
         // Apply Level filter
@@ -82,6 +94,10 @@ class LogViewerController extends Controller
                 $filtered = $filtered->where('level', 'DEBUG');
             } elseif ($currentLevel === 'browser') {
                 $filtered = $filtered->where('is_browser', true);
+            } elseif ($currentLevel === 'backend') {
+                $filtered = $filtered->where('is_browser', false);
+            } elseif ($currentLevel === 'today') {
+                $filtered = $filtered->filter(fn($e) => isset($e['timestamp_raw']) && str_starts_with($e['timestamp_raw'], $todayStr));
             }
         }
 

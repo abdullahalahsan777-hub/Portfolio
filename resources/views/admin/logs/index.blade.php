@@ -85,47 +85,94 @@
             </div>
         </div>
 
-        <!-- 2. Diagnostic Summary Metrics Cards -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            <!-- Total Entries -->
-            <a href="{{ route('admin.logs.index', ['source' => $currentSource, 'level' => 'all'] + request()->except('level', 'page')) }}"
-                class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'all' ? 'border-indigo-500/60 shadow-lg shadow-indigo-500/10' : 'border-white/10 hover:border-white/20' }} transition-all group space-y-1 block">
-                <div class="text-[10px] font-mono uppercase text-slate-400 font-bold tracking-wider">Total Captured</div>
-                <div class="text-2xl font-black font-mono text-white">{{ number_format($stats['total']) }}</div>
-                <div class="text-[11px] font-mono text-slate-500">Across {{ $stats['file_count'] }} log files</div>
-            </a>
+        <!-- 2. Diagnostic Summary Metrics Cards (Two Rows) -->
+        <div class="space-y-4">
+            <!-- Row 1: Log Severity & Classifications (5 Cards) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <!-- 1. Total Captured -->
+                <a href="{{ route('admin.logs.index', ['source' => 'all', 'level' => 'all'] + request()->except('source', 'level', 'page')) }}"
+                    class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'all' && $currentSource === 'all' ? 'border-indigo-500/60 shadow-lg shadow-indigo-500/10 bg-indigo-500/[0.04]' : 'border-indigo-500/20 hover:border-indigo-500/40' }} transition-all group space-y-1 block">
+                    <div class="text-[10px] font-mono uppercase text-indigo-400 font-bold tracking-wider">Total Captured</div>
+                    <div class="text-2xl font-black font-mono text-white">{{ number_format($stats['total']) }}</div>
+                    <div class="text-[11px] font-mono text-slate-400">Across {{ $stats['file_count'] }} log files</div>
+                </a>
 
-            <!-- Errors & Critical -->
-            <a href="{{ route('admin.logs.index', ['source' => $currentSource, 'level' => 'error'] + request()->except('level', 'page')) }}"
-                class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'error' ? 'border-rose-500/60 shadow-lg shadow-rose-500/10' : 'border-rose-500/20 hover:border-rose-500/40' }} bg-rose-500/[0.02] transition-all group space-y-1 block">
-                <div class="text-[10px] font-mono uppercase text-rose-400 font-bold tracking-wider">Exceptions / Errors
+                <!-- 2. Exceptions / Errors -->
+                <a href="{{ route('admin.logs.index', ['source' => $currentSource, 'level' => 'error'] + request()->except('level', 'page')) }}"
+                    class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'error' ? 'border-rose-500/60 shadow-lg shadow-rose-500/10' : 'border-rose-500/20 hover:border-rose-500/40' }} bg-rose-500/[0.02] transition-all group space-y-1 block">
+                    <div class="text-[10px] font-mono uppercase text-rose-400 font-bold tracking-wider">Exceptions / Errors</div>
+                    <div class="text-2xl font-black font-mono text-rose-400">{{ number_format($stats['errors']) }}</div>
+                    <div class="text-[11px] font-mono text-rose-300/70">Critical application events</div>
+                </a>
+
+                <!-- 3. Warnings -->
+                <a href="{{ route('admin.logs.index', ['source' => $currentSource, 'level' => 'warning'] + request()->except('level', 'page')) }}"
+                    class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'warning' ? 'border-amber-500/60 shadow-lg shadow-amber-500/10' : 'border-amber-500/20 hover:border-amber-500/40' }} bg-amber-500/[0.02] transition-all group space-y-1 block">
+                    <div class="text-[10px] font-mono uppercase text-amber-400 font-bold tracking-wider">Warnings</div>
+                    <div class="text-2xl font-black font-mono text-amber-400">{{ number_format($stats['warnings']) }}</div>
+                    <div class="text-[11px] font-mono text-amber-300/70">Potential issues flagged</div>
+                </a>
+
+                <!-- 4. Browser Errors -->
+                <a href="{{ route('admin.logs.index', ['source' => 'browser', 'level' => 'all'] + request()->except('source', 'level', 'page')) }}"
+                    class="p-5 rounded-2xl bg-[#09101d] border {{ $currentSource === 'browser' ? 'border-emerald-500/60 shadow-lg shadow-emerald-500/10' : 'border-emerald-500/20 hover:border-emerald-500/40' }} bg-emerald-500/[0.02] transition-all group space-y-1 block">
+                    <div class="text-[10px] font-mono uppercase text-emerald-400 font-bold tracking-wider">Browser Errors</div>
+                    <div class="text-2xl font-black font-mono text-emerald-400">{{ number_format($stats['browser']) }}</div>
+                    <div class="text-[11px] font-mono text-emerald-300/70">Client-side JS exceptions</div>
+                </a>
+
+                <!-- 5. Info & Notices -->
+                <a href="{{ route('admin.logs.index', ['source' => $currentSource, 'level' => 'info'] + request()->except('level', 'page')) }}"
+                    class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'info' ? 'border-sky-500/60 shadow-lg shadow-sky-500/10' : 'border-sky-500/20 hover:border-sky-500/40' }} bg-sky-500/[0.02] transition-all group space-y-1 block">
+                    <div class="text-[10px] font-mono uppercase text-sky-400 font-bold tracking-wider">Info &amp; Notices</div>
+                    <div class="text-2xl font-black font-mono text-sky-400">{{ number_format($stats['info']) }}</div>
+                    <div class="text-[11px] font-mono text-sky-300/70">Runtime system messages</div>
+                </a>
+            </div>
+
+            <!-- Row 2: System Health, Environment & Activity (5 Cards) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <!-- 6. Today's Activity -->
+                <a href="{{ route('admin.logs.index', ['source' => $currentSource, 'level' => 'today'] + request()->except('level', 'page')) }}"
+                    class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'today' ? 'border-purple-500/60 shadow-lg shadow-purple-500/10' : 'border-purple-500/20 hover:border-purple-500/40' }} bg-purple-500/[0.02] transition-all group space-y-1 block">
+                    <div class="text-[10px] font-mono uppercase text-purple-400 font-bold tracking-wider">Today's Activity</div>
+                    <div class="text-2xl font-black font-mono text-purple-400">{{ number_format($stats['today']) }}</div>
+                    <div class="text-[11px] font-mono text-purple-300/70">Recorded past 24 hours</div>
+                </a>
+
+                <!-- 7. Backend Logs -->
+                <a href="{{ route('admin.logs.index', ['source' => 'laravel', 'level' => 'all'] + request()->except('source', 'level', 'page')) }}"
+                    class="p-5 rounded-2xl bg-[#09101d] border {{ $currentSource === 'laravel' ? 'border-indigo-500/60 shadow-lg shadow-indigo-500/10' : 'border-indigo-500/20 hover:border-indigo-500/40' }} bg-indigo-500/[0.02] transition-all group space-y-1 block">
+                    <div class="text-[10px] font-mono uppercase text-indigo-400 font-bold tracking-wider">Laravel Backend</div>
+                    <div class="text-2xl font-black font-mono text-indigo-400">{{ number_format($stats['backend']) }}</div>
+                    <div class="text-[11px] font-mono text-indigo-300/70">Server controller events</div>
+                </a>
+
+                <!-- 8. PHP & Framework Runtime -->
+                <div class="p-5 rounded-2xl bg-[#09101d] border border-cyan-500/20 bg-cyan-500/[0.02] space-y-1">
+                    <div class="text-[10px] font-mono uppercase text-cyan-400 font-bold tracking-wider">Runtime Stack</div>
+                    <div class="text-xl font-black font-mono text-cyan-400 truncate">{{ $stats['php_version'] }}</div>
+                    <div class="text-[11px] font-mono text-slate-400">Laravel {{ $stats['laravel_ver'] }}</div>
                 </div>
-                <div class="text-2xl font-black font-mono text-rose-400">{{ number_format($stats['errors']) }}</div>
-                <div class="text-[11px] font-mono text-rose-300/70">Critical application events</div>
-            </a>
 
-            <!-- Warnings -->
-            <a href="{{ route('admin.logs.index', ['source' => $currentSource, 'level' => 'warning'] + request()->except('level', 'page')) }}"
-                class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'warning' ? 'border-amber-500/60 shadow-lg shadow-amber-500/10' : 'border-amber-500/20 hover:border-amber-500/40' }} bg-amber-500/[0.02] transition-all group space-y-1 block">
-                <div class="text-[10px] font-mono uppercase text-amber-400 font-bold tracking-wider">Warnings</div>
-                <div class="text-2xl font-black font-mono text-amber-400">{{ number_format($stats['warnings']) }}</div>
-                <div class="text-[11px] font-mono text-amber-300/70">Potential issues flagged</div>
-            </a>
+                <!-- 9. Environment & Security -->
+                <div class="p-5 rounded-2xl bg-[#09101d] border {{ $stats['debug_mode'] ? 'border-amber-500/20 bg-amber-500/[0.02]' : 'border-emerald-500/20 bg-emerald-500/[0.02]' }} space-y-1">
+                    <div class="text-[10px] font-mono uppercase {{ $stats['debug_mode'] ? 'text-amber-400' : 'text-emerald-400' }} font-bold tracking-wider flex items-center justify-between">
+                        <span>Environment</span>
+                        <span class="w-1.5 h-1.5 rounded-full {{ $stats['debug_mode'] ? 'bg-amber-400' : 'bg-emerald-400' }} animate-pulse"></span>
+                    </div>
+                    <div class="text-xl font-black font-mono text-white">{{ $stats['environment'] }}</div>
+                    <div class="text-[11px] font-mono {{ $stats['debug_mode'] ? 'text-amber-300/80 font-bold' : 'text-emerald-300/80 font-bold' }}">
+                        Debug {{ $stats['debug_mode'] ? 'Active (ON)' : 'Disabled (OFF)' }}
+                    </div>
+                </div>
 
-            <!-- Browser Errors -->
-            <a href="{{ route('admin.logs.index', ['source' => 'browser', 'level' => 'all'] + request()->except('source', 'level', 'page')) }}"
-                class="p-5 rounded-2xl bg-[#09101d] border {{ $currentSource === 'browser' ? 'border-emerald-500/60 shadow-lg shadow-emerald-500/10' : 'border-emerald-500/20 hover:border-emerald-500/40' }} bg-emerald-500/[0.02] transition-all group space-y-1 block">
-                <div class="text-[10px] font-mono uppercase text-emerald-400 font-bold tracking-wider">Browser Errors</div>
-                <div class="text-2xl font-black font-mono text-emerald-400">{{ number_format($stats['browser']) }}</div>
-                <div class="text-[11px] font-mono text-emerald-300/70">Client-side JS exceptions</div>
-            </a>
-
-            <!-- Storage Footprint -->
-            <div class="p-5 rounded-2xl bg-[#09101d] border border-white/10 space-y-1 col-span-2 sm:col-span-1">
-                <div class="text-[10px] font-mono uppercase text-slate-400 font-bold tracking-wider">Storage Footprint</div>
-                <div class="text-2xl font-black font-mono text-cyan-400">{{ $stats['total_size_mb'] }} <span
-                        class="text-sm font-normal text-slate-400">MB</span></div>
-                <div class="text-[11px] font-mono text-slate-500">In storage/logs</div>
+                <!-- 10. Storage Footprint -->
+                <div class="p-5 rounded-2xl bg-[#09101d] border border-white/10 space-y-1">
+                    <div class="text-[10px] font-mono uppercase text-slate-400 font-bold tracking-wider">Storage Footprint</div>
+                    <div class="text-2xl font-black font-mono text-cyan-400">{{ $stats['total_size_mb'] }} <span class="text-sm font-normal text-slate-400">MB</span></div>
+                    <div class="text-[11px] font-mono text-slate-400">In storage/logs</div>
+                </div>
             </div>
         </div>
 
@@ -236,6 +283,9 @@
                                 <option value="all" {{ $currentLevel === 'all' ? 'selected' : '' }}>
                                     All Status ({{ $stats['total'] }})
                                 </option>
+                                <option value="today" {{ $currentLevel === 'today' ? 'selected' : '' }}>
+                                    Today's Activity ({{ $stats['today'] }})
+                                </option>
                                 <option value="error" {{ $currentLevel === 'error' ? 'selected' : '' }}>
                                     Error / Critical ({{ $stats['errors'] }})
                                 </option>
@@ -244,6 +294,9 @@
                                 </option>
                                 <option value="browser" {{ $currentLevel === 'browser' ? 'selected' : '' }}>
                                     Browser Errors ({{ $stats['browser'] }})
+                                </option>
+                                <option value="backend" {{ $currentLevel === 'backend' ? 'selected' : '' }}>
+                                    Laravel Backend ({{ $stats['backend'] }})
                                 </option>
                                 <option value="info" {{ $currentLevel === 'info' ? 'selected' : '' }}>
                                     Info ({{ $stats['info'] }})
