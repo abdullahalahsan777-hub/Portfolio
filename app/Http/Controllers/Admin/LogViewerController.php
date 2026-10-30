@@ -27,9 +27,9 @@ class LogViewerController extends Controller
         $currentSource = $request->query('source', 'all');
         $currentLevel = strtolower($request->query('level', 'all'));
         $search = trim((string) $request->query('search', ''));
-        $perPage = (int) $request->query('per_page', 25);
+        $perPage = (int) $request->query('per_page', 20);
         if ($perPage < 10 || $perPage > 200) {
-            $perPage = 25;
+            $perPage = 20;
         }
 
         // Determine which files to read based on source selection

@@ -15,7 +15,9 @@ class NotificationController extends Controller
      */
     public function index(Request $request)
     {
+        /** @var User|null $currentUser */
         $currentUser = Auth::user();
+        $isAdmin = $currentUser instanceof User && $currentUser->isAdmin();
         $query = Notification::with('user')->forUser($currentUser);
 
         // Filter / Status
@@ -34,7 +36,7 @@ class NotificationController extends Controller
             $query->whereIn('type', ['system', 'maintenance', 'settings']);
         } elseif ($status === 'today') {
             $query->whereDate('created_at', today());
-        } elseif ($status === 'mine' && $currentUser->isAdmin()) {
+        } elseif ($status === 'mine' && $isAdmin) {
             $query->where('user_id', $currentUser->id);
         } elseif (in_array($status, ['project', 'blog', 'service', 'skill', 'pricing', 'testimonial', 'faq', 'resume', 'content', 'settings', 'system', 'auth', 'inquiry'], true)) {
             $query->where('type', $status);
@@ -49,7 +51,7 @@ class NotificationController extends Controller
         }
 
         // User filter for admin
-        if ($currentUser->isAdmin() && $request->filled('user_id')) {
+        if ($isAdmin && $request->filled('user_id')) {
             if ($request->get('user_id') === 'system') {
                 $query->whereNull('user_id');
             } else {
@@ -73,7 +75,7 @@ class NotificationController extends Controller
         $todayCount = (clone $baseQuery)->whereDate('created_at', today())->count();
 
         // All users list for admin filter dropdown
-        $users = $currentUser->isAdmin() ? User::orderBy('name')->get(['id', 'name', 'email', 'role']) : collect();
+        $users = $isAdmin ? User::orderBy('name')->get(['id', 'name', 'email', 'role']) : collect();
 
         return view('admin.notifications.index', compact(
             'notifications',
@@ -305,12 +307,13 @@ class NotificationController extends Controller
      */
     private function authorizeAccess(Notification $notification): void
     {
+        /** @var User|null $user */
         $user = Auth::user();
         if (! $user) {
             abort(401);
         }
 
-        if ($user->isAdmin()) {
+        if ($user instanceof User && $user->isAdmin()) {
             return; // Admin can view/modify any notification
         }
 

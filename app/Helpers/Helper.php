@@ -476,3 +476,17 @@ if (! function_exists('flash')) {
         return $notifier;
     }
 }
+
+if (! function_exists('currentUser')) {
+    /**
+     * Get the currently authenticated User model instance.
+     *
+     * @return \App\Models\User|null
+     */
+    function currentUser(): ?\App\Models\User
+    {
+        $user = \Illuminate\Support\Facades\Auth::user();
+
+        return $user instanceof \App\Models\User ? $user : null;
+    }
+}

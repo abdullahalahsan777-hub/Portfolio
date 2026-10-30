@@ -26,7 +26,9 @@ class AuthController extends Controller
             || SiteSetting::get('server_status', 'up') === 'maintenance';
 
         if (Auth::check()) {
-            if (Auth::user()->isAdmin()) {
+            /** @var User|null $user */
+            $user = Auth::user();
+            if ($user instanceof User && $user->isAdmin()) {
                 return redirect()->route('admin.dashboard');
             }
 
@@ -77,7 +79,9 @@ class AuthController extends Controller
                 'color' => 'indigo',
             ]);
 
-            if (Auth::user()->isAdmin()) {
+            /** @var User|null $user */
+            $user = Auth::user();
+            if ($user instanceof User && $user->isAdmin()) {
                 flash()->info('Welcome back, Admin!');
 
                 return redirect()->intended(route('admin.dashboard'));
