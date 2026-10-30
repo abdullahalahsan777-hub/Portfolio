@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BlogPostController as AdminBlogController;
 use App\Http\Controllers\Admin\ContactMessageController as AdminMessageController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Admin\LogViewerController as AdminLogController;
 use App\Http\Controllers\Admin\MaintenanceController as AdminMaintenanceController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 use App\Http\Controllers\Admin\PricingPlanController as AdminPricingController;
@@ -36,6 +37,9 @@ Route::get('/faq', [PortfolioController::class, 'faq'])->name('faq');
 Route::get('/contact', [PortfolioController::class, 'contact'])->name('contact');
 Route::post('/contact', [PortfolioController::class, 'submitContact'])->name('contact.submit');
 Route::get('/download-cv', [PortfolioController::class, 'downloadCv'])->name('cv.download');
+
+// Browser Error Reporting Endpoint (Client Runtime Logging)
+Route::post('/log/browser-error', [AdminLogController::class, 'recordBrowserError'])->name('log.browser.error');
 
 // Legacy Route Aliases
 Route::get('/projects', [PortfolioController::class, 'portfolio'])->name('project');
@@ -188,7 +192,23 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
         Route::post('/users/{user}/role', [AdminUserController::class, 'toggleRole'])->name('users.toggleRole');
         Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+
+        // Unified Error & System Logs Module (Only Admin Can Access)
+        Route::get('/logs', [AdminLogController::class, 'index'])->name('logs.index');
+        Route::delete('/logs/clear', [AdminLogController::class, 'clear'])->name('logs.clear');
+        Route::get('/logs/download', [AdminLogController::class, 'download'])->name('logs.download');
+        Route::post('/logs/test-error', [AdminLogController::class, 'testError'])->name('logs.testError');
     });
+});
+
+// Redirect legacy admin log interface routes to unified error logs interface
+Route::middleware(['auth:admin', 'superadmin'])->group(function () {
+    Route::get('/_boost/error-logs', fn () => redirect()->route('admin.logs.index'));
+    Route::get('/_boost/error-logs/interface', fn () => redirect()->route('admin.logs.index'))->name('error.logs.interface');
+    Route::get('/_boost/browser-logs', fn () => redirect()->route('admin.logs.index', ['source' => 'browser']));
+    Route::get('/_boost/browser-logs/interface', fn () => redirect()->route('admin.logs.index', ['source' => 'browser']))->name('browser.logs.interface');
+    Route::get('/_boost/laravel-logs', fn () => redirect()->route('admin.logs.index', ['source' => 'laravel']));
+    Route::get('/_boost/laravel-logs/interface', fn () => redirect()->route('admin.logs.index', ['source' => 'laravel']))->name('laravel.logs.interface');
 });
 
 // Error Pages Showcase & Preview Routes

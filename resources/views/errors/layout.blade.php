@@ -164,5 +164,7 @@
         </div>
     </footer>
 
+    <!-- Global Browser Error Logger -->
+    @include('partials.browser-logger')
 </body>
 </html>

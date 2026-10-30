@@ -787,6 +787,18 @@
                             <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-slate-400 border border-white/5">12</span>
                         </a>
 
+                        <!-- Unified Error & System Logs (Admin Only) -->
+                        <a href="{{ route('admin.logs.index') }}"
+                            class="flex items-center justify-between px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.logs.*') ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <span>Error &amp; System Logs</span>
+                            </div>
+                            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 font-bold">LOG</span>
+                        </a>
+
                         <!-- User Management -->
                         <a href="{{ route('admin.users.index') }}"
                             class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.users.*') ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
@@ -1804,6 +1816,9 @@
 
     <!-- Global Toastr Configuration & Notification Handler -->
     @include('partials.toastr')
+
+    <!-- Global Browser Error Logger -->
+    @include('partials.browser-logger')
 
     @stack('scripts')
 
