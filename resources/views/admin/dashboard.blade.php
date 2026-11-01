@@ -9,7 +9,7 @@
 
         <!-- System Status Banner -->
         <div
-            class="p-6 rounded-3xl bg-gradient-to-r from-[#09101d] via-[#0d1627] to-[#09101d] border border-white/10 shadow-2xl relative overflow-hidden">
+            class="p-4 sm:p-6 rounded-3xl bg-gradient-to-r from-[#09101d] via-[#0d1627] to-[#09101d] border border-white/10 shadow-2xl relative overflow-hidden">
             <div class="absolute -top-24 -right-24 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
             </div>
             <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none">
@@ -82,13 +82,14 @@
                         System status tracking <strong
                             class="text-indigo-400">{{ $stats['total_content_assets'] }}</strong> content assets,
                         <strong class="text-cyan-400">{{ $stats['total_users'] }}</strong> registered user accounts,
-                        <strong class="text-emerald-400">{{ $stats['total_messages'] }}</strong> client inquiries, and
+                        <strong class="text-emerald-400">{{ $stats['total_messages'] }}</strong> client inquiries,
+                        <strong class="text-teal-400">{{ $stats['total_subscribers'] }}</strong> newsletter subscribers, and
                         <strong class="text-rose-400">{{ $stats['unread_notifications'] }}</strong> unread alerts across the
                         application.
                     </p>
                 </div>
 
-                <div class="flex flex-wrap lg:flex-col items-start lg:items-end gap-3 shrink-0">
+                <div class="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end gap-3 shrink-0 w-full lg:w-auto">
                     <div class="flex flex-wrap items-center gap-2">
                         <span
                             class="px-2.5 py-1 rounded-lg bg-[#0090e7]/10 border border-[#0090e7]/30 text-[10px] font-mono text-[#0090e7] font-semibold"
@@ -110,14 +111,14 @@
                     </div>
 
                     <!-- Action Controls -->
-                    <div class="flex items-center gap-2">
+                    <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
                         @if (auth()->check() && auth()->user()->isAdmin())
                             <!-- Toggle Maintenance Button -->
-                            <form action="{{ route('admin.maintenance.toggle') }}" method="POST" class="inline">
+                            <form action="{{ route('admin.maintenance.toggle') }}" method="POST" class="inline flex-1 sm:flex-initial">
                                 @csrf
                                 <button type="submit"
                                     title="{{ $stats['is_maintenance'] ? 'Resume Live Operations' : 'Put Website in Maintenance' }}"
-                                    class="px-3 py-1.5 rounded-xl text-xs font-semibold {{ $stats['is_maintenance'] ? 'bg-emerald-600 hover:bg-emerald-500 text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-white/10' }} transition-all flex items-center gap-1.5 shadow-sm">
+                                    class="w-full sm:w-auto px-3 py-1.5 rounded-xl text-xs font-semibold {{ $stats['is_maintenance'] ? 'bg-emerald-600 hover:bg-emerald-500 text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-white/10' }} transition-all flex items-center justify-center gap-1.5 shadow-sm">
                                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -127,11 +128,11 @@
                             </form>
 
                             <!-- Quick Cache Purge -->
-                            <form action="{{ route('admin.maintenance.clearCache') }}" method="POST" class="inline">
+                            <form action="{{ route('admin.maintenance.clearCache') }}" method="POST" class="inline flex-1 sm:flex-initial">
                                 @csrf
                                 <input type="hidden" name="type" value="optimize">
                                 <button type="submit" title="Purge system caches"
-                                    class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-white/10 transition-all flex items-center gap-1.5 shadow-sm">
+                                    class="w-full sm:w-auto px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-white/10 transition-all flex items-center justify-center gap-1.5 shadow-sm">
                                     <svg class="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -144,7 +145,7 @@
 
                         <!-- Live Site Link -->
                         <a href="{{ route('home') }}" target="_blank"
-                            class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition-all flex items-center gap-1.5 shadow-md shadow-indigo-600/30">
+                            class="flex-1 sm:flex-initial px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition-all flex items-center justify-center gap-1.5 shadow-md shadow-indigo-600/30">
                             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -397,6 +398,57 @@
                         Manage Notifications &rarr;
                     </a>
                     <span class="text-[10px] font-mono text-slate-400">{{ $stats['today_notifications'] }} Today</span>
+                </div>
+            </div>
+
+            <!-- Card 6: Newsletter Subscribers & Audience Growth -->
+            <div
+                class="p-6 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl relative overflow-hidden flex flex-col justify-between group hover:border-emerald-500/40 transition-all">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            Newsletter
+                        </span>
+                        @if ($stats['today_subscribers'] > 0)
+                            <span
+                                class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 animate-pulse">
+                                +{{ $stats['today_subscribers'] }} Today
+                            </span>
+                        @else
+                            <span
+                                class="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                                {{ $stats['active_subscribers'] }} Active
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="flex items-baseline gap-2">
+                        <div class="text-3xl font-extrabold text-emerald-400 font-mono">
+                            {{ $stats['total_subscribers'] }}
+                        </div>
+                        <span class="text-xs text-slate-400 font-mono">subscribers in list</span>
+                    </div>
+
+                    <!-- Subscriber Health / Active Rate Progress Bar -->
+                    <div class="space-y-1">
+                        <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                            <span>Audience Health</span>
+                            <span class="text-slate-300 font-mono">{{ $stats['active_subscribers'] }} Active &bull; {{ $stats['subscriber_active_rate'] }}%</span>
+                        </div>
+                        <div class="w-full h-1.5 rounded-full bg-white/5 overflow-hidden flex">
+                            <div class="h-full rounded-full bg-gradient-to-r from-teal-500 to-emerald-400 transition-all duration-500"
+                                style="width: {{ $stats['subscriber_active_rate'] }}%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 mt-4 border-t border-white/5 flex items-center justify-between">
+                    <a href="{{ route('admin.subscribers.index') }}"
+                        class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors">
+                        Manage Subscribers &rarr;
+                    </a>
+                    <span class="text-[10px] font-mono text-slate-400">{{ $stats['week_subscribers'] }} This Week</span>
                 </div>
             </div>
         </div>
@@ -797,8 +849,8 @@
                     <div class="space-y-3">
                         @forelse($recentProjects as $proj)
                             <div
-                                class="p-3.5 rounded-2xl bg-black/40 border border-white/5 flex items-center justify-between gap-4 hover:border-white/15 transition-all">
-                                <div class="flex items-center gap-3 overflow-hidden">
+                                class="p-3.5 rounded-2xl bg-black/40 border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-white/15 transition-all">
+                                <div class="flex items-center gap-3 overflow-hidden min-w-0">
                                     <div
                                         class="w-12 h-12 rounded-xl bg-slate-900 border border-white/10 overflow-hidden shrink-0">
                                         @if ($proj->image_url)
@@ -821,7 +873,7 @@
                                     </div>
                                 </div>
 
-                                <div class="flex items-center gap-2 shrink-0">
+                                <div class="flex items-center justify-between sm:justify-end gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/5 w-full sm:w-auto">
                                     @if ($proj->is_featured)
                                         <span
                                             class="px-2 py-0.5 rounded text-[9px] font-mono bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">

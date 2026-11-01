@@ -35,9 +35,9 @@
      TOP THEME FILTER & VISUAL SELECTOR (Select2 / Selectpicker / AngularJS Reactive)
      ========================================================================= -->
 <div id="themeFilterContainer"
-    class="px-5 py-3 rounded-2xl bg-[#09101d] border border-white/10 shadow-xl mb-6 transition-all relative">
+    class="px-4 sm:px-5 py-3 rounded-2xl bg-[#09101d] border border-white/10 shadow-xl mb-6 transition-all relative">
 
-    <div class="flex items-center justify-between gap-3 sm:gap-4 flex-nowrap w-full">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 w-full">
 
         <div class="flex items-center gap-3.5 min-w-0 flex-1">
             <div class="relative shrink-0 flex items-center justify-center">
@@ -66,22 +66,22 @@
                     </span>
                 </div>
 
-                <!-- Bottom Row: Element Count Text (Full width, no truncation) -->
-                <p class="mt-3 text-xs text-slate-400">
+                <!-- Bottom Row: Element Count Text -->
+                <p class="mt-2 text-xs text-slate-400">
                     <span id="tfCountLabel">Loading elements for <strong
                             class="text-white">{{ $selectedThemeMeta['name'] }}</strong>...</span>
                 </p>
             </div>
         </div>
 
-        <!-- Right: Theme Dropdown + Preview Live (Strictly flex-nowrap, never breaking onto 2 lines) -->
-        <div class="flex items-center gap-2.5 shrink-0 flex-nowrap">
+        <!-- Right: Theme Dropdown + Preview Live -->
+        <div class="flex items-center gap-2.5 shrink-0 flex-wrap sm:flex-nowrap w-full md:w-auto justify-between md:justify-end">
 
             <!-- SELECTPICKER / SELECT2 DROPDOWN WRAPPER -->
-            <div class="relative shrink-0" id="themeSelectPicker">
+            <div class="relative shrink-0 w-full sm:w-auto" id="themeSelectPicker">
                 <!-- Dropdown Trigger Button -->
                 <button type="button" id="themeSelectBtn" onclick="toggleThemeDropdown()"
-                    class="h-10 px-3 rounded-xl bg-black/60 border border-white/15 hover:border-indigo-500/50 text-white text-xs font-semibold flex items-center gap-2.5 transition-all shadow-inner focus:outline-none focus:ring-1 focus:ring-indigo-500/40 w-auto min-w-[190px] max-w-[240px] sm:max-w-[270px] justify-between shrink-0">
+                    class="h-10 px-3 rounded-xl bg-black/60 border border-white/15 hover:border-indigo-500/50 text-white text-xs font-semibold flex items-center gap-2.5 transition-all shadow-inner focus:outline-none focus:ring-1 focus:ring-indigo-500/40 w-full sm:w-auto min-w-[170px] sm:min-w-[190px] max-w-full sm:max-w-[270px] justify-between shrink-0">
                     <div class="flex items-center gap-2 min-w-0 overflow-hidden">
                         <span id="tfSelectedDot" class="w-2.5 h-2.5 rounded-full shrink-0"
                             style="background-color: {{ $selectedThemeMeta['color'] ?? '#6366f1' }}"></span>
@@ -105,7 +105,7 @@
 
                 <!-- Dropdown Menu (Select2 Style with Search and Rich Options) -->
                 <div id="themeSelectMenu"
-                    class="hidden absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl bg-[#09101d] border border-white/20 shadow-2xl z-50 overflow-hidden backdrop-blur-xl transition-all duration-200">
+                    class="hidden absolute right-0 mt-2 w-80 sm:w-96 max-w-[calc(100vw-2rem)] rounded-2xl bg-[#09101d] border border-white/20 shadow-2xl z-50 overflow-hidden backdrop-blur-xl transition-all duration-200">
 
                     <!-- Select2 Search Header -->
                     <div class="p-3 border-b border-white/10 bg-black/40">

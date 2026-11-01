@@ -98,7 +98,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .page-elements-wrapper {
         grid-template-columns: 1fr !important;
     }

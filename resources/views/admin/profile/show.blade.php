@@ -47,8 +47,9 @@
                     style="background-image: radial-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 1px); background-size: 22px 22px;">
                 </div>
 
-                <!-- Active Theme Indicator Badge (Top Left of Cover) -->
-                <div class="absolute top-4 left-4 z-10">
+                <!-- Cover Banner Controls (Responsive wrapper so badges never overlap on mobile) -->
+                <div class="absolute top-3 sm:top-4 inset-x-3 sm:inset-x-4 flex flex-wrap items-center justify-between gap-2 z-10">
+                    <!-- Active Theme Indicator Badge -->
                     <div
                         class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white text-xs font-mono shadow-xl">
                         <span class="w-2.5 h-2.5 rounded-full animate-pulse shrink-0"
@@ -57,10 +58,8 @@
                         <span class="text-[9px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider"
                             style="background-color: {{ $themeColor }}33; color: {{ $themeColor }};">Active</span>
                     </div>
-                </div>
 
-                <!-- Live Website Link Badge (Top Right of Cover) -->
-                <div class="absolute top-4 right-4 z-10">
+                    <!-- Live Website Link Badge -->
                     <a href="{{ route('home') }}" target="_blank"
                         class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/15 text-white text-xs font-mono transition-all hover:scale-105 shadow-xl">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -74,7 +73,7 @@
             </div>
 
             <!-- Identity Bar (Avatar overlapping cover) -->
-            <div class="px-6 sm:px-8 pb-8 pt-0 relative">
+            <div class="px-4 sm:px-8 pb-8 pt-0 relative">
                 <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 -mt-16 sm:-mt-20 mb-6">
 
                     <!-- Avatar & Core Info -->

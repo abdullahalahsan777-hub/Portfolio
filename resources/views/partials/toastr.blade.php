@@ -32,6 +32,21 @@
         pointer-events: auto !important;
     }
 
+    @media (max-width: 640px) {
+        #toast-container {
+            top: 0.75rem !important;
+            right: 0.75rem !important;
+            left: 0.75rem !important;
+            width: auto !important;
+        }
+        #toast-container > div.toast {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 14px 40px 14px 64px !important;
+            min-height: 64px !important;
+        }
+    }
+
     /* 1. Global Reset (Eliminates all default Toastr PNG icons and base64 styles) */
     #toast-container > div,
     #toast-container > .toast,
@@ -306,7 +321,7 @@
     }
 </style>
 
-<!-- Toastr Core Scripts (if not already included) -->
+<!-- Toastr Core Scripts (Clean non-blocking script loading) -->
 @once
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 @endonce

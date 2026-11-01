@@ -22,9 +22,9 @@
             </h1>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
             <a href="{{ route('admin.users.show', $user) }}"
-                class="px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all flex items-center gap-1.5 shadow-sm">
+                class="flex-1 sm:flex-initial justify-center px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all flex items-center gap-1.5 shadow-sm">
                 <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -32,7 +32,7 @@
                 <span>View Profile</span>
             </a>
             <a href="{{ route('admin.users.index') }}"
-                class="px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all">
+                class="flex-1 sm:flex-initial justify-center px-3.5 py-2 rounded-xl text-xs font-mono font-bold text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-center">
                 &larr; Back to Users
             </a>
         </div>
@@ -59,7 +59,7 @@
         @method('PUT')
 
         <!-- Card 1: Avatar & Personal Information -->
-        <div class="p-6 sm:p-7 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
+        <div class="p-4 sm:p-6 lg:p-7 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
             <div class="flex items-center gap-2 pb-3 border-b border-white/5">
                 <span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span>
                 <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-300">Personal & Profile Details</h3>
@@ -117,7 +117,7 @@
         </div>
 
         <!-- Card 2: Role & Permissions -->
-        <div class="p-6 sm:p-7 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-4">
+        <div class="p-4 sm:p-6 lg:p-7 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-4">
             <div class="flex items-center gap-2 pb-3 border-b border-white/5">
                 <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
                 <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-purple-300">Account Role & Access Privileges</h3>
@@ -145,7 +145,7 @@
         </div>
 
         <!-- Form Actions Bar -->
-        <div class="p-5 rounded-2xl bg-[#09101d] border border-white/10 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="p-4 sm:p-5 rounded-2xl bg-[#09101d] border border-white/10 shadow-xl flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
             <a href="{{ route('admin.users.index') }}"
                 class="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-mono font-bold text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-center">
                 Cancel

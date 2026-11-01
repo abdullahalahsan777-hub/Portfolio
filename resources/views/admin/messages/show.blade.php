@@ -185,23 +185,22 @@
 
 @section('content')
     <div class="max-full space-y-6">
-        <div class="flex items-center justify-between">
-            <a href="{{ route('admin.messages.index') }}" class="text-xs text-slate-400 hover:text-white">&larr; Back to
-                Inbox</a>
-            <div class="flex items-center gap-2">
-                <form action="{{ route('admin.messages.toggleRead', $message) }}" method="POST">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <a href="{{ route('admin.messages.index') }}" class="text-xs text-slate-400 hover:text-white inline-flex items-center gap-1.5">&larr; Back to Inbox</a>
+            <div class="flex items-center gap-2 flex-wrap">
+                <form action="{{ route('admin.messages.toggleRead', $message) }}" method="POST" class="flex-1 sm:flex-initial">
                     @csrf
                     <button type="submit"
-                        class="px-3 py-1.5 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300">
+                        class="w-full sm:w-auto px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors">
                         Mark as {{ $message->is_read ? 'Unread' : 'Read' }}
                     </button>
                 </form>
                 <form action="{{ route('admin.messages.destroy', $message) }}" method="POST"
-                    onsubmit="return confirm('Delete this inquiry?')">
+                    onsubmit="return confirm('Delete this inquiry?')" class="flex-1 sm:flex-initial">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
-                        class="px-3 py-1.5 rounded-lg text-xs bg-rose-500/20 hover:bg-rose-500/30 text-rose-300">
+                        class="w-full sm:w-auto px-3.5 py-2 rounded-xl text-xs font-semibold bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 transition-colors">
                         Delete
                     </button>
                 </form>
@@ -216,8 +215,8 @@
                 class="text-slate-400 hover:text-white">&times;</button>
         </div>
 
-        <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
-            <div class="border-b border-white/10 pb-6 flex items-start justify-between gap-4">
+        <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
+            <div class="border-b border-white/10 pb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                 <div>
                     <!-- Subject & Service Type Badge -->
                     <div class="flex items-center gap-2 flex-wrap mb-2">
@@ -258,7 +257,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="text-xs font-mono text-slate-500 text-right shrink-0">
+                <div class="text-xs font-mono text-slate-500 sm:text-right shrink-0">
                     {{ $message->created_at->format('M d, Y h:i A') }}
                 </div>
             </div>
@@ -266,22 +265,22 @@
             <div class="space-y-2">
                 <label class="block text-xs font-mono uppercase text-slate-400 tracking-wider">Message Content</label>
                 <div
-                    class="p-6 rounded-2xl bg-black/40 border border-white/5 text-slate-200 text-sm leading-relaxed whitespace-pre-wrap">
+                    class="p-4 sm:p-6 rounded-2xl bg-black/40 border border-white/5 text-slate-200 text-sm leading-relaxed whitespace-pre-wrap">
                     {{ $message->message }}
                 </div>
             </div>
 
-            <div class="pt-4 border-t border-white/10 flex items-center justify-between flex-wrap gap-3">
-                <div class="flex items-center gap-3">
+            <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
                     <button type="button" onclick="openComposer()"
-                        class="px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg flex items-center gap-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+                        class="w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                         <span>Reply via Email</span> &rarr;
                     </button>
                     <a href="{{ route('admin.messages.previewReply', $message) }}" target="_blank"
-                        class="px-4 py-2 rounded-xl text-xs font-mono font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all flex items-center gap-1.5"
+                        class="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-mono font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all flex items-center justify-center gap-1.5"
                         title="Preview rendered HTML email reply template">
                         <span>Preview Template</span>
                         <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -289,7 +288,7 @@
                         </svg>
                     </a>
                 </div>
-                <div class="flex items-center gap-3 text-xs font-mono text-slate-500">
+                <div class="flex items-center justify-between sm:justify-end gap-3 text-xs font-mono text-slate-500">
                     <span class="inline-flex items-center gap-1 text-[11px] text-emerald-400 font-mono">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                         Queue Worker Active

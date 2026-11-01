@@ -40,10 +40,10 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-2.5">
+            <div class="flex items-center gap-2.5 flex-wrap w-full md:w-auto">
                 <!-- Download Combined Diagnostics Log File -->
                 <a href="{{ route('admin.logs.download') }}"
-                    class="px-4 py-2.5 rounded-xl text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition-all flex items-center gap-2 cursor-pointer shadow-sm group"
+                    class="flex-1 md:flex-initial justify-center px-4 py-2.5 rounded-xl text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition-all flex items-center gap-2 cursor-pointer shadow-sm group"
                     title="Download all data in one file with datetime wise descending as 'System & Browser Diagnostics.log'">
                     <svg class="w-4 h-4 text-indigo-400 group-hover:-translate-y-0.5 transition-transform" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
@@ -56,12 +56,12 @@
                 <!-- Clear Logs Button (Clears Both Browser & Laravel log files) -->
                 <form action="{{ route('admin.logs.clear') }}" method="POST"
                     onsubmit="return confirm('Are you sure you want to clear both Browser and Laravel log files? All recorded diagnostics data will be deleted.');"
-                    class="inline">
+                    class="inline flex-1 md:flex-initial">
                     @csrf
                     @method('DELETE')
                     <input type="hidden" name="file" value="all">
                     <button type="submit"
-                        class="px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 transition-all flex items-center gap-2 cursor-pointer shadow-sm group"
+                        class="w-full md:w-auto justify-center px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 transition-all flex items-center gap-2 cursor-pointer shadow-sm group"
                         title="Clear both Browser and Laravel log files">
                         <svg class="w-4 h-4 text-rose-400 group-hover:scale-110 transition-transform" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
@@ -433,17 +433,27 @@
                                 </span>
                             </div>
 
-                            <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
-                                <span>{{ $item['time_human'] }}</span>
-                                <span class="text-slate-600">&bull;</span>
-                                <span class="text-slate-500">{{ $item['time_ago'] }}</span>
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-mono text-slate-400">
+                                <span class="text-slate-300 whitespace-nowrap">{{ $item['time_human'] }}</span>
+                                <span class="text-slate-600 shrink-0">&bull;</span>
+                                <span class="text-slate-500 whitespace-nowrap">{{ $item['time_ago'] }}</span>
                             </div>
                         </div>
 
                         <!-- Main Log Message Body -->
-                        <div
-                            class="text-xs sm:text-sm font-mono text-slate-200 leading-relaxed break-words whitespace-pre-wrap select-text bg-black/30 p-3 rounded-xl border border-white/5">
-                            {{ $item['message'] }}
+                        <div class="relative group/msg bg-black/40 p-3 sm:p-3.5 rounded-xl border border-white/5">
+                            <button type="button"
+                                onclick="navigator.clipboard.writeText(this.nextElementSibling.innerText); const s=this.querySelector('.copy-label'); s.textContent='Copied!'; setTimeout(function(){ s.textContent='Copy'; }, 1500);"
+                                class="absolute top-2.5 right-2.5 px-2 py-1 rounded-lg text-[10px] font-mono bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/10 transition-all flex items-center gap-1 cursor-pointer"
+                                title="Copy log message">
+                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                <span class="copy-label">Copy</span>
+                            </button>
+                            <div class="text-xs sm:text-sm font-mono text-slate-200 leading-relaxed break-words whitespace-pre-wrap select-text pr-16">
+                                {{ $item['message'] }}
+                            </div>
                         </div>
 
                         <!-- Structured Context Display (if present) -->
@@ -528,38 +538,18 @@
             <!-- Bottom Stats & Pagination (Image 2 Pro Style) -->
             <div class="pt-6 mt-4 border-t border-white/10 flex flex-col items-center justify-center gap-4">
 
-                <!-- Range & Position Badges (Top Center in Image 2) -->
+                <!-- Unified Stats Capsule -->
                 <div id="showingCountContainer" class="flex flex-wrap items-center justify-center gap-2.5">
                     @if ($logs->total() > 0)
-                        <!-- Primary Range Badge -->
-                        <div
-                            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-[#0c1424] border border-white/10 text-xs font-mono text-slate-300 shadow-sm">
-                            <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                            <span class="text-slate-400">Showing</span>
-                            <span
-                                class="px-2 py-0.5 rounded-lg bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/30">
-                                {{ $logs->firstItem() ?? 0 }}&ndash;{{ $logs->lastItem() ?? 0 }}
-                            </span>
-                            <span class="text-slate-400">of</span>
-                            <span class="text-white font-extrabold">{{ $logs->total() }}</span>
-                            <span class="text-slate-400">items</span>
-                        </div>
-
-                        <!-- Secondary Page Position & Total Context -->
-                        <div
-                            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-[#0c1424] border border-white/10 text-xs font-mono text-slate-400">
-                            <span>Page <strong class="text-white">{{ $logs->currentPage() }}</strong> of <strong
-                                    class="text-white">{{ $logs->lastPage() }}</strong></span>
-                            <span class="text-slate-600">&bull;</span>
-                            <span class="text-slate-300">{{ $logs->count() }} on page</span>
-                            <span class="text-slate-600">&bull;</span>
-                            <span class="text-slate-400">Total: <strong
-                                    class="text-white">{{ $stats['total'] }}</strong></span>
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c1424] border border-white/10 text-xs font-mono text-slate-300 shadow-inner whitespace-nowrap">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                            <span>Showing <strong class="text-white font-semibold">{{ $logs->firstItem() ?? 0 }}–{{ $logs->lastItem() ?? 0 }}</strong> of <strong class="text-white font-semibold">{{ $logs->total() }}</strong></span>
+                            <span class="text-slate-600">•</span>
+                            <span>Page <strong class="text-white font-semibold">{{ $logs->currentPage() }}</strong> of <strong class="text-white font-semibold">{{ $logs->lastPage() }}</strong></span>
                         </div>
                     @else
-                        <div
-                            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-[#0c1424] border border-white/10 text-xs font-mono text-slate-400">
-                            <span class="w-2 h-2 rounded-full bg-slate-600"></span>
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c1424] border border-white/10 text-xs font-mono text-slate-400">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-600"></span>
                             <span>Showing <strong>0</strong> items</span>
                         </div>
                     @endif
@@ -567,7 +557,7 @@
 
                 <!-- Bottom Pagination Bar (Centered Navigation Links) -->
                 @if ($logs->hasPages())
-                    <div id="paginationContainer" class="flex items-center justify-center">
+                    <div id="paginationContainer" class="flex items-center justify-center overflow-x-auto max-w-full py-1">
                         {{ $logs->links('admin.components.pagination') }}
                     </div>
                 @endif

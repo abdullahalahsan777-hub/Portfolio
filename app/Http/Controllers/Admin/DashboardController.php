@@ -13,6 +13,7 @@ use App\Models\ResumeItem;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\Skill;
+use App\Models\Subscriber;
 use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Support\Facades\App;
@@ -61,6 +62,13 @@ class DashboardController extends Controller
         $adminUsers = User::where('role', 'admin')->count();
         $clientUsers = User::where('role', '!=', 'admin')->count();
         $socialUsers = User::whereNotNull('provider')->count();
+
+        $totalSubscribers = Subscriber::count();
+        $activeSubscribers = Subscriber::where('status', 'active')->count();
+        $unsubscribedCount = $totalSubscribers - $activeSubscribers;
+        $todaySubscribers = Subscriber::whereDate('created_at', today())->count();
+        $weekSubscribers = Subscriber::where('created_at', '>=', now()->subDays(7))->count();
+        $subscriberActiveRate = $totalSubscribers > 0 ? round(($activeSubscribers / $totalSubscribers) * 100, 1) : 100;
 
         $currentUser = Auth::user();
         $notifQuery = Notification::forUser($currentUser);
@@ -145,6 +153,13 @@ class DashboardController extends Controller
             'read_notifications'    => $readNotifications,
             'today_notifications'   => $todayNotifications,
             'notification_read_percentage' => $notifReadPercentage,
+
+            'total_subscribers'      => $totalSubscribers,
+            'active_subscribers'     => $activeSubscribers,
+            'unsubscribed_count'     => $unsubscribedCount,
+            'today_subscribers'      => $todaySubscribers,
+            'week_subscribers'       => $weekSubscribers,
+            'subscriber_active_rate' => $subscriberActiveRate,
         ];
 
         $recentMessages        = ContactMessage::where('type', 'inbox')->latest()->take(6)->get();
@@ -152,6 +167,7 @@ class DashboardController extends Controller
         $recentArticles        = BlogPost::latest()->take(6)->get();
         $recentUsers           = User::latest()->take(5)->get();
         $recentNotifications   = (clone $notifQuery)->latest()->take(6)->get();
+        $recentSubscribers     = Subscriber::latest()->take(5)->get();
 
         $this->data['stats']               = $stats;
         $this->data['recentMessages']      = $recentMessages;
@@ -159,6 +175,7 @@ class DashboardController extends Controller
         $this->data['recentArticles']      = $recentArticles;
         $this->data['recentUsers']         = $recentUsers;
         $this->data['recentNotifications'] = $recentNotifications;
+        $this->data['recentSubscribers']   = $recentSubscribers;
 
         return view('admin.dashboard', $this->data);
     }

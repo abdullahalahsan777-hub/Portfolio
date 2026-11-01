@@ -250,11 +250,11 @@
 
             <!-- Submit Bar matching previous design -->
             <div
-                class="pt-4 flex items-center justify-end gap-3 sticky bottom-6 p-4 rounded-2xl bg-black/80 backdrop-blur-md border border-white/15 shadow-2xl">
+                class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-between sm:justify-end gap-3 sticky bottom-4 sm:bottom-6 p-4 rounded-2xl bg-black/80 backdrop-blur-md border border-white/15 shadow-2xl">
                 <a href="{{ route('admin.dashboard') }}"
-                    class="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white transition-colors">Cancel</a>
+                    class="w-full sm:w-auto text-center px-4 py-2.5 rounded-xl text-xs text-slate-400 hover:text-white transition-colors">Cancel</a>
                 <button type="submit"
-                    class="px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 transition-all hover:scale-105">SAVE
+                    class="w-full sm:w-auto text-center px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 transition-all hover:scale-105">SAVE
                     IMAGES</button>
             </div>
         </form>

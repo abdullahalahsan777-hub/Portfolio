@@ -6,21 +6,21 @@
 
 @section('content')
     <div class="w-full space-y-6">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <h1 class="text-xl font-bold text-white">Edit {{ ucfirst($resume->type) }} Entry</h1>
-            <a href="{{ route('admin.resume.index') }}" class="text-xs text-slate-400 hover:text-white">&larr; Back to
+            <a href="{{ route('admin.resume.index') }}" class="text-xs text-slate-400 hover:text-white inline-flex items-center gap-1.5">&larr; Back to
                 Resume</a>
         </div>
 
         <form action="{{ route('admin.resume.update', $resume) }}" method="POST"
-            class="p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-5">
+            class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-5">
             @csrf
             @method('PUT')
 
             <!-- Milestone Type Selector -->
             <div>
                 <label class="block text-xs font-mono text-slate-400 mb-1.5">Entry Type *</label>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <label
                         class="cursor-pointer p-3 rounded-xl border border-white/10 bg-black/40 flex items-center gap-2.5 has-[:checked]:border-violet-500 has-[:checked]:bg-violet-600/10">
                         <input type="radio" name="type" value="education"
@@ -95,7 +95,7 @@
             </div>
 
             <!-- Display Theme & Sort Order -->
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-mono text-slate-400 mb-1">Display Theme</label>
                     <select name="theme"
@@ -127,11 +127,11 @@
                 </div>
             </div>
 
-            <div class="pt-4 flex items-center justify-end gap-3 border-t border-white/10">
+            <div class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-white/10">
                 <a href="{{ route('admin.resume.index') }}"
-                    class="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white">Cancel</a>
+                    class="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs text-slate-400 hover:text-white text-center">Cancel</a>
                 <button type="submit"
-                    class="px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg transition-all">Update
+                    class="w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg transition-all text-center">Update
                     Entry</button>
             </div>
         </form>

@@ -136,37 +136,115 @@
                 </ul>
             </div>
 
-            <!-- Column 4 (2.5 cols): Contact -->
-            <div class="lg:col-span-2 space-y-4">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-white font-['Outfit']">Contact</h4>
-                <div class="space-y-2.5 text-xs leading-relaxed text-neutral-400">
-                    <p>{{ $settings['contact_location'] ?? 'San Francisco, CA & Remote' }}</p>
-                    <p><a href="tel:{{ $settings['contact_phone'] ?? '+1 (555) 382-9012' }}"
-                            class="text-[#ff6b00] hover:underline font-mono">{{ $settings['contact_phone'] ?? '+1 (555) 382-9012' }}</a>
-                    </p>
-                    <p><a href="mailto:{{ $settings['contact_email'] ?? 'hello@portfolio.me' }}"
-                            class="text-white border-b border-dotted border-white/40 pb-0.5 hover:text-[#ff6b00] hover:border-[#ff6b00] transition-colors">{{ $settings['contact_email'] ?? 'hello@portfolio.me' }}</a>
-                    </p>
+            <!-- Column 4 & 5 (5 cols): Contact, About & Newsletter -->
+            <div class="lg:col-span-5 space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-5 gap-6">
+                    <!-- Contact (2 cols) -->
+                    <div class="sm:col-span-2 space-y-4">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-white font-['Outfit']">Contact</h4>
+                        <div class="space-y-2.5 text-xs leading-relaxed text-neutral-400">
+                            <p>{{ $settings['contact_location'] ?? 'San Francisco, CA & Remote' }}</p>
+                            <p><a href="tel:{{ $settings['contact_phone'] ?? '+1 (555) 382-9012' }}"
+                                    class="text-[#ff6b00] hover:underline font-mono">{{ $settings['contact_phone'] ?? '+1 (555) 382-9012' }}</a>
+                            </p>
+                            <p><a href="mailto:{{ $settings['contact_email'] ?? 'hello@portfolio.me' }}"
+                                    class="text-white border-b border-dotted border-white/40 pb-0.5 hover:text-[#ff6b00] hover:border-[#ff6b00] transition-colors">{{ $settings['contact_email'] ?? 'hello@portfolio.me' }}</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- About (3 cols) -->
+                    <div class="sm:col-span-3 space-y-4">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-white font-['Outfit']">About</h4>
+                        <p class="text-xs text-neutral-400 leading-relaxed">
+                            Senior App &amp; Software Architect delivering high-throughput cloud backends, cross-platform mobile
+                            apps, and scalable web solutions.
+                        </p>
+                    </div>
                 </div>
+
+                <!-- Newsletter (Under Contact & About with subscriber count) -->
+                @include('frontend.partials.newsletter', [
+                    'accent' => '#ff6b00',
+                    'btnText' => 'text-white',
+                    'inputBg' => 'bg-[#121212]',
+                    'borderColor' => 'border-white/10'
+                ])
             </div>
 
-            <!-- Column 5 (2.5 cols): About -->
-            <div class="lg:col-span-3 space-y-4">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-white font-['Outfit']">About</h4>
-                <p class="text-xs text-neutral-400 leading-relaxed">
-                    Senior App &amp; Software Architect delivering high-throughput cloud backends, cross-platform mobile
-                    apps, and scalable web solutions.
-                </p>
-            </div>
-
-            <!-- Floating Back to Top Button (Matches other themes) -->
-            <a href="#mainHeader"
-                class="absolute right-0 bottom-4 w-10 h-10 rounded-xl bg-[#141414] hover:bg-[#ff6b00] text-[#ff6b00] hover:text-white border border-white/10 flex items-center justify-center transition-all hover:-translate-y-1 shadow-lg shadow-black/50"
-                title="Back to top">
+            <!-- Floating Back to Top Button (Smooth scroll to website main menu header) -->
+            <a href="#mainContent"
+                id="backToTopBtn"
+                onclick="
+                    event.preventDefault(); 
+                    const target = document.getElementById('mainContent') || document.getElementById('mainHeader'); 
+                    if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); } 
+                    else { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+                "
+                class="fixed right-4 sm:right-6 md:right-10 bottom-4 sm:bottom-6 md:bottom-10 w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#141414] hover:bg-[#ff6b00] text-[#ff6b00] hover:text-white border border-white/10 flex items-center justify-center transition-all duration-300 hover:-translate-y-1 shadow-2xl shadow-black/80 cursor-pointer z-50 opacity-0 invisible translate-y-4 pointer-events-none"
+                title="Back to top"
+                aria-label="Back to top of main menu">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" />
                 </svg>
             </a>
+
+            <!-- Scroll Listener to Show on Scroll & Auto-Hide when Scrolling Stops -->
+            <script>
+                (function() {
+                    const btn = document.getElementById('backToTopBtn');
+                    if (!btn) return;
+
+                    let scrollTimeout = null;
+                    let isHovered = false;
+
+                    function showBtn() {
+                        btn.classList.remove('opacity-0', 'invisible', 'translate-y-4', 'pointer-events-none');
+                        btn.classList.add('opacity-100', 'visible', 'translate-y-0', 'pointer-events-auto');
+                    }
+
+                    function hideBtn() {
+                        btn.classList.remove('opacity-100', 'visible', 'translate-y-0', 'pointer-events-auto');
+                        btn.classList.add('opacity-0', 'invisible', 'translate-y-4', 'pointer-events-none');
+                    }
+
+                    function onScroll() {
+                        if (window.scrollY > 250) {
+                            showBtn();
+
+                            if (scrollTimeout) {
+                                clearTimeout(scrollTimeout);
+                            }
+
+                            // Auto-hide button when scrolling stops
+                            scrollTimeout = setTimeout(function() {
+                                if (!isHovered) {
+                                    hideBtn();
+                                }
+                            }, 1800);
+                        } else {
+                            if (scrollTimeout) clearTimeout(scrollTimeout);
+                            hideBtn();
+                        }
+                    }
+
+                    btn.addEventListener('mouseenter', function() {
+                        isHovered = true;
+                        if (scrollTimeout) clearTimeout(scrollTimeout);
+                    });
+
+                    btn.addEventListener('mouseleave', function() {
+                        isHovered = false;
+                        if (window.scrollY > 250) {
+                            scrollTimeout = setTimeout(hideBtn, 1500);
+                        } else {
+                            hideBtn();
+                        }
+                    });
+
+                    window.addEventListener('scroll', onScroll, { passive: true });
+                })();
+            </script>
 
         </div>
 

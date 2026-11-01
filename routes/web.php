@@ -13,10 +13,12 @@ use App\Http\Controllers\Admin\ResumeController as AdminResumeController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\SkillController as AdminSkillController;
+use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
 use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\WebsiteContentController as AdminWebsiteController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Frontend\PortfolioController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +39,10 @@ Route::get('/faq', [PortfolioController::class, 'faq'])->name('faq');
 Route::get('/contact', [PortfolioController::class, 'contact'])->name('contact');
 Route::post('/contact', [PortfolioController::class, 'submitContact'])->name('contact.submit');
 Route::get('/download-cv', [PortfolioController::class, 'downloadCv'])->name('cv.download');
+
+// Newsletter Subscription Routes
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::get('/newsletter/count', [NewsletterController::class, 'count'])->name('newsletter.count');
 
 // Browser Error Reporting Endpoint (Client Runtime Logging)
 Route::post('/log/browser-error', [AdminLogController::class, 'recordBrowserError'])->name('log.browser.error');
@@ -128,6 +134,13 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/messages/{message}/reply', [AdminMessageController::class, 'reply'])->name('messages.reply');
     Route::get('/messages/{message}/preview-reply', [AdminMessageController::class, 'previewReply'])->name('messages.previewReply');
     Route::delete('/messages/{message}', [AdminMessageController::class, 'destroy'])->name('messages.destroy');
+
+    // Newsletter Subscribers Module
+    Route::prefix('subscribers')->name('subscribers.')->group(function () {
+        Route::get('/', [AdminSubscriberController::class, 'index'])->name('index');
+        Route::post('/bulk', [AdminSubscriberController::class, 'bulk'])->name('bulk');
+        Route::delete('/{subscriber}', [AdminSubscriberController::class, 'destroy'])->name('destroy');
+    });
 
     // Notifications Module (System Group)
     Route::prefix('notifications')->name('notifications.')->group(function () {

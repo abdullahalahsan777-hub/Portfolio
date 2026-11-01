@@ -70,7 +70,7 @@
             <!-- =========================================================================
                  SECTION 01: HERO SECTION & HEADLINES
                  ========================================================================= -->
-            <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
+            <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
                 <div class="flex items-center justify-between pb-4 border-b border-white/10">
                     <div class="flex items-center gap-3">
                         <span
@@ -217,7 +217,7 @@
             <!-- =========================================================================
                  SECTION 02: ABOUT ME, PHILOSOPHY & MOSAIC MEDIA
                  ========================================================================= -->
-            <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
+            <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
                 <div class="flex items-center justify-between pb-4 border-b border-white/10">
                     <div class="flex items-center gap-3">
                         <span
@@ -334,7 +334,7 @@
             <!-- =========================================================================
                  SECTION 03: KEY STATISTICAL METRICS & ACHIEVEMENT COUNTERS
                  ========================================================================= -->
-            <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
+            <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
                 <div class="flex items-center justify-between pb-4 border-b border-white/10">
                     <div class="flex items-center gap-3">
                         <span
@@ -407,7 +407,7 @@
             <!-- =========================================================================
                  SECTION 04: SECTION HEADINGS, SUBTITLES & BUTTON LABELS
                  ========================================================================= -->
-            <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
+            <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
                 <div class="flex items-center justify-between pb-4 border-b border-white/10">
                     <div class="flex items-center gap-3">
                         <span
@@ -563,7 +563,7 @@
             <!-- =========================================================================
                  SECTION 05: CONTACT, LOCATION & FOOTER COPYRIGHT
                  ========================================================================= -->
-            <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
+            <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
                 <div class="flex items-center justify-between pb-4 border-b border-white/10">
                     <div class="flex items-center gap-3">
                         <span
@@ -624,15 +624,15 @@
 
             <!-- Sticky Floating Save Bar -->
             <div
-                class="sticky bottom-6 z-40 p-4 rounded-2xl bg-black/90 backdrop-blur-xl border border-white/20 shadow-2xl flex items-center justify-between gap-4">
+                class="sticky bottom-4 sm:bottom-6 z-40 p-4 rounded-2xl bg-black/90 backdrop-blur-xl border border-white/20 shadow-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div class="flex items-center gap-2.5 text-xs text-slate-300">
-                    <span class="w-2.5 h-2.5 rounded-full" style="background-color: {{ $themeColor }};"></span>
-                    <span>Saving to <strong class="text-white">theme_contents</strong> for <strong
+                    <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: {{ $themeColor }};"></span>
+                    <span class="truncate">Saving to <strong class="text-white">theme_contents</strong> for <strong
                             class="text-indigo-400">{{ $themeName }}</strong></span>
                 </div>
 
                 <button type="submit"
-                    class="px-8 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider text-white shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+                    class="w-full sm:w-auto justify-center px-6 sm:px-8 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider text-white shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
                     style="background: linear-gradient(135deg, {{ $themeColor }}, #4f46e5);">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />

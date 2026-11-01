@@ -8,13 +8,13 @@
     <div class="space-y-6">
 
         <!-- Header -->
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <h1 class="text-2xl font-extrabold text-white">Pricing Plans</h1>
-                <p class="text-xs text-slate-400">Tiers displayed in the Awesome Pricing section across all themes.</p>
+                <p class="text-xs text-slate-400 mt-1">Tiers displayed in the Awesome Pricing section across all themes.</p>
             </div>
             <a href="{{ route('admin.pricing.create') }}"
-                class="theme-aware-create-btn px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg transition-all flex items-center gap-2">
+                class="theme-aware-create-btn w-full sm:w-auto justify-center px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg transition-all flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>

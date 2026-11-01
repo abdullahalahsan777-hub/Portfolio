@@ -15,7 +15,7 @@
             @csrf
 
             <!-- THEME SELECTION MODULE -->
-            <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
+            <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 space-y-6 shadow-xl">
                 <div class="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
                         <span class="text-xs font-mono font-bold text-sky-400 uppercase tracking-widest">Theme Customizer</span>
@@ -299,9 +299,9 @@
             </div>
 
             <!-- Submit Bar matching previous design -->
-            <div class="pt-4 flex items-center justify-end gap-3 sticky bottom-6 p-4 rounded-2xl bg-black/80 backdrop-blur-md border border-white/15 shadow-2xl">
-                <a href="{{ route('admin.dashboard') }}" class="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white transition-colors">Cancel</a>
-                <button type="submit" class="px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 transition-all hover:scale-105">SAVE THEME</button>
+            <div class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-between sm:justify-end gap-3 sticky bottom-4 sm:bottom-6 p-4 rounded-2xl bg-black/80 backdrop-blur-md border border-white/15 shadow-2xl">
+                <a href="{{ route('admin.dashboard') }}" class="w-full sm:w-auto text-center px-4 py-2.5 rounded-xl text-xs text-slate-400 hover:text-white transition-colors">Cancel</a>
+                <button type="submit" class="w-full sm:w-auto text-center px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 transition-all hover:scale-105">SAVE THEME</button>
             </div>
         </form>
     </div>

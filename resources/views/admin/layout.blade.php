@@ -143,6 +143,30 @@
             background: rgba(99, 102, 241, 0.5);
         }
 
+        /* Sleek custom scrollbar for Sidebar Navigation */
+        #adminSidebar .overflow-y-auto::-webkit-scrollbar {
+            width: 4px;
+        }
+        #adminSidebar .overflow-y-auto::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #adminSidebar .overflow-y-auto::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+        }
+        #adminSidebar .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.4);
+        }
+
+        /* Pro-grade clean pagination: prevent unwanted scrollbars */
+        #paginationContainer {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        #paginationContainer::-webkit-scrollbar {
+            display: none;
+        }
+
         /* Select2 Option Item Styling */
         .select2-container--default .select2-results__option[role="group"] {
             display: block !important;
@@ -460,41 +484,57 @@
 </head>
 
 <body ng-app="adminApp"
-    class="admin-body bg-[#060b13] text-slate-100 min-h-screen antialiased flex selection:bg-indigo-500 selection:text-white">
-    <!-- Sidebar Navigation -->
+    class="admin-body bg-[#060b13] text-slate-100 min-h-screen antialiased flex selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
+    <!-- Mobile Backdrop Overlay -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar(false)"
+        class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity duration-300">
+    </div>
+
+    <!-- Sidebar Navigation: Fixed 100vh pinned on desktop, off-canvas drawer on mobile -->
     <aside id="adminSidebar"
-        class="w-64 bg-[#09101d] border-r border-white/10 flex flex-col shrink-0 min-h-screen sticky top-0 h-screen z-40">
+        class="fixed inset-y-0 left-0 w-64 bg-[#09101d] border-r border-white/10 flex flex-col shrink-0 h-screen z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none">
         <!-- Scrollable Navigation Area -->
         <div class="flex-1 overflow-y-auto">
             <!-- Admin Studio Brand & Profile Header (Sidebar Top) -->
-            <div class="p-0.5 border-b border-white/10 space-y-3.5 bg-gradient-to-b from-white/[0.03] to-transparent">
+            <div class="p-2 border-b border-white/10 space-y-2 bg-gradient-to-b from-white/[0.03] to-transparent">
                 <!-- Sidebar Top Profile Info Card -->
-                <div class="flex items-center gap-3 p-2.5 rounded-2xl transition-all group">
-                    <div class="relative shrink-0">
-                        @if (!empty(auth()->user()->avatar) && file_exists(public_path(auth()->user()->avatar)))
-                            <img src="{{ asset(auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}"
-                                class="w-10 h-10 rounded-xl object-cover border border-indigo-500/40 shadow-md">
-                        @else
-                            <div
-                                class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 text-white font-extrabold text-xs flex items-center justify-center shadow-md">
-                                {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
+                <div class="flex items-center justify-between gap-2 p-1.5 rounded-2xl transition-all group">
+                    <div class="flex items-center gap-3 min-w-0 flex-1">
+                        <div class="relative shrink-0">
+                            @if (!empty(auth()->user()->avatar) && file_exists(public_path(auth()->user()->avatar)))
+                                <img src="{{ asset(auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}"
+                                    class="w-10 h-10 rounded-xl object-cover border border-indigo-500/40 shadow-md">
+                            @else
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 text-white font-extrabold text-xs flex items-center justify-center shadow-md">
+                                    {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
+                                </div>
+                            @endif
+                            <span
+                                class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-[#09101d]"
+                                title="Online"></span>
+                        </div>
+                        <div class="overflow-hidden flex-1 text-left min-w-0">
+                            <span
+                                class="block text-xs font-bold text-white truncate transition-colors">{{ auth()->user()->name }}</span>
+                            <div class="flex items-center gap-1.5 mt-0.5">
+                                <span
+                                    class="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-semibold">Admin</span>
+                                <span class="text-[10px] text-slate-400 truncate">Online</span>
+                                <span
+                                    class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[#0090e7]/15 text-[#0090e7] font-semibold">v{{ config('app.version', '1.0.0') }}</span>
                             </div>
-                        @endif
-                        <span
-                            class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-[#09101d]"
-                            title="Online"></span>
-                    </div>
-                    <div class="overflow-hidden flex-1 text-left min-w-0">
-                        <span
-                            class="block text-xs font-bold text-white truncate transition-colors">{{ auth()->user()->name }}</span>
-                        <div class="flex items-center gap-1.5 mt-0.5">
-                            <span
-                                class="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-semibold">Admin</span>
-                            <span class="text-[10px] text-slate-400 truncate">Online</span>
-                            <span
-                                class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[#0090e7]/15 text-[#0090e7] font-semibold">v{{ config('app.version', '1.0.0') }}</span>
                         </div>
                     </div>
+
+                    <!-- Mobile Close Button -->
+                    <button type="button" onclick="toggleSidebar(false)"
+                        class="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
+                        title="Close sidebar" aria-label="Close sidebar">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
             </div>
 
@@ -727,6 +767,27 @@
                             <span
                                 class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500 text-black">
                                 {{ $unread }}
+                            </span>
+                        @endif
+                    </a>
+
+                    <!-- Newsletter Subscribers -->
+                    <a href="{{ route('admin.subscribers.index') }}"
+                        class="flex items-center justify-between px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.subscribers.*') ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span>Subscribers</span>
+                        </div>
+                        @php
+                            $activeSubscribersCount = \App\Models\Subscriber::where('status', 'active')->count();
+                        @endphp
+                        @if ($activeSubscribersCount > 0)
+                            <span
+                                class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                                {{ $activeSubscribersCount }}
                             </span>
                         @endif
                     </a>
@@ -1051,21 +1112,29 @@
         </div>
     </aside>
 
-    <!-- Main Content Area -->
-    <div class="flex-1 flex flex-col min-h-screen overflow-x-hidden">
+    <!-- Main Content Area: Offset by sidebar width on desktop so it never overlaps fixed sidebar -->
+    <div class="flex-1 flex flex-col min-h-screen lg:ml-64 w-full min-w-0 overflow-x-hidden">
         <!-- Topbar -->
         <header
-            class="h-16 border-b border-white/10 bg-[#09101d]/60 backdrop-blur-md px-8 flex items-center justify-between sticky top-0 z-30">
-            <div class="flex items-center gap-3">
-                <h2 class="text-base font-bold text-white">@yield('page_title', 'Dashboard')</h2>
-                <span class="text-xs text-slate-500 font-mono">/ @yield('page_subtitle', 'Overview')</span>
+            class="h-16 border-b border-white/10 bg-[#09101d]/60 backdrop-blur-md px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30">
+            <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                <!-- Mobile Hamburger Menu Button -->
+                <button type="button" onclick="toggleSidebar(true)"
+                    class="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
+                    title="Toggle Sidebar Menu" aria-label="Open sidebar menu">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <h2 class="text-sm sm:text-base font-bold text-white truncate max-w-[130px] sm:max-w-xs md:max-w-none">@yield('page_title', 'Dashboard')</h2>
+                <span class="text-xs text-slate-500 font-mono hidden md:inline">/ @yield('page_subtitle', 'Overview')</span>
                 <span class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#0090e7]/15 text-[#0090e7] border border-[#0090e7]/30 shadow-sm"
                     title="Current Release">
                     v{{ config('app.version', '1.0.0') }}
                 </span>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 sm:gap-3">
                 @php
                     $isServerMaintenance =
                         \App\Models\SiteSetting::get('maintenance_mode', '0') === '1' ||
@@ -1074,18 +1143,19 @@
                 @if ($isServerMaintenance)
                     @if (auth()->check() && auth()->user()->isAdmin())
                         <a href="{{ route('admin.maintenance.index') }}"
-                            class="flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 hover:bg-amber-500/30 transition-all shadow-lg shadow-amber-500/10 text-xs font-mono"
+                            class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 hover:bg-amber-500/30 transition-all shadow-lg shadow-amber-500/10 text-xs font-mono shrink-0"
                             title="Click to upgrade server status">
                             <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-                            <span class="font-bold">503 Maintenance</span>
-                            <span class="text-[10px] bg-amber-400 text-black px-1.5 py-0.5 rounded font-black">UPGRADE
-                                &rarr;</span>
+                            <span class="font-bold hidden sm:inline">503 Maintenance</span>
+                            <span class="font-bold sm:hidden">503</span>
+                            <span class="text-[9px] sm:text-[10px] bg-amber-400 text-black px-1 sm:px-1.5 py-0.5 rounded font-black hidden md:inline">UPGRADE &rarr;</span>
                         </a>
                     @else
                         <div
-                            class="flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-mono">
+                            class="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-mono shrink-0">
                             <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                            <span class="font-bold">Maintenance Mode</span>
+                            <span class="font-bold hidden sm:inline">Maintenance Mode</span>
+                            <span class="font-bold sm:hidden">503</span>
                         </div>
                     @endif
                 @endif
@@ -1110,7 +1180,7 @@
 
                     <!-- Notifications Dropdown Popover -->
                     <div id="topbarNotificationMenu"
-                        class="hidden absolute right-0 top-full mt-2 w-80 sm:w-96 rounded-2xl bg-[#0c1424] border border-white/10 shadow-[0_16px_50px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-50 text-xs transition-all overflow-hidden font-sans">
+                        class="hidden absolute right-0 top-full mt-2 w-80 sm:w-96 max-w-[calc(100vw-2rem)] rounded-2xl bg-[#0c1424] border border-white/10 shadow-[0_16px_50px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-50 text-xs transition-all overflow-hidden font-sans">
 
                         <!-- Header -->
                         <div
@@ -1175,7 +1245,7 @@
 
                     <!-- Profile Dropdown Menu (Opens downwards) -->
                     <div id="topbarProfileMenu"
-                        class="hidden absolute right-0 top-full mt-2 w-64 rounded-2xl bg-[#0c1424] border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.85)] backdrop-blur-xl p-2 z-50 text-xs transition-all space-y-1">
+                        class="hidden absolute right-0 top-full mt-2 w-64 max-w-[calc(100vw-2rem)] rounded-2xl bg-[#0c1424] border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.85)] backdrop-blur-xl p-2 z-50 text-xs transition-all space-y-1">
 
                         <!-- User Header Details -->
                         <div
@@ -1271,12 +1341,12 @@
         </header>
 
         <!-- Page Body -->
-        <main class="p-8 flex-1">
+        <main class="p-4 sm:p-6 lg:p-8 2xl:p-10 flex-1 w-full max-w-[1920px] mx-auto">
             @yield('content')
         </main>
 
         <!-- Admin Studio Footer -->
-        <footer class="px-8 py-4 border-t border-white/5 bg-[#070c16]/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+        <footer class="px-4 sm:px-6 lg:px-8 py-4 border-t border-white/5 bg-[#070c16]/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
             <div class="flex items-center gap-2">
                 <span class="font-bold text-slate-300">Portfolio Studio</span>
                 <span>&bull;</span>
@@ -1812,6 +1882,52 @@
                 }
             }
         });
+
+        // Responsive Admin Sidebar Drawer Toggle
+        window.toggleSidebar = function(force) {
+            const sidebar = document.getElementById('adminSidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if (!sidebar) return;
+            const isHidden = sidebar.classList.contains('-translate-x-full');
+            const shouldOpen = typeof force === 'boolean' ? force : isHidden;
+            if (shouldOpen) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                if (backdrop) {
+                    backdrop.classList.remove('hidden');
+                }
+                document.body.classList.add('overflow-hidden', 'lg:overflow-auto');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
+                if (backdrop) {
+                    backdrop.classList.add('hidden');
+                }
+                document.body.classList.remove('overflow-hidden', 'lg:overflow-auto');
+            }
+        };
+
+        // Reset drawer on desktop viewport transition
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
+                const sidebar = document.getElementById('adminSidebar');
+                const backdrop = document.getElementById('sidebarBackdrop');
+                if (sidebar) {
+                    sidebar.classList.remove('-translate-x-full');
+                }
+                if (backdrop) {
+                    backdrop.classList.add('hidden');
+                }
+                document.body.classList.remove('overflow-hidden');
+            } else {
+                const sidebar = document.getElementById('adminSidebar');
+                const backdrop = document.getElementById('sidebarBackdrop');
+                if (sidebar && !sidebar.classList.contains('translate-x-0')) {
+                    sidebar.classList.add('-translate-x-full');
+                    if (backdrop) backdrop.classList.add('hidden');
+                }
+            }
+        }, { passive: true });
     </script>
 
     <!-- Global Toastr Configuration & Notification Handler -->

@@ -14,7 +14,7 @@
                 Configure live server status, trigger 503 Service Unavailable for public endpoints, and perform system upgrades.
             </p>
         </div>
-        <div class="flex items-center gap-2 px-4 py-2 rounded-2xl bg-black/40 border border-white/10">
+        <div class="flex items-center justify-center gap-2 px-4 py-2 rounded-2xl bg-black/40 border border-white/10 w-full sm:w-auto">
             <span class="w-2.5 h-2.5 rounded-full {{ $isDown ? 'bg-amber-400 animate-ping' : 'bg-emerald-400 animate-pulse' }}"></span>
             <span class="text-xs font-mono font-bold uppercase {{ $isDown ? 'text-amber-400' : 'text-emerald-400' }}">
                 {{ $isDown ? 'Server Status: UPGRADE / 503 ACTIVE' : 'Server Status: LIVE & OPERATIONAL' }}
@@ -23,7 +23,7 @@
     </div>
 
     <!-- 1. HERO SERVER STATUS & UPGRADE CONTROL BANNER -->
-    <div class="p-8 rounded-3xl bg-[#09101d] border {{ $isDown ? 'border-amber-500/40 bg-gradient-to-br from-[#09101d] via-amber-950/20 to-[#09101d]' : 'border-emerald-500/30 bg-gradient-to-br from-[#09101d] via-emerald-950/20 to-[#09101d]' }} shadow-2xl relative overflow-hidden">
+    <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border {{ $isDown ? 'border-amber-500/40 bg-gradient-to-br from-[#09101d] via-amber-950/20 to-[#09101d]' : 'border-emerald-500/30 bg-gradient-to-br from-[#09101d] via-emerald-950/20 to-[#09101d]' }} shadow-2xl relative overflow-hidden">
         
         <!-- Ambient decorative glow -->
         <div class="absolute -right-16 -top-16 w-64 h-64 {{ $isDown ? 'bg-amber-500/10' : 'bg-emerald-500/10' }} rounded-full blur-3xl pointer-events-none"></div>
@@ -127,7 +127,7 @@
     </div>
 
     <!-- 2. CUSTOMIZE 503 SERVICE UNAVAILABLE MESSAGE & TIMELINE -->
-    <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
+    <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
         <div class="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <span class="text-xs font-mono uppercase tracking-widest text-indigo-400">Message Customization</span>
@@ -192,17 +192,17 @@
     </div>
 
     <!-- 3. CACHE PURGE & OPTIMIZATION CONTROL CENTER -->
-    <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
+    <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
         <div class="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <span class="text-xs font-mono uppercase tracking-widest text-indigo-400">Cache Invalidation</span>
                 <h2 class="text-xl font-bold text-white mt-1">Application Cache &amp; Speed Management</h2>
                 <p class="text-xs text-slate-400">Purge stale compiled files or reset application caches after content adjustments.</p>
             </div>
-            <form action="{{ route('admin.maintenance.clearCache') }}" method="POST">
+            <form action="{{ route('admin.maintenance.clearCache') }}" method="POST" class="w-full sm:w-auto">
                 @csrf
                 <input type="hidden" name="type" value="optimize">
-                <button type="submit" class="px-5 py-2.5 rounded-xl font-extrabold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg transition-all">
+                <button type="submit" class="w-full sm:w-auto px-5 py-2.5 rounded-xl font-extrabold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg transition-all text-center">
                     Purge All Caches (Full Optimize)
                 </button>
             </form>
@@ -272,7 +272,7 @@
     </div>
 
     <!-- 4. EMAIL BROADCAST NOTIFICATION TEMPLATES (SERVER DOWN & UP) -->
-    <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
+    <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
         <div class="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <span class="text-xs font-mono uppercase tracking-widest text-indigo-400">Automated Mail Alerts</span>
@@ -406,7 +406,7 @@
         </div>
     </div>
 
-    <div class="p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-4">
+    <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-4">
         <div class="border-b border-white/10 pb-4">
             <span class="text-xs font-mono uppercase tracking-widest text-indigo-400">Diagnostics</span>
             <h2 class="text-xl font-bold text-white mt-1">Server Information &amp; Diagnostics</h2>

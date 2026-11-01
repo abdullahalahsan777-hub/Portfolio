@@ -74,7 +74,7 @@
                         @endif
                     @endauth
 
-                    <a href="{{ route('contact') }}" class="dev-btn-primary py-2 px-5 text-xs">
+                    <a href="{{ route('contact') }}" class="dev-btn-primary py-1.5 px-3 sm:py-2 sm:px-5 text-[11px] sm:text-xs">
                         <span>Get In Touch</span>
                         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -106,3 +106,21 @@
 
         </div>
     </header>
+
+    <script>
+        (function() {
+            const toggleBtn = document.getElementById('devMobileToggle');
+            const mobileMenu = document.getElementById('devMobileMenu');
+            if (toggleBtn && mobileMenu) {
+                toggleBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+        })();
+    </script>

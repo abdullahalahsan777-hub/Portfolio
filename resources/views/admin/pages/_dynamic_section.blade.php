@@ -103,7 +103,7 @@
     <div class="h-1 w-full" style="background: linear-gradient(90deg, {{ $themeColor }}, #6366f1, #ec4899);"></div>
 
     <!-- Section Card Header -->
-    <div class="p-5 sm:p-6 border-b border-white/10 bg-white/[0.015] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div class="p-4 sm:p-6 border-b border-white/10 bg-white/[0.015] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div class="flex items-center gap-3.5 min-w-0">
             <!-- Dynamic Section Category Icon Badge -->
             <span class="w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm shadow-lg shrink-0"
@@ -175,7 +175,7 @@
     </div>
 
     <!-- Edit Form -->
-    <form action="{{ route('admin.pages.update') }}" method="POST" enctype="multipart/form-data" class="p-6 sm:p-7 space-y-6">
+    <form action="{{ route('admin.pages.update') }}" method="POST" enctype="multipart/form-data" class="p-4 sm:p-6 lg:p-7 space-y-6">
         @csrf
         <input type="hidden" name="theme" value="{{ $selectedTheme }}">
         <input type="hidden" name="page" value="{{ $pageSlug }}">
@@ -619,7 +619,7 @@
         </div>
 
         <!-- Section Save Action Bar -->
-        <div class="pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white/[0.01] -mx-6 sm:-mx-7 -mb-6 sm:-mb-7 p-5 sm:p-6 rounded-b-3xl">
+        <div class="pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white/[0.01] -mx-4 sm:-mx-6 lg:-mx-7 -mb-4 sm:-mb-6 lg:-mb-7 p-4 sm:p-6 rounded-b-3xl">
             <div class="flex items-center gap-2.5 text-xs text-slate-400">
                 <span class="w-2.5 h-2.5 rounded-full animate-pulse shrink-0" style="background-color: {{ $themeColor }};"></span>
                 <span>

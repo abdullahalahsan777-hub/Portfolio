@@ -6,14 +6,14 @@
 
 @section('content')
     <div class="w-full space-y-6">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <h1 class="text-xl font-bold text-white">Create Client Testimonial</h1>
-            <a href="{{ route('admin.testimonials.index') }}" class="text-xs text-slate-400 hover:text-white">&larr; Back to
+            <a href="{{ route('admin.testimonials.index') }}" class="text-xs text-slate-400 hover:text-white inline-flex items-center gap-1.5">&larr; Back to
                 Testimonials</a>
         </div>
 
         <form action="{{ route('admin.testimonials.store') }}" method="POST" enctype="multipart/form-data"
-            class="p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-4">
+            class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-4">
             @csrf
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -139,11 +139,11 @@
                     class="summernote w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">{{ old('content') }}</textarea>
             </div>
 
-            <div class="pt-4 flex items-center justify-end gap-3">
+            <div class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-white/10">
                 <a href="{{ route('admin.testimonials.index') }}"
-                    class="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white">Cancel</a>
+                    class="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs text-slate-400 hover:text-white text-center">Cancel</a>
                 <button type="submit"
-                    class="px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg">Save
+                    class="w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg text-center">Save
                     Testimonial</button>
             </div>
         </form>
