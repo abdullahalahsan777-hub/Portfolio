@@ -281,11 +281,15 @@ php artisan storage:link
 
 ### Step 7: Launch the Application
 
-Start Laravel's built-in development server:
+Open `dev.sh` (or execute it via Git Bash / terminal):
 
 ```bash
-php artisan serve
+./dev.sh
+# or
+bash dev.sh
 ```
+
+> **Note**: `dev.sh` automatically launches the complete development environment, running the Laravel HTTP application server, background email queue listener, and Vite frontend asset bundler concurrently.
 
 Visit the application in your browser:
 - **Public Portfolio**: [http://127.0.0.1:8000](http://127.0.0.1:8000)
@@ -500,6 +504,7 @@ portfolio/
 │   └── logs/                   # Unified Logs (laravel.log, browser.log)
 ├── .env.example                # Documented Environment Variable Blueprint
 ├── composer.json               # PHP Dependencies
+├── dev.sh                      # Development Server Launcher (Server, Queue & Vite)
 ├── package.json                # Frontend Dependencies & Vite Scripts
 ├── tailwind.config.js          # Tailwind Color System & Font Extensions
 └── vite.config.js              # Vite Compilation Pipeline
