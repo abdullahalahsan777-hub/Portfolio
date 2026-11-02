@@ -561,7 +561,7 @@
                             </svg>
                             <span>View Live Website</span>
                         </div>
-                        <span class="text-[10px] font-mono text-emerald-400">:8044</span>
+                        <span class="text-[10px] font-mono text-emerald-400">:{{ serverPort() }}</span>
                     </a>
                 </div>
 

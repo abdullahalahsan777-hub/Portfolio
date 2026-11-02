@@ -52,7 +52,7 @@
 | **Release Status** | **Stable** (Production-Ready) |
 | **Laravel Compatibility** | Laravel `12.x` / PHP `8.2+` |
 | **Default Branch** | [`main`](https://github.com/abdullahalahsan777-hub/Portfolio/tree/main) |
-| **Version Releases Center** | [`/admin/versions`](http://127.0.0.1:8044/admin/versions) |
+| **Version Releases Center** | [`/admin/versions`](/admin/versions) |
 
 ---
 
@@ -245,10 +245,11 @@ Open `.env` in your text editor and set your local database credentials:
 
 ```env
 APP_NAME="Portfolio Studio"
-APP_VERSION=1.1.1
+APP_VERSION=1.2.0
 APP_ENV=local
 APP_DEBUG=true
-APP_URL=http://127.0.0.1:8000
+SERVER_PORT=8044
+APP_URL=http://127.0.0.1
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -291,9 +292,11 @@ bash dev.sh
 
 > **Note**: `dev.sh` automatically launches the complete development environment, running the Laravel HTTP application server, background email queue listener, and Vite frontend asset bundler concurrently.
 
-Visit the application in your browser:
-- **Public Portfolio**: [http://127.0.0.1:8000](http://127.0.0.1:8000)
-- **Admin Control Panel**: [http://127.0.0.1:8000/login](http://127.0.0.1:8000/login)
+Visit the application in your browser (using your configured `SERVER_PORT` in `.env`, default `8044`):
+- **Public Portfolio**: [http://127.0.0.1:8044](http://127.0.0.1:8044)
+- **Admin Control Panel**: [http://127.0.0.1:8044/login](http://127.0.0.1:8044/login)
+
+> **Port Configuration**: The server port is controlled exclusively by `SERVER_PORT` in your `.env` file. Changing `SERVER_PORT` in `.env` immediately updates `php artisan serve`, `dev.sh`, OAuth callback URLs, and the admin panel link badge without requiring any code modifications.
 
 ---
 

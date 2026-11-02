@@ -40,7 +40,7 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => (!empty(env('GOOGLE_REDIRECT_URI')) && !str_contains(env('GOOGLE_REDIRECT_URI'), '${'))
             ? env('GOOGLE_REDIRECT_URI')
-            : (env('APP_URL', 'http://127.0.0.1:8044') . '/auth/google/callback'),
+            : (rtrim(env('APP_URL', 'http://127.0.0.1') . (env('SERVER_PORT') && !str_contains(env('APP_URL', ''), ':') ? ':' . env('SERVER_PORT') : ''), '/') . '/auth/google/callback'),
     ],
 
     'facebook' => [
@@ -48,7 +48,7 @@ return [
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
         'redirect' => (!empty(env('FACEBOOK_REDIRECT_URI')) && !str_contains(env('FACEBOOK_REDIRECT_URI'), '${'))
             ? env('FACEBOOK_REDIRECT_URI')
-            : (env('APP_URL', 'http://127.0.0.1:8044') . '/auth/facebook/callback'),
+            : (rtrim(env('APP_URL', 'http://127.0.0.1') . (env('SERVER_PORT') && !str_contains(env('APP_URL', ''), ':') ? ':' . env('SERVER_PORT') : ''), '/') . '/auth/facebook/callback'),
     ],
 
 ];

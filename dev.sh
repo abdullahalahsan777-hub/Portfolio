@@ -23,19 +23,21 @@ if ! command -v composer &> /dev/null; then
     fi
 fi
 
-# Read server port and app url from .env
-SERVER_PORT="8000"
-APP_URL="http://127.0.0.1"
+# Read server port and app url exclusively from .env
+SERVER_PORT=""
+APP_URL=""
 
 if [ -f .env ]; then
-    ENV_PORT=$(grep -E '^SERVER_PORT=' .env | cut -d '=' -f2 | tr -d '\r')
-    if [ -n "$ENV_PORT" ]; then
-        SERVER_PORT="$ENV_PORT"
-    fi
-    ENV_URL=$(grep -E '^APP_URL=' .env | cut -d '=' -f2 | tr -d '\r')
-    if [ -n "$ENV_URL" ]; then
-        APP_URL="$ENV_URL"
-    fi
+    SERVER_PORT=$(grep -E '^[[:space:]]*SERVER_PORT=' .env | head -n 1 | cut -d '=' -f2 | tr -d '\r"' | tr -d "'")
+    APP_URL=$(grep -E '^[[:space:]]*APP_URL=' .env | head -n 1 | cut -d '=' -f2 | tr -d '\r"' | tr -d "'")
+fi
+
+# Fallback only if missing from .env
+if [ -z "$SERVER_PORT" ]; then
+    SERVER_PORT="8044"
+fi
+if [ -z "$APP_URL" ]; then
+    APP_URL="http://127.0.0.1"
 fi
 
 echo -e "\033[1;32m[INFO] Local Server URL: ${APP_URL}:${SERVER_PORT}\033[0m"

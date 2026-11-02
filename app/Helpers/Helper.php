@@ -504,3 +504,35 @@ if (! function_exists('currentUser')) {
         return $user instanceof User ? $user : null;
     }
 }
+
+if (! function_exists('serverPort')) {
+    /**
+     * Get the application server port configured exclusively via SERVER_PORT in .env.
+     *
+     * @param string|null $default
+     * @return string
+     */
+    function serverPort(?string $default = null): string
+    {
+        $port = env('SERVER_PORT');
+        if (!empty($port)) {
+            return (string) $port;
+        }
+
+        $configPort = config('app.port');
+        if (!empty($configPort)) {
+            return (string) $configPort;
+        }
+
+        if (function_exists('request')) {
+            try {
+                $reqPort = request()->getPort();
+                if (!empty($reqPort)) {
+                    return (string) $reqPort;
+                }
+            } catch (\Throwable $e) {}
+        }
+
+        return $default ?? '8044';
+    }
+}
