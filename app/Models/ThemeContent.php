@@ -416,6 +416,86 @@ class ThemeContent extends Model
             ],
 
             /* =========================================================================
+               7. FULL-STACK LARAVEL DEVELOPER (Md. Abdullah Al Ahsan)
+               ========================================================================= */
+            'laravel_developer' => [
+                // Hero
+                'hero_tag'               => '// FULL-STACK LARAVEL DEVELOPER',
+                'hero_title_line1'       => 'BUILDING SCALABLE',
+                'hero_title_line2'       => 'LARAVEL ARCHITECTURE',
+                'hero_title_line3'       => '& MODERN WEB APPS',
+                'hero_description'       => 'Full-Stack Laravel Developer with 8+ years of expertise in enterprise backend architecture, RESTful API design, database modeling, and modern web application development. Certified Level-3 NSDA professional specialized in ERP, POS, and custom order/PDF invoice systems.',
+                'hero_image'             => 'images/themes/developer/hero_portrait.jpg',
+                'hero_exp_badge'         => '8+ YRS EXP',
+                'hero_cta_text'          => 'HIRE ME',
+                'hero_cta_url'           => '#contact',
+                'hero_cta2_text'         => 'VIEW PROJECTS',
+                'hero_cta2_url'          => '#portfolio',
+
+                // About / Bio
+                'about_tag'              => 'ABOUT THE DEVELOPER',
+                'about_heading'          => 'CRAFTING RESILIENT WEB ARCHITECTURE & AUTOMATION',
+                'about_description'      => 'Highly motivated and detail-oriented Full-Stack Laravel Developer and Computer Professional with strong expertise in enterprise backend architecture, RESTful API design, database modeling, and modern web application development. Skilled in building resilient Laravel backends, RBAC authentication systems, dynamic frontends, and custom ERP/e-commerce modules.',
+                'about_bio_extended'     => 'Experienced across Devzet LLC, Freelance IT Lab, and enterprise ERP solutions. Dedicated to delivering high concurrency stability, clean MVC design, robust RBAC authentication, and intuitive responsive user experiences with Tailwind CSS and AngularJS.',
+                'about_name'             => 'Md. Abdullah Al Ahsan',
+                'about_title'            => 'Full-Stack Laravel Developer',
+                'about_father'           => 'Md. Abdur Rahman',
+                'about_dob'              => '06-08-1990',
+                'about_nationality'      => 'Bangladeshi (By Birth)',
+                'about_marital'          => 'Married',
+                'about_religion'         => 'Islam (Sunni)',
+                'about_blood_group'      => 'AB+',
+                'about_address'          => '53/20, Razbollovpur, Sherpur Town, Sherpur',
+                'about_phone'            => '+8801718926673',
+                'about_email'            => 'abdullahalahsan1990@gmail.com',
+                'about_cv_text'          => 'DOWNLOAD RESUME',
+                'about_cv_url'           => '#resume',
+
+                // Stats / Counters
+                'experience_years'       => '8+ YRS EXP',
+                'completed_projects'     => '45+ Projects Delivered',
+                'satisfied_clients'      => '30+ Satisfied Clients',
+                'awards_count'           => '3 Professional Certs',
+
+                // Sections
+                'services_tag'           => 'SERVICES & EXPERTISE',
+                'services_title'         => 'FULL-STACK DEVELOPMENT SOLUTIONS',
+                'services_subtitle'      => 'From mission-critical backend architecture to reactive responsive frontends.',
+
+                'portfolio_tag'          => 'RECENT PRODUCTION WORK',
+                'portfolio_title'        => 'ENTERPRISE & CLIENT PROJECTS',
+                'portfolio_subtitle'     => 'Real-world software including custom order PDF engines, school ERPs, and inventory systems.',
+
+                'skills_tag'             => 'TECH STACK & CAPABILITIES',
+                'skills_title'           => 'CORE TECHNICAL PROFICIENCIES',
+                'skills_subtitle'        => 'Modern frameworks, database architecture, frontend reactivity, and DevOps practices.',
+
+                'resume_tag'             => 'CAREER TRAJECTORY',
+                'resume_title'           => 'WORK EXPERIENCE & EDUCATION',
+                'resume_subtitle'        => 'Hands-on production history from 2011 to 2025 across software engineering and training.',
+
+                'testimonials_tag'       => 'CLIENT TESTIMONIALS',
+                'testimonials_title'     => 'WHAT COLLABORATORS SAY',
+                'testimonials_subtitle'  => 'Feedback from team coordinators, enterprise clients, and institutional partners.',
+
+                'pricing_tag'            => 'PROJECT TIERS',
+                'pricing_title'          => 'TRANSPARENT ENGAGEMENT MODELS',
+                'pricing_subtitle'       => 'Flexible options for sprint features, full-stack systems, and enterprise consultation.',
+
+                'faqs_tag'               => 'COMMON QUESTIONS',
+                'faqs_title'             => 'FREQUENTLY ASKED QUESTIONS',
+                'faqs_subtitle'          => 'Insights into development process, stack compatibility, code quality, and delivery timelines.',
+
+                'contact_tag'            => 'GET IN TOUCH',
+                'contact_title'          => 'LET\'S BUILD YOUR NEXT SYSTEM',
+                'contact_subtitle'       => 'Send an inquiry or project description. I will respond within 24 hours.',
+                'contact_phone'          => '+8801718926673',
+                'contact_email'          => 'abdullahalahsan1990@gmail.com',
+                'contact_location'       => '53/20, Razbollovpur, Sherpur Town, Sherpur, Bangladesh',
+                'copyright_text'         => '© 2026 Md. Abdullah Al Ahsan. All rights reserved.',
+            ],
+
+            /* =========================================================================
                6. DIGITAL DESIGNER & ILLUSTRATOR (Blayden* - digital designer & illustrator.png)
                ========================================================================= */
             'digital_designer_illustrator' => [

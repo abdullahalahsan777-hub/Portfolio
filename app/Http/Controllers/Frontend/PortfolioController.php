@@ -28,7 +28,7 @@ class PortfolioController extends Controller
      */
     private function getActiveTheme(): string
     {
-        $allowedThemes = ['developer', 'graphic_designer', 'uiux_designer', 'app_developer', 'app_software_developer', 'digital_designer_illustrator'];
+        $allowedThemes = ['developer', 'graphic_designer', 'uiux_designer', 'app_developer', 'app_software_developer', 'digital_designer_illustrator', 'laravel_developer'];
         $requestedTheme = request()->query('theme', session('user_theme'));
         if ($requestedTheme && in_array($requestedTheme, $allowedThemes, true)) {
             return $requestedTheme;

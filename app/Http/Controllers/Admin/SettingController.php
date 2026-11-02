@@ -109,7 +109,7 @@ class SettingController extends Controller
     public function updateTheme(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'active_theme' => 'required|string|in:developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'active_theme' => 'required|string|in:developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'theme_mode' => 'nullable|string|in:dark,light,system',
         ]);
 
@@ -284,7 +284,7 @@ class SettingController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'active_theme' => 'nullable|string|in:developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'active_theme' => 'nullable|string|in:developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'theme_mode' => 'nullable|string|in:dark,light,system',
             'site_title' => 'nullable|string|max:150',
             'site_logo_text' => 'nullable|string|max:50',

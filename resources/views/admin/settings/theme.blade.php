@@ -185,6 +185,31 @@
                             <span class="text-[10px] font-mono text-[#e26d9b] ml-auto">Rose Poppy &amp; Stone</span>
                         </div>
                     </label>
+
+                    <!-- Option 7: Full-Stack Laravel Developer Theme -->
+                    <label class="relative cursor-pointer rounded-2xl p-5 border-2 transition-all flex flex-col justify-between space-y-4 {{ $currentTheme === 'laravel_developer' ? 'border-[#00e5ff] bg-[#071322] shadow-xl shadow-[#00e5ff]/25' : 'border-white/10 bg-black/40 hover:border-white/30' }}">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="w-3.5 h-3.5 rounded-full bg-[#00e5ff] border-2 border-[#071322] inline-block shadow-sm shadow-[#00e5ff]"></span>
+                                <input type="radio" name="active_theme" value="laravel_developer"
+                                    {{ $currentTheme === 'laravel_developer' ? 'checked' : '' }}
+                                    class="text-[#00e5ff] focus:ring-0">
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <h3 class="font-extrabold text-white text-base">Full-Stack Laravel Developer</h3>
+                            </div>
+                            <p class="text-[11px] text-neutral-300 leading-relaxed">
+                                High-tech obsidian cyber canvas (<code class="text-[#00e5ff]">#080c14</code>), vibrant electric cyan (<code class="text-[#00e5ff]">#00e5ff</code>), deep indigo, animated multi-part hero slider, AngularJS reactivity, and full resume integration for <strong class="text-white">Md. Abdullah Al Ahsan</strong>.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-1.5 pt-2 border-t border-white/10">
+                            <span class="w-4 h-4 rounded-full bg-[#080c14] border border-white/20"></span>
+                            <span class="w-4 h-4 rounded-full bg-[#00e5ff]"></span>
+                            <span class="w-4 h-4 rounded-full bg-[#3d5afe]"></span>
+                            <span class="w-4 h-4 rounded-full bg-[#ff5722]"></span>
+                            <span class="text-[10px] font-mono text-[#00e5ff] ml-auto">Cyber Cyan &amp; Indigo</span>
+                        </div>
+                    </label>
                 </div>
             </div>
 
