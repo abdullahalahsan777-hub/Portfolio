@@ -43,7 +43,7 @@ class SkillController extends Controller
             'category' => 'required|string|max:80',
             'percentage' => 'required|integer|min:1|max:100',
             'icon' => 'nullable|string|max:5000',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'sort_order' => 'nullable|integer',
         ]);
 
@@ -78,7 +78,7 @@ class SkillController extends Controller
             'category' => 'required|string|max:80',
             'percentage' => 'required|integer|min:1|max:100',
             'icon' => 'nullable|string|max:5000',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'sort_order' => 'nullable|integer',
         ]);
 

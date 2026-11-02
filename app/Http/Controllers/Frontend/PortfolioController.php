@@ -70,9 +70,16 @@ class PortfolioController extends Controller
     {
         $theme = $theme ?: $this->getActiveTheme();
         $posts = BlogPost::where('is_published', true)
-            ->whereIn('theme', ['all', $theme])
+            ->where('theme', $theme)
             ->orderBy('sort_order')
             ->get();
+
+        if ($posts->isEmpty()) {
+            $posts = BlogPost::where('is_published', true)
+                ->whereIn('theme', ['all', $theme])
+                ->orderBy('sort_order')
+                ->get();
+        }
 
         if ($posts->isEmpty()) {
             $posts = BlogPost::where('is_published', true)->orderBy('sort_order')->get();
@@ -88,9 +95,16 @@ class PortfolioController extends Controller
     {
         $theme = $theme ?: $this->getActiveTheme();
         $faqs = Faq::where('is_published', true)
-            ->whereIn('theme', ['all', $theme])
+            ->where('theme', $theme)
             ->orderBy('sort_order')
             ->get();
+
+        if ($faqs->isEmpty()) {
+            $faqs = Faq::where('is_published', true)
+                ->whereIn('theme', ['all', $theme])
+                ->orderBy('sort_order')
+                ->get();
+        }
 
         if ($faqs->isEmpty()) {
             $faqs = Faq::where('is_published', true)->orderBy('sort_order')->get();
@@ -138,7 +152,10 @@ class PortfolioController extends Controller
         }
 
         $pricingPlans = PricingPlan::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
-        $testimonials = Testimonial::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
+        $testimonials = Testimonial::where('theme', $activeTheme)->orderBy('sort_order')->get();
+        if ($testimonials->isEmpty()) {
+            $testimonials = Testimonial::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
+        }
 
         $resumeEducation = ResumeItem::where('type', 'education')
             ->whereIn('theme', ['all', $activeTheme])

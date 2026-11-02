@@ -55,6 +55,8 @@
                         <option value="digital_designer_illustrator"
                             {{ old('theme', $faq->theme) === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital
                             Designer &amp; Illustrator</option>
+                        <option value="laravel_developer"
+                            {{ old('theme', $faq->theme) === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
                         <option value="developer" {{ old('theme', $faq->theme) === 'developer' ? 'selected' : '' }}>
                             Developer</option>
                         <option value="uiux_designer" {{ old('theme', $faq->theme) === 'uiux_designer' ? 'selected' : '' }}>

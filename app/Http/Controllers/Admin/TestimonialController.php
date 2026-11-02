@@ -46,7 +46,7 @@ class TestimonialController extends Controller
             'avatar' => 'nullable|string|max:500',
             'rating' => 'required|integer|min:1|max:5',
             'content' => 'required|string',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'sort_order' => 'nullable|integer',
         ]);
 
@@ -92,7 +92,7 @@ class TestimonialController extends Controller
             'avatar' => 'nullable|string|max:500',
             'rating' => 'required|integer|min:1|max:5',
             'content' => 'required|string',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'sort_order' => 'nullable|integer',
         ]);
 

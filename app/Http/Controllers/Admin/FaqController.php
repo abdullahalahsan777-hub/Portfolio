@@ -44,7 +44,7 @@ class FaqController extends Controller
             'question' => 'required|string|max:255',
             'answer' => 'required|string',
             'category' => 'required|string|max:100',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'sort_order' => 'nullable|integer',
             'is_published' => 'nullable|boolean',
         ]);
@@ -83,7 +83,7 @@ class FaqController extends Controller
             'question' => 'required|string|max:255',
             'answer' => 'required|string',
             'category' => 'required|string|max:100',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'sort_order' => 'nullable|integer',
             'is_published' => 'nullable|boolean',
         ]);

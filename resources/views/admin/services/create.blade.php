@@ -59,6 +59,8 @@
                         <option value="digital_designer_illustrator"
                             {{ $targetTheme === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer &amp;
                             Illustrator</option>
+                        <option value="laravel_developer"
+                            {{ $targetTheme === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
                     </select>
                 </div>
                 <div>

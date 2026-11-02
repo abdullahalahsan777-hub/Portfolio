@@ -46,7 +46,7 @@ class PricingPlanController extends Controller
             'features' => 'nullable|string',
             'button_text' => 'required|string|max:80',
             'button_url' => 'required|string|max:250',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'is_featured' => 'nullable|boolean',
             'sort_order' => 'nullable|integer',
         ]);
@@ -86,7 +86,7 @@ class PricingPlanController extends Controller
             'features' => 'nullable|string',
             'button_text' => 'required|string|max:80',
             'button_url' => 'required|string|max:250',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'is_featured' => 'nullable|boolean',
             'sort_order' => 'nullable|integer',
         ]);

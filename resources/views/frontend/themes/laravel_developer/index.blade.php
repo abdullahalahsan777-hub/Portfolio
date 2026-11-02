@@ -774,7 +774,124 @@
     </section>
 
     <!-- =========================================================================
-         8. FREQUENTLY ASKED QUESTIONS (ACCORDION POWERED BY ANGULARJS)
+         7. CLIENT TESTIMONIALS (REAL ENDORSEMENTS FROM COLLABORATORS & CLIENTS)
+         ========================================================================= -->
+    <section id="testimonials" class="py-20 bg-slate-100/70 dark:bg-[#060a12]/80 border-t border-slate-200 dark:border-white/5 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-3 mb-14">
+                <span class="px-3.5 py-1 rounded-full bg-cyan-500/10 text-[var(--theme-primary)] font-mono text-xs font-bold uppercase tracking-wider">
+                    // CLIENT REPUTATION
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white uppercase font-['Outfit']">
+                    WHAT DIRECTORS &amp; <span class="text-[var(--theme-primary)]">COLLABORATORS SAY</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+                    Direct feedback from engineering leads, institutional directors, and enterprise clients who scaled on my backend architectures.
+                </p>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($testimonials as $t)
+                    <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0a0f1d] border border-slate-200 dark:border-white/10 shadow-sm hover:border-[var(--theme-primary)]/50 hover:shadow-xl dark:hover:shadow-cyan-500/5 transition-all duration-300 flex flex-col justify-between group">
+                        <div class="space-y-4">
+                            <!-- Star Rating -->
+                            <div class="flex items-center gap-1 text-[var(--theme-primary)] text-sm">
+                                @for($i = 0; $i < ($t->rating ?? 5); $i++)
+                                    <span>★</span>
+                                @endfor
+                            </div>
+
+                            <!-- Quote Content -->
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed italic">
+                                "{{ strip_tags($t->content) }}"
+                            </p>
+                        </div>
+
+                        <!-- Client Identity -->
+                        <div class="pt-6 mt-6 border-t border-slate-100 dark:border-white/10 flex items-center gap-3.5">
+                            <img src="{{ !empty($t->avatar) ? (str_starts_with($t->avatar, 'http') ? $t->avatar : asset($t->avatar)) : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80' }}"
+                                alt="{{ $t->client_name }}"
+                                class="w-11 h-11 rounded-full object-cover border border-cyan-500/30">
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-900 dark:text-white font-['Outfit']">
+                                    {{ $t->client_name }}
+                                </h4>
+                                <p class="text-[11px] font-mono text-[var(--theme-primary)]">
+                                    {{ $t->client_role }} @if(!empty($t->company)) • <span class="text-slate-400">{{ $t->company }}</span> @endif
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         8. TECHNICAL ARTICLES & BLOG (INSIGHTS ON SOFTWARE ARCHITECTURE)
+         ========================================================================= -->
+    <section id="blog" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-14">
+                <div class="space-y-2 text-center sm:text-left">
+                    <span class="px-3.5 py-1 rounded-full bg-cyan-500/10 text-[var(--theme-primary)] font-mono text-xs font-bold uppercase tracking-wider inline-block">
+                        // TECHNICAL DISPATCHES
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white uppercase font-['Outfit']">
+                        LATEST <span class="text-[var(--theme-primary)]">ENGINEERING ARTICLES</span>
+                    </h2>
+                </div>
+                <a href="{{ route('blog') }}" class="px-5 py-2.5 rounded-full border border-slate-200 dark:border-white/10 hover:border-[var(--theme-primary)] text-xs font-mono font-bold uppercase tracking-wider text-slate-800 dark:text-white hover:text-[var(--theme-primary)] transition-all flex items-center gap-2">
+                    <span>VIEW ALL ARTICLES</span>
+                    <span>→</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                @foreach ($blogPosts->take(4) as $post)
+                    <article class="p-5 rounded-3xl bg-white dark:bg-[#0a0f1d] border border-slate-200 dark:border-white/10 shadow-sm hover:border-[var(--theme-primary)]/50 hover:shadow-xl dark:hover:shadow-cyan-500/5 transition-all duration-300 flex flex-col justify-between group">
+                        <div>
+                            <div class="aspect-[16/10] rounded-2xl overflow-hidden bg-slate-900 mb-4 relative">
+                                <img src="{{ !empty($post->image) ? (str_starts_with($post->image, 'http') ? $post->image : asset($post->image)) : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80' }}"
+                                    alt="{{ $post->title }}"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold bg-slate-950/80 backdrop-blur-md text-[var(--theme-primary)] border border-cyan-500/30">
+                                    {{ $post->category }}
+                                </span>
+                            </div>
+
+                            <div class="flex items-center gap-2 text-[10px] font-mono text-slate-400 mb-2">
+                                <span>{{ $post->date }}</span>
+                                <span>•</span>
+                                <span>{{ $post->read_time }}</span>
+                            </div>
+
+                            <h3 class="text-base font-bold font-['Outfit'] text-slate-900 dark:text-white group-hover:text-[var(--theme-primary)] transition-colors line-clamp-2 leading-snug">
+                                <a href="{{ route('blog.detail', $post->slug) }}">
+                                    {{ $post->title }}
+                                </a>
+                            </h3>
+
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">
+                                {{ $post->excerpt }}
+                            </p>
+                        </div>
+
+                        <div class="pt-4 mt-4 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-xs font-mono">
+                            <span class="text-slate-400 text-[11px]">{{ $post->author }}</span>
+                            <a href="{{ route('blog.detail', $post->slug) }}" class="text-[var(--theme-primary)] font-bold hover:underline">
+                                Read →
+                            </a>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         9. FREQUENTLY ASKED QUESTIONS (ACCORDION POWERED BY ANGULARJS)
          ========================================================================= -->
     <section id="faqs" class="py-20 bg-slate-100/70 dark:bg-[#060a12]/80 border-y border-slate-200 dark:border-white/5">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

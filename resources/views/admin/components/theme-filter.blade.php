@@ -372,6 +372,12 @@
                 short: 'Illustrator',
                 color: '#e26d9b',
                 badge: 'bg-pink-500/20 text-pink-300 border-pink-500/30'
+            },
+            'laravel_developer': {
+                name: 'Full-Stack Laravel Developer',
+                short: 'Laravel Dev',
+                color: '#00e5ff',
+                badge: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30'
             }
             @if ($showGlobalOptions)
                 ,

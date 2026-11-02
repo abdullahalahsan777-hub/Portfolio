@@ -138,6 +138,7 @@
                     <option value="all" {{ old('theme', $blog->theme) === 'all' ? 'selected' : '' }}>All Themes</option>
                     <option value="graphic_designer" {{ old('theme', $blog->theme) === 'graphic_designer' ? 'selected' : '' }}>Graphic Designer</option>
                     <option value="digital_designer_illustrator" {{ old('theme', $blog->theme) === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer &amp; Illustrator</option>
+                    <option value="laravel_developer" {{ old('theme', $blog->theme) === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
                     <option value="developer" {{ old('theme', $blog->theme) === 'developer' ? 'selected' : '' }}>Developer</option>
                     <option value="uiux_designer" {{ old('theme', $blog->theme) === 'uiux_designer' ? 'selected' : '' }}>UI/UX Designer</option>
                     <option value="app_developer" {{ old('theme', $blog->theme) === 'app_developer' ? 'selected' : '' }}>App Developer</option>

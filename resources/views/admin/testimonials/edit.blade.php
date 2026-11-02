@@ -127,6 +127,7 @@
                         <option value="app_developer" {{ $testimonial->theme === 'app_developer' ? 'selected' : '' }}>App Developer</option>
                         <option value="app_software_developer" {{ $testimonial->theme === 'app_software_developer' ? 'selected' : '' }}>App &amp; Software Developer</option>
                         <option value="digital_designer_illustrator" {{ $testimonial->theme === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer &amp; Illustrator</option>
+                        <option value="laravel_developer" {{ $testimonial->theme === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
                     </select>
                 </div>
                 <div>

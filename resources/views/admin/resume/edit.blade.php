@@ -108,6 +108,8 @@
                         <option value="digital_designer_illustrator"
                             {{ old('theme', $resume->theme) === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital
                             Designer &amp; Illustrator</option>
+                        <option value="laravel_developer"
+                            {{ old('theme', $resume->theme) === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
                         <option value="app_developer"
                             {{ old('theme', $resume->theme) === 'app_developer' ? 'selected' : '' }}>App Developer</option>
                         <option value="developer" {{ old('theme', $resume->theme) === 'developer' ? 'selected' : '' }}>

@@ -55,6 +55,8 @@
                         <option value="digital_designer_illustrator"
                             {{ $skill->theme === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer &amp;
                             Illustrator</option>
+                        <option value="laravel_developer"
+                            {{ $skill->theme === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
                     </select>
                 </div>
                 <div>

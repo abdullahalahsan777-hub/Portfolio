@@ -103,6 +103,7 @@
                         <option value="all">All Themes</option>
                         <option value="graphic_designer">Graphic Designer</option>
                         <option value="digital_designer_illustrator">Digital Designer &amp; Illustrator</option>
+                        <option value="laravel_developer">Full-Stack Laravel Developer</option>
                         <option value="app_developer">App Developer</option>
                         <option value="developer">Developer</option>
                         <option value="uiux_designer">UI/UX Designer</option>

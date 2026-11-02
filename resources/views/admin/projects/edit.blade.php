@@ -137,6 +137,8 @@
                         <option value="digital_designer_illustrator"
                             {{ $project->theme === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer
                             &amp; Illustrator</option>
+                        <option value="laravel_developer"
+                            {{ $project->theme === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
                     </select>
                 </div>
                 <div>

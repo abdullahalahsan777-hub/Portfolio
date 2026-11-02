@@ -48,7 +48,7 @@ class ProjectController extends Controller
             'demo_url' => 'nullable|string|max:500',
             'github_url' => 'nullable|string|max:500',
             'tags' => 'nullable|string|max:250',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'is_featured' => 'nullable|boolean',
             'sort_order' => 'nullable|integer',
         ]);
@@ -98,7 +98,7 @@ class ProjectController extends Controller
             'demo_url' => 'nullable|string|max:500',
             'github_url' => 'nullable|string|max:500',
             'tags' => 'nullable|string|max:250',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'is_featured' => 'nullable|boolean',
             'sort_order' => 'nullable|integer',
         ]);

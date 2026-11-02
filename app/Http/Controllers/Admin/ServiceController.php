@@ -43,7 +43,7 @@ class ServiceController extends Controller
             'description' => 'required|string',
             'icon' => 'nullable|string|max:60',
             'category' => 'required|string|max:60',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'sort_order' => 'nullable|integer',
         ]);
 
@@ -78,7 +78,7 @@ class ServiceController extends Controller
             'description' => 'required|string',
             'icon' => 'nullable|string|max:60',
             'category' => 'required|string|max:60',
-            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator',
+            'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'sort_order' => 'nullable|integer',
         ]);
 

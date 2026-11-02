@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\BlogPost;
+use App\Models\Faq;
 use App\Models\Project;
 use App\Models\ResumeItem;
 use App\Models\Service;
 use App\Models\Skill;
+use App\Models\Testimonial;
 use App\Models\ThemeContent;
 use Illuminate\Database\Seeder;
 
@@ -267,6 +270,193 @@ class LaravelDeveloperThemeSeeder extends Seeder
                     );
                 }
             }
+        }
+
+        // 6. Testimonials for laravel_developer theme
+        $testimonials = [
+            [
+                'client_name' => 'Engr. Kazi M. Rahman',
+                'client_role' => 'CTO & Tech Director',
+                'company' => 'Devzet LLC',
+                'avatar' => 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
+                'rating' => 5,
+                'content' => "Abdullah's mastery of Laravel 11 and complex relational database schemas completely transformed our backend infrastructure. He engineered our custom order pipeline and automated PDF invoice generation system with queue workers that process thousands of orders daily without a hitch. A consummate engineering professional.",
+                'theme' => $theme,
+                'sort_order' => 1,
+            ],
+            [
+                'client_name' => 'Prof. M. A. Karim',
+                'client_role' => 'Principal & Project Lead',
+                'company' => 'BBGC College',
+                'avatar' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
+                'rating' => 5,
+                'content' => "The BBGC College Management ERP developed by Md. Abdullah Al Ahsan modernized our institutional operations. From automated student enrollments, attendance tracking, to secure fee collection and coordinator management, the system has run with flawless uptime. His mathematical background reflects in every algorithm.",
+                'theme' => $theme,
+                'sort_order' => 2,
+            ],
+            [
+                'client_name' => 'Md. Rafiqul Islam',
+                'client_role' => 'Managing Director',
+                'company' => 'Rafiq Enterprise',
+                'avatar' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
+                'rating' => 5,
+                'content' => "Managing inventory across multiple retail outlets used to be a nightmare before Abdullah engineered our custom multi-store POS system. The real-time synchronization, barcode scanning, and daily cash-ledger reconciliation give us complete control over our business.",
+                'theme' => $theme,
+                'sort_order' => 3,
+            ],
+            [
+                'client_name' => 'Sarah Jenkins',
+                'client_role' => 'VP of Product Engineering',
+                'company' => 'Linksposting Platform',
+                'avatar' => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80',
+                'rating' => 5,
+                'content' => "Abdullah designed decoupled RESTful APIs with Laravel Sanctum and dynamic page management for our SaaS publisher marketplace. His code is exceptionally clean, thoroughly tested, and delivers sub-second response times under peak European & US traffic.",
+                'theme' => $theme,
+                'sort_order' => 4,
+            ],
+            [
+                'client_name' => 'Tariqul Hasan',
+                'client_role' => 'Lead Technical Consultant',
+                'company' => 'Freelance IT Lab',
+                'avatar' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80',
+                'rating' => 5,
+                'content' => "Working alongside Abdullah at Freelance IT Lab was inspiring. Whether he was architecting complex database models for client projects or mentoring batches of junior web developers, his dedication, NSDA Level-3 rigor, and Laravel expertise are second to none.",
+                'theme' => $theme,
+                'sort_order' => 5,
+            ],
+        ];
+
+        foreach ($testimonials as $t) {
+            Testimonial::updateOrCreate([
+                'client_name' => $t['client_name'],
+                'theme' => $t['theme'],
+            ], $t);
+        }
+
+        // 7. Blog Posts for laravel_developer theme
+        $blogPosts = [
+            [
+                'title' => 'Architecting High-Concurrency Invoicing Engines in Laravel 11',
+                'slug' => 'architecting-high-concurrency-invoicing-engines-laravel-11',
+                'category' => 'Backend Architecture',
+                'date' => 'October 28, 2026',
+                'read_time' => '7 min read',
+                'author' => 'Md. Abdullah Al Ahsan',
+                'image' => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
+                'excerpt' => 'How we engineered sub-second PDF invoice generation and asynchronous queue workers processing thousands of transactions at Devzet LLC without blocking HTTP requests.',
+                'content' => "In modern enterprise applications, generating PDF invoices synchronously during a checkout or billing web request is an architectural anti-pattern. When transaction volume spikes, synchronous PDF rendering consumes worker memory and blocks incoming HTTP connections.\n\nAt Devzet LLC, we re-architected our invoicing pipeline using Laravel 11 queued jobs. By decoupling order completion from document rendering via Redis queues and dedicated worker daemons, checkout response times dropped from 3.4 seconds to under 180 milliseconds.\n\nWe implemented pessimistic database locking (`lockForUpdate()`) around the invoice sequencing table to guarantee gap-free invoice numbers even during parallel checkout attempts. Templates are written using lightweight Tailwind CSS and rendered through headless Chrome, delivering crisp typography and barcode fidelity.\n\nKey takeaways for high-throughput billing:\n1. Never render binary documents on the web thread.\n2. Isolate document generation into a dedicated queue worker pool.\n3. Store generated artifacts on S3-compatible object storage and dispatch signed temporary URLs.\n4. Ensure complete idempotency so retried queue jobs never issue duplicate invoice numbers.",
+                'theme' => $theme,
+                'sort_order' => 1,
+                'is_published' => true,
+            ],
+            [
+                'title' => 'Mastering Multi-Store POS Database Modeling with MySQL & Eloquent',
+                'slug' => 'mastering-multi-store-pos-database-modeling-mysql-eloquent',
+                'category' => 'Database Optimization',
+                'date' => 'October 15, 2026',
+                'read_time' => '8 min read',
+                'author' => 'Md. Abdullah Al Ahsan',
+                'image' => 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80',
+                'excerpt' => 'A deep dive into schema design, inventory ledger tables, optimistic locking, and indexing strategies for retail POS systems like Rafiq Enterprise.',
+                'content' => "Managing retail inventory across decentralized branches presents unique database challenges: stock races, intermittent internet connectivity, and daily cash-ledger reconciliation.\n\nWhen designing the Rafiq Enterprise Multi-Store POS, we rejected simplistic single-column stock counters in favor of an append-only inventory ledger model. Rather than mutating a single `products.stock` integer, every stock movement (sale, return, transfer, adjustment) is recorded as an immutable ledger transaction.\n\nTo ensure lightning-fast POS checkouts at branch terminals:\n- Current store stock is computed using atomic SQL increments (`decrement('stock', \$qty)`) within transactional blocks.\n- Composite indexes on `(store_id, product_id, created_at)` ensure scan operations complete in sub-millisecond time.\n- End-of-day reconciliation balances ledger entries against cash drawers with automated variance alerts.\n\nThis architecture eliminated inventory discrepancies and provided complete auditability for tax and business reporting.",
+                'theme' => $theme,
+                'sort_order' => 2,
+                'is_published' => true,
+            ],
+            [
+                'title' => 'Building Enterprise ERPs using the Coordinator Architecture Pattern',
+                'slug' => 'building-enterprise-erps-using-coordinator-architecture-pattern',
+                'category' => 'Enterprise ERP',
+                'date' => 'September 24, 2026',
+                'read_time' => '6 min read',
+                'author' => 'Md. Abdullah Al Ahsan',
+                'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+                'excerpt' => 'Case study on how the BBGC College ERP maintains loose coupling across academic modules, attendance, fees, and examination workflows.',
+                'content' => "As enterprise software grows, controllers frequently become bloated god-objects entangled with business rules, authorization, and notifications. In large institutional platforms like the BBGC School Management ERP, such coupling makes maintenance hazardous.\n\nTo resolve this, we employed the Coordinator Pattern in Laravel. Coordinators act as pure workflow orchestrators that sequence granular single-responsibility Action classes without containing business logic themselves.\n\nFor example, during student semester registration, the `EnrollmentCoordinator`:\n1. Invokes `VerifyAcademicPrerequisitesAction`.\n2. Dispatches `CalculateTuitionFeeAction`.\n3. Initiates `GenerateFeeVoucherAction`.\n4. Fires `StudentEnrolledEvent` to trigger SMS and parent portal updates.\n\nEach Action class is completely decoupled, unit-testable, and reusable across web controllers, console commands, and API webhooks.",
+                'theme' => $theme,
+                'sort_order' => 3,
+                'is_published' => true,
+            ],
+            [
+                'title' => 'Securing Decoupled RESTful APIs with Laravel Sanctum & Rate Limiting',
+                'slug' => 'securing-decoupled-restful-apis-laravel-sanctum-rate-limiting',
+                'category' => 'API & Security',
+                'date' => 'September 10, 2026',
+                'read_time' => '5 min read',
+                'author' => 'Md. Abdullah Al Ahsan',
+                'image' => 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80',
+                'excerpt' => 'Best practices for role-based access control (RBAC), token lifecycle management, and protecting high-throughput endpoints against abuse.',
+                'content' => "Building scalable mobile applications and third-party integrations requires rock-solid API security. Laravel Sanctum provides a featherweight yet enterprise-grade authentication system for SPAs, mobile apps, and token-based external integrations.\n\nIn our production deployments, we follow strict defense-in-depth principles:\n- Scoped Token Abilities: Tokens issued to external clients specify exact granular permissions (e.g., `orders:create`, `invoices:read`) enforced via Sanctum middleware.\n- Dynamic Redis Rate Limiting: High-traffic endpoints utilize tiered rate limiters keyed by authenticated user ID and IP address to prevent brute-force attacks.\n- Standardized JSON Schemas: Every response is transformed via Laravel API Resources, guaranteeing consistent response envelopes and zero data leakage.\n- Automated Audit Logging: All privileged administrative mutations trigger structured audit records containing user identity, IP address, and changed attributes.",
+                'theme' => $theme,
+                'sort_order' => 4,
+                'is_published' => true,
+            ],
+        ];
+
+        foreach ($blogPosts as $b) {
+            BlogPost::updateOrCreate([
+                'slug' => $b['slug'],
+                'theme' => $b['theme'],
+            ], $b);
+        }
+
+        // 8. FAQs for laravel_developer theme
+        $faqs = [
+            [
+                'category' => 'Architecture & Stack',
+                'question' => 'What versions of Laravel and PHP do you build production applications with?',
+                'answer' => 'I specialize in Laravel 11 and PHP 8.3, leveraging modern language features including typed properties, match expressions, readonly classes, and the streamlined application bootstrap structure of Laravel 11. I also provide legacy modernization, migration, and performance refactoring for older Laravel codebases (versions 5.x through 10.x).',
+                'theme' => $theme,
+                'sort_order' => 1,
+                'is_published' => true,
+            ],
+            [
+                'category' => 'Performance & Scalability',
+                'question' => 'How do you handle heavy operations like PDF invoice generation and automated reporting?',
+                'answer' => 'Heavy processing tasks are offloaded to background queue workers managed by Redis and Laravel Horizon or database queues monitored by Supervisor daemons. This ensures HTTP web requests return instantly while documents, reports, and transactional email notifications are processed asynchronously without impacting server responsiveness.',
+                'theme' => $theme,
+                'sort_order' => 2,
+                'is_published' => true,
+            ],
+            [
+                'category' => 'Enterprise ERP & POS',
+                'question' => 'Can you integrate multi-branch POS systems with central databases and offline support?',
+                'answer' => 'Yes. Having engineered systems like the Rafiq Enterprise Multi-Store POS, I design robust synchronization layers that allow branch terminals to process sales efficiently while maintaining inventory consistency and ledger audit trails across multiple locations without duplicate sales or race conditions.',
+                'theme' => $theme,
+                'sort_order' => 3,
+                'is_published' => true,
+            ],
+            [
+                'category' => 'Database & Security',
+                'question' => 'How do you ensure data integrity and prevent race conditions in inventory and financial apps?',
+                'answer' => 'I implement strict database transactions (DB::transaction), pessimistic row-level locking (lockForUpdate()), and atomic decrement queries. Combined with strict foreign key constraints, composite indexing, and database triggers, financial ledgers and stock counts remain 100% accurate under peak concurrency.',
+                'theme' => $theme,
+                'sort_order' => 4,
+                'is_published' => true,
+            ],
+            [
+                'category' => 'Engagements & Contracts',
+                'question' => 'What is your engagement model for full-time or contract Laravel engineering?',
+                'answer' => 'I am available for full-time remote roles, dedicated contract sprints, and architectural consultation. I operate with clear Git version control, daily standup updates, milestone deliverables, and automated testing suites to ensure complete delivery transparency.',
+                'theme' => $theme,
+                'sort_order' => 5,
+                'is_published' => true,
+            ],
+            [
+                'category' => 'Full-Stack Capabilities',
+                'question' => 'Do you build reactive frontends alongside Laravel backends?',
+                'answer' => 'Yes. While specialized in deep backend architecture, I build clean, reactive frontends using Tailwind CSS, AngularJS, Vue.js, and Blade. This enables responsive dashboards, real-time POS interfaces, and interactive user experiences tailored to high-speed workflows.',
+                'theme' => $theme,
+                'sort_order' => 6,
+                'is_published' => true,
+            ],
+        ];
+
+        foreach ($faqs as $f) {
+            Faq::updateOrCreate([
+                'question' => $f['question'],
+                'theme' => $f['theme'],
+            ], $f);
         }
     }
 }
