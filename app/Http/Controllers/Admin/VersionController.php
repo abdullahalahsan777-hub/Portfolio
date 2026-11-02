@@ -207,3 +207,4 @@ class VersionController extends Controller
         return redirect()->away($downloadUrl);
     }
 }
+
