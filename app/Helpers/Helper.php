@@ -2,8 +2,9 @@
 
 use App\Helpers\FlashNotifier;
 use App\Models\SiteSetting;
-
+use App\Models\User;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -95,7 +96,21 @@ if (! function_exists('uploadFile')) {
             return false;
         }
 
-        $extension = $file->getClientOriginalExtension() ?: $file->guessExtension() ?: 'bin';
+        $extension = strtolower(trim($file->getClientOriginalExtension() ?: $file->guessExtension() ?: 'bin'));
+
+        // Prohibit dangerous / executable file extensions
+        $blockedExtensions = [
+            'php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'phps', 'pht',
+            'inc', 'pl', 'py', 'cgi', 'asp', 'aspx', 'jsp', 'sh', 'bash', 'bat', 'cmd', 'com',
+            'exe', 'dll', 'vbs', 'hta', 'htaccess', 'htpasswd', 'ini', 'bin'
+        ];
+
+        if (in_array($extension, $blockedExtensions, true)) {
+            Log::warning("uploadFile: Blocked attempt to upload file with dangerous extension '{$extension}'. Upload aborted.");
+
+            return false;
+        }
+
         $filename = ($prefix ? $prefix.'-' : '').date('ymd').rand(100000, 999999).'.'.$extension;
         $fullFilePath = $destinationPath.DIRECTORY_SEPARATOR.$filename;
 
@@ -483,10 +498,9 @@ if (! function_exists('currentUser')) {
      *
      * @return \App\Models\User|null
      */
-    function currentUser(): ?\App\Models\User
+    function currentUser(): ?User
     {
-        $user = \Illuminate\Support\Facades\Auth::user();
-
-        return $user instanceof \App\Models\User ? $user : null;
+        $user = Auth::user();
+        return $user instanceof User ? $user : null;
     }
 }

@@ -521,8 +521,9 @@
                                 <span
                                     class="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-semibold">Admin</span>
                                 <span class="text-[10px] text-slate-400 truncate">Online</span>
-                                <span
-                                    class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[#0090e7]/15 text-[#0090e7] font-semibold">v{{ config('app.version', '1.0.0') }}</span>
+                                <a href="{{ route('admin.versions.index') }}"
+                                    class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[#0090e7]/15 hover:bg-[#0090e7]/25 text-[#0090e7] font-semibold transition-colors"
+                                    title="View Version Releases">v{{ config('app.version', '1.2.0') }}</a>
                             </div>
                         </div>
                     </div>
@@ -870,6 +871,21 @@
                             </svg>
                             <span>User Management</span>
                         </a>
+
+                        <!-- Version Control & Releases -->
+                        <a href="{{ route('admin.versions.index') }}"
+                            class="flex items-center justify-between px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.versions.*') ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                                </svg>
+                                <span>Version Control</span>
+                            </div>
+                            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold">
+                                v{{ config('app.version', '1.2.0') }}
+                            </span>
+                        </a>
                     @endif
                 </div>
             </div>
@@ -1103,10 +1119,10 @@
             <!-- Sidebar Bottom Version Indicator -->
             <div class="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500 px-1">
                 <span class="truncate">Portfolio Studio</span>
-                <a href="https://github.com/abdullahalahsan777-hub/Portfolio" target="_blank"
+                <a href="{{ route('admin.versions.index') }}"
                     class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/5 hover:bg-[#0090e7]/15 text-slate-400 hover:text-[#0090e7] transition-all font-semibold"
-                    title="GitHub Repository & Release">
-                    <span>v{{ config('app.version', '1.0.0') }}</span>
+                    title="Software Version Control & Releases">
+                    <span>v{{ config('app.version', '1.2.0') }}</span>
                 </a>
             </div>
         </div>
@@ -1128,10 +1144,11 @@
                 </button>
                 <h2 class="text-sm sm:text-base font-bold text-white truncate max-w-[130px] sm:max-w-xs md:max-w-none">@yield('page_title', 'Dashboard')</h2>
                 <span class="text-xs text-slate-500 font-mono hidden md:inline">/ @yield('page_subtitle', 'Overview')</span>
-                <span class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#0090e7]/15 text-[#0090e7] border border-[#0090e7]/30 shadow-sm"
-                    title="Current Release">
-                    v{{ config('app.version', '1.0.0') }}
-                </span>
+                <a href="{{ route('admin.versions.index') }}"
+                    class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#0090e7]/15 hover:bg-[#0090e7]/25 text-[#0090e7] border border-[#0090e7]/30 shadow-sm transition-colors"
+                    title="Software Version Releases Center">
+                    v{{ config('app.version', '1.2.0') }}
+                </a>
             </div>
 
             <div class="flex items-center gap-2 sm:gap-3">

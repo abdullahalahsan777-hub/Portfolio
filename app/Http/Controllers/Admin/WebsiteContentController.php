@@ -265,6 +265,10 @@ class WebsiteContentController extends Controller
         $uploadedKeys = [];
         foreach ($request->allFiles() as $fileKey => $file) {
             if ($file && $file->isValid()) {
+                $ext = strtolower(trim($file->getClientOriginalExtension() ?: ''));
+                if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg', 'ico'], true)) {
+                    continue; // Prohibit non-image assets
+                }
                 $targetKey = str_ends_with($fileKey, '_file') ? substr($fileKey, 0, -5) : $fileKey;
                 $relativePath = uploadFile($file, "uploads/themes/{$theme}", $targetKey);
                 if ($relativePath) {
@@ -296,6 +300,14 @@ class WebsiteContentController extends Controller
         foreach ($request->except($ignoredKeys) as $key => $value) {
             if (str_ends_with($key, '_file') || in_array($key, $uploadedKeys, true)) {
                 continue;
+            }
+
+            // Sanitize string content to prevent XSS while allowing styling tags
+            if (is_string($value)) {
+                $cleanValue = strip_tags($value, '<span><strong><em><b><i><br><a><p><small>');
+                $cleanValue = preg_replace('/(\bon\w+\s*=\s*["\'][^"\']*["\'])|(\bon\w+\s*=\s*[^>\s]+)/i', '', $cleanValue);
+                $cleanValue = preg_replace('/href\s*=\s*["\']\s*javascript:[^"\']*["\']/i', 'href="#"', $cleanValue);
+                $value = $cleanValue;
             }
 
             // Determine section: explicit section, existing section from DB, or inferred fallback

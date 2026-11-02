@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-2.5 flex-wrap w-full md:w-auto">
+            <div class="flex items-center gap-2.5 w-full md:w-auto">
                 <!-- Download Combined Diagnostics Log File -->
                 <a href="{{ route('admin.logs.download') }}"
                     class="flex-1 md:flex-initial justify-center px-4 py-2.5 rounded-xl text-xs font-semibold bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition-all flex items-center gap-2 cursor-pointer shadow-sm group"
@@ -92,7 +92,8 @@
                 <!-- 1. Total Captured -->
                 <a href="{{ route('admin.logs.index', ['source' => 'all', 'level' => 'all'] + request()->except('source', 'level', 'page')) }}"
                     class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'all' && $currentSource === 'all' ? 'border-indigo-500/60 shadow-lg shadow-indigo-500/10 bg-indigo-500/[0.04]' : 'border-indigo-500/20 hover:border-indigo-500/40' }} transition-all group space-y-1 block">
-                    <div class="text-[10px] font-mono uppercase text-indigo-400 font-bold tracking-wider">Total Captured</div>
+                    <div class="text-[10px] font-mono uppercase text-indigo-400 font-bold tracking-wider">Total Captured
+                    </div>
                     <div class="text-2xl font-black font-mono text-white">{{ number_format($stats['total']) }}</div>
                     <div class="text-[11px] font-mono text-slate-400">Across {{ $stats['file_count'] }} log files</div>
                 </a>
@@ -100,7 +101,8 @@
                 <!-- 2. Exceptions / Errors -->
                 <a href="{{ route('admin.logs.index', ['source' => $currentSource, 'level' => 'error'] + request()->except('level', 'page')) }}"
                     class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'error' ? 'border-rose-500/60 shadow-lg shadow-rose-500/10' : 'border-rose-500/20 hover:border-rose-500/40' }} bg-rose-500/[0.02] transition-all group space-y-1 block">
-                    <div class="text-[10px] font-mono uppercase text-rose-400 font-bold tracking-wider">Exceptions / Errors</div>
+                    <div class="text-[10px] font-mono uppercase text-rose-400 font-bold tracking-wider">Exceptions / Errors
+                    </div>
                     <div class="text-2xl font-black font-mono text-rose-400">{{ number_format($stats['errors']) }}</div>
                     <div class="text-[11px] font-mono text-rose-300/70">Critical application events</div>
                 </a>
@@ -116,15 +118,18 @@
                 <!-- 4. Browser Errors -->
                 <a href="{{ route('admin.logs.index', ['source' => 'browser', 'level' => 'all'] + request()->except('source', 'level', 'page')) }}"
                     class="p-5 rounded-2xl bg-[#09101d] border {{ $currentSource === 'browser' ? 'border-emerald-500/60 shadow-lg shadow-emerald-500/10' : 'border-emerald-500/20 hover:border-emerald-500/40' }} bg-emerald-500/[0.02] transition-all group space-y-1 block">
-                    <div class="text-[10px] font-mono uppercase text-emerald-400 font-bold tracking-wider">Browser Errors</div>
-                    <div class="text-2xl font-black font-mono text-emerald-400">{{ number_format($stats['browser']) }}</div>
+                    <div class="text-[10px] font-mono uppercase text-emerald-400 font-bold tracking-wider">Browser Errors
+                    </div>
+                    <div class="text-2xl font-black font-mono text-emerald-400">{{ number_format($stats['browser']) }}
+                    </div>
                     <div class="text-[11px] font-mono text-emerald-300/70">Client-side JS exceptions</div>
                 </a>
 
                 <!-- 5. Info & Notices -->
                 <a href="{{ route('admin.logs.index', ['source' => $currentSource, 'level' => 'info'] + request()->except('level', 'page')) }}"
                     class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'info' ? 'border-sky-500/60 shadow-lg shadow-sky-500/10' : 'border-sky-500/20 hover:border-sky-500/40' }} bg-sky-500/[0.02] transition-all group space-y-1 block">
-                    <div class="text-[10px] font-mono uppercase text-sky-400 font-bold tracking-wider">Info &amp; Notices</div>
+                    <div class="text-[10px] font-mono uppercase text-sky-400 font-bold tracking-wider">Info &amp; Notices
+                    </div>
                     <div class="text-2xl font-black font-mono text-sky-400">{{ number_format($stats['info']) }}</div>
                     <div class="text-[11px] font-mono text-sky-300/70">Runtime system messages</div>
                 </a>
@@ -135,7 +140,8 @@
                 <!-- 6. Today's Activity -->
                 <a href="{{ route('admin.logs.index', ['source' => $currentSource, 'level' => 'today'] + request()->except('level', 'page')) }}"
                     class="p-5 rounded-2xl bg-[#09101d] border {{ $currentLevel === 'today' ? 'border-purple-500/60 shadow-lg shadow-purple-500/10' : 'border-purple-500/20 hover:border-purple-500/40' }} bg-purple-500/[0.02] transition-all group space-y-1 block">
-                    <div class="text-[10px] font-mono uppercase text-purple-400 font-bold tracking-wider">Today's Activity</div>
+                    <div class="text-[10px] font-mono uppercase text-purple-400 font-bold tracking-wider">Today's Activity
+                    </div>
                     <div class="text-2xl font-black font-mono text-purple-400">{{ number_format($stats['today']) }}</div>
                     <div class="text-[11px] font-mono text-purple-300/70">Recorded past 24 hours</div>
                 </a>
@@ -143,7 +149,8 @@
                 <!-- 7. Backend Logs -->
                 <a href="{{ route('admin.logs.index', ['source' => 'laravel', 'level' => 'all'] + request()->except('source', 'level', 'page')) }}"
                     class="p-5 rounded-2xl bg-[#09101d] border {{ $currentSource === 'laravel' ? 'border-indigo-500/60 shadow-lg shadow-indigo-500/10' : 'border-indigo-500/20 hover:border-indigo-500/40' }} bg-indigo-500/[0.02] transition-all group space-y-1 block">
-                    <div class="text-[10px] font-mono uppercase text-indigo-400 font-bold tracking-wider">Laravel Backend</div>
+                    <div class="text-[10px] font-mono uppercase text-indigo-400 font-bold tracking-wider">Laravel Backend
+                    </div>
                     <div class="text-2xl font-black font-mono text-indigo-400">{{ number_format($stats['backend']) }}</div>
                     <div class="text-[11px] font-mono text-indigo-300/70">Server controller events</div>
                 </a>
@@ -156,21 +163,27 @@
                 </div>
 
                 <!-- 9. Environment & Security -->
-                <div class="p-5 rounded-2xl bg-[#09101d] border {{ $stats['debug_mode'] ? 'border-amber-500/20 bg-amber-500/[0.02]' : 'border-emerald-500/20 bg-emerald-500/[0.02]' }} space-y-1">
-                    <div class="text-[10px] font-mono uppercase {{ $stats['debug_mode'] ? 'text-amber-400' : 'text-emerald-400' }} font-bold tracking-wider flex items-center justify-between">
+                <div
+                    class="p-5 rounded-2xl bg-[#09101d] border {{ $stats['debug_mode'] ? 'border-amber-500/20 bg-amber-500/[0.02]' : 'border-emerald-500/20 bg-emerald-500/[0.02]' }} space-y-1">
+                    <div
+                        class="text-[10px] font-mono uppercase {{ $stats['debug_mode'] ? 'text-amber-400' : 'text-emerald-400' }} font-bold tracking-wider flex items-center justify-between">
                         <span>Environment</span>
-                        <span class="w-1.5 h-1.5 rounded-full {{ $stats['debug_mode'] ? 'bg-amber-400' : 'bg-emerald-400' }} animate-pulse"></span>
+                        <span
+                            class="w-1.5 h-1.5 rounded-full {{ $stats['debug_mode'] ? 'bg-amber-400' : 'bg-emerald-400' }} animate-pulse"></span>
                     </div>
                     <div class="text-xl font-black font-mono text-white">{{ $stats['environment'] }}</div>
-                    <div class="text-[11px] font-mono {{ $stats['debug_mode'] ? 'text-amber-300/80 font-bold' : 'text-emerald-300/80 font-bold' }}">
+                    <div
+                        class="text-[11px] font-mono {{ $stats['debug_mode'] ? 'text-amber-300/80 font-bold' : 'text-emerald-300/80 font-bold' }}">
                         Debug {{ $stats['debug_mode'] ? 'Active (ON)' : 'Disabled (OFF)' }}
                     </div>
                 </div>
 
                 <!-- 10. Storage Footprint -->
                 <div class="p-5 rounded-2xl bg-[#09101d] border border-white/10 space-y-1">
-                    <div class="text-[10px] font-mono uppercase text-slate-400 font-bold tracking-wider">Storage Footprint</div>
-                    <div class="text-2xl font-black font-mono text-cyan-400">{{ $stats['total_size_mb'] }} <span class="text-sm font-normal text-slate-400">MB</span></div>
+                    <div class="text-[10px] font-mono uppercase text-slate-400 font-bold tracking-wider">Storage Footprint
+                    </div>
+                    <div class="text-2xl font-black font-mono text-cyan-400">{{ $stats['total_size_mb'] }} <span
+                            class="text-sm font-normal text-slate-400">MB</span></div>
                     <div class="text-[11px] font-mono text-slate-400">In storage/logs</div>
                 </div>
             </div>
@@ -433,7 +446,8 @@
                                 </span>
                             </div>
 
-                            <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-mono text-slate-400">
+                            <div
+                                class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-mono text-slate-400">
                                 <span class="text-slate-300 whitespace-nowrap">{{ $item['time_human'] }}</span>
                                 <span class="text-slate-600 shrink-0">&bull;</span>
                                 <span class="text-slate-500 whitespace-nowrap">{{ $item['time_ago'] }}</span>
@@ -447,11 +461,13 @@
                                 class="absolute top-2.5 right-2.5 px-2 py-1 rounded-lg text-[10px] font-mono bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/10 transition-all flex items-center gap-1 cursor-pointer"
                                 title="Copy log message">
                                 <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                                 </svg>
                                 <span class="copy-label">Copy</span>
                             </button>
-                            <div class="text-xs sm:text-sm font-mono text-slate-200 leading-relaxed break-words whitespace-pre-wrap select-text pr-16">
+                            <div
+                                class="text-xs sm:text-sm font-mono text-slate-200 leading-relaxed break-words whitespace-pre-wrap select-text pr-16">
                                 {{ $item['message'] }}
                             </div>
                         </div>
@@ -541,14 +557,19 @@
                 <!-- Unified Stats Capsule -->
                 <div id="showingCountContainer" class="flex flex-wrap items-center justify-center gap-2.5">
                     @if ($logs->total() > 0)
-                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c1424] border border-white/10 text-xs font-mono text-slate-300 shadow-inner whitespace-nowrap">
+                        <div
+                            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c1424] border border-white/10 text-xs font-mono text-slate-300 shadow-inner whitespace-nowrap">
                             <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-                            <span>Showing <strong class="text-white font-semibold">{{ $logs->firstItem() ?? 0 }}–{{ $logs->lastItem() ?? 0 }}</strong> of <strong class="text-white font-semibold">{{ $logs->total() }}</strong></span>
+                            <span>Showing <strong
+                                    class="text-white font-semibold">{{ $logs->firstItem() ?? 0 }}–{{ $logs->lastItem() ?? 0 }}</strong>
+                                of <strong class="text-white font-semibold">{{ $logs->total() }}</strong></span>
                             <span class="text-slate-600">•</span>
-                            <span>Page <strong class="text-white font-semibold">{{ $logs->currentPage() }}</strong> of <strong class="text-white font-semibold">{{ $logs->lastPage() }}</strong></span>
+                            <span>Page <strong class="text-white font-semibold">{{ $logs->currentPage() }}</strong> of
+                                <strong class="text-white font-semibold">{{ $logs->lastPage() }}</strong></span>
                         </div>
                     @else
-                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c1424] border border-white/10 text-xs font-mono text-slate-400">
+                        <div
+                            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c1424] border border-white/10 text-xs font-mono text-slate-400">
                             <span class="w-1.5 h-1.5 rounded-full bg-slate-600"></span>
                             <span>Showing <strong>0</strong> items</span>
                         </div>
@@ -557,7 +578,8 @@
 
                 <!-- Bottom Pagination Bar (Centered Navigation Links) -->
                 @if ($logs->hasPages())
-                    <div id="paginationContainer" class="flex items-center justify-center overflow-x-auto max-w-full py-1">
+                    <div id="paginationContainer"
+                        class="flex items-center justify-center overflow-x-auto max-w-full py-1">
                         {{ $logs->links('admin.components.pagination') }}
                     </div>
                 @endif

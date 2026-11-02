@@ -170,12 +170,32 @@ class LogViewerController extends Controller
                 }
             }
 
-            $message = trim((string) ($input['message'] ?? 'Unknown client JavaScript error'));
-            $source = (string) ($input['source'] ?? 'browser');
+            $message = mb_substr(trim((string) ($input['message'] ?? 'Unknown client JavaScript error')), 0, 1000);
+            $source = mb_substr((string) ($input['source'] ?? 'browser'), 0, 255);
+            $lowerMsg = strtolower($message);
+            $lowerSource = strtolower($source);
+
+            // Filter out benign client-side network interruptions, browser drops, and adblocker extension noise
+            if (
+                str_contains($lowerMsg, 'networkerror when attempting to fetch resource') ||
+                str_contains($lowerMsg, 'failed to fetch') ||
+                str_contains($lowerMsg, 'load failed') ||
+                str_contains($lowerMsg, 'aborterror') ||
+                str_contains($lowerMsg, 'the operation was aborted') ||
+                str_contains($lowerMsg, 'adblock') ||
+                str_contains($lowerMsg, 'in-browser-notifications') ||
+                str_contains($lowerSource, 'adblock') ||
+                str_contains($lowerSource, 'extension://')
+            ) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Ignored benign client network/extension noise.',
+                ]);
+            }
             $lineno = (int) ($input['lineno'] ?? 0);
             $colno = (int) ($input['colno'] ?? 0);
-            $stack = (string) ($input['stack'] ?? '');
-            $pageUrl = (string) ($input['url'] ?? $request->fullUrl());
+            $stack = mb_substr((string) ($input['stack'] ?? ''), 0, 4000);
+            $pageUrl = mb_substr((string) ($input['url'] ?? $request->fullUrl()), 0, 500);
             $userAgent = $request->userAgent() ?? 'N/A';
             $ip = $request->ip() ?? 'N/A';
 

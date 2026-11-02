@@ -192,13 +192,23 @@ class ContactMessageController extends Controller
     public function uploadAttachment(Request $request): JsonResponse
     {
         $request->validate([
-            'file'    => 'required|file|max:20480',
+            'file'    => 'required|file|max:20480|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z,tar,gz,jpeg,jpg,png,gif,webp,svg',
             'temp_id' => 'nullable|string|max:64',
+        ], [
+            'file.mimes' => 'Executable and dangerous file extensions are strictly prohibited.',
         ]);
 
         $file = $request->file('file');
         $originalName = $file->getClientOriginalName();
-        $extension = strtolower($file->getClientOriginalExtension());
+        $extension = strtolower(trim($file->getClientOriginalExtension() ?: 'bin'));
+
+        $blocked = ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'phps', 'pht', 'inc', 'pl', 'py', 'cgi', 'asp', 'aspx', 'jsp', 'sh', 'bash', 'bat', 'cmd', 'com', 'exe', 'dll', 'vbs', 'hta', 'htaccess', 'htpasswd', 'ini', 'bin'];
+        if (in_array($extension, $blocked, true)) {
+            return response()->json([
+                'success' => false,
+                'error'   => 'Prohibited file type. Executable and script uploads are blocked.',
+            ], 422);
+        }
         $mimeType = $file->getMimeType() ?: 'application/octet-stream';
         $sizeBytes = $file->getSize();
         $size = $sizeBytes >= 1048576 
@@ -364,9 +374,19 @@ class ContactMessageController extends Controller
 
             // 2. Process legacy or direct file upload input if provided
             if ($request->hasFile('attachment') && $request->file('attachment')->isValid()) {
+                $request->validate([
+                    'attachment' => 'file|max:20480|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z,tar,gz,jpeg,jpg,png,gif,webp,svg',
+                ]);
+
                 $file = $request->file('attachment');
                 $originalName = $file->getClientOriginalName();
-                $extension = strtolower($file->getClientOriginalExtension());
+                $extension = strtolower(trim($file->getClientOriginalExtension() ?: 'bin'));
+
+                $blocked = ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phtml', 'phar', 'phps', 'pht', 'inc', 'pl', 'py', 'cgi', 'asp', 'aspx', 'jsp', 'sh', 'bash', 'bat', 'cmd', 'com', 'exe', 'dll', 'vbs', 'hta', 'htaccess', 'htpasswd', 'ini', 'bin'];
+                if (in_array($extension, $blocked, true)) {
+                    flash()->danger('Prohibited file extension uploaded. Executables and scripts are strictly blocked.');
+                    return redirect()->back();
+                }
                 $mimeType = $file->getMimeType() ?: 'application/octet-stream';
                 $sizeBytes = $file->getSize();
                 $size = $sizeBytes >= 1048576 

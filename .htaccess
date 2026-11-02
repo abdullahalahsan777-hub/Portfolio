@@ -1,0 +1,26 @@
+# ==============================================================================
+# Security & Routing Gateway for Local & Production Web Servers (Apache/XAMPP)
+# ==============================================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 1. Deny direct access to hidden files and directories (dotfiles, e.g. .env, .git)
+    RewriteRule (^|/)\.(?!well-known) - [F,L]
+
+    # 2. Deny direct access to sensitive configuration and manifest files
+    RewriteRule ^(\.env|\.env\..*|composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|vite\.config\.js|README\.md) - [F,L]
+
+    # 3. Deny direct access to internal Laravel application directories
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests)/ - [F,L]
+
+    # 4. Safely redirect all valid web traffic to the public front controller
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Disable directory browsing
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+

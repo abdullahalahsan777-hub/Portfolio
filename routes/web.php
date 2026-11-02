@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\SkillController as AdminSkillController;
 use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
 use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\VersionController as AdminVersionController;
 use App\Http\Controllers\Admin\WebsiteContentController as AdminWebsiteController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Frontend\NewsletterController;
@@ -37,15 +38,15 @@ Route::get('/blog', [PortfolioController::class, 'blog'])->name('blog');
 Route::get('/blog/{slug}', [PortfolioController::class, 'blogDetail'])->name('blog.detail');
 Route::get('/faq', [PortfolioController::class, 'faq'])->name('faq');
 Route::get('/contact', [PortfolioController::class, 'contact'])->name('contact');
-Route::post('/contact', [PortfolioController::class, 'submitContact'])->name('contact.submit');
+Route::post('/contact', [PortfolioController::class, 'submitContact'])->name('contact.submit')->middleware('throttle:15,1');
 Route::get('/download-cv', [PortfolioController::class, 'downloadCv'])->name('cv.download');
 
 // Newsletter Subscription Routes
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe')->middleware('throttle:15,1');
 Route::get('/newsletter/count', [NewsletterController::class, 'count'])->name('newsletter.count');
 
 // Browser Error Reporting Endpoint (Client Runtime Logging)
-Route::post('/log/browser-error', [AdminLogController::class, 'recordBrowserError'])->name('log.browser.error');
+Route::post('/log/browser-error', [AdminLogController::class, 'recordBrowserError'])->name('log.browser.error')->middleware('throttle:30,1');
 
 // Legacy Route Aliases
 Route::get('/projects', [PortfolioController::class, 'portfolio'])->name('project');
@@ -55,15 +56,15 @@ Route::get('/resume', [PortfolioController::class, 'index'])->name('resume');
 // Authentication Routes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:10,1');
 
     // Password Reset Routes
     Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
-    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email')->middleware('throttle:5,1');
     Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
-    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update')->middleware('throttle:5,1');
 
     // Social Authentication (Google & Facebook)
     Route::get('/auth/{provider}', [AuthController::class, 'redirectToProvider'])->name('auth.social');
@@ -211,6 +212,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         Route::delete('/logs/clear', [AdminLogController::class, 'clear'])->name('logs.clear');
         Route::get('/logs/download', [AdminLogController::class, 'download'])->name('logs.download');
         Route::post('/logs/test-error', [AdminLogController::class, 'testError'])->name('logs.testError');
+
+        // Software Version Control & Releases Center
+        Route::get('/versions', [AdminVersionController::class, 'index'])->name('versions.index');
+        Route::get('/versions/{version}/download', [AdminVersionController::class, 'download'])->name('versions.download');
     });
 });
 

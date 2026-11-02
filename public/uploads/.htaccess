@@ -1,0 +1,26 @@
+# ==============================================================================
+# Hardened Uploads Directory Security Policy
+# Prohibits execution of any server-side script or CGI executable
+# ==============================================================================
+
+<FilesMatch "(?i)\.(php|php[0-9]|phtml|phar|phps|pht|inc|pl|py|cgi|asp|aspx|jsp|sh|bash|bat|cmd|com|exe|dll|vbs|hta|htaccess|htpasswd|ini)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Disable PHP execution engine in this directory if mod_php is loaded
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+# Prevent CGI script execution and disable directory listings
+Options -ExecCGI -Indexes
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
+

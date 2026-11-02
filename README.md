@@ -2,7 +2,7 @@
 
 > Complete multi-theme portfolio with admin panel to maintain everything.
 
-[![Current Version](https://img.shields.io/badge/Version-v1.1.1-0090e7?style=flat-square&logo=git&logoColor=white)](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.1)
+[![Current Version](https://img.shields.io/badge/Version-v1.2.0-0090e7?style=flat-square&logo=git&logoColor=white)](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0)
 [![Release Status](https://img.shields.io/badge/Release-Stable-emerald?style=flat-square)](https://github.com/abdullahalahsan777-hub/Portfolio/releases)
 [![Laravel 12](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com)
 [![PHP 8.2+](https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
@@ -46,12 +46,42 @@
 
 | Metric | Details |
 | :--- | :--- |
-| **Current Stable Version** | **`v1.1.1`** |
-| **Release Date** | October 30, 2026 |
-| **Git Tag** | [`v1.1.1`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.1) |
+| **Current Stable Version** | **`v1.2.0`** |
+| **Release Date** | November 2, 2026 |
+| **Git Tag** | [`v1.2.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0) |
 | **Release Status** | **Stable** (Production-Ready) |
 | **Laravel Compatibility** | Laravel `12.x` / PHP `8.2+` |
 | **Default Branch** | [`main`](https://github.com/abdullahalahsan777-hub/Portfolio/tree/main) |
+| **Version Releases Center** | [`/admin/versions`](http://127.0.0.1:8044/admin/versions) |
+
+---
+
+## Software Version Control & Releases Matrix (v1.0.0 – v1.2.0)
+
+All releases from **v1.0.0** to **v1.2.0** are stable versions tracked by Git tags on GitHub.
+
+### Unified Foundational Architecture (Retained in ALL Versions)
+Across all versions, the foundational modules remain identical, unified, and fully operational:
+1. **`Website` Group Module**: Website Studio Editor, Dynamic Sections & all Page Elements (Home, About, Contact, Services, Projects, Skills, Resume, Blog, FAQs, Pricing, Testimonials).
+2. **Authentication Subsystem**: Secure session login, registration, password recovery, and role-based access.
+3. **Account & Profile Management**: Admin user profile, avatar upload, and password update.
+4. **General & Brand Settings**: Global title, copyright, social coordinates, and brand logos.
+5. **Image & Media Engine**: Logo, favicon, dark mode wordmark, WebP image pipeline.
+6. **Theme Engine Core**: Multi-theme presentation supporting Developer, App Developer, App Software Developer, UI/UX Designer, and Graphic Designer personas.
+
+---
+
+### Version-by-Version Subsystems & GitHub Downloads
+
+| Version | Status | Release Date | Subsystem / Key Feature Focus | Direct Downloads | GitHub Release |
+| :--- | :---: | :---: | :--- | :---: | :---: |
+| **`v1.2.0`** | **Current Stable** | Nov 02, 2026 | **Enterprise Security & Full Responsive Polish**<br>&bull; Root `.htaccess` gateway protecting `.env`, `composer.json`, `.git`<br>&bull; Upload folder script execution prohibition (`php_flag engine off`)<br>&bull; `uploadFile()` extension blacklist<br>&bull; `SecurityHeadersMiddleware` (CSP/SAMEORIGIN/nosniff)<br>&bull; Public route rate-limiting throttle (15/min)<br>&bull; Fixed 100vh admin sidebar with slim custom scrollbars<br>&bull; Full device responsiveness (desktop, laptop, tab, mobile)<br>&bull; Version Control Releases Hub (`/admin/versions`) | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.2.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.2.0.tar.gz) | [`v1.2.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0) |
+| **`v1.1.9`** | Stable | Nov 01, 2026 | **Newsletter Engine & Pro Pagination**<br>&bull; Newsletter subscriber management & database migration<br>&bull; Public subscription endpoint (`/newsletter/subscribe`)<br>&bull; Dashboard newsletter audience health metrics card<br>&bull; Mathematical windowed pagination (capped to 7 items)<br>&bull; Scroll-to-top button auto-hide on scroll stop | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.9.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.9.tar.gz) | [`v1.1.9 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.9) |
+| **`v1.1.8`** | Stable | Oct 30, 2026 | **Unified System & Browser Diagnostics Center**<br>&bull; Dual-source log viewer: backend `laravel.log` + client `browser.log`<br>&bull; Automated frontend JavaScript error beacon<br>&bull; Structured severity & runtime environment metric cards<br>&bull; One-click combined log download & dual-file clear | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.8.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.8.tar.gz) | [`v1.1.8 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.8) |
+| **`v1.1.4`** | Stable | Oct 30, 2026 | **Client Inquiries & Communications Hub**<br>&bull; Gmail-style dark mode mailbox with hover action buttons<br>&bull; Folder navigation (Inbox, Sent, Drafts, Important, Trash)<br>&bull; Background autosave drafts with UUID `temp_id`<br>&bull; VIP importance badge inheritance from client history<br>&bull; Background file attachments & HTML email replies | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.4.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.4.tar.gz) | [`v1.1.4 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.4) |
+| **`v1.1.1`** | Stable | Oct 29, 2026 | **System Maintenance & Infrastructure Hub**<br>&bull; Maintenance mode toggle (HTTP 503) with admin preview bypass<br>&bull; Automated broadcast emails to users on server status change<br>&bull; Real-time database size telemetry (MySQL/SQLite)<br>&bull; View, route, and configuration cache clear controls | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.1.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.1.tar.gz) | [`v1.1.1 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.1) |
+| **`v1.1.0`** | Stable | Oct 29, 2026 | **Custom Error Pages Suite & Resilience**<br>&bull; Branded custom error pages: 400, 401, 403, 404, 405, 408, 410, 429, 500, 502, 503, 504<br>&bull; Interactive error preview showcase hub (`/errors`)<br>&bull; Exception reporter with route/action/IP context logging | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.0.tar.gz) | [`v1.1.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.0) |
+| **`v1.0.0`** | Foundation | Oct 29, 2026 | **Multi-Theme Portfolio Foundation Release**<br>&bull; 5 frontend themes (Developer, App Developer, App Software, UI/UX, Graphic Designer)<br>&bull; Full Website Group content editor (Home, About, Services, Projects, Skills, Resume, Blog, FAQ, Pricing, Testimonials)<br>&bull; Authentication, User Management, General/Image/Media settings | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.0.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.0.0.tar.gz) | [`v1.0.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.0.0) |
 
 ---
 
