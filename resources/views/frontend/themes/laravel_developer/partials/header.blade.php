@@ -1,7 +1,7 @@
 <!-- =========================================================================
      TOP INFO BAR & STICKY HEADER (Full-Stack Laravel Developer Theme)
-     Featuring Md. Abdullah Al Ahsan's resume contact, Material Color Palette Switcher,
-     Dark/Light Mode toggle, and reactive AngularJS controller integration.
+     Featuring Md. Abdullah Al Ahsan's resume contact, Right Fixed Material Palette Switcher,
+     clean header bar without theme mode toggle button (per user specification).
      ========================================================================= -->
 
 <!-- Top Info Bar (Desktop) -->
@@ -47,7 +47,7 @@
 
 <!-- Main Sticky Navigation Bar -->
 <header id="mainHeader"
-    class="sticky top-0 z-50 w-full transition-all duration-300 py-3 bg-white/95 dark:bg-[#070b14]/95 backdrop-blur-xl border-b border-slate-200 dark:border-white/10 shadow-sm dark:shadow-2xl font-['Plus_Jakarta_Sans']">
+    class="sticky top-0 z-40 w-full transition-all duration-300 py-3 bg-white/95 dark:bg-[#070b14]/95 backdrop-blur-xl border-b border-slate-200 dark:border-white/10 shadow-sm dark:shadow-2xl font-['Plus_Jakarta_Sans']">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between">
 
@@ -113,80 +113,11 @@
                 </a>
             </nav>
 
-            <!-- Actions Header Group: Theme Palette Picker + Dark/Light Mode + Admin Button -->
+            <!-- Actions Header Group: Admin Shortcut Button & Mobile Menu Toggle (Theme mode & Palette removed per specification) -->
             <div class="flex items-center gap-2 sm:gap-3">
-
-                <!-- Material Design Color Palette Picker (from uploaded user image) -->
-                <div class="relative" id="paletteDropdownContainer">
-                    <button type="button" onclick="togglePaletteMenu()" title="Material Color Accent Palette"
-                        class="w-9 h-9 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 hover:border-[var(--theme-primary)] text-slate-700 dark:text-slate-200 flex items-center justify-center transition-all cursor-pointer">
-                        <span class="w-4 h-4 rounded-full bg-[var(--theme-primary)] shadow-sm shadow-[var(--theme-primary)]/50 inline-block"></span>
-                    </button>
-                    <!-- Dropdown Menu -->
-                    <div id="paletteMenu" class="hidden absolute right-0 mt-2 w-56 rounded-2xl bg-white dark:bg-[#0f172a] border border-slate-200 dark:border-white/10 shadow-2xl p-3 z-50 space-y-2">
-                        <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-white/10 text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                            <span>Material Palette</span>
-                            <span class="text-[var(--theme-primary)] font-bold">Accent</span>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2">
-                            <!-- 1. Cyan (Default Cyber) -->
-                            <button type="button" onclick="applyMaterialColor('#00e5ff', 'Cyan')"
-                                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Cyber Cyan">
-                                <span class="w-5 h-5 rounded-full bg-[#00e5ff] shadow-sm"></span>
-                                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Cyan</span>
-                            </button>
-                            <!-- 2. Deep Orange (Laravel Flame) -->
-                            <button type="button" onclick="applyMaterialColor('#ff5722', 'Laravel Orange')"
-                                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Laravel Deep Orange">
-                                <span class="w-5 h-5 rounded-full bg-[#ff5722] shadow-sm"></span>
-                                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Orange</span>
-                            </button>
-                            <!-- 3. Teal -->
-                            <button type="button" onclick="applyMaterialColor('#00bfa5', 'Teal')"
-                                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Teal Green">
-                                <span class="w-5 h-5 rounded-full bg-[#00bfa5] shadow-sm"></span>
-                                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Teal</span>
-                            </button>
-                            <!-- 4. Indigo / Deep Blue -->
-                            <button type="button" onclick="applyMaterialColor('#3d5afe', 'Indigo')"
-                                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Electric Indigo">
-                                <span class="w-5 h-5 rounded-full bg-[#3d5afe] shadow-sm"></span>
-                                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Indigo</span>
-                            </button>
-                            <!-- 5. Amber -->
-                            <button type="button" onclick="applyMaterialColor('#ffc107', 'Amber')"
-                                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Amber Gold">
-                                <span class="w-5 h-5 rounded-full bg-[#ffc107] shadow-sm"></span>
-                                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Amber</span>
-                            </button>
-                            <!-- 6. Pink -->
-                            <button type="button" onclick="applyMaterialColor('#ff4081', 'Pink')"
-                                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Neon Pink">
-                                <span class="w-5 h-5 rounded-full bg-[#ff4081] shadow-sm"></span>
-                                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Pink</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dark / Light Mode Switcher Toggle Button -->
-                <button type="button" onclick="toggleThemeMode()" title="Toggle Dark / Light Mode"
-                    class="w-9 h-9 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-amber-400 flex items-center justify-center transition-all cursor-pointer">
-                    <!-- Sun Icon for Light Mode -->
-                    <svg id="themeIconSun" class="w-4 h-4 hidden dark:block text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    <!-- Moon Icon for Dark Mode -->
-                    <svg id="themeIconMoon" class="w-4 h-4 block dark:hidden text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                </button>
-
                 <!-- Admin Dashboard Shortcut -->
                 <a href="{{ route('admin.dashboard') }}" title="Open Admin Panel"
-                    class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 text-[var(--theme-primary)] text-xs font-mono font-bold transition-all">
+                    class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 text-[var(--theme-primary)] text-xs font-mono font-bold transition-all">
                     <span>ADMIN</span>
                     <span>⚙</span>
                 </a>
@@ -202,6 +133,82 @@
         </div>
     </div>
 </header>
+
+<!-- =========================================================================
+     RIGHT FIXED SMALL BUTTON: Material Color Palette Switcher
+     Fixed on right side of screen with sleek popout color picker
+     ========================================================================= -->
+<div id="fixedPaletteWidget" class="fixed right-3 sm:right-5 top-1/2 -translate-y-1/2 z-50 flex items-center">
+    <!-- Palette Popout Menu (opens to the left of the button) -->
+    <div id="paletteMenu" class="hidden mr-3 w-64 rounded-2xl bg-white/95 dark:bg-[#0b1220]/95 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-2xl p-3.5 space-y-3 transition-all duration-300">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-white/10 text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <span>Material Palette</span>
+            <span class="text-[var(--theme-primary)] font-bold">Accent</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+            <!-- 1. Cyan (Default Cyber) -->
+            <button type="button" onclick="applyMaterialColor('#00e5ff', 'Cyan')"
+                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Cyber Cyan">
+                <span class="w-5 h-5 rounded-full bg-[#00e5ff] shadow-sm"></span>
+                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Cyan</span>
+            </button>
+            <!-- 2. Deep Orange (Laravel Flame) -->
+            <button type="button" onclick="applyMaterialColor('#ff5722', 'Laravel Orange')"
+                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Laravel Deep Orange">
+                <span class="w-5 h-5 rounded-full bg-[#ff5722] shadow-sm"></span>
+                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Orange</span>
+            </button>
+            <!-- 3. Teal -->
+            <button type="button" onclick="applyMaterialColor('#00bfa5', 'Teal')"
+                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Teal Green">
+                <span class="w-5 h-5 rounded-full bg-[#00bfa5] shadow-sm"></span>
+                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Teal</span>
+            </button>
+            <!-- 4. Indigo / Deep Blue -->
+            <button type="button" onclick="applyMaterialColor('#3d5afe', 'Indigo')"
+                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Electric Indigo">
+                <span class="w-5 h-5 rounded-full bg-[#3d5afe] shadow-sm"></span>
+                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Indigo</span>
+            </button>
+            <!-- 5. Amber -->
+            <button type="button" onclick="applyMaterialColor('#ffc107', 'Amber')"
+                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Amber Gold">
+                <span class="w-5 h-5 rounded-full bg-[#ffc107] shadow-sm"></span>
+                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Amber</span>
+            </button>
+            <!-- 6. Pink -->
+            <button type="button" onclick="applyMaterialColor('#ff4081', 'Pink')"
+                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Neon Pink">
+                <span class="w-5 h-5 rounded-full bg-[#ff4081] shadow-sm"></span>
+                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Pink</span>
+            </button>
+            <!-- 7. Deep Purple -->
+            <button type="button" onclick="applyMaterialColor('#7c4dff', 'Deep Purple')"
+                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Deep Purple">
+                <span class="w-5 h-5 rounded-full bg-[#7c4dff] shadow-sm"></span>
+                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Purple</span>
+            </button>
+            <!-- 8. Lime Accent -->
+            <button type="button" onclick="applyMaterialColor('#aeea00', 'Lime Accent')"
+                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Lime Accent">
+                <span class="w-5 h-5 rounded-full bg-[#aeea00] shadow-sm"></span>
+                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Lime</span>
+            </button>
+            <!-- 9. Electric Blue -->
+            <button type="button" onclick="applyMaterialColor('#2979ff', 'Electric Blue')"
+                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Electric Blue">
+                <span class="w-5 h-5 rounded-full bg-[#2979ff] shadow-sm"></span>
+                <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Blue</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Right Fixed Small Button -->
+    <button type="button" onclick="togglePaletteMenu()" title="Material Color Accent Palette"
+        class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-slate-900/95 dark:bg-[#070b14]/95 border-2 border-slate-200 dark:border-white/20 hover:border-[var(--theme-primary)] text-white flex items-center justify-center shadow-2xl shadow-cyan-500/20 hover:scale-110 active:scale-95 transition-all cursor-pointer backdrop-blur-md group">
+        <span class="w-4 h-4 rounded-full bg-[var(--theme-primary)] shadow-md shadow-[var(--theme-primary)]/80 group-hover:scale-125 transition-transform"></span>
+    </button>
+</div>
 
 <!-- Mobile Navigation Drawer -->
 <div id="mobileDrawer" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md md:hidden transition-all duration-300">
@@ -239,12 +246,6 @@
         </div>
 
         <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-white/10 text-xs">
-            <div class="flex items-center justify-between">
-                <span class="text-slate-500 dark:text-slate-400">Theme Mode:</span>
-                <button type="button" onclick="toggleThemeMode()" class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-white/10 text-slate-800 dark:text-white font-bold">
-                    Switch Mode
-                </button>
-            </div>
             <a href="{{ route('admin.dashboard') }}" class="block text-center py-2 rounded-xl border border-cyan-500/30 bg-cyan-500/10 text-[var(--theme-primary)] font-mono font-bold">
                 Admin Panel ⚙
             </a>
@@ -272,39 +273,16 @@
         togglePaletteMenu();
     }
 
-    function toggleThemeMode() {
-        const isDark = document.documentElement.classList.contains('dark');
-        const newMode = isDark ? 'light' : 'dark';
-        if (newMode === 'dark') {
-            document.documentElement.classList.add('dark');
-            document.documentElement.classList.remove('light');
-        } else {
-            document.documentElement.classList.add('light');
-            document.documentElement.classList.remove('dark');
-        }
-        localStorage.setItem('laravel_theme_mode', newMode);
-        document.cookie = `user_theme_mode=${newMode};path=/;max-age=31536000`;
-    }
-
-    // Initialize saved custom palette and mode
+    // Initialize saved custom palette
     document.addEventListener('DOMContentLoaded', () => {
         const savedColor = localStorage.getItem('laravel_theme_color') || '#00e5ff';
         document.documentElement.style.setProperty('--theme-primary', savedColor);
 
-        const savedMode = localStorage.getItem('laravel_theme_mode');
-        if (savedMode === 'light') {
-            document.documentElement.classList.add('light');
-            document.documentElement.classList.remove('dark');
-        } else if (savedMode === 'dark') {
-            document.documentElement.classList.add('dark');
-            document.documentElement.classList.remove('light');
-        }
-
         // Close palette menu if clicked outside
         document.addEventListener('click', (e) => {
-            const container = document.getElementById('paletteDropdownContainer');
+            const widget = document.getElementById('fixedPaletteWidget');
             const menu = document.getElementById('paletteMenu');
-            if (container && menu && !container.contains(e.target)) {
+            if (widget && menu && !widget.contains(e.target)) {
                 menu.classList.add('hidden');
             }
         });

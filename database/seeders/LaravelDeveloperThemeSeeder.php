@@ -250,10 +250,24 @@ class LaravelDeveloperThemeSeeder extends Seeder
             ], $r);
         }
 
-        // 5. Seed ThemeContents
-        $defaults = ThemeContent::defaultsForTheme($theme);
-        foreach ($defaults as $key => $val) {
-            ThemeContent::set($theme, $key, $val, 'general', 'text', 'home');
+        // 5. Seed ThemeContents across all 8 pages and all sections
+        $themeContentPages = require __DIR__ . '/data_laravel_developer.php';
+
+        ThemeContent::updateOrCreate(
+            ['theme' => $theme, 'page' => 'general', 'key' => 'template_preview_image'],
+            ['section' => 'general', 'value' => 'images/templates/developer.png', 'type' => 'image']
+        );
+
+        foreach ($themeContentPages as $page => $sections) {
+            foreach ($sections as $section => $fields) {
+                foreach ($fields as $key => [$value, $type]) {
+                    ThemeContent::updateOrCreate(
+                        ['theme' => $theme, 'page' => $page, 'key' => $key],
+                        ['section' => $section, 'value' => $value, 'type' => $type]
+                    );
+                }
+            }
         }
     }
 }
+

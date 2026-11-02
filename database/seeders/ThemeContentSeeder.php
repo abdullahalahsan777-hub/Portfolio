@@ -1815,6 +1815,11 @@ class ThemeContentSeeder extends Seeder
                     ],
                 ],
             ],
+
+            /* =========================================================================
+               7. FULL-STACK LARAVEL DEVELOPER (Md. Abdullah Al Ahsan)
+               ========================================================================= */
+            'laravel_developer' => require __DIR__ . '/data_laravel_developer.php',
         ];
     }
 }
