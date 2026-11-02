@@ -7,14 +7,15 @@
 @push('styles')
     <style>
         .composer-dark {
-            background-color: #09101d !important;
-            border-color: rgba(255, 255, 255, 0.15) !important;
+            background-color: #0b1322 !important;
+            border-color: rgba(255, 255, 255, 0.12) !important;
             color: #f1f5f9 !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
         }
 
         .composer-dark #composer_header {
-            background-color: #0d1627 !important;
-            border-color: rgba(255, 255, 255, 0.1) !important;
+            background-color: #0f1a2e !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
         }
 
         .composer-dark .composer-title {
@@ -31,14 +32,14 @@
         }
 
         .composer-dark #composer_body_section {
-            background-color: #09101d !important;
+            background-color: #0b1322 !important;
         }
 
         .composer-dark #row_to,
         .composer-dark #composer_cc_row,
         .composer-dark #composer_bcc_row,
         .composer-dark #row_subject {
-            border-color: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.07) !important;
         }
 
         .composer-dark .composer-label {
@@ -61,14 +62,27 @@
             color: #64748b !important;
         }
 
+        .composer-dark .composer-textarea::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .composer-dark .composer-textarea::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .composer-dark .composer-textarea::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 9999px;
+        }
+
         .composer-dark .composer-chip {
-            background-color: #0d1627 !important;
-            border-color: rgba(255, 255, 255, 0.1) !important;
+            background-color: #0f1a2e !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
             color: #cbd5e1 !important;
         }
 
         .composer-dark #composer_footer {
-            background-color: #09101d !important;
+            background-color: #0f1a2e !important;
             border-color: rgba(255, 255, 255, 0.08) !important;
         }
 
@@ -1261,33 +1275,34 @@
     <!-- =========================================================================
                                                      POPUP EMAIL COMPOSER (Supports Temporary ID Autosave & Background Queue)
                                                      ========================================================================= -->
-    <div id="mail_composer_modal" class="hidden fixed z-50 transition-all duration-200">
+    <div id="mail_composer_modal" class="hidden fixed bottom-0 right-0 sm:right-6 md:right-8 z-50 transition-all duration-200 pointer-events-none w-full sm:w-auto px-2 sm:px-0">
         <div id="composer_window"
-            class="w-[580px] max-w-[95vw] rounded-t-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 composer-dark">
+            class="w-full sm:w-[580px] max-w-[95vw] rounded-t-2xl shadow-2xl border border-b-0 flex flex-col font-sans overflow-hidden transition-all duration-200 composer-dark pointer-events-auto">
 
             <!-- Window Title Bar -->
             <div id="composer_header"
-                class="px-4 py-2.5 flex items-center justify-between border-b select-none cursor-pointer"
+                class="px-4 py-3 flex items-center justify-between border-b select-none cursor-pointer"
                 onclick="handleHeaderBarClick(event)">
                 <div class="flex items-center gap-2 overflow-hidden">
                     <span class="text-xs sm:text-sm font-semibold composer-title" id="composer_modal_title">New
                         Message</span>
                     <span id="composer_autosave_badge"
-                        class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hidden">
+                        class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hidden inline-flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                         Saved
                     </span>
                     <span id="composer_minimized_snippet" class="hidden text-xs truncate max-w-[240px] opacity-70"></span>
                 </div>
-                <div class="flex items-center gap-1 composer-header-actions">
+                <div class="flex items-center gap-1 composer-header-actions" onclick="event.stopPropagation()">
                     <!-- Theme Toggle -->
                     <button type="button" onclick="toggleComposerTheme(event)" title="Toggle Dark/Light Theme"
-                        class="w-7 h-7 flex items-center justify-center rounded transition-colors cursor-pointer">
+                        class="w-7 h-7 flex items-center justify-center rounded-lg transition-colors cursor-pointer">
                         <svg id="theme_icon_sun" class="w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
-                        <svg id="theme_icon_moon" class="w-3.5 h-3.5 text-slate-600 hidden" fill="none"
+                        <svg id="theme_icon_moon" class="w-3.5 h-3.5 text-slate-400 hidden" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
@@ -1295,7 +1310,7 @@
                     </button>
                     <!-- Minimize -->
                     <button type="button" onclick="toggleMinimizeComposer(event)" title="Minimize"
-                        class="w-7 h-7 flex items-center justify-center rounded transition-colors cursor-pointer">
+                        class="w-7 h-7 flex items-center justify-center rounded-lg transition-colors cursor-pointer">
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2.5">
                             <line x1="5" y1="12" x2="19" y2="12" />
@@ -1303,7 +1318,7 @@
                     </button>
                     <!-- Maximize -->
                     <button type="button" onclick="toggleMaximizeComposer(event)" title="Full screen"
-                        class="w-7 h-7 flex items-center justify-center rounded transition-colors cursor-pointer">
+                        class="w-7 h-7 flex items-center justify-center rounded-lg transition-colors cursor-pointer">
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <polyline points="15 3 21 3 21 9"></polyline>
@@ -1312,7 +1327,7 @@
                     </button>
                     <!-- Close -->
                     <button type="button" onclick="closeComposer(event)" title="Close"
-                        class="w-7 h-7 flex items-center justify-center rounded transition-colors cursor-pointer">
+                        class="w-7 h-7 flex items-center justify-center rounded-lg transition-colors cursor-pointer hover:bg-rose-500/20 hover:text-rose-400">
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2.5">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -1323,31 +1338,32 @@
             </div>
 
             <!-- Composer Body -->
-            <div id="composer_body_section" class="flex flex-col">
-                <form id="mail_composer_form" onsubmit="sendComposerMail(event)" class="flex flex-col">
+            <div id="composer_body_section" class="flex flex-col flex-1 overflow-hidden">
+                <form id="mail_composer_form" onsubmit="sendComposerMail(event)" class="flex flex-col flex-1 overflow-hidden">
                     @csrf
                     <!-- Hidden Temporary ID for keyup Autosave -->
                     <input type="hidden" name="temp_id" id="composer_temp_id" value="">
                     <input type="hidden" name="message_id" id="composer_reply_message_id" value="">
                     <input type="hidden" name="attachments" id="composer_attachments_json" value="[]">
+
                     <!-- To Row -->
-                    <div id="row_to" class="px-4 py-2 border-b flex items-center gap-2">
-                        <span class="text-xs font-medium select-none w-8 composer-label">To</span>
+                    <div id="row_to" class="px-4 py-2.5 border-b flex items-center gap-2 shrink-0">
+                        <span class="text-xs font-semibold select-none w-8 composer-label">To</span>
                         <input type="email" name="to" id="composer_to_input" required
                             placeholder="Recipient email address"
                             class="flex-1 bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 composer-input"
                             onkeyup="triggerDebouncedAutosave()">
                         <div class="flex items-center gap-2 text-xs select-none composer-label">
                             <button type="button" onclick="toggleCcRow()"
-                                class="hover:underline font-medium cursor-pointer">Cc</button>
+                                class="hover:text-indigo-400 font-semibold cursor-pointer transition-colors">Cc</button>
                             <button type="button" onclick="toggleBccRow()"
-                                class="hover:underline font-medium cursor-pointer">Bcc</button>
+                                class="hover:text-indigo-400 font-semibold cursor-pointer transition-colors">Bcc</button>
                         </div>
                     </div>
 
                     <!-- Cc Row -->
-                    <div id="composer_cc_row" class="hidden px-4 py-1.5 border-b flex items-center gap-2">
-                        <span class="text-xs font-medium select-none w-8 composer-label">Cc</span>
+                    <div id="composer_cc_row" class="hidden px-4 py-2 border-b flex items-center gap-2 shrink-0">
+                        <span class="text-xs font-semibold select-none w-8 composer-label">Cc</span>
                         <input type="text" name="cc" id="composer_cc_input"
                             placeholder="Recipients (comma separated)"
                             class="flex-1 bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 composer-input"
@@ -1355,8 +1371,8 @@
                     </div>
 
                     <!-- Bcc Row -->
-                    <div id="composer_bcc_row" class="hidden px-4 py-1.5 border-b flex items-center gap-2">
-                        <span class="text-xs font-medium select-none w-8 composer-label">Bcc</span>
+                    <div id="composer_bcc_row" class="hidden px-4 py-2 border-b flex items-center gap-2 shrink-0">
+                        <span class="text-xs font-semibold select-none w-8 composer-label">Bcc</span>
                         <input type="text" name="bcc" id="composer_bcc_input"
                             placeholder="Recipients (comma separated)"
                             class="flex-1 bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 composer-input"
@@ -1364,25 +1380,64 @@
                     </div>
 
                     <!-- Subject Row -->
-                    <div id="row_subject" class="px-4 py-2 border-b">
+                    <div id="row_subject" class="px-4 py-2.5 border-b shrink-0">
                         <input type="text" name="subject" id="composer_subject_input" required placeholder="Subject"
                             class="w-full bg-transparent text-xs sm:text-sm border-0 focus:outline-none focus:ring-0 p-0 font-medium composer-input"
                             onkeyup="triggerDebouncedAutosave()">
                     </div>
 
                     <!-- Message Body -->
-                    <div id="row_body" class="p-4 flex-1">
-                        <textarea name="body" id="composer_text_body" rows="9" required
-                            class="w-full border-0 focus:outline-none focus:ring-0 p-0 text-xs sm:text-sm leading-relaxed resize-none font-sans composer-textarea"
+                    <div id="row_body" class="p-4 flex-1 overflow-y-auto">
+                        <textarea name="body" id="composer_text_body" rows="8" required
+                            class="w-full h-full min-h-[160px] max-h-[45vh] border-0 focus:outline-none focus:ring-0 p-0 text-xs sm:text-sm leading-relaxed resize-none font-sans composer-textarea"
                             placeholder="Write your email here..." onkeyup="triggerDebouncedAutosave()"></textarea>
                     </div>
 
                     <!-- Background Uploaded Attachment preview chips -->
                     <div id="composer_attachments_container"
-                        class="hidden px-4 py-2.5 border-t flex flex-wrap items-center gap-2 text-xs composer-chip">
+                        class="hidden px-4 py-2 border-t flex flex-wrap items-center gap-2 text-xs composer-chip shrink-0 max-h-28 overflow-y-auto">
                         <!-- Dynamic attachment chips rendered by uploadAttachmentsInBackground -->
                     </div>
+
+                    <!-- Footer Toolbar -->
+                    <div id="composer_footer" class="px-4 py-3 border-t flex items-center justify-between gap-3 select-none shrink-0">
+                        <div class="flex items-center gap-2.5">
+                            <!-- Send Button -->
+                            <button type="submit" id="send_submit_btn"
+                                class="px-5 py-2 text-xs sm:text-sm font-semibold rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 active:scale-95 text-white shadow-md shadow-indigo-600/30 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50">
+                                <span id="send_btn_label">Send</span>
+                                <svg class="w-3.5 h-3.5 text-white transform -rotate-45 -mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                </svg>
+                            </button>
+
+                            <!-- Attach File Button -->
+                            <button type="button" onclick="triggerAttachmentPicker()" title="Attach files"
+                                class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer composer-icon-btn hover:bg-white/10 text-slate-400 hover:text-white">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                </svg>
+                            </button>
+                            <input type="file" id="composer_attachment_input" name="attachment" multiple class="hidden" onchange="uploadAttachmentsInBackground(this)">
+
+                            <!-- Autosave Status Indicator -->
+                            <span id="autosave_status_text" class="text-[11px] font-mono text-slate-400 hidden sm:inline-flex items-center gap-1.5 ml-1"></span>
+                        </div>
+
+                        <!-- Discard Draft Button -->
+                        <button type="button" onclick="discardComposerDraft()" title="Discard draft"
+                            class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer composer-icon-btn hover:text-rose-400 hover:bg-rose-500/10">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
 
             @push('scripts')
                 <script>
@@ -1409,9 +1464,9 @@
                         renderComposerAttachmentChips();
 
                         modal.classList.remove('hidden');
-                        modal.className = 'fixed bottom-0 right-4 sm:right-8 z-50 transition-all duration-200';
+                        modal.className = 'fixed bottom-0 right-0 sm:right-6 md:right-8 z-50 transition-all duration-200 pointer-events-none w-full sm:w-auto px-2 sm:px-0';
                         win.classList.remove('w-72');
-                        win.classList.add('w-[580px]');
+                        win.classList.add('w-full', 'sm:w-[580px]');
                         bodySection.classList.remove('hidden');
                         snippet.classList.add('hidden');
                         isComposerMinimized = false;
@@ -1425,16 +1480,34 @@
                     function openReplyComposer(email, name, subject, messageId) {
                         openNewComposer();
                         document.getElementById('composer_to_input').value = email;
-                        document.getElementById('composer_subject_input').value = subject;
+                        
+                        // Clean subject so 'Re: ' is not duplicated
+                        let cleanSubject = subject || 'Inquiry';
+                        if (!cleanSubject.toLowerCase().startsWith('re:')) {
+                            cleanSubject = 'Re: ' + cleanSubject;
+                        }
+                        document.getElementById('composer_subject_input').value = cleanSubject;
                         document.getElementById('composer_reply_message_id').value = messageId;
-                        document.getElementById('composer_modal_title').textContent = 'Reply to ' + name;
+                        document.getElementById('composer_modal_title').textContent = 'Reply to ' + (name || email);
+                        
+                        const senderName = "{{ auth()->user()->name ?? 'Administrator' }}";
+                        const clientName = name || 'there';
                         document.getElementById('composer_text_body').value =
-                            `Hi ${name},\n\nThank you for reaching out!\n\n\nBest regards,\n{{ auth()->user()->name ?? 'Alex Rivera' }}`;
+                            `Hi ${clientName},\n\nThank you for reaching out!\n\n\nBest regards,\n${senderName}`;
 
                         triggerDebouncedAutosave();
 
                         setTimeout(() => {
-                            document.getElementById('composer_text_body')?.focus();
+                            const textarea = document.getElementById('composer_text_body');
+                            if (textarea) {
+                                textarea.focus();
+                                const marker = 'Thank you for reaching out!\n\n';
+                                const idx = textarea.value.indexOf(marker);
+                                if (idx !== -1) {
+                                    const pos = idx + marker.length;
+                                    textarea.setSelectionRange(pos, pos);
+                                }
+                            }
                         }, 150);
                     }
 
@@ -1483,14 +1556,14 @@
                             bodySection.classList.add('hidden');
                             snippet.textContent = '— ' + (toInput.value || 'Draft');
                             snippet.classList.remove('hidden');
-                            win.classList.remove('w-[580px]');
+                            win.classList.remove('w-full', 'sm:w-[580px]');
                             win.classList.add('w-72');
                             isComposerMinimized = true;
                         } else {
                             bodySection.classList.remove('hidden');
                             snippet.classList.add('hidden');
                             win.classList.remove('w-72');
-                            win.classList.add('w-[580px]');
+                            win.classList.add('w-full', 'sm:w-[580px]');
                             isComposerMinimized = false;
                         }
                     }
@@ -1516,15 +1589,16 @@
 
                         if (!isComposerMaximized) {
                             modal.className =
-                                'fixed inset-4 sm:inset-10 z-50 flex items-center justify-center transition-all duration-200';
+                                'fixed inset-2 sm:inset-6 md:inset-10 z-50 flex items-center justify-center transition-all duration-200 pointer-events-none';
                             win.className =
-                                'w-full h-full max-w-4xl rounded-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 ' +
+                                'w-full h-full max-w-4xl rounded-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 pointer-events-auto ' +
                                 (win.classList.contains('composer-light') ? 'composer-light' : 'composer-dark');
                             isComposerMaximized = true;
                         } else {
-                            modal.className = 'fixed bottom-0 right-4 sm:right-8 z-50 transition-all duration-200';
+                            modal.className =
+                                'fixed bottom-0 right-0 sm:right-6 md:right-8 z-50 transition-all duration-200 pointer-events-none w-full sm:w-auto px-2 sm:px-0';
                             win.className =
-                                'w-[580px] max-w-[95vw] rounded-t-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 ' +
+                                'w-full sm:w-[580px] max-w-[95vw] rounded-t-2xl shadow-2xl border border-b-0 flex flex-col font-sans overflow-hidden transition-all duration-200 pointer-events-auto ' +
                                 (win.classList.contains('composer-light') ? 'composer-light' : 'composer-dark');
                             isComposerMaximized = false;
                         }
