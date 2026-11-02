@@ -34,10 +34,10 @@ fi
 
 # Fallback only if missing from .env
 if [ -z "$SERVER_PORT" ]; then
-    SERVER_PORT="8044"
+    SERVER_PORT="8000"
 fi
 if [ -z "$APP_URL" ]; then
-    APP_URL="http://127.0.0.1"
+    APP_URL="http://[IP_ADDRESS]"
 fi
 
 echo -e "\033[1;32m[INFO] Local Server URL: ${APP_URL}:${SERVER_PORT}\033[0m"

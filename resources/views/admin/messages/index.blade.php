@@ -899,7 +899,7 @@
 
                                                 <!-- 4. Quick Reply via Composer -->
                                                 <button type="button"
-                                                    onclick="openReplyComposer('{{ e($msg->email) }}', '{{ e($msg->name) }}', 'Re: {{ e($msg->subject ?: 'Inquiry') }}', '{{ $msg->id }}')"
+                                                    onclick="openReplyComposer('{{ e(addslashes($msg->email)) }}', '{{ e(addslashes($msg->name)) }}', 'Re: {{ e(addslashes($msg->subject ?: 'Inquiry')) }}', '{{ $msg->id }}')"
                                                     title="Quick Reply via Email"
                                                     class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-all cursor-pointer">
                                                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
@@ -991,7 +991,7 @@
                                             @else
                                                 <!-- Inbox / Normal Mobile: Reply, Read/Unread, View, Delete -->
                                                 <button type="button"
-                                                    onclick="openReplyComposer('{{ e($msg->email) }}', '{{ e($msg->name) }}', 'Re: {{ e($msg->subject ?: 'Inquiry') }}', '{{ $msg->id }}')"
+                                                    onclick="openReplyComposer('{{ e(addslashes($msg->email)) }}', '{{ e(addslashes($msg->name)) }}', 'Re: {{ e(addslashes($msg->subject ?: 'Inquiry')) }}', '{{ $msg->id }}')"
                                                     title="Quick Reply"
                                                     class="px-2 py-1 rounded-lg text-[10px] font-mono bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20 flex items-center gap-1 cursor-pointer">
                                                     <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1277,15 +1277,14 @@
                                                      ========================================================================= -->
     <div id="mail_composer_modal" class="hidden fixed bottom-0 right-0 sm:right-6 md:right-8 z-50 transition-all duration-200 pointer-events-none w-full sm:w-auto px-2 sm:px-0">
         <div id="composer_window"
-            class="w-full sm:w-[580px] max-w-[95vw] rounded-t-2xl shadow-2xl border border-b-0 flex flex-col font-sans overflow-hidden transition-all duration-200 composer-dark pointer-events-auto">
+            class="w-full sm:w-[580px] md:w-[620px] max-w-[95vw] h-[520px] max-h-[calc(100vh-2rem)] rounded-t-2xl shadow-2xl border border-b-0 flex flex-col font-sans overflow-hidden transition-all duration-200 composer-dark pointer-events-auto">
 
             <!-- Window Title Bar -->
             <div id="composer_header"
-                class="px-4 py-3 flex items-center justify-between border-b select-none cursor-pointer"
+                class="px-4 py-3 flex items-center justify-between border-b select-none cursor-pointer shrink-0"
                 onclick="handleHeaderBarClick(event)">
                 <div class="flex items-center gap-2 overflow-hidden">
-                    <span class="text-xs sm:text-sm font-semibold composer-title" id="composer_modal_title">New
-                        Message</span>
+                    <span class="text-xs sm:text-sm font-semibold composer-title" id="composer_modal_title">New Message</span>
                     <span id="composer_autosave_badge"
                         class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hidden inline-flex items-center gap-1">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -1338,8 +1337,8 @@
             </div>
 
             <!-- Composer Body -->
-            <div id="composer_body_section" class="flex flex-col flex-1 overflow-hidden">
-                <form id="mail_composer_form" onsubmit="sendComposerMail(event)" class="flex flex-col flex-1 overflow-hidden">
+            <div id="composer_body_section" class="flex flex-col flex-1 min-h-0 overflow-hidden">
+                <form id="mail_composer_form" onsubmit="sendComposerMail(event)" class="flex flex-col flex-1 min-h-0 overflow-hidden">
                     @csrf
                     <!-- Hidden Temporary ID for keyup Autosave -->
                     <input type="hidden" name="temp_id" id="composer_temp_id" value="">
@@ -1387,15 +1386,15 @@
                     </div>
 
                     <!-- Message Body -->
-                    <div id="row_body" class="p-4 flex-1 overflow-y-auto">
-                        <textarea name="body" id="composer_text_body" rows="8" required
-                            class="w-full h-full min-h-[160px] max-h-[45vh] border-0 focus:outline-none focus:ring-0 p-0 text-xs sm:text-sm leading-relaxed resize-none font-sans composer-textarea"
+                    <div id="row_body" class="p-4 flex-1 min-h-0 overflow-y-auto flex flex-col">
+                        <textarea name="body" id="composer_text_body" rows="6" required
+                            class="w-full flex-1 min-h-[140px] border-0 focus:outline-none focus:ring-0 p-0 text-xs sm:text-sm leading-relaxed resize-none font-sans bg-transparent composer-textarea"
                             placeholder="Write your email here..." onkeyup="triggerDebouncedAutosave()"></textarea>
                     </div>
 
                     <!-- Background Uploaded Attachment preview chips -->
                     <div id="composer_attachments_container"
-                        class="hidden px-4 py-2 border-t flex flex-wrap items-center gap-2 text-xs composer-chip shrink-0 max-h-28 overflow-y-auto">
+                        class="hidden px-4 py-2 border-t flex flex-wrap items-center gap-2 text-xs composer-chip shrink-0 max-h-24 overflow-y-auto">
                         <!-- Dynamic attachment chips rendered by uploadAttachmentsInBackground -->
                     </div>
 
@@ -1439,7 +1438,7 @@
         </div>
     </div>
 
-            @push('scripts')
+    @push('scripts')
                 <script>
                     let isComposerMinimized = false;
                     let isComposerMaximized = false;
@@ -1454,21 +1453,34 @@
                         const win = document.getElementById('composer_window');
                         const bodySection = document.getElementById('composer_body_section');
                         const snippet = document.getElementById('composer_minimized_snippet');
+                        const form = document.getElementById('mail_composer_form');
 
-                        document.getElementById('mail_composer_form').reset();
-                        document.getElementById('composer_temp_id').value = generateTempId();
-                        document.getElementById('composer_reply_message_id').value = '';
-                        document.getElementById('composer_modal_title').textContent = 'New Message';
-                        document.getElementById('composer_autosave_badge').classList.add('hidden');
+                        if (!modal || !win) return;
+
+                        if (form) form.reset();
+                        const tempIdInput = document.getElementById('composer_temp_id');
+                        if (tempIdInput) tempIdInput.value = generateTempId();
+
+                        const replyMsgId = document.getElementById('composer_reply_message_id');
+                        if (replyMsgId) replyMsgId.value = '';
+
+                        const titleEl = document.getElementById('composer_modal_title');
+                        if (titleEl) titleEl.textContent = 'New Message';
+
+                        const autosaveBadge = document.getElementById('composer_autosave_badge');
+                        if (autosaveBadge) autosaveBadge.classList.add('hidden');
+
                         composerAttachments = [];
                         renderComposerAttachmentChips();
 
                         modal.classList.remove('hidden');
                         modal.className = 'fixed bottom-0 right-0 sm:right-6 md:right-8 z-50 transition-all duration-200 pointer-events-none w-full sm:w-auto px-2 sm:px-0';
-                        win.classList.remove('w-72');
-                        win.classList.add('w-full', 'sm:w-[580px]');
-                        bodySection.classList.remove('hidden');
-                        snippet.classList.add('hidden');
+
+                        win.className = 'w-full sm:w-[580px] md:w-[620px] max-w-[95vw] h-[520px] max-h-[calc(100vh-2rem)] rounded-t-2xl shadow-2xl border border-b-0 flex flex-col font-sans overflow-hidden transition-all duration-200 pointer-events-auto ' +
+                            (win.classList.contains('composer-light') ? 'composer-light' : 'composer-dark');
+
+                        if (bodySection) bodySection.classList.remove('hidden');
+                        if (snippet) snippet.classList.add('hidden');
                         isComposerMinimized = false;
                         isComposerMaximized = false;
 
@@ -1479,21 +1491,29 @@
 
                     function openReplyComposer(email, name, subject, messageId) {
                         openNewComposer();
-                        document.getElementById('composer_to_input').value = email;
-                        
+                        const toInput = document.getElementById('composer_to_input');
+                        if (toInput) toInput.value = email || '';
+
                         // Clean subject so 'Re: ' is not duplicated
                         let cleanSubject = subject || 'Inquiry';
                         if (!cleanSubject.toLowerCase().startsWith('re:')) {
                             cleanSubject = 'Re: ' + cleanSubject;
                         }
-                        document.getElementById('composer_subject_input').value = cleanSubject;
-                        document.getElementById('composer_reply_message_id').value = messageId;
-                        document.getElementById('composer_modal_title').textContent = 'Reply to ' + (name || email);
-                        
+                        const subjectInput = document.getElementById('composer_subject_input');
+                        if (subjectInput) subjectInput.value = cleanSubject;
+
+                        const replyMsgId = document.getElementById('composer_reply_message_id');
+                        if (replyMsgId) replyMsgId.value = messageId || '';
+
+                        const titleEl = document.getElementById('composer_modal_title');
+                        if (titleEl) titleEl.textContent = 'Reply to ' + (name || email || 'Client');
+
                         const senderName = "{{ auth()->user()->name ?? 'Administrator' }}";
                         const clientName = name || 'there';
-                        document.getElementById('composer_text_body').value =
-                            `Hi ${clientName},\n\nThank you for reaching out!\n\n\nBest regards,\n${senderName}`;
+                        const bodyInput = document.getElementById('composer_text_body');
+                        if (bodyInput) {
+                            bodyInput.value = `Hi ${clientName},\n\nThank you for reaching out!\n\n\nBest regards,\n${senderName}`;
+                        }
 
                         triggerDebouncedAutosave();
 
@@ -1516,15 +1536,27 @@
                         openNewComposer();
                         const cleanEmail = (email && email !== 'draft@recipient.local') ? email : '';
                         const cleanSubject = (subject && subject !== '(Draft Subject)') ? subject : '';
-                        document.getElementById('composer_to_input').value = cleanEmail;
-                        document.getElementById('composer_subject_input').value = cleanSubject;
-                        document.getElementById('composer_text_body').value = body || '';
-                        if (tempId) {
-                            document.getElementById('composer_temp_id').value = tempId;
-                        } else if (draftId) {
-                            document.getElementById('composer_temp_id').value = 'draft_' + draftId;
+                        const toInput = document.getElementById('composer_to_input');
+                        if (toInput) toInput.value = cleanEmail;
+
+                        const subjectInput = document.getElementById('composer_subject_input');
+                        if (subjectInput) subjectInput.value = cleanSubject;
+
+                        const bodyInput = document.getElementById('composer_text_body');
+                        if (bodyInput) bodyInput.value = body || '';
+
+                        const tempIdInput = document.getElementById('composer_temp_id');
+                        if (tempIdInput) {
+                            if (tempId) {
+                                tempIdInput.value = tempId;
+                            } else if (draftId) {
+                                tempIdInput.value = 'draft_' + draftId;
+                            }
                         }
-                        document.getElementById('composer_modal_title').textContent = 'Draft: ' + (cleanSubject || cleanEmail || 'Resume Message');
+
+                        const titleEl = document.getElementById('composer_modal_title');
+                        if (titleEl) titleEl.textContent = 'Draft: ' + (cleanSubject || cleanEmail || 'Resume Message');
+
                         if (attachments && Array.isArray(attachments) && attachments.length > 0) {
                             composerAttachments = attachments;
                             renderComposerAttachmentChips();
@@ -1542,7 +1574,8 @@
 
                     function closeComposer(e) {
                         if (e) e.stopPropagation();
-                        document.getElementById('mail_composer_modal').classList.add('hidden');
+                        const modal = document.getElementById('mail_composer_modal');
+                        if (modal) modal.classList.add('hidden');
                     }
 
                     function toggleMinimizeComposer(e) {
@@ -1551,19 +1584,22 @@
                         const bodySection = document.getElementById('composer_body_section');
                         const snippet = document.getElementById('composer_minimized_snippet');
                         const toInput = document.getElementById('composer_to_input');
+                        if (!win || !bodySection) return;
 
                         if (!isComposerMinimized) {
                             bodySection.classList.add('hidden');
-                            snippet.textContent = '— ' + (toInput.value || 'Draft');
-                            snippet.classList.remove('hidden');
-                            win.classList.remove('w-full', 'sm:w-[580px]');
-                            win.classList.add('w-72');
+                            if (snippet) {
+                                snippet.textContent = '— ' + (toInput?.value || 'Draft');
+                                snippet.classList.remove('hidden');
+                            }
+                            win.className = 'w-72 h-auto rounded-t-2xl shadow-2xl border border-b-0 flex flex-col font-sans overflow-hidden transition-all duration-200 pointer-events-auto ' +
+                                (win.classList.contains('composer-light') ? 'composer-light' : 'composer-dark');
                             isComposerMinimized = true;
                         } else {
                             bodySection.classList.remove('hidden');
-                            snippet.classList.add('hidden');
-                            win.classList.remove('w-72');
-                            win.classList.add('w-full', 'sm:w-[580px]');
+                            if (snippet) snippet.classList.add('hidden');
+                            win.className = 'w-full sm:w-[580px] md:w-[620px] max-w-[95vw] h-[520px] max-h-[calc(100vh-2rem)] rounded-t-2xl shadow-2xl border border-b-0 flex flex-col font-sans overflow-hidden transition-all duration-200 pointer-events-auto ' +
+                                (win.classList.contains('composer-light') ? 'composer-light' : 'composer-dark');
                             isComposerMinimized = false;
                         }
                     }
@@ -1580,10 +1616,11 @@
                         const win = document.getElementById('composer_window');
                         const bodySection = document.getElementById('composer_body_section');
                         const snippet = document.getElementById('composer_minimized_snippet');
+                        if (!modal || !win) return;
 
                         if (isComposerMinimized) {
-                            bodySection.classList.remove('hidden');
-                            snippet.classList.add('hidden');
+                            if (bodySection) bodySection.classList.remove('hidden');
+                            if (snippet) snippet.classList.add('hidden');
                             isComposerMinimized = false;
                         }
 
@@ -1591,14 +1628,14 @@
                             modal.className =
                                 'fixed inset-2 sm:inset-6 md:inset-10 z-50 flex items-center justify-center transition-all duration-200 pointer-events-none';
                             win.className =
-                                'w-full h-full max-w-4xl rounded-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 pointer-events-auto ' +
+                                'w-full h-full max-w-4xl max-h-[92vh] rounded-2xl shadow-2xl border flex flex-col font-sans overflow-hidden transition-all duration-200 pointer-events-auto ' +
                                 (win.classList.contains('composer-light') ? 'composer-light' : 'composer-dark');
                             isComposerMaximized = true;
                         } else {
                             modal.className =
                                 'fixed bottom-0 right-0 sm:right-6 md:right-8 z-50 transition-all duration-200 pointer-events-none w-full sm:w-auto px-2 sm:px-0';
                             win.className =
-                                'w-full sm:w-[580px] max-w-[95vw] rounded-t-2xl shadow-2xl border border-b-0 flex flex-col font-sans overflow-hidden transition-all duration-200 pointer-events-auto ' +
+                                'w-full sm:w-[580px] md:w-[620px] max-w-[95vw] h-[520px] max-h-[calc(100vh-2rem)] rounded-t-2xl shadow-2xl border border-b-0 flex flex-col font-sans overflow-hidden transition-all duration-200 pointer-events-auto ' +
                                 (win.classList.contains('composer-light') ? 'composer-light' : 'composer-dark');
                             isComposerMaximized = false;
                         }
@@ -1606,36 +1643,41 @@
 
                     function toggleCcRow() {
                         const row = document.getElementById('composer_cc_row');
+                        if (!row) return;
                         row.classList.toggle('hidden');
                         if (!row.classList.contains('hidden')) {
-                            document.getElementById('composer_cc_input').focus();
+                            document.getElementById('composer_cc_input')?.focus();
                         }
                     }
 
                     function toggleBccRow() {
                         const row = document.getElementById('composer_bcc_row');
+                        if (!row) return;
                         row.classList.toggle('hidden');
                         if (!row.classList.contains('hidden')) {
-                            document.getElementById('composer_bcc_input').focus();
+                            document.getElementById('composer_bcc_input')?.focus();
                         }
                     }
 
                     function triggerAttachmentPicker() {
-                        document.getElementById('composer_attachment_input').click();
+                        document.getElementById('composer_attachment_input')?.click();
                     }
 
                     function handleAttachmentSelected(input) {
-                        if (input.files && input.files[0]) {
+                        if (input && input.files && input.files[0]) {
                             const file = input.files[0];
                             const chip = document.getElementById('attachment_preview_chip');
-                            document.getElementById('attachment_name').textContent = file.name;
-                            document.getElementById('attachment_size').textContent = `(${ (file.size / 1024).toFixed(1) } KB)`;
-                            chip.classList.remove('hidden');
+                            const nameEl = document.getElementById('attachment_name');
+                            const sizeEl = document.getElementById('attachment_size');
+                            if (nameEl) nameEl.textContent = file.name;
+                            if (sizeEl) sizeEl.textContent = `(${ (file.size / 1024).toFixed(1) } KB)`;
+                            if (chip) chip.classList.remove('hidden');
                         }
                     }
 
                     function removeAttachment() {
-                        document.getElementById('composer_attachment_input').value = '';
+                        const input = document.getElementById('composer_attachment_input');
+                        if (input) input.value = '';
                         composerAttachments = [];
                         renderComposerAttachmentChips();
                     }
@@ -1651,16 +1693,18 @@
                     function triggerDebouncedAutosave() {
                         clearTimeout(autosaveTimer);
                         const statusText = document.getElementById('autosave_status_text');
-                        statusText.textContent = 'Saving draft...';
-                        statusText.classList.remove('hidden');
+                        if (statusText) {
+                            statusText.textContent = 'Saving draft...';
+                            statusText.classList.remove('hidden');
+                        }
 
                         autosaveTimer = setTimeout(async () => {
-                            const tempId = document.getElementById('composer_temp_id').value;
+                            const tempId = document.getElementById('composer_temp_id')?.value;
                             if (!tempId) return;
 
-                            const to = document.getElementById('composer_to_input').value;
-                            const subject = document.getElementById('composer_subject_input').value;
-                            const body = document.getElementById('composer_text_body').value;
+                            const to = document.getElementById('composer_to_input')?.value || '';
+                            const subject = document.getElementById('composer_subject_input')?.value || '';
+                            const body = document.getElementById('composer_text_body')?.value || '';
 
                             try {
                                 const res = await fetch("{{ route('admin.messages.autosaveDraft') }}", {
@@ -1681,12 +1725,16 @@
 
                                 const data = await res.json();
                                 if (data.success) {
-                                    statusText.textContent = `Draft saved at ${data.saved_at}`;
+                                    if (statusText) {
+                                        statusText.textContent = `Draft saved at ${data.saved_at}`;
+                                    }
                                     const badge = document.getElementById('composer_autosave_badge');
-                                    badge.classList.remove('hidden');
+                                    if (badge) badge.classList.remove('hidden');
                                 }
                             } catch (err) {
-                                statusText.textContent = 'Autosave paused';
+                                if (statusText) {
+                                    statusText.textContent = 'Autosave paused';
+                                }
                             }
                         }, 600);
                     }
@@ -1698,11 +1746,11 @@
                         const sendBtn = document.getElementById('send_submit_btn');
                         const btnLabel = document.getElementById('send_btn_label');
 
-                        const tempId = document.getElementById('composer_temp_id').value;
-                        const messageId = document.getElementById('composer_reply_message_id').value;
-                        const to = document.getElementById('composer_to_input').value;
-                        const subject = document.getElementById('composer_subject_input').value;
-                        const body = document.getElementById('composer_text_body').value;
+                        const tempId = document.getElementById('composer_temp_id')?.value || '';
+                        const messageId = document.getElementById('composer_reply_message_id')?.value || '';
+                        const to = document.getElementById('composer_to_input')?.value || '';
+                        const subject = document.getElementById('composer_subject_input')?.value || '';
+                        const body = document.getElementById('composer_text_body')?.value || '';
                         const cc = document.getElementById('composer_cc_input')?.value || '';
                         const bcc = document.getElementById('composer_bcc_input')?.value || '';
 
@@ -1716,13 +1764,15 @@
                         formData.append('attachments', JSON.stringify(composerAttachments));
 
                         const fileInput = document.getElementById('composer_attachment_input');
-                        if (fileInput && fileInput.files[0]) {
+                        if (fileInput && fileInput.files && fileInput.files[0]) {
                             formData.append('attachment', fileInput.files[0]);
                         }
 
-                        sendBtn.disabled = true;
-                        btnLabel.innerHTML =
-                            `<svg class="animate-spin h-3.5 w-3.5 text-white inline-block mr-1" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg> Queueing...`;
+                        if (sendBtn) sendBtn.disabled = true;
+                        if (btnLabel) {
+                            btnLabel.innerHTML =
+                                `<svg class="animate-spin h-3.5 w-3.5 text-white inline-block mr-1" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg> Sending...`;
+                        }
 
                         const targetUrl = messageId ? `{{ url('admin/messages') }}/${messageId}/reply` :
                             `{{ route('admin.messages.sendCompose') }}`;
@@ -1764,8 +1814,8 @@
                         } catch (err) {
                             alert(err.message || 'Email sending failed.');
                         } finally {
-                            sendBtn.disabled = false;
-                            btnLabel.textContent = 'Send';
+                            if (sendBtn) sendBtn.disabled = false;
+                            if (btnLabel) btnLabel.textContent = 'Send';
                         }
                     }
 
@@ -1781,14 +1831,16 @@
                             });
 
                             const data = await res.json();
-                            if (data.success) {
+                            if (data.success && btn) {
                                 const svg = btn.querySelector('svg');
-                                if (data.is_important) {
-                                    svg.className.baseVal = 'w-4 h-4 text-yellow-400 fill-yellow-400';
-                                    svg.setAttribute('fill', 'currentColor');
-                                } else {
-                                    svg.className.baseVal = 'w-4 h-4 text-slate-600 hover:text-slate-400';
-                                    svg.setAttribute('fill', 'none');
+                                if (svg) {
+                                    if (data.is_important) {
+                                        svg.className.baseVal = 'w-4 h-4 text-yellow-400 fill-yellow-400';
+                                        svg.setAttribute('fill', 'currentColor');
+                                    } else {
+                                        svg.className.baseVal = 'w-4 h-4 text-slate-600 hover:text-slate-400';
+                                        svg.setAttribute('fill', 'none');
+                                    }
                                 }
 
                                 if (typeof toastr !== 'undefined') {
@@ -1803,6 +1855,7 @@
                     // Theme toggle in composer
                     function setComposerTheme(theme) {
                         const win = document.getElementById('composer_window');
+                        if (!win) return;
                         const sun = document.getElementById('theme_icon_sun');
                         const moon = document.getElementById('theme_icon_moon');
 
@@ -1824,6 +1877,7 @@
                     function toggleComposerTheme(e) {
                         if (e) e.stopPropagation();
                         const win = document.getElementById('composer_window');
+                        if (!win) return;
                         const current = win.classList.contains('composer-light') ? 'light' : 'dark';
                         setComposerTheme(current === 'light' ? 'dark' : 'light');
                     }
@@ -2140,12 +2194,14 @@
 
                     // Asynchronous Background File Upload to Server Folder
                     async function uploadAttachmentsInBackground(input) {
-                        if (!input.files || input.files.length === 0) return;
+                        if (!input || !input.files || input.files.length === 0) return;
 
-                        const tempId = document.getElementById('composer_temp_id').value;
+                        const tempId = document.getElementById('composer_temp_id')?.value || '';
                         const statusText = document.getElementById('autosave_status_text');
-                        statusText.textContent = 'Uploading file in background...';
-                        statusText.classList.remove('hidden');
+                        if (statusText) {
+                            statusText.textContent = 'Uploading file in background...';
+                            statusText.classList.remove('hidden');
+                        }
 
                         for (let i = 0; i < input.files.length; i++) {
                             const file = input.files[i];
@@ -2178,10 +2234,12 @@
                         }
 
                         input.value = '';
-                        statusText.textContent = 'Attachment uploaded';
-                        setTimeout(() => {
-                            statusText.classList.add('hidden');
-                        }, 2000);
+                        if (statusText) {
+                            statusText.textContent = 'Attachment uploaded';
+                            setTimeout(() => {
+                                statusText.classList.add('hidden');
+                            }, 2000);
+                        }
                     }
 
                     // Remove attachment from composer and backend folder
