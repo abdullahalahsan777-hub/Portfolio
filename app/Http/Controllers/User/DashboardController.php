@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContactMessage;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,7 @@ class DashboardController extends Controller
      */
     public function index(): View
     {
+        /** @var User $user */
         $user = Auth::user();
 
         // Find messages sent with this user's email
@@ -35,6 +37,7 @@ class DashboardController extends Controller
      */
     public function updateProfile(Request $request): RedirectResponse
     {
+        /** @var User $user */
         $user = Auth::user();
 
         $validated = $request->validate([
@@ -61,6 +64,7 @@ class DashboardController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
+        /** @var User $user */
         $user = Auth::user();
 
         if (! Hash::check($validated['current_password'], $user->password)) {
