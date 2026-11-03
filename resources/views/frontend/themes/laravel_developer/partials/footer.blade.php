@@ -10,6 +10,67 @@
      Floating Back-To-Top button
      Bottom Sub-Footer copyright bar
      ========================================================================= -->
+<style>
+    /* Footer Social Buttons: High contrast hover, crisp white default, and immunity to browser visited link discoloration */
+    .footer-social-btn {
+        background-color: #121212 !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        color: #ffffff !important;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    .footer-social-btn svg {
+        fill: #ffffff !important;
+        color: #ffffff !important;
+        transition: fill 0.25s ease, color 0.25s ease, transform 0.25s ease !important;
+    }
+    /* Prevent visited links from turning into browser default purple */
+    .footer-social-btn:visited {
+        background-color: #121212 !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
+        color: #ffffff !important;
+    }
+    .footer-social-btn:visited svg {
+        fill: #ffffff !important;
+        color: #ffffff !important;
+    }
+    /* Active hover state: dynamic high-contrast icon against active accent background */
+    .footer-social-btn:hover,
+    .footer-social-btn:visited:hover {
+        background-color: var(--theme-primary) !important;
+        border-color: var(--theme-primary) !important;
+        color: var(--theme-on-primary, #000000) !important;
+        transform: scale(1.12) !important;
+        box-shadow: 0 4px 16px var(--theme-primary-glow, rgba(0, 229, 255, 0.35)) !important;
+    }
+    .footer-social-btn:hover svg,
+    .footer-social-btn:visited:hover svg {
+        fill: var(--theme-on-primary, #000000) !important;
+        color: var(--theme-on-primary, #000000) !important;
+    }
+
+    /* Footer text links (Menu & Follow) visited protection */
+    .footer-nav-link,
+    .footer-nav-link:visited {
+        color: #a3a3a3 !important;
+        transition: color 0.2s ease !important;
+    }
+    .footer-nav-link:hover,
+    .footer-nav-link:visited:hover {
+        color: var(--theme-primary) !important;
+    }
+
+    /* Back To Top Button High Contrast Hover */
+    #backToTopBtn:hover {
+        background-color: var(--theme-primary) !important;
+        border-color: var(--theme-primary) !important;
+        color: var(--theme-on-primary, #000000) !important;
+    }
+    #backToTopBtn:hover svg {
+        color: var(--theme-on-primary, #000000) !important;
+        stroke: var(--theme-on-primary, #000000) !important;
+    }
+</style>
+
 <footer class="bg-[#070707] text-[#8c8c8c] pt-20 pb-10 border-t border-white/10 relative overflow-hidden font-['Plus_Jakarta_Sans']">
 
     <!-- Ambient Glow -->
@@ -38,45 +99,45 @@
                 <div class="flex items-center gap-3 pt-2">
                     <!-- GitHub -->
                     <a href="{{ $settings['social_github'] ?? 'https://github.com' }}" target="_blank" rel="noopener noreferrer"
-                        class="w-8 h-8 rounded-full bg-[#121212] border border-white/10 text-neutral-400 hover:text-black hover:bg-[var(--theme-primary)] hover:border-[var(--theme-primary)] flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm"
-                        title="GitHub">
-                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        class="footer-social-btn w-8 h-8 rounded-full flex items-center justify-center shadow-sm"
+                        title="GitHub" aria-label="GitHub">
+                        <svg class="w-3.5 h-3.5 pointer-events-none" viewBox="0 0 24 24">
                             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
                         </svg>
                     </a>
 
                     <!-- LinkedIn -->
                     <a href="{{ $settings['social_linkedin'] ?? 'https://linkedin.com' }}" target="_blank" rel="noopener noreferrer"
-                        class="w-8 h-8 rounded-full bg-[#121212] border border-white/10 text-neutral-400 hover:text-black hover:bg-[var(--theme-primary)] hover:border-[var(--theme-primary)] flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm"
-                        title="LinkedIn">
-                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        class="footer-social-btn w-8 h-8 rounded-full flex items-center justify-center shadow-sm"
+                        title="LinkedIn" aria-label="LinkedIn">
+                        <svg class="w-3.5 h-3.5 pointer-events-none" viewBox="0 0 24 24">
                             <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                         </svg>
                     </a>
 
                     <!-- X / Twitter -->
                     <a href="{{ $settings['social_twitter'] ?? 'https://twitter.com' }}" target="_blank" rel="noopener noreferrer"
-                        class="w-8 h-8 rounded-full bg-[#121212] border border-white/10 text-neutral-400 hover:text-black hover:bg-[var(--theme-primary)] hover:border-[var(--theme-primary)] flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm"
-                        title="Twitter / X">
-                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        class="footer-social-btn w-8 h-8 rounded-full flex items-center justify-center shadow-sm"
+                        title="Twitter / X" aria-label="Twitter / X">
+                        <svg class="w-3.5 h-3.5 pointer-events-none" viewBox="0 0 24 24">
                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                         </svg>
                     </a>
 
                     <!-- Web / Globe -->
                     <a href="https://abdullah.dev" target="_blank" rel="noopener noreferrer"
-                        class="w-8 h-8 rounded-full bg-[#121212] border border-white/10 text-neutral-400 hover:text-black hover:bg-[var(--theme-primary)] hover:border-[var(--theme-primary)] flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm"
-                        title="Personal Website">
-                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        class="footer-social-btn w-8 h-8 rounded-full flex items-center justify-center shadow-sm"
+                        title="Personal Website" aria-label="Personal Website">
+                        <svg class="w-3.5 h-3.5 pointer-events-none" viewBox="0 0 24 24">
                             <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1 2.06c4.54.49 8.16 4.11 8.65 8.65h-3.69c-.31-3.23-1.63-6.15-4.96-8.65zm-2 0c-3.33 2.5-4.65 5.42-4.96 8.65H2.35C2.84 6.17 6.46 2.55 11 2.06zM2.06 13h3.69c.31 3.23 1.63 6.15 4.96 8.65-4.54-.49-8.16-4.11-8.65-8.65zm10.94 8.94c3.33-2.5 4.65-5.42 4.96-8.65h3.69c-.49 4.54-4.11 8.16-8.65 8.65zM12 4.09c1.9 2.2 2.94 4.86 3.09 7.91H8.91C9.06 8.95 10.1 6.29 12 4.09zm-3.09 9.91h6.18c-.15 3.05-1.19 5.71-3.09 7.91-1.9-2.2-2.94-4.86-3.09-7.91z" />
                         </svg>
                     </a>
 
                     <!-- Behance / Dribbble -->
                     <a href="{{ $settings['social_behance'] ?? 'https://behance.net' }}" target="_blank" rel="noopener noreferrer"
-                        class="w-8 h-8 rounded-full bg-[#121212] border border-white/10 text-neutral-400 hover:text-black hover:bg-[var(--theme-primary)] hover:border-[var(--theme-primary)] flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm"
-                        title="Portfolio Profiles">
-                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        class="footer-social-btn w-8 h-8 rounded-full flex items-center justify-center shadow-sm"
+                        title="Portfolio Profiles" aria-label="Portfolio Profiles">
+                        <svg class="w-3.5 h-3.5 pointer-events-none" viewBox="0 0 24 24">
                             <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-4.971 3-3.467 0-5.834-2.544-5.834-5.917 0-3.468 2.457-6.083 5.763-6.083 3.42 0 5.474 2.518 5.474 6.083h-8.24c.063 1.782 1.341 3.076 2.977 3.076 1.408 0 2.277-.696 2.673-1.624l2.158 1.465zm-2.316-4.437c-.073-1.258-.87-2.42-2.463-2.42-1.542 0-2.378 1.118-2.543 2.42h5.006zm-13.41 7.437h-8v-16h8.217c2.68 0 4.783 1.354 4.783 3.864 0 1.552-.806 2.766-2.091 3.393 1.737.587 2.591 2.052 2.591 3.93 0 2.871-2.298 4.813-5.5 4.813zm-5-10h4.316c1.19 0 2.184-.57 2.184-1.636 0-1.137-.927-1.636-2.184-1.636h-4.316v3.272zm0 7h4.783c1.378 0 2.422-.658 2.422-1.892 0-1.282-1.077-1.975-2.422-1.975h-4.783v3.867z" />
                         </svg>
                     </a>
@@ -87,12 +148,12 @@
             <div class="lg:col-span-2 space-y-4">
                 <h4 class="text-xs font-bold uppercase tracking-wider text-white font-['Outfit']">MENU</h4>
                 <ul class="space-y-2.5 text-xs text-neutral-400">
-                    <li><a href="{{ route('home') }}" class="hover:text-[var(--theme-primary)] transition-colors">Home</a></li>
-                    <li><a href="{{ route('about') }}" class="hover:text-[var(--theme-primary)] transition-colors">About</a></li>
-                    <li><a href="{{ route('portfolio') }}" class="hover:text-[var(--theme-primary)] transition-colors">Portfolio</a></li>
-                    <li><a href="{{ route('blog') }}" class="hover:text-[var(--theme-primary)] transition-colors">Blog</a></li>
-                    <li><a href="{{ route('faq') }}" class="hover:text-[var(--theme-primary)] transition-colors">FAQ</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-[var(--theme-primary)] transition-colors">Contact</a></li>
+                    <li><a href="{{ route('home') }}" class="footer-nav-link">Home</a></li>
+                    <li><a href="{{ route('about') }}" class="footer-nav-link">About</a></li>
+                    <li><a href="{{ route('portfolio') }}" class="footer-nav-link">Portfolio</a></li>
+                    <li><a href="{{ route('blog') }}" class="footer-nav-link">Blog</a></li>
+                    <li><a href="{{ route('faq') }}" class="footer-nav-link">FAQ</a></li>
+                    <li><a href="{{ route('contact') }}" class="footer-nav-link">Contact</a></li>
                 </ul>
             </div>
 
@@ -100,11 +161,11 @@
             <div class="lg:col-span-2 space-y-4">
                 <h4 class="text-xs font-bold uppercase tracking-wider text-white font-['Outfit']">FOLLOW</h4>
                 <ul class="space-y-2.5 text-xs text-neutral-400">
-                    <li><a href="{{ $settings['social_facebook'] ?? 'https://facebook.com' }}" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--theme-primary)] transition-colors">Facebook</a></li>
-                    <li><a href="{{ $settings['social_instagram'] ?? 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--theme-primary)] transition-colors">Instagram</a></li>
-                    <li><a href="{{ $settings['social_pinterest'] ?? 'https://pinterest.com' }}" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--theme-primary)] transition-colors">Pinterest</a></li>
-                    <li><a href="{{ $settings['social_tiktok'] ?? 'https://tiktok.com' }}" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--theme-primary)] transition-colors">TikTok</a></li>
-                    <li><a href="{{ $settings['social_youtube'] ?? 'https://youtube.com' }}" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--theme-primary)] transition-colors">YouTube</a></li>
+                    <li><a href="{{ $settings['social_facebook'] ?? 'https://facebook.com' }}" target="_blank" rel="noopener noreferrer" class="footer-nav-link">Facebook</a></li>
+                    <li><a href="{{ $settings['social_instagram'] ?? 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer" class="footer-nav-link">Instagram</a></li>
+                    <li><a href="{{ $settings['social_pinterest'] ?? 'https://pinterest.com' }}" target="_blank" rel="noopener noreferrer" class="footer-nav-link">Pinterest</a></li>
+                    <li><a href="{{ $settings['social_tiktok'] ?? 'https://tiktok.com' }}" target="_blank" rel="noopener noreferrer" class="footer-nav-link">TikTok</a></li>
+                    <li><a href="{{ $settings['social_youtube'] ?? 'https://youtube.com' }}" target="_blank" rel="noopener noreferrer" class="footer-nav-link">YouTube</a></li>
                 </ul>
             </div>
 

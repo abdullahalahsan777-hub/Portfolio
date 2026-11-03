@@ -264,8 +264,20 @@
         if (drawer) drawer.classList.toggle('hidden');
     }
 
+    function updateThemeContrast(hex) {
+        if (!hex) return;
+        hex = hex.replace('#', '');
+        const r = parseInt(hex.substr(0, 2), 16) || 0;
+        const g = parseInt(hex.substr(2, 2), 16) || 0;
+        const b = parseInt(hex.substr(4, 2), 16) || 0;
+        const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        const onPrimary = (yiq >= 120) ? '#000000' : '#ffffff';
+        document.documentElement.style.setProperty('--theme-on-primary', onPrimary);
+    }
+
     function applyMaterialColor(hex, name) {
         document.documentElement.style.setProperty('--theme-primary', hex);
+        updateThemeContrast(hex);
         localStorage.setItem('laravel_theme_color', hex);
         if (typeof toastr !== 'undefined') {
             toastr.info(`Applied Material ${name} accent!`);
@@ -277,6 +289,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const savedColor = localStorage.getItem('laravel_theme_color') || '#00e5ff';
         document.documentElement.style.setProperty('--theme-primary', savedColor);
+        updateThemeContrast(savedColor);
 
         // Close palette menu if clicked outside
         document.addEventListener('click', (e) => {

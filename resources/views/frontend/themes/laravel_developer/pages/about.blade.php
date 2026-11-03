@@ -6,6 +6,7 @@
         --theme-primary: #00e5ff;
         --theme-primary-hover: #00b4d8;
         --theme-primary-glow: rgba(0, 229, 255, 0.25);
+        --theme-on-primary: #000000;
     }
 </style>
 
