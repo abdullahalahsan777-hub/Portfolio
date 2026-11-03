@@ -89,7 +89,7 @@
                         
                         <img src="{{ $item->image_url }}" alt="{{ $item->title }}" loading="lazy"
                             class="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-110"
-                            onerror="this.style.opacity='0.3';">
+                            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80'; this.classList.add('opacity-75');">
                         
                         <!-- Top Floating Theme Badge -->
                         <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 flex-wrap z-10 pointer-events-none">

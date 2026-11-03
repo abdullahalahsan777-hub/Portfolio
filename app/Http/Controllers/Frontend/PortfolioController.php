@@ -90,16 +90,10 @@ class PortfolioController extends Controller
     private function getFaqs(?string $theme = null)
     {
         $theme = $theme ?: $this->getActiveTheme();
-        $faqs = Faq::where('is_published', true)
-            ->where('theme', $theme)
-            ->orderBy('sort_order')
-            ->get();
+        $faqs = Faq::where('is_published', true)->where('theme', $theme)->orderBy('sort_order')->get();
 
         if ($faqs->isEmpty()) {
-            $faqs = Faq::where('is_published', true)
-                ->whereIn('theme', ['all', $theme])
-                ->orderBy('sort_order')
-                ->get();
+            $faqs = Faq::where('is_published', true)->whereIn('theme', ['all', $theme])->orderBy('sort_order')->get();
         }
 
         if ($faqs->isEmpty()) {
@@ -153,18 +147,12 @@ class PortfolioController extends Controller
             $testimonials = Testimonial::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
         }
 
-        $resumeEducation = ResumeItem::where('type', 'education')
-            ->whereIn('theme', ['all', $activeTheme])
-            ->orderBy('sort_order')
-            ->get();
+        $resumeEducation = ResumeItem::where('type', 'education')->whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
         if ($resumeEducation->isEmpty()) {
             $resumeEducation = ResumeItem::where('type', 'education')->orderBy('sort_order')->get();
         }
 
-        $resumeExperience = ResumeItem::where('type', 'experience')
-            ->whereIn('theme', ['all', $activeTheme])
-            ->orderBy('sort_order')
-            ->get();
+        $resumeExperience = ResumeItem::where('type', 'experience')->whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
         if ($resumeExperience->isEmpty()) {
             $resumeExperience = ResumeItem::where('type', 'experience')->orderBy('sort_order')->get();
         }
@@ -172,29 +160,14 @@ class PortfolioController extends Controller
         $blogPosts = $this->getBlogPosts();
         $faqs = $this->getFaqs();
 
-        $recentGalleries = Gallery::active()
-            ->forTheme($activeTheme)
-            ->where('is_featured', true)
-            ->orderBy('sort_order')
-            ->orderByDesc('id')
-            ->take(8)
-            ->get();
+        $recentGalleries = Gallery::active()->forTheme($activeTheme)->where('is_featured', true)->orderBy('sort_order')->orderByDesc('id')->take(8)->get();
 
         if ($recentGalleries->count() < 4) {
-            $recentGalleries = Gallery::active()
-                ->forTheme($activeTheme)
-                ->orderBy('sort_order')
-                ->orderByDesc('id')
-                ->take(8)
-                ->get();
+            $recentGalleries = Gallery::active()->forTheme($activeTheme)->orderBy('sort_order')->orderByDesc('id')->take(8)->get();
         }
 
         if ($recentGalleries->count() < 4) {
-            $recentGalleries = Gallery::active()
-                ->orderBy('sort_order')
-                ->orderByDesc('id')
-                ->take(8)
-                ->get();
+            $recentGalleries = Gallery::active()->orderBy('sort_order')->orderByDesc('id')->take(8)->get();
         }
 
         // Only keep items that have a valid, accessible image
