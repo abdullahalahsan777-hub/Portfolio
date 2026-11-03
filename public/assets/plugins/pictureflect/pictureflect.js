@@ -189,7 +189,7 @@
                         var src = el.getAttribute('data-src') || el.getAttribute('href') || (el.tagName === 'IMG' ? el.src : '');
                         var title = el.getAttribute('data-title') || el.getAttribute('title') || el.getAttribute('alt') || 'Photo';
                         var category = el.getAttribute('data-category') || 'Gallery';
-                        var theme = el.getAttribute('data-theme') || '';
+                        var theme = el.getAttribute('data-pf-theme') || el.getAttribute('data-theme') || '';
                         var thumb = el.getAttribute('data-thumb') || src;
 
                         items.push({

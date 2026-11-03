@@ -521,7 +521,9 @@
             }
 
             // 5. REACTIVE ELEMENT FILTER (Instant DOM filtering)
-            const filterableElements = document.querySelectorAll('[data-theme]');
+            const allThemeElements = document.querySelectorAll('[data-theme]');
+            // Filter to only top-level filterable cards/rows (ignore nested elements that might have data-theme)
+            const filterableElements = Array.from(allThemeElements).filter(el => !el.parentElement || !el.parentElement.closest('[data-theme]'));
             let matchCount = 0;
             let totalCount = filterableElements.length;
 
