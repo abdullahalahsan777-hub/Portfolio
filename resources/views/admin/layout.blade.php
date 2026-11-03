@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!-- Pictureflect Photo Viewer Plugin -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/pictureflect/pictureflect.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/pictureflect/pictureflect.css') }}?v=1.2.1">
 
     <style>
         /* Dark Select2 Styling */
@@ -1973,7 +1973,7 @@
     <div id="liveNotificationToastContainer"
         class="fixed top-20 right-8 z-50 flex flex-col gap-2.5 pointer-events-none max-w-sm w-full"></div>
     <!-- Pictureflect Photo Viewer Plugin -->
-    <script src="{{ asset('assets/plugins/pictureflect/pictureflect.js') }}"></script>
+    <script src="{{ asset('assets/plugins/pictureflect/pictureflect.js') }}?v=1.2.1"></script>
 </body>
 
 </html>
