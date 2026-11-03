@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class SiteSetting extends Model
 {
     use HasFactory;
+
+    public const THEMES = [
+        'laravel_developer',
+        'developer',
+        'uiux_designer',
+        'graphic_designer',
+        'digital_designer_illustrator',
+        'app_developer',
+        'app_software_developer',
+    ];
     
     protected $fillable = [
         'key',
