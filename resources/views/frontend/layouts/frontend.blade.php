@@ -69,7 +69,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Pictureflect Photo Viewer Plugin -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/pictureflect/pictureflect.css') }}?v=1.2.1">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/pictureflect/pictureflect.css') }}?v=1.2.3">
 </head>
 
 <body
@@ -85,7 +85,7 @@
     @include('partials.toastr')
     @include('partials.browser-logger')
     <!-- Pictureflect Photo Viewer Plugin -->
-    <script src="{{ asset('assets/plugins/pictureflect/pictureflect.js') }}?v=1.2.1"></script>
+    <script src="{{ asset('assets/plugins/pictureflect/pictureflect.js') }}?v=1.2.3"></script>
 </body>
 
 </html>
