@@ -42,9 +42,9 @@
                 <!-- Category: Select2 with AngularJS -->
                 <div>
                     <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Category * (Select or Type New)</label>
-                    <div class="relative">
+                    <div class="relative gallery-category-wrapper">
                         <select name="category" id="galleryCategorySelect" required
-                            class="no-select2 w-full"
+                            class="no-select2 w-full px-4 py-2.5 rounded-xl bg-[#0d1627] border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors"
                             ng-model="category"
                             data-placeholder="Select or type a category...">
                             @php
@@ -204,7 +204,141 @@
             </div>
         </form>
     </div>
+@endsection
 
+@push('styles')
+    <style>
+        /* Gallery Category Obsidian Select2 Custom Styling */
+        .gallery-category-wrapper .select2-container {
+            width: 100% !important;
+        }
+
+        .gallery-category-wrapper .select2-container--default .select2-selection--single {
+            background-color: #0d1627 !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            border-radius: 0.75rem !important; /* rounded-xl */
+            height: 42px !important;
+            display: flex !important;
+            align-items: center !important;
+            padding: 0 0.85rem !important;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+            outline: none !important;
+        }
+
+        .gallery-category-wrapper .select2-container--default .select2-selection--single:hover {
+            border-color: rgba(6, 182, 212, 0.45) !important;
+            background-color: #101c33 !important;
+        }
+
+        .gallery-category-wrapper .select2-container--default.select2-container--open .select2-selection--single,
+        .gallery-category-wrapper .select2-container--default.select2-container--focus .select2-selection--single {
+            border-color: #06b6d4 !important; /* cyan-500 */
+            background-color: #0d1627 !important;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.22) !important;
+        }
+
+        .gallery-category-wrapper .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #ffffff !important;
+            font-size: 0.875rem !important;
+            font-weight: 500 !important;
+            line-height: 42px !important;
+            padding-left: 0.2rem !important;
+            padding-right: 2rem !important;
+        }
+
+        .gallery-category-wrapper .select2-container--default .select2-selection--single .select2-selection__placeholder {
+            color: #64748b !important;
+            font-size: 0.875rem !important;
+        }
+
+        .gallery-category-wrapper .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 42px !important;
+            right: 0.85rem !important;
+            top: 0 !important;
+            width: 20px !important;
+        }
+
+        .gallery-category-wrapper .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #06b6d4 transparent transparent transparent !important;
+            border-width: 5px 4px 0 4px !important;
+            transition: transform 0.2s ease !important;
+        }
+
+        .gallery-category-wrapper .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+            border-color: transparent transparent #06b6d4 transparent !important;
+            border-width: 0 4px 5px 4px !important;
+        }
+
+        /* High-contrast dark acrylic Select2 Dropdown */
+        .select2-dropdown {
+            background-color: #09101d !important;
+            border: 1px solid rgba(6, 182, 212, 0.35) !important;
+            border-radius: 0.85rem !important;
+            box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.85), 0 0 25px rgba(6, 182, 212, 0.12) !important;
+            backdrop-filter: blur(24px) !important;
+            overflow: hidden !important;
+            z-index: 999999 !important;
+            margin-top: 4px !important;
+        }
+
+        .select2-search--dropdown {
+            padding: 0.65rem 0.75rem !important;
+            background-color: #060b13 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        }
+
+        .select2-search--dropdown .select2-search__field {
+            background-color: #0d1627 !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 0.6rem !important;
+            padding: 0.55rem 0.85rem !important;
+            font-size: 0.8125rem !important;
+            font-family: inherit !important;
+            outline: none !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .select2-search--dropdown .select2-search__field:focus {
+            border-color: #06b6d4 !important;
+            box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.25) !important;
+        }
+
+        .select2-results__options {
+            padding: 0.4rem !important;
+            max-height: 240px !important;
+            background-color: #09101d !important;
+        }
+
+        .select2-container--default .select2-results__option {
+            padding: 0.6rem 0.85rem !important;
+            font-size: 0.8125rem !important;
+            color: #cbd5e1 !important;
+            border-radius: 0.55rem !important;
+            margin: 1px 0 !important;
+            transition: all 0.15s ease !important;
+            background-color: transparent !important;
+            cursor: pointer !important;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected],
+        .select2-container--default .select2-results__option:hover {
+            background: linear-gradient(90deg, #0284c7 0%, #0369a1 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 2px 8px -1px rgba(6, 182, 212, 0.35) !important;
+        }
+
+        .select2-container--default .select2-results__option[aria-selected="true"] {
+            background-color: rgba(6, 182, 212, 0.15) !important;
+            color: #22d3ee !important;
+            font-weight: 600 !important;
+            border: 1px solid rgba(6, 182, 212, 0.3) !important;
+        }
+    </style>
+@endpush
+
+@push('scripts')
     <!-- AngularJS & Select2 Integration Script -->
     <script>
         adminApp.controller('GalleryFormController', ['$scope', function($scope) {
@@ -274,4 +408,4 @@
             }
         }
     </script>
-@endsection
+@endpush
