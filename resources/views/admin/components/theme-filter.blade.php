@@ -1,8 +1,8 @@
 @php
     use App\Models\SiteSetting;
 
-    $activeTheme = $activeTheme ?? \App\Models\SiteSetting::getActiveTheme();
-    $themes = $themes ?? \App\Models\SiteSetting::getAvailableThemes();
+    $activeTheme = $activeTheme ?? SiteSetting::getActiveTheme();
+    $themes = $themes ?? SiteSetting::getAvailableThemes();
     $showGlobalOptions = $showGlobalOptions ?? true;
     $selectedTheme = request()->query('theme', $selectedTheme ?? $activeTheme);
     if (
@@ -12,10 +12,10 @@
         $selectedTheme = $activeTheme;
     }
 
-    $activeThemeMeta = $themes[$activeTheme] ?? \App\Models\SiteSetting::getThemeDetails($activeTheme);
+    $activeThemeMeta = $themes[$activeTheme] ?? SiteSetting::getThemeDetails($activeTheme);
     $selectedThemeMeta =
         $selectedTheme === 'all'
-            ? \App\Models\SiteSetting::getThemeDetails('all')
+            ? SiteSetting::getThemeDetails('all')
             : ($selectedTheme === 'everything'
                 ? [
                     'name' => 'All Elements (No Filter)',
@@ -25,7 +25,7 @@
                     'border' => 'border-indigo-500',
                     'description' => 'Display all elements regardless of theme',
                 ]
-                : $themes[$selectedTheme] ?? \App\Models\SiteSetting::getThemeDetails($selectedTheme));
+                : $themes[$selectedTheme] ?? SiteSetting::getThemeDetails($selectedTheme));
 
     $elementName = $elementName ?? 'Elements';
     $themeCounts = $themeCounts ?? [];
@@ -75,7 +75,8 @@
         </div>
 
         <!-- Right: Theme Dropdown + Preview Live -->
-        <div class="flex items-center gap-2.5 shrink-0 flex-wrap sm:flex-nowrap w-full md:w-auto justify-between md:justify-end">
+        <div
+            class="flex items-center gap-2.5 shrink-0 flex-wrap sm:flex-nowrap w-full md:w-auto justify-between md:justify-end">
 
             <!-- SELECTPICKER / SELECT2 DROPDOWN WRAPPER -->
             <div class="relative shrink-0 w-full sm:w-auto" id="themeSelectPicker">
@@ -523,7 +524,8 @@
             // 5. REACTIVE ELEMENT FILTER (Instant DOM filtering)
             const allThemeElements = document.querySelectorAll('[data-theme]');
             // Filter to only top-level filterable cards/rows (ignore nested elements that might have data-theme)
-            const filterableElements = Array.from(allThemeElements).filter(el => !el.parentElement || !el.parentElement.closest('[data-theme]'));
+            const filterableElements = Array.from(allThemeElements).filter(el => !el.parentElement || !el
+                .parentElement.closest('[data-theme]'));
             let matchCount = 0;
             let totalCount = filterableElements.length;
 
