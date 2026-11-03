@@ -52,6 +52,45 @@
     .slider-progress-running {
         animation: progressTimer 6s linear infinite;
     }
+
+    /* Hero Section Fixed Height to prevent jumping between slides */
+    .hero-fixed-container {
+        height: 880px;
+        min-height: 880px;
+    }
+    @media (min-width: 640px) {
+        .hero-fixed-container {
+            height: 780px;
+            min-height: 780px;
+        }
+    }
+    @media (min-width: 768px) {
+        .hero-fixed-container {
+            height: 720px;
+            min-height: 720px;
+        }
+    }
+    @media (min-width: 1024px) {
+        .hero-fixed-container {
+            height: 560px;
+            min-height: 560px;
+        }
+    }
+    @media (min-width: 1280px) {
+        .hero-fixed-container {
+            height: 540px;
+            min-height: 540px;
+        }
+    }
+
+    /* Testimonials Progress Bar Animation (5s) */
+    @keyframes testimonialProgressTimer {
+        0% { width: 0%; }
+        100% { width: 100%; }
+    }
+    .testimonial-progress-active {
+        animation: testimonialProgressTimer 5s linear infinite;
+    }
 </style>
 
 <!-- Load AngularJS -->
@@ -77,12 +116,12 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             
-            <!-- Slide Container: Cycles through slides array -->
-            <div class="min-h-[520px] lg:min-h-[560px] flex items-center">
+            <!-- Slide Container: Cycles through slides array with FIXED HEIGHT to eliminate slide transition height jumping -->
+            <div class="hero-fixed-container w-full relative flex items-center">
 
                 <!-- SLIDE 1: Enterprise Laravel Backend & Architecture -->
-                <div ng-show="currentSlide === 0" class="w-full slide-active">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <div ng-show="currentSlide === 0" class="w-full h-full flex items-center slide-active">
+                    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
                         <!-- Left Column (7 cols): Staggered Animated Elements -->
                         <div class="lg:col-span-7 space-y-6">
                             <!-- Part 1: Top Tag -->
@@ -92,7 +131,7 @@
                             </div>
 
                             <!-- Part 2 & 3: Headline with Dual Lines -->
-                            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white font-['Outfit'] uppercase leading-[1.05]">
+                            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white font-['Outfit'] uppercase leading-[1.08]">
                                 <span class="anim-part-2 block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500">
                                     SCALABLE BACKENDS
                                 </span>
@@ -178,15 +217,15 @@
                 </div>
 
                 <!-- SLIDE 2: ERP, POS & Business Software (BBGC, Rafiq Ent, Devzet) -->
-                <div ng-show="currentSlide === 1" class="w-full slide-active">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <div ng-show="currentSlide === 1" class="w-full h-full flex items-center slide-active">
+                    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
                         <div class="lg:col-span-7 space-y-6">
                             <div class="anim-part-1 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
                                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                                 <span>// ENTERPRISE ERP &amp; POS SYSTEMS</span>
                             </div>
 
-                            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white font-['Outfit'] uppercase leading-[1.05]">
+                            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white font-['Outfit'] uppercase leading-[1.08]">
                                 <span class="anim-part-2 block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-500">
                                     CUSTOM ERP &amp; POS
                                 </span>
@@ -244,15 +283,15 @@
                 </div>
 
                 <!-- SLIDE 3: Modern Reactive Frontend Meets High-Performance Backend -->
-                <div ng-show="currentSlide === 2" class="w-full slide-active">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <div ng-show="currentSlide === 2" class="w-full h-full flex items-center slide-active">
+                    <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
                         <div class="lg:col-span-7 space-y-6">
                             <div class="anim-part-1 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-mono font-bold">
                                 <span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
                                 <span>// TAILWIND CSS &amp; ANGULARJS STACK</span>
                             </div>
 
-                            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 dark:text-white font-['Outfit'] uppercase leading-[1.05]">
+                            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white font-['Outfit'] uppercase leading-[1.08]">
                                 <span class="anim-part-2 block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-500">
                                     REACTIVE FRONTENDS
                                 </span>
@@ -775,59 +814,296 @@
     </section>
 
     <!-- =========================================================================
-         7. CLIENT TESTIMONIALS (REAL ENDORSEMENTS FROM COLLABORATORS & CLIENTS)
+         7. CLIENT TESTIMONIALS (AUTO SLIDER: 5s INTERVAL, 1 ITEM PER STEP)
          ========================================================================= -->
-    <section id="testimonials" class="py-20 bg-slate-100/70 dark:bg-[#060a12]/80 border-t border-slate-200 dark:border-white/5 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center space-y-3 mb-14">
-                <span class="px-3.5 py-1 rounded-full bg-cyan-500/10 text-[var(--theme-primary)] font-mono text-xs font-bold uppercase tracking-wider">
-                    // CLIENT REPUTATION
-                </span>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white uppercase font-['Outfit']">
-                    WHAT DIRECTORS &amp; <span class="text-[var(--theme-primary)]">COLLABORATORS SAY</span>
-                </h2>
-                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
-                    Direct feedback from engineering leads, institutional directors, and enterprise clients who scaled on my backend architectures.
-                </p>
+    <section id="testimonials" class="py-20 bg-slate-100/70 dark:bg-[#060a12]/80 border-t border-slate-200 dark:border-white/5 relative overflow-hidden"
+        onmouseenter="pauseTestimonialsSlider()" onmouseleave="resumeTestimonialsSlider()">
+
+        <!-- Ambient Cyber Background Glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[var(--theme-primary)]/5 rounded-full blur-[140px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <!-- Section Header: Title & Top Navigation Controls -->
+            <div class="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-6 mb-12">
+                <div class="text-center sm:text-left space-y-3">
+                    <span class="px-3.5 py-1 rounded-full bg-cyan-500/10 text-[var(--theme-primary)] font-mono text-xs font-bold uppercase tracking-wider inline-block">
+                        // CLIENT REPUTATION
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white uppercase font-['Outfit']">
+                        WHAT DIRECTORS &amp; <span class="text-[var(--theme-primary)]">COLLABORATORS SAY</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl">
+                        Direct feedback from engineering leads, institutional directors, and enterprise clients who scaled on my backend architectures.
+                    </p>
+                </div>
+
+                <!-- Slider Controls: Prev/Next Buttons & 5s Auto-Badge -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-200/70 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-[10px] font-mono text-slate-500 dark:text-slate-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[var(--theme-primary)] animate-pulse"></span>
+                        <span>Auto 5s</span>
+                    </span>
+
+                    <!-- Prev Button (Slides 1 Item Back) -->
+                    <button type="button" onclick="prevTestimonialSlide()" aria-label="Previous Testimonial" title="Previous Testimonial (1 item)"
+                        class="w-11 h-11 rounded-full border border-slate-300 dark:border-white/10 hover:border-[var(--theme-primary)] bg-white dark:bg-white/5 text-slate-800 dark:text-white hover:text-[var(--theme-primary)] flex items-center justify-center font-bold text-base shadow-sm active:scale-95 transition-all cursor-pointer">
+                        ←
+                    </button>
+                    <!-- Next Button (Slides 1 Item Forward) -->
+                    <button type="button" onclick="nextTestimonialSlide()" aria-label="Next Testimonial" title="Next Testimonial (1 item)"
+                        class="w-11 h-11 rounded-full border border-slate-300 dark:border-white/10 hover:border-[var(--theme-primary)] bg-white dark:bg-white/5 text-slate-800 dark:text-white hover:text-[var(--theme-primary)] flex items-center justify-center font-bold text-base shadow-sm active:scale-95 transition-all cursor-pointer">
+                        →
+                    </button>
+                </div>
             </div>
 
-            <!-- Testimonials Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($testimonials as $t)
-                    <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0a0f1d] border border-slate-200 dark:border-white/10 shadow-sm hover:border-[var(--theme-primary)]/50 hover:shadow-xl dark:hover:shadow-cyan-500/5 transition-all duration-300 flex flex-col justify-between group">
-                        <div class="space-y-4">
-                            <!-- Star Rating -->
-                            <div class="flex items-center gap-1 text-[var(--theme-primary)] text-sm">
-                                @for($i = 0; $i < ($t->rating ?? 5); $i++)
-                                    <span>★</span>
-                                @endfor
-                            </div>
+            <!-- Testimonials Slider Track Container (Clips overflow) -->
+            <div id="testimonialsSliderContainer" class="relative overflow-hidden py-2 -mx-3">
+                <div id="testimonialsTrack" class="flex transition-transform duration-500 ease-out"
+                    style="transform: translateX(0%);">
+                    
+                    @php
+                        $uniqueCount = count($testimonials);
+                        // Repeat loop so there are always enough cards to slide continuously
+                        $repeatPasses = ($uniqueCount < 4) ? 3 : 2;
+                    @endphp
 
-                            <!-- Quote Content -->
-                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed italic">
-                                "{{ strip_tags($t->content) }}"
-                            </p>
-                        </div>
+                    @for ($pass = 0; $pass < $repeatPasses; $pass++)
+                        @foreach ($testimonials as $idx => $t)
+                            <div class="testimonial-slide-item w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-3 box-border"
+                                data-index="{{ $idx }}">
+                                <div class="h-full p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#0a0f1d] border border-slate-200 dark:border-white/10 shadow-sm hover:border-[var(--theme-primary)]/50 hover:shadow-xl dark:hover:shadow-cyan-500/5 transition-all duration-300 flex flex-col justify-between group">
+                                    <div class="space-y-4">
+                                        <!-- Star Rating -->
+                                        <div class="flex items-center gap-1 text-[var(--theme-primary)] text-sm">
+                                            @for($i = 0; $i < ($t->rating ?? 5); $i++)
+                                                <span>★</span>
+                                            @endfor
+                                        </div>
 
-                        <!-- Client Identity -->
-                        <div class="pt-6 mt-6 border-t border-slate-100 dark:border-white/10 flex items-center gap-3.5">
-                            <img src="{{ !empty($t->avatar) ? (str_starts_with($t->avatar, 'http') ? $t->avatar : asset($t->avatar)) : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80' }}"
-                                alt="{{ $t->client_name }}"
-                                class="w-11 h-11 rounded-full object-cover border border-cyan-500/30">
-                            <div>
-                                <h4 class="font-bold text-sm text-slate-900 dark:text-white font-['Outfit']">
-                                    {{ $t->client_name }}
-                                </h4>
-                                <p class="text-[11px] font-mono text-[var(--theme-primary)]">
-                                    {{ $t->client_role }} @if(!empty($t->company)) • <span class="text-slate-400">{{ $t->company }}</span> @endif
-                                </p>
+                                        <!-- Quote Content -->
+                                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed italic">
+                                            "{{ strip_tags($t->content) }}"
+                                        </p>
+                                    </div>
+
+                                    <!-- Client Identity -->
+                                    <div class="pt-6 mt-6 border-t border-slate-100 dark:border-white/10 flex items-center gap-3.5">
+                                        <img src="{{ !empty($t->avatar) ? (str_starts_with($t->avatar, 'http') ? $t->avatar : asset($t->avatar)) : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80' }}"
+                                            alt="{{ $t->client_name }}"
+                                            class="w-11 h-11 rounded-full object-cover border border-cyan-500/30 flex-shrink-0">
+                                        <div class="min-w-0">
+                                            <h4 class="font-bold text-sm text-slate-900 dark:text-white font-['Outfit'] truncate">
+                                                {{ $t->client_name }}
+                                            </h4>
+                                            <p class="text-[11px] font-mono text-[var(--theme-primary)] truncate">
+                                                {{ $t->client_role }} @if(!empty($t->company)) • <span class="text-slate-400">{{ $t->company }}</span> @endif
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        @endforeach
+                    @endfor
+
+                </div>
+            </div>
+
+            <!-- Bottom Pagination Dots & Auto-Slide Progress Bar -->
+            <div class="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <!-- Dots Pagination -->
+                <div id="testimonialDots" class="flex items-center gap-2">
+                    @foreach ($testimonials as $idx => $t)
+                        <button type="button" onclick="goToTestimonialSlide({{ $idx }})"
+                            class="testimonial-dot-btn h-2 rounded-full transition-all cursor-pointer {{ $idx === 0 ? 'w-8 bg-[var(--theme-primary)]' : 'w-2.5 bg-slate-300 dark:bg-white/20 hover:bg-slate-400' }}"
+                            data-dot="{{ $idx }}"
+                            aria-label="Go to testimonial {{ $idx + 1 }}">
+                        </button>
+                    @endforeach
+                </div>
+
+                <!-- 5-Second Timer Progress Bar -->
+                <div class="flex items-center gap-3">
+                    <div class="text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                        Next slide in 5s
                     </div>
-                @endforeach
+                    <div class="w-24 sm:w-32 h-1.5 rounded-full bg-slate-200 dark:bg-white/10 overflow-hidden">
+                        <div id="testimonialProgressBar" class="h-full bg-[var(--theme-primary)] rounded-full testimonial-progress-active"></div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </section>
+
+    <!-- Testimonials Slider Controller Script -->
+    <script>
+        (function() {
+            const totalUnique = {{ count($testimonials) }};
+            if (totalUnique === 0) return;
+
+            let currentIndex = 0;
+            let isTransitioning = false;
+            let autoSlideTimer = null;
+            let isHovered = false;
+
+            function getVisibleCount() {
+                if (window.innerWidth >= 1024) return 3;
+                if (window.innerWidth >= 768) return 2;
+                return 1;
+            }
+
+            function updateSliderPosition(animate = true) {
+                const track = document.getElementById('testimonialsTrack');
+                if (!track) return;
+
+                const visibleCount = getVisibleCount();
+                const stepPercent = 100 / visibleCount;
+
+                if (animate) {
+                    track.style.transition = 'transform 0.5s cubic-bezier(0.2, 1, 0.3, 1)';
+                } else {
+                    track.style.transition = 'none';
+                }
+
+                track.style.transform = 'translateX(-' + (currentIndex * stepPercent) + '%)';
+                updateDots(currentIndex % totalUnique);
+                resetProgressBar();
+            }
+
+            function updateDots(activeIdx) {
+                const dots = document.querySelectorAll('.testimonial-dot-btn');
+                dots.forEach((dot, i) => {
+                    if (i === activeIdx) {
+                        dot.classList.remove('w-2.5', 'bg-slate-300', 'dark:bg-white/20');
+                        dot.classList.add('w-8', 'bg-[var(--theme-primary)]');
+                    } else {
+                        dot.classList.remove('w-8', 'bg-[var(--theme-primary)]');
+                        dot.classList.add('w-2.5', 'bg-slate-300', 'dark:bg-white/20');
+                    }
+                });
+            }
+
+            function resetProgressBar() {
+                const bar = document.getElementById('testimonialProgressBar');
+                if (!bar) return;
+                bar.classList.remove('testimonial-progress-active');
+                void bar.offsetWidth; // Force CSS reflow
+                if (!isHovered) {
+                    bar.classList.add('testimonial-progress-active');
+                }
+            }
+
+            window.nextTestimonialSlide = function() {
+                if (isTransitioning) return;
+                isTransitioning = true;
+                currentIndex++;
+                updateSliderPosition(true);
+
+                // When we have reached the end of the first loop, silently reset to index 0 after transition
+                if (currentIndex >= totalUnique) {
+                    setTimeout(() => {
+                        currentIndex = 0;
+                        updateSliderPosition(false);
+                        isTransitioning = false;
+                    }, 520);
+                } else {
+                    setTimeout(() => {
+                        isTransitioning = false;
+                    }, 520);
+                }
+            };
+
+            window.prevTestimonialSlide = function() {
+                if (isTransitioning) return;
+                isTransitioning = true;
+
+                if (currentIndex === 0) {
+                    currentIndex = totalUnique;
+                    updateSliderPosition(false);
+                    const track = document.getElementById('testimonialsTrack');
+                    if (track) void track.offsetWidth;
+                    setTimeout(() => {
+                        currentIndex = totalUnique - 1;
+                        updateSliderPosition(true);
+                        setTimeout(() => {
+                            isTransitioning = false;
+                        }, 520);
+                    }, 20);
+                } else {
+                    currentIndex--;
+                    updateSliderPosition(true);
+                    setTimeout(() => {
+                        isTransitioning = false;
+                    }, 520);
+                }
+            };
+
+            window.goToTestimonialSlide = function(idx) {
+                if (isTransitioning) return;
+                currentIndex = idx % totalUnique;
+                updateSliderPosition(true);
+            };
+
+            function startAutoSlide() {
+                if (autoSlideTimer) clearInterval(autoSlideTimer);
+                autoSlideTimer = setInterval(() => {
+                    if (!isHovered) {
+                        window.nextTestimonialSlide();
+                    }
+                }, 5000);
+            }
+
+            window.pauseTestimonialsSlider = function() {
+                isHovered = true;
+                const bar = document.getElementById('testimonialProgressBar');
+                if (bar) bar.style.animationPlayState = 'paused';
+            };
+
+            window.resumeTestimonialsSlider = function() {
+                isHovered = false;
+                const bar = document.getElementById('testimonialProgressBar');
+                if (bar) bar.style.animationPlayState = 'running';
+            };
+
+            // Window resize handler: recalculate slide width
+            window.addEventListener('resize', () => {
+                updateSliderPosition(false);
+            });
+
+            // Touch swipe support for mobile
+            let touchStartX = 0;
+            const container = document.getElementById('testimonialsSliderContainer');
+            if (container) {
+                container.addEventListener('touchstart', e => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+
+                container.addEventListener('touchend', e => {
+                    const diff = touchStartX - e.changedTouches[0].screenX;
+                    if (Math.abs(diff) > 40) {
+                        if (diff > 0) {
+                            window.nextTestimonialSlide();
+                        } else {
+                            window.prevTestimonialSlide();
+                        }
+                    }
+                }, { passive: true });
+            }
+
+            // Start slider on load
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    updateSliderPosition(false);
+                    startAutoSlide();
+                });
+            } else {
+                updateSliderPosition(false);
+                startAutoSlide();
+            }
+        })();
+    </script>
 
     <!-- =========================================================================
          8. TECHNICAL ARTICLES & BLOG (INSIGHTS ON SOFTWARE ARCHITECTURE)
