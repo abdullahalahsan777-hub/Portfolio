@@ -162,35 +162,100 @@ export function initTestimonialsSlider() {
         container.addEventListener('mouseenter', stopAutoPlay);
         container.addEventListener('mouseleave', startAutoPlay);
 
-        // Touch Swipe
+        // Drag-to-Slide Engine (Mouse & Touch for all themes)
+        let isDragging = false;
         let startX = 0;
         let currentX = 0;
-        let isTouching = false;
+        let hasMoved = false;
 
-        container.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            isTouching = true;
+        container.style.cursor = 'grab';
+        container.style.userSelect = 'none';
+        container.classList.add('select-none');
+
+        // Prevent native HTML5 image drag
+        container.addEventListener('dragstart', (e) => e.preventDefault());
+
+        function getBaseOffsetPercent() {
+            const visible = getVisibleCount();
+            const stepPercent = 100 / visible;
+            return -(currentIndex * stepPercent);
+        }
+
+        // Mouse Down (Drag Start)
+        container.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return; // Main left click only
+            isDragging = true;
+            hasMoved = false;
+            startX = e.clientX;
+            currentX = e.clientX;
+            container.style.cursor = 'grabbing';
             stopAutoPlay();
-        }, { passive: true });
+        });
 
-        container.addEventListener('touchmove', (e) => {
-            if (!isTouching) return;
-            currentX = e.touches[0].clientX;
-        }, { passive: true });
+        // Window Mouse Move (Smooth Interactive Tracking)
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            currentX = e.clientX;
+            const diffX = currentX - startX;
+            if (Math.abs(diffX) > 6) {
+                hasMoved = true;
+            }
+            const basePercent = getBaseOffsetPercent();
+            track.style.transition = 'none';
+            track.style.transform = `translateX(calc(${basePercent}% + ${diffX}px))`;
+        });
 
-        container.addEventListener('touchend', () => {
-            if (!isTouching) return;
-            isTouching = false;
+        function endDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+            container.style.cursor = 'grab';
             const diffX = startX - currentX;
-            if (Math.abs(diffX) > 40) {
+
+            if (hasMoved && Math.abs(diffX) > 40) {
                 if (diffX > 0) {
                     nextSlide();
                 } else {
                     prevSlide();
                 }
+            } else {
+                updatePosition(true);
             }
             startAutoPlay();
-        });
+        }
+
+        window.addEventListener('mouseup', endDrag);
+
+        // Touch Listeners for Mobile Swiping
+        container.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            hasMoved = false;
+            startX = e.touches[0].clientX;
+            currentX = e.touches[0].clientX;
+            stopAutoPlay();
+        }, { passive: true });
+
+        container.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+            const diffX = currentX - startX;
+            if (Math.abs(diffX) > 6) {
+                hasMoved = true;
+            }
+            const basePercent = getBaseOffsetPercent();
+            track.style.transition = 'none';
+            track.style.transform = `translateX(calc(${basePercent}% + ${diffX}px))`;
+        }, { passive: true });
+
+        container.addEventListener('touchend', endDrag, { passive: true });
+
+        // Prevent click if drag movement occurred
+        container.addEventListener('click', (e) => {
+            if (hasMoved) {
+                e.preventDefault();
+                e.stopPropagation();
+                hasMoved = false;
+            }
+        }, true);
 
         // Window resize listener
         window.addEventListener('resize', () => {

@@ -1013,17 +1013,33 @@
     <script>
         function toggleFaq(id) {
             const el = document.getElementById(id);
+            if (!el) return;
+            const isCurrentlyHidden = el.classList.contains('hidden');
             const iconId = id.replace('faq-item-', 'faq-icon-');
             const icon = document.getElementById(iconId);
 
-            if (el.classList.contains('hidden')) {
+            // Close all items in the accordion container first (single-open behavior)
+            const container = document.getElementById('faqAccordionContainer');
+            if (container) {
+                container.querySelectorAll('[id^="faq-item-"]').forEach(item => {
+                    item.classList.remove('block');
+                    item.classList.add('hidden');
+                });
+                container.querySelectorAll('[id^="faq-icon-"]').forEach(ic => {
+                    ic.classList.remove('rotate-180');
+                });
+                container.querySelectorAll('.app-card').forEach(card => {
+                    card.classList.remove('border-[#ff0033]/40');
+                });
+            }
+
+            // If the clicked item was previously hidden, open it
+            if (isCurrentlyHidden) {
                 el.classList.remove('hidden');
                 el.classList.add('block');
                 if (icon) icon.classList.add('rotate-180');
-            } else {
-                el.classList.remove('block');
-                el.classList.add('hidden');
-                if (icon) icon.classList.remove('rotate-180');
+                const card = el.closest('.app-card');
+                if (card) card.classList.add('border-[#ff0033]/40');
             }
         }
     </script>

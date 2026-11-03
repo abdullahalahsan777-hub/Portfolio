@@ -114,18 +114,32 @@
         const item = button.closest('[data-faq-item]');
         const pane = item.querySelector('.faq-content-pane');
         const icon = button.querySelector('.faq-icon-pill span');
+        const pill = button.querySelector('.faq-icon-pill');
         const isExpanded = button.getAttribute('aria-expanded') === 'true';
 
-        if (isExpanded) {
-            button.setAttribute('aria-expanded', 'false');
-            pane.classList.add('hidden');
-            icon.textContent = '+';
-            button.querySelector('.faq-icon-pill').classList.remove('bg-[var(--theme-primary)]', 'text-black');
-        } else {
+        // Close all items in the accordion list first (single-open behavior)
+        document.querySelectorAll('#laravelFaqList [data-faq-item]').forEach(otherItem => {
+            const otherBtn = otherItem.querySelector('button');
+            const otherPane = otherItem.querySelector('.faq-content-pane');
+            const otherIcon = otherItem.querySelector('.faq-icon-pill span');
+            const otherPill = otherItem.querySelector('.faq-icon-pill');
+
+            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+            if (otherPane) {
+                otherPane.classList.add('hidden');
+                otherPane.classList.remove('block');
+            }
+            if (otherIcon) otherIcon.textContent = '+';
+            if (otherPill) otherPill.classList.remove('bg-[var(--theme-primary)]', 'text-black', 'font-bold');
+        });
+
+        // If the clicked item was not already open, expand it
+        if (!isExpanded) {
             button.setAttribute('aria-expanded', 'true');
             pane.classList.remove('hidden');
+            pane.classList.add('block');
             icon.textContent = '−';
-            button.querySelector('.faq-icon-pill').classList.add('bg-[var(--theme-primary)]', 'text-black');
+            pill.classList.add('bg-[var(--theme-primary)]', 'text-black', 'font-bold');
         }
     }
 </script>

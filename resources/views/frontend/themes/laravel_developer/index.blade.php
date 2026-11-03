@@ -824,42 +824,21 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-            <!-- Section Header: Title & Top Navigation Controls -->
-            <div class="flex flex-col sm:flex-row items-center sm:items-end justify-between gap-6 mb-12">
-                <div class="text-center sm:text-left space-y-3">
-                    <span class="px-3.5 py-1 rounded-full bg-cyan-500/10 text-[var(--theme-primary)] font-mono text-xs font-bold uppercase tracking-wider inline-block">
-                        // CLIENT REPUTATION
-                    </span>
-                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white uppercase font-['Outfit']">
-                        WHAT DIRECTORS &amp; <span class="text-[var(--theme-primary)]">COLLABORATORS SAY</span>
-                    </h2>
-                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl">
-                        Direct feedback from engineering leads, institutional directors, and enterprise clients who scaled on my backend architectures.
-                    </p>
-                </div>
-
-                <!-- Slider Controls: Prev/Next Buttons & 5s Auto-Badge -->
-                <div class="flex items-center gap-3 flex-shrink-0">
-                    <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-200/70 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-[10px] font-mono text-slate-500 dark:text-slate-400">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[var(--theme-primary)] animate-pulse"></span>
-                        <span>Auto 5s</span>
-                    </span>
-
-                    <!-- Prev Button (Slides 1 Item Back) -->
-                    <button type="button" onclick="prevTestimonialSlide()" aria-label="Previous Testimonial" title="Previous Testimonial (1 item)"
-                        class="w-11 h-11 rounded-full border border-slate-300 dark:border-white/10 hover:border-[var(--theme-primary)] bg-white dark:bg-white/5 text-slate-800 dark:text-white hover:text-[var(--theme-primary)] flex items-center justify-center font-bold text-base shadow-sm active:scale-95 transition-all cursor-pointer">
-                        ←
-                    </button>
-                    <!-- Next Button (Slides 1 Item Forward) -->
-                    <button type="button" onclick="nextTestimonialSlide()" aria-label="Next Testimonial" title="Next Testimonial (1 item)"
-                        class="w-11 h-11 rounded-full border border-slate-300 dark:border-white/10 hover:border-[var(--theme-primary)] bg-white dark:bg-white/5 text-slate-800 dark:text-white hover:text-[var(--theme-primary)] flex items-center justify-center font-bold text-base shadow-sm active:scale-95 transition-all cursor-pointer">
-                        →
-                    </button>
-                </div>
+            <!-- Section Header: Title -->
+            <div class="mb-12 text-center sm:text-left space-y-3">
+                <span class="px-3.5 py-1 rounded-full bg-cyan-500/10 text-[var(--theme-primary)] font-mono text-xs font-bold uppercase tracking-wider inline-block">
+                    // CLIENT REPUTATION
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white uppercase font-['Outfit']">
+                    WHAT DIRECTORS &amp; <span class="text-[var(--theme-primary)]">COLLABORATORS SAY</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl">
+                    Direct feedback from engineering leads, institutional directors, and enterprise clients who scaled on my backend architectures.
+                </p>
             </div>
 
             <!-- Testimonials Slider Track Container (Clips overflow) -->
-            <div id="testimonialsSliderContainer" class="relative overflow-hidden py-2 -mx-3">
+            <div id="testimonialsSliderContainer" class="relative overflow-hidden py-2 -mx-3 select-none cursor-grab active:cursor-grabbing">
                 <div id="testimonialsTrack" class="flex transition-transform duration-500 ease-out"
                     style="transform: translateX(0%);">
                     
@@ -1072,24 +1051,102 @@
                 updateSliderPosition(false);
             });
 
-            // Touch swipe support for mobile
-            let touchStartX = 0;
-            const container = document.getElementById('testimonialsSliderContainer');
-            if (container) {
-                container.addEventListener('touchstart', e => {
-                    touchStartX = e.changedTouches[0].screenX;
-                }, { passive: true });
+            // Mouse Drag & Touch Drag to Slide support
+            let isDragging = false;
+            let startX = 0;
+            let currentX = 0;
+            let hasMoved = false;
 
-                container.addEventListener('touchend', e => {
-                    const diff = touchStartX - e.changedTouches[0].screenX;
-                    if (Math.abs(diff) > 40) {
-                        if (diff > 0) {
+            const container = document.getElementById('testimonialsSliderContainer');
+            const track = document.getElementById('testimonialsTrack');
+
+            function getCurrentOffsetPercent() {
+                const visibleCount = getVisibleCount();
+                return -(currentIndex * (100 / visibleCount));
+            }
+
+            if (container && track) {
+                // Prevent native image dragging
+                container.addEventListener('dragstart', (e) => e.preventDefault());
+
+                // Mouse down
+                container.addEventListener('mousedown', (e) => {
+                    if (e.button !== 0 || isTransitioning) return;
+                    isDragging = true;
+                    hasMoved = false;
+                    startX = e.clientX;
+                    currentX = e.clientX;
+                    container.classList.add('cursor-grabbing');
+                    container.classList.remove('cursor-grab');
+                    pauseTestimonialsSlider();
+                });
+
+                // Mouse move
+                window.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    currentX = e.clientX;
+                    const diffX = currentX - startX;
+                    if (Math.abs(diffX) > 6) {
+                        hasMoved = true;
+                    }
+                    const basePercent = getCurrentOffsetPercent();
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(calc(${basePercent}% + ${diffX}px))`;
+                });
+
+                function handleDragFinish() {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    container.classList.remove('cursor-grabbing');
+                    container.classList.add('cursor-grab');
+                    const diffX = startX - currentX;
+
+                    if (hasMoved && Math.abs(diffX) > 40) {
+                        if (diffX > 0) {
                             window.nextTestimonialSlide();
                         } else {
                             window.prevTestimonialSlide();
                         }
+                    } else {
+                        updateSliderPosition(true);
                     }
+                    resumeTestimonialsSlider();
+                }
+
+                window.addEventListener('mouseup', handleDragFinish);
+
+                // Touch support
+                container.addEventListener('touchstart', (e) => {
+                    if (isTransitioning) return;
+                    isDragging = true;
+                    hasMoved = false;
+                    startX = e.touches[0].clientX;
+                    currentX = e.touches[0].clientX;
+                    pauseTestimonialsSlider();
                 }, { passive: true });
+
+                container.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    currentX = e.touches[0].clientX;
+                    const diffX = currentX - startX;
+                    if (Math.abs(diffX) > 6) {
+                        hasMoved = true;
+                    }
+                    const basePercent = getCurrentOffsetPercent();
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(calc(${basePercent}% + ${diffX}px))`;
+                }, { passive: true });
+
+                container.addEventListener('touchend', handleDragFinish, { passive: true });
+
+                // Suppress click on card content if drag occurred
+                container.addEventListener('click', (e) => {
+                    if (hasMoved) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        hasMoved = false;
+                    }
+                }, true);
             }
 
             // Start slider on load
@@ -1184,16 +1241,15 @@
                 </p>
             </div>
 
-            <div class="space-y-4">
+            <div class="space-y-4" ng-init="activeFaq = 0">
                 @foreach ($faqs as $faq)
-                    <div class="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0a0f1d] overflow-hidden shadow-sm transition-all"
-                        ng-init="openFaq_{{ $loop->index }} = {{ $loop->first ? 'true' : 'false' }}">
-                        <button type="button" ng-click="openFaq_{{ $loop->index }} = !openFaq_{{ $loop->index }}"
+                    <div class="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0a0f1d] overflow-hidden shadow-sm transition-all">
+                        <button type="button" ng-click="activeFaq = (activeFaq === {{ $loop->index }} ? -1 : {{ $loop->index }})"
                             class="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-slate-900 dark:text-white font-['Outfit'] uppercase hover:text-[var(--theme-primary)] transition-colors cursor-pointer">
                             <span>{{ $faq->question }}</span>
-                            <span class="text-lg font-mono text-[var(--theme-primary)]" ng-bind="openFaq_{{ $loop->index }} ? '−' : '+'">+</span>
+                            <span class="text-lg font-mono text-[var(--theme-primary)]" ng-bind="activeFaq === {{ $loop->index }} ? '−' : '+'">+</span>
                         </button>
-                        <div ng-show="openFaq_{{ $loop->index }}" class="px-5 sm:px-6 pb-6 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-4">
+                        <div ng-show="activeFaq === {{ $loop->index }}" class="px-5 sm:px-6 pb-6 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-4">
                             {{ $faq->answer }}
                         </div>
                     </div>
