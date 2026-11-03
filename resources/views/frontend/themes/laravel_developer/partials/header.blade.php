@@ -137,76 +137,93 @@
 <!-- =========================================================================
      RIGHT FIXED SMALL BUTTON: Material Color Palette Switcher
      Fixed on right side of screen with sleek popout color picker
+     Shows 6-tooth gear settings SVG with the active theme color in both Dark & Light mode
      ========================================================================= -->
 <div id="fixedPaletteWidget" class="fixed right-3 sm:right-5 top-1/2 -translate-y-1/2 z-50 flex items-center">
     <!-- Palette Popout Menu (opens to the left of the button) -->
     <div id="paletteMenu" class="hidden mr-3 w-64 rounded-2xl bg-white/95 dark:bg-[#0b1220]/95 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-2xl p-3.5 space-y-3 transition-all duration-300">
         <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-white/10 text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            <span>Material Palette</span>
+            <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="color: var(--theme-primary); stroke: var(--theme-primary);">
+                    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <span>Material Palette</span>
+            </span>
             <span class="text-[var(--theme-primary)] font-bold">Accent</span>
         </div>
         <div class="grid grid-cols-3 gap-2">
             <!-- 1. Cyan (Default Cyber) -->
-            <button type="button" onclick="applyMaterialColor('#00e5ff', 'Cyan')"
-                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Cyber Cyan">
-                <span class="w-5 h-5 rounded-full bg-[#00e5ff] shadow-sm"></span>
+            <button type="button" onclick="applyMaterialColor('#00e5ff', 'Cyan')" data-color="#00e5ff"
+                class="palette-color-btn flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Cyber Cyan">
+                <span class="w-5 h-5 rounded-full bg-[#00e5ff] shadow-sm transition-transform"></span>
                 <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Cyan</span>
             </button>
             <!-- 2. Deep Orange (Laravel Flame) -->
-            <button type="button" onclick="applyMaterialColor('#ff5722', 'Laravel Orange')"
-                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Laravel Deep Orange">
-                <span class="w-5 h-5 rounded-full bg-[#ff5722] shadow-sm"></span>
+            <button type="button" onclick="applyMaterialColor('#ff5722', 'Laravel Orange')" data-color="#ff5722"
+                class="palette-color-btn flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Laravel Deep Orange">
+                <span class="w-5 h-5 rounded-full bg-[#ff5722] shadow-sm transition-transform"></span>
                 <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Orange</span>
             </button>
             <!-- 3. Teal -->
-            <button type="button" onclick="applyMaterialColor('#00bfa5', 'Teal')"
-                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Teal Green">
-                <span class="w-5 h-5 rounded-full bg-[#00bfa5] shadow-sm"></span>
+            <button type="button" onclick="applyMaterialColor('#00bfa5', 'Teal')" data-color="#00bfa5"
+                class="palette-color-btn flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Teal Green">
+                <span class="w-5 h-5 rounded-full bg-[#00bfa5] shadow-sm transition-transform"></span>
                 <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Teal</span>
             </button>
             <!-- 4. Indigo / Deep Blue -->
-            <button type="button" onclick="applyMaterialColor('#3d5afe', 'Indigo')"
-                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Electric Indigo">
-                <span class="w-5 h-5 rounded-full bg-[#3d5afe] shadow-sm"></span>
+            <button type="button" onclick="applyMaterialColor('#3d5afe', 'Indigo')" data-color="#3d5afe"
+                class="palette-color-btn flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Electric Indigo">
+                <span class="w-5 h-5 rounded-full bg-[#3d5afe] shadow-sm transition-transform"></span>
                 <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Indigo</span>
             </button>
             <!-- 5. Amber -->
-            <button type="button" onclick="applyMaterialColor('#ffc107', 'Amber')"
-                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Amber Gold">
-                <span class="w-5 h-5 rounded-full bg-[#ffc107] shadow-sm"></span>
+            <button type="button" onclick="applyMaterialColor('#ffc107', 'Amber')" data-color="#ffc107"
+                class="palette-color-btn flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Amber Gold">
+                <span class="w-5 h-5 rounded-full bg-[#ffc107] shadow-sm transition-transform"></span>
                 <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Amber</span>
             </button>
             <!-- 6. Pink -->
-            <button type="button" onclick="applyMaterialColor('#ff4081', 'Pink')"
-                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Neon Pink">
-                <span class="w-5 h-5 rounded-full bg-[#ff4081] shadow-sm"></span>
+            <button type="button" onclick="applyMaterialColor('#ff4081', 'Pink')" data-color="#ff4081"
+                class="palette-color-btn flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Neon Pink">
+                <span class="w-5 h-5 rounded-full bg-[#ff4081] shadow-sm transition-transform"></span>
                 <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Pink</span>
             </button>
             <!-- 7. Deep Purple -->
-            <button type="button" onclick="applyMaterialColor('#7c4dff', 'Deep Purple')"
-                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Deep Purple">
-                <span class="w-5 h-5 rounded-full bg-[#7c4dff] shadow-sm"></span>
+            <button type="button" onclick="applyMaterialColor('#7c4dff', 'Deep Purple')" data-color="#7c4dff"
+                class="palette-color-btn flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Deep Purple">
+                <span class="w-5 h-5 rounded-full bg-[#7c4dff] shadow-sm transition-transform"></span>
                 <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Purple</span>
             </button>
             <!-- 8. Lime Accent -->
-            <button type="button" onclick="applyMaterialColor('#aeea00', 'Lime Accent')"
-                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Lime Accent">
-                <span class="w-5 h-5 rounded-full bg-[#aeea00] shadow-sm"></span>
+            <button type="button" onclick="applyMaterialColor('#aeea00', 'Lime Accent')" data-color="#aeea00"
+                class="palette-color-btn flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Lime Accent">
+                <span class="w-5 h-5 rounded-full bg-[#aeea00] shadow-sm transition-transform"></span>
                 <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Lime</span>
             </button>
             <!-- 9. Electric Blue -->
-            <button type="button" onclick="applyMaterialColor('#2979ff', 'Electric Blue')"
-                class="flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Electric Blue">
-                <span class="w-5 h-5 rounded-full bg-[#2979ff] shadow-sm"></span>
+            <button type="button" onclick="applyMaterialColor('#2979ff', 'Electric Blue')" data-color="#2979ff"
+                class="palette-color-btn flex flex-col items-center gap-1 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer" title="Electric Blue">
+                <span class="w-5 h-5 rounded-full bg-[#2979ff] shadow-sm transition-transform"></span>
                 <span class="text-[9px] font-mono text-slate-600 dark:text-slate-300">Blue</span>
             </button>
         </div>
     </div>
 
-    <!-- Right Fixed Small Button -->
-    <button type="button" onclick="togglePaletteMenu()" title="Material Color Accent Palette"
-        class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-slate-900/95 dark:bg-[#070b14]/95 border-2 border-slate-200 dark:border-white/20 hover:border-[var(--theme-primary)] text-white flex items-center justify-center shadow-2xl shadow-cyan-500/20 hover:scale-110 active:scale-95 transition-all cursor-pointer backdrop-blur-md group">
-        <span class="w-4 h-4 rounded-full bg-[var(--theme-primary)] shadow-md shadow-[var(--theme-primary)]/80 group-hover:scale-125 transition-transform"></span>
+    <!-- Right Fixed Small Button: 6-Tooth Settings Gear SVG in Active Color (Dark & Light Mode) -->
+    <button type="button" onclick="togglePaletteMenu()" title="Theme Accent Color & Settings" aria-label="Theme Accent Color & Settings"
+        class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/95 dark:bg-[#070b14]/95 border-2 border-slate-200 dark:border-white/20 hover:border-[var(--theme-primary)] flex items-center justify-center shadow-lg shadow-slate-900/10 dark:shadow-2xl dark:shadow-black/70 hover:scale-110 active:scale-95 transition-all cursor-pointer backdrop-blur-md group">
+        <svg class="w-5 h-5 sm:w-5.5 sm:h-5.5 transition-transform duration-500 ease-out group-hover:rotate-90 pointer-events-none drop-shadow-sm"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="color: var(--theme-primary); stroke: var(--theme-primary);">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+        </svg>
     </button>
 </div>
 
@@ -273,11 +290,29 @@
         const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
         const onPrimary = (yiq >= 120) ? '#000000' : '#ffffff';
         document.documentElement.style.setProperty('--theme-on-primary', onPrimary);
+        document.documentElement.style.setProperty('--theme-primary-glow', `rgba(${r}, ${g}, ${b}, 0.35)`);
+    }
+
+    function markActiveColorSwatch(hex) {
+        if (!hex) return;
+        const normalized = hex.toLowerCase();
+        document.querySelectorAll('.palette-color-btn').forEach(btn => {
+            const btnColor = (btn.getAttribute('data-color') || '').toLowerCase();
+            const swatch = btn.querySelector('span:first-child');
+            if (swatch) {
+                if (btnColor === normalized) {
+                    swatch.classList.add('ring-2', 'ring-offset-2', 'ring-offset-white', 'dark:ring-offset-slate-900', 'ring-[var(--theme-primary)]', 'scale-110');
+                } else {
+                    swatch.classList.remove('ring-2', 'ring-offset-2', 'ring-offset-white', 'dark:ring-offset-slate-900', 'ring-[var(--theme-primary)]', 'scale-110');
+                }
+            }
+        });
     }
 
     function applyMaterialColor(hex, name) {
         document.documentElement.style.setProperty('--theme-primary', hex);
         updateThemeContrast(hex);
+        markActiveColorSwatch(hex);
         localStorage.setItem('laravel_theme_color', hex);
         if (typeof toastr !== 'undefined') {
             toastr.info(`Applied Material ${name} accent!`);
@@ -290,6 +325,7 @@
         const savedColor = localStorage.getItem('laravel_theme_color') || '#00e5ff';
         document.documentElement.style.setProperty('--theme-primary', savedColor);
         updateThemeContrast(savedColor);
+        markActiveColorSwatch(savedColor);
 
         // Close palette menu if clicked outside
         document.addEventListener('click', (e) => {
