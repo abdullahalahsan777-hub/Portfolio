@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Laravel\Socialite\Socialite;
+use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\AbstractProvider;
 
 class AuthController extends Controller
 {
@@ -218,7 +219,7 @@ class AuthController extends Controller
     /**
      * Redirect the user to the OAuth provider authentication page.
      */
-    public function redirectToProvider(string $provider): RedirectResponse
+    public function redirectToProvider(string $provider): \Symfony\Component\HttpFoundation\RedirectResponse|\Illuminate\Http\RedirectResponse
     {
         if (!in_array($provider, ['google', 'facebook'])) {
             return redirect()->route('login')->withErrors([
@@ -227,7 +228,10 @@ class AuthController extends Controller
         }
 
         try {
-            return Socialite::driver($provider)->stateless()->redirect();
+            /** @var AbstractProvider $driver */
+            $driver = Socialite::driver($provider);
+
+            return $driver->stateless()->redirect();
         } catch (\Throwable $e) {
             try {
                 return Socialite::driver($provider)->redirect();
@@ -251,7 +255,10 @@ class AuthController extends Controller
         }
 
         try {
-            $socialUser = Socialite::driver($provider)->stateless()->user();
+            /** @var AbstractProvider $driver */
+            $driver = Socialite::driver($provider);
+
+            $socialUser = $driver->stateless()->user();
         } catch (\Throwable $e) {
             try {
                 $socialUser = Socialite::driver($provider)->user();
