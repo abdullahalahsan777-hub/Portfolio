@@ -52,10 +52,10 @@ class CheckMaintenanceMode
         }
 
         // Return 503 maintenance page for public frontend
-        $title = SiteSetting::get('maintenance_title', 'System Upgrade in Progress');
-        $message = SiteSetting::get('maintenance_message', 'The frontend portfolio and client services are temporarily paused while our infrastructure undergoes a scheduled performance upgrade. We apologize for the inconvenience and will be fully operational shortly.');
-        $estimatedTime = SiteSetting::get('maintenance_estimated_time', 'Estimated duration: 15–30 minutes');
-        $contactEmail = SiteSetting::get('contact_email', 'admin@portfolio.local');
+        $title          = SiteSetting::get('maintenance_title', 'System Upgrade in Progress');
+        $message        = SiteSetting::get('maintenance_message', 'The frontend portfolio and client services are temporarily paused while our infrastructure undergoes a scheduled performance upgrade. We apologize for the inconvenience and will be fully operational shortly.');
+        $estimatedTime  = SiteSetting::get('maintenance_estimated_time', 'Estimated duration: 15–30 minutes');
+        $contactEmail   = SiteSetting::get('contact_email', 'admin@portfolio.local');
 
         return response()->view('errors.503', compact('title', 'message', 'estimatedTime', 'contactEmail'), 503, [
             'Retry-After' => '1800',

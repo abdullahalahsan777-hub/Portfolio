@@ -58,6 +58,7 @@
                     <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'text-[#00ff88]' : 'text-neutral-400 hover:text-[#00ff88]' }} transition-colors">About</a>
                     <a href="{{ route('home') }}#services" class="text-neutral-400 hover:text-[#00ff88] transition-colors">Services</a>
                     <a href="{{ route('portfolio') }}" class="{{ request()->routeIs('portfolio') ? 'text-[#00ff88]' : 'text-neutral-400 hover:text-[#00ff88]' }} transition-colors">Portfolio</a>
+                    <a href="{{ route('gallery') }}" class="{{ request()->routeIs('gallery') ? 'text-[#00ff88]' : 'text-neutral-400 hover:text-[#00ff88]' }} transition-colors">Gallery</a>
                     <a href="{{ route('blog') }}" class="{{ request()->routeIs('blog*') ? 'text-[#00ff88]' : 'text-neutral-400 hover:text-[#00ff88]' }} transition-colors">Blog</a>
                     <a href="{{ route('faq') }}" class="{{ request()->routeIs('faq') ? 'text-[#00ff88]' : 'text-neutral-400 hover:text-[#00ff88]' }} transition-colors">FAQ</a>
                     <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'text-[#00ff88]' : 'text-neutral-400 hover:text-[#00ff88]' }} transition-colors">Contact</a>
@@ -99,6 +100,7 @@
                 <a href="{{ route('about') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('about') ? 'bg-[#00ff88]/10 text-[#00ff88]' : 'text-neutral-300 hover:bg-white/5' }}">About</a>
                 <a href="{{ route('home') }}#services" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-neutral-300 hover:bg-white/5">Services</a>
                 <a href="{{ route('portfolio') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('portfolio') ? 'bg-[#00ff88]/10 text-[#00ff88]' : 'text-neutral-300 hover:bg-white/5' }}">Portfolio</a>
+                <a href="{{ route('gallery') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('gallery') ? 'bg-[#00ff88]/10 text-[#00ff88]' : 'text-neutral-300 hover:bg-white/5' }}">Gallery</a>
                 <a href="{{ route('blog') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('blog*') ? 'bg-[#00ff88]/10 text-[#00ff88]' : 'text-neutral-300 hover:bg-white/5' }}">Blog</a>
                 <a href="{{ route('faq') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('faq') ? 'bg-[#00ff88]/10 text-[#00ff88]' : 'text-neutral-300 hover:bg-white/5' }}">FAQ</a>
                 <a href="{{ route('contact') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('contact') ? 'bg-[#00ff88]/10 text-[#00ff88]' : 'text-neutral-300 hover:bg-white/5' }}">Contact</a>

@@ -813,6 +813,86 @@
         </section>
 
         <!-- =========================================================================
+             8.5. CREATIVE VISUAL GALLERY (PICTUREFLECT VIEWER)
+             ========================================================================= -->
+        <section id="gallery" class="py-24 border-t border-white/5 relative bg-[#120d24]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                    <div>
+                        <span class="text-xs font-mono font-bold text-[#c084fc] uppercase tracking-widest block mb-2">// CREATIVE ARCHIVE</span>
+                        <h2 class="text-3xl sm:text-5xl font-black font-['Outfit'] uppercase text-white">
+                            PHOTO &amp; ART <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] to-[#f472b6]">GALLERY</span>
+                        </h2>
+                        <p class="text-slate-400 text-xs sm:text-sm mt-2 max-w-xl">
+                            Visual showcase of brand identity design, packaging mockups, tactile typography, and creative studio setups.
+                        </p>
+                    </div>
+
+                    <a href="{{ route('gallery') }}"
+                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#a855f7]/40 bg-[#7c3aed]/10 hover:bg-[#7c3aed]/20 text-[#c084fc] font-mono font-bold text-xs uppercase tracking-wider transition-all self-start md:self-auto group">
+                        <span>Explore Full Gallery</span>
+                        <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @foreach($recentGalleries->take(8) as $item)
+                        <div class="rounded-2xl bg-[#181329] border border-white/10 overflow-hidden hover:border-[#a855f7]/40 transition-all group flex flex-col justify-between cursor-pointer"
+                            data-pictureflect
+                            data-gallery="home-gallery"
+                            data-src="{{ $item->image_url }}"
+                            data-title="{{ $item->title }}"
+                            data-category="{{ $item->category }}"
+                            data-caption="{{ $item->caption }}">
+                            <div>
+                                <div class="relative aspect-4/3 w-full overflow-hidden bg-[#0d0a17]">
+                                    <img src="{{ $item->image_url }}" alt="{{ $item->title }}" loading="lazy"
+                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity"></div>
+
+                                    <div class="absolute top-2.5 left-2.5 z-10">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-black/75 text-[#c084fc] border border-[#a855f7]/30 backdrop-blur">
+                                            {{ $item->category }}
+                                        </span>
+                                    </div>
+
+                                    <!-- Hover Pictureflect Pill -->
+                                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                        <span class="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#7c3aed] to-[#c084fc] text-white text-xs font-bold font-mono tracking-wider uppercase shadow-xl flex items-center gap-1.5">
+                                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                                <line x1="11" y1="8" x2="11" y2="14"></line>
+                                                <line x1="8" y1="11" x2="14" y2="11"></line>
+                                            </svg>
+                                            <span>Pictureflect</span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 space-y-1">
+                                    <h3 class="text-xs font-bold text-white group-hover:text-[#c084fc] transition-colors line-clamp-1">
+                                        {{ $item->title }}
+                                    </h3>
+                                    @if (!empty($item->caption))
+                                        <p class="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
+                                            {{ $item->caption }}
+                                        </p>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="px-4 py-2.5 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                                <span class="text-[#c084fc]">#{{ $item->sort_order }}</span>
+                                <span class="group-hover:text-[#c084fc] transition-colors">Inspect &rarr;</span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================================
              9. RECENT BLOG
              ========================================================================= -->
         <section id="blog" class="py-24 bg-[#0e0b1d] border-t border-white/5 relative">

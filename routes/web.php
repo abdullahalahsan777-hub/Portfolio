@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BlogPostController as AdminBlogController;
 use App\Http\Controllers\Admin\ContactMessageController as AdminMessageController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\LogViewerController as AdminLogController;
 use App\Http\Controllers\Admin\MaintenanceController as AdminMaintenanceController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
@@ -34,6 +35,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PortfolioController::class, 'index'])->name('home');
 Route::get('/about', [PortfolioController::class, 'about'])->name('about');
 Route::get('/portfolio', [PortfolioController::class, 'portfolio'])->name('portfolio');
+Route::get('/gallery', [PortfolioController::class, 'gallery'])->name('gallery');
 Route::get('/blog', [PortfolioController::class, 'blog'])->name('blog');
 Route::get('/blog/{slug}', [PortfolioController::class, 'blogDetail'])->name('blog.detail');
 Route::get('/faq', [PortfolioController::class, 'faq'])->name('faq');
@@ -110,6 +112,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // Content Resource Managers (Under Website Group in navigation)
     Route::resource('services', AdminServiceController::class);
     Route::resource('projects', AdminProjectController::class);
+    Route::post('/galleries/{gallery}/toggle-active', [AdminGalleryController::class, 'toggleActive'])->name('galleries.toggleActive');
+    Route::post('/galleries/{gallery}/toggle-featured', [AdminGalleryController::class, 'toggleFeatured'])->name('galleries.toggleFeatured');
+    Route::resource('galleries', AdminGalleryController::class);
     Route::resource('skills', AdminSkillController::class);
     Route::post('/resume/upload-pdf', [AdminResumeController::class, 'uploadPdf'])->name('resume.uploadPdf');
     Route::delete('/resume/delete-pdf', [AdminResumeController::class, 'deletePdf'])->name('resume.deletePdf');

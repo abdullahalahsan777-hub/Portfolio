@@ -28,6 +28,7 @@
                 <a href="{{ route('home') }}#services" class="text-neutral-400 hover:text-[#ccff00] transition-colors">Services</a>
                 <a href="{{ route('home') }}#tools" class="text-neutral-400 hover:text-[#ccff00] transition-colors">Tools</a>
                 <a href="{{ route('portfolio') }}" class="{{ request()->routeIs('portfolio') ? 'text-[#ccff00] font-bold' : 'text-neutral-400 hover:text-[#ccff00]' }} transition-colors">Portfolio</a>
+                <a href="{{ route('gallery') }}" class="{{ request()->routeIs('gallery') ? 'text-[#ccff00] font-bold' : 'text-neutral-400 hover:text-[#ccff00]' }} transition-colors">Gallery</a>
                 <a href="{{ route('home') }}#pricing" class="text-neutral-400 hover:text-[#ccff00] transition-colors">Pricing</a>
                 <a href="{{ route('blog') }}" class="{{ request()->routeIs('blog*') ? 'text-[#ccff00] font-bold' : 'text-neutral-400 hover:text-[#ccff00]' }} transition-colors">Blog</a>
                 <a href="{{ route('faq') }}" class="{{ request()->routeIs('faq') ? 'text-[#ccff00] font-bold' : 'text-neutral-400 hover:text-[#ccff00]' }} transition-colors">FAQ</a>
@@ -71,6 +72,7 @@
             <a href="{{ route('home') }}#services" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-neutral-300 hover:bg-white/5">Services</a>
             <a href="{{ route('home') }}#tools" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-neutral-300 hover:bg-white/5">Tools</a>
             <a href="{{ route('portfolio') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('portfolio') ? 'bg-[#ccff00]/10 text-[#ccff00]' : 'text-neutral-300 hover:bg-white/5' }}">Portfolio</a>
+            <a href="{{ route('gallery') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('gallery') ? 'bg-[#ccff00]/10 text-[#ccff00]' : 'text-neutral-300 hover:bg-white/5' }}">Gallery</a>
             <a href="{{ route('home') }}#pricing" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-neutral-300 hover:bg-white/5">Pricing</a>
             <a href="{{ route('blog') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('blog*') ? 'bg-[#ccff00]/10 text-[#ccff00]' : 'text-neutral-300 hover:bg-white/5' }}">Blog</a>
             <a href="{{ route('faq') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('faq') ? 'bg-[#ccff00]/10 text-[#ccff00]' : 'text-neutral-300 hover:bg-white/5' }}">FAQ</a>

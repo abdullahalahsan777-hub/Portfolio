@@ -60,6 +60,7 @@
                 <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'text-[#ff6b00]' : 'text-slate-600 dark:text-neutral-400 hover:text-[#ff6b00]' }} transition-colors">About</a>
                 <a href="{{ route('home') }}#services" class="text-slate-600 dark:text-neutral-400 hover:text-[#ff6b00] transition-colors">Services</a>
                 <a href="{{ route('portfolio') }}" class="{{ request()->routeIs('portfolio') ? 'text-[#ff6b00]' : 'text-slate-600 dark:text-neutral-400 hover:text-[#ff6b00]' }} transition-colors">Portfolio</a>
+                <a href="{{ route('gallery') }}" class="{{ request()->routeIs('gallery') ? 'text-[#ff6b00]' : 'text-slate-600 dark:text-neutral-400 hover:text-[#ff6b00]' }} transition-colors">Gallery</a>
                 <a href="{{ route('home') }}#pricing" class="text-slate-600 dark:text-neutral-400 hover:text-[#ff6b00] transition-colors">Pricing</a>
                 <a href="{{ route('blog') }}" class="{{ request()->routeIs('blog*') ? 'text-[#ff6b00]' : 'text-slate-600 dark:text-neutral-400 hover:text-[#ff6b00]' }} transition-colors">Blog</a>
                 <a href="{{ route('faq') }}" class="{{ request()->routeIs('faq') ? 'text-[#ff6b00]' : 'text-slate-600 dark:text-neutral-400 hover:text-[#ff6b00]' }} transition-colors">FAQ</a>
@@ -103,6 +104,7 @@
             <a href="{{ route('about') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('about') ? 'bg-[#ff6b00]/10 text-[#ff6b00]' : 'text-slate-700 dark:text-neutral-300 hover:bg-black/5 dark:hover:bg-white/5' }}">About</a>
             <a href="{{ route('home') }}#services" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-neutral-300 hover:bg-black/5 dark:hover:bg-white/5">Services</a>
             <a href="{{ route('portfolio') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('portfolio') ? 'bg-[#ff6b00]/10 text-[#ff6b00]' : 'text-slate-700 dark:text-neutral-300 hover:bg-black/5 dark:hover:bg-white/5' }}">Portfolio</a>
+            <a href="{{ route('gallery') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('gallery') ? 'bg-[#ff6b00]/10 text-[#ff6b00]' : 'text-slate-700 dark:text-neutral-300 hover:bg-black/5 dark:hover:bg-white/5' }}">Gallery</a>
             <a href="{{ route('home') }}#pricing" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-neutral-300 hover:bg-black/5 dark:hover:bg-white/5">Pricing</a>
             <a href="{{ route('blog') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('blog*') ? 'bg-[#ff6b00]/10 text-[#ff6b00]' : 'text-slate-700 dark:text-neutral-300 hover:bg-black/5 dark:hover:bg-white/5' }}">Blog</a>
             <a href="{{ route('faq') }}" class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('faq') ? 'bg-[#ff6b00]/10 text-[#ff6b00]' : 'text-slate-700 dark:text-neutral-300 hover:bg-black/5 dark:hover:bg-white/5' }}">FAQ</a>

@@ -89,7 +89,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         <!-- Main Footer Row (5 Columns) -->
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-10 pb-16 border-b border-white/10 relative">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-10 pb-2 border-b border-white/10 relative">
 
             <!-- Column 1 (3 cols): Brand Logo with accent dot & social icons -->
             <div class="col-span-2 lg:col-span-3 space-y-4">
@@ -257,9 +257,9 @@
                                 </a>
                             </p>
                             <p>
-                                <a href="mailto:{{ $settings['contact_email'] ?? 'abdullahalahsan1990@gmail.com' }}"
+                                <a href="mailto:{{ $settings['contact_email'] ?? 'abdullahalahsan@hotmail.com' }}"
                                     class="text-white border-b border-dotted border-white/40 pb-0.5 hover:text-[var(--theme-primary)] hover:border-[var(--theme-primary)] transition-colors break-all">
-                                    {{ $settings['contact_email'] ?? 'abdullahalahsan1990@gmail.com' }}
+                                    {{ $settings['contact_email'] ?? 'abdullahalahsan@hotmail.com' }}
                                 </a>
                             </p>
                         </div>

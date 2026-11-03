@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
 use App\Models\ContactMessage;
 use App\Models\Faq;
+use App\Models\Gallery;
 use App\Models\PricingPlan;
 use App\Models\Project;
 use App\Models\ResumeItem;
@@ -176,6 +177,31 @@ class PortfolioController extends Controller
         $blogPosts = $this->getBlogPosts();
         $faqs = $this->getFaqs();
 
+        $recentGalleries = Gallery::active()
+            ->forTheme($activeTheme)
+            ->where('is_featured', true)
+            ->orderBy('sort_order')
+            ->orderByDesc('id')
+            ->take(8)
+            ->get();
+
+        if ($recentGalleries->count() < 4) {
+            $recentGalleries = Gallery::active()
+                ->forTheme($activeTheme)
+                ->orderBy('sort_order')
+                ->orderByDesc('id')
+                ->take(8)
+                ->get();
+        }
+
+        if ($recentGalleries->count() < 4) {
+            $recentGalleries = Gallery::active()
+                ->orderBy('sort_order')
+                ->orderByDesc('id')
+                ->take(8)
+                ->get();
+        }
+
         $viewName = "frontend.themes.{$activeTheme}.index";
         if (! view()->exists($viewName)) {
             $viewName = 'frontend.themes.graphic_designer.index';
@@ -199,6 +225,8 @@ class PortfolioController extends Controller
         $this->data['resumeExperience'] = $resumeExperience;
         $this->data['blogPosts'] = $blogPosts;
         $this->data['faqs'] = $faqs;
+        $this->data['recentGalleries'] = $recentGalleries;
+        $this->data['galleries'] = $recentGalleries;
 
         return view($viewName, $this->data);
     }
@@ -258,6 +286,42 @@ class PortfolioController extends Controller
         $this->data['themeMode'] = $themeMode;
         $this->data['settings'] = $settings;
         $this->data['projects'] = $projects;
+
+        return view($viewName, $this->data);
+    }
+
+    /**
+     * Dedicated Gallery Showcase Page.
+     */
+    public function gallery(Request $request): View
+    {
+        $activeTheme = $this->getActiveTheme();
+        $themeMode = $this->getThemeMode();
+        $settings = $this->getSettings(null, 'gallery');
+
+        $selectedCategory = $request->query('category', 'all');
+
+        $query = Gallery::active()->forTheme($activeTheme)->orderBy('sort_order')->orderByDesc('id');
+
+        $galleries = $query->get();
+
+        if ($galleries->isEmpty()) {
+            $galleries = Gallery::active()->orderBy('sort_order')->orderByDesc('id')->get();
+        }
+
+        $categories = $galleries->pluck('category')->map(fn ($c) => trim($c))->filter()->unique()->values();
+
+        $viewName = "frontend.themes.{$activeTheme}.pages.gallery";
+        if (! view()->exists($viewName)) {
+            $viewName = 'frontend.themes.laravel_developer.pages.gallery';
+        }
+
+        $this->data['activeTheme'] = $activeTheme;
+        $this->data['themeMode'] = $themeMode;
+        $this->data['settings'] = $settings;
+        $this->data['galleries'] = $galleries;
+        $this->data['categories'] = $categories;
+        $this->data['selectedCategory'] = $selectedCategory;
 
         return view($viewName, $this->data);
     }

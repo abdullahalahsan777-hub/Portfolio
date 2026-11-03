@@ -74,6 +74,8 @@
                     class="text-neutral-400 hover:text-[#ff0033] transition-colors">Services</a>
                 <a href="{{ route('portfolio') }}"
                     class="{{ request()->routeIs('portfolio') ? 'text-[#ff0033]' : 'text-neutral-400 hover:text-[#ff0033]' }} transition-colors">Portfolio</a>
+                <a href="{{ route('gallery') }}"
+                    class="{{ request()->routeIs('gallery') ? 'text-[#ff0033]' : 'text-neutral-400 hover:text-[#ff0033]' }} transition-colors">Gallery</a>
                 <a href="{{ route('home') }}#resume"
                     class="text-neutral-400 hover:text-[#ff0033] transition-colors">Resume</a>
                 <a href="{{ route('home') }}#skills"
@@ -132,6 +134,8 @@
                 class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-neutral-300 hover:bg-white/5">Services</a>
             <a href="{{ route('portfolio') }}"
                 class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('portfolio') ? 'bg-[#ff0033]/10 text-[#ff0033]' : 'text-neutral-300 hover:bg-white/5' }}">Portfolio</a>
+            <a href="{{ route('gallery') }}"
+                class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider {{ request()->routeIs('gallery') ? 'bg-[#ff0033]/10 text-[#ff0033]' : 'text-neutral-300 hover:bg-white/5' }}">Gallery</a>
             <a href="{{ route('home') }}#resume"
                 class="block px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-neutral-300 hover:bg-white/5">Resume</a>
             <a href="{{ route('home') }}#skills"
