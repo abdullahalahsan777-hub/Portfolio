@@ -43,13 +43,12 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="devGalleryGrid">
                 @forelse($galleries as $item)
                     <div data-category="{{ $item->category }}"
-                        class="dev-gallery-card rounded-2xl bg-[#111111] border border-white/10 overflow-hidden hover:border-[#00ff88]/40 transition-all group flex flex-col justify-between cursor-pointer"
+                        class="gallery-item-card dev-gallery-card rounded-2xl bg-[#111111] border border-white/10 overflow-hidden hover:border-[#00ff88]/40 transition-all group flex flex-col justify-between cursor-pointer"
                         data-pictureflect
                         data-gallery="developer-gallery"
                         data-src="{{ $item->image_url }}"
                         data-title="{{ $item->title }}"
-                        data-category="{{ $item->category }}"
-                        data-caption="{{ $item->caption }}">
+                        data-category="{{ $item->category }}">
 
                         <div>
                             <!-- Mockup Header -->
@@ -63,9 +62,10 @@
                             </div>
 
                             <!-- Image Container -->
-                            <div class="relative aspect-4/3 w-full overflow-hidden bg-black">
+                            <div class="relative h-56 w-full overflow-hidden bg-black">
                                 <img src="{{ $item->image_url }}" alt="{{ $item->title }}" loading="lazy"
-                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    onerror="this.closest('.gallery-item-card')?.remove();">
 
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity"></div>
 
@@ -84,15 +84,10 @@
                             </div>
 
                             <!-- Card Body -->
-                            <div class="p-4 space-y-1.5">
-                                <h3 class="text-sm font-bold text-white group-hover:text-[#00ff88] transition-colors line-clamp-1">
+                            <div class="p-4 space-y-1">
+                                <h3 class="text-sm font-bold text-white group-hover:text-[#00ff88] transition-colors line-clamp-2">
                                     {{ $item->title }}
                                 </h3>
-                                @if (!empty($item->caption))
-                                    <p class="text-xs text-neutral-400 line-clamp-2 leading-relaxed">
-                                        {{ $item->caption }}
-                                    </p>
-                                @endif
                             </div>
                         </div>
 
@@ -139,3 +134,4 @@
     }
 </script>
 @endsection
+

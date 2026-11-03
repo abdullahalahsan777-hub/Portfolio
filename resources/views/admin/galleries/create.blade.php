@@ -5,7 +5,7 @@
 @section('page_subtitle', 'Group: Website')
 
 @section('content')
-    <div class="w-full space-y-6 max-w-5xl">
+    <div class="w-full space-y-6 max-w-5xl" ng-controller="GalleryFormController">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
@@ -28,7 +28,7 @@
             @csrf
 
             <!-- Title & Category Row -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                     <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Photo Title *</label>
                     <input type="text" name="title" required value="{{ old('title') }}"
@@ -39,22 +39,46 @@
                     @enderror
                 </div>
 
+                <!-- Category: Select2 with AngularJS -->
                 <div>
-                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Category *</label>
-                    <input type="text" name="category" id="gallery_category_input" required value="{{ old('category', 'Architecture & Systems') }}"
-                        placeholder="e.g. Photography, UI/UX Designs, Systems"
-                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
-                    
+                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Category * (Select or Type New)</label>
+                    <div class="relative">
+                        <select name="category" id="galleryCategorySelect" required
+                            class="no-select2 w-full"
+                            ng-model="category"
+                            data-placeholder="Select or type a category...">
+                            @php
+                                $presetCats = [
+                                    'Architecture & Systems',
+                                    'Performance & Queues',
+                                    'DevOps & Cloud',
+                                    'Database Engineering',
+                                    'Workspace',
+                                    'Certificates',
+                                    'UI/UX Designs',
+                                    'Mobile Apps',
+                                    'Photography',
+                                    'Branding',
+                                    'Software Engineering',
+                                    'Events',
+                                ];
+                                $allOptions = collect($presetCats)->merge($categories ?? [])->unique()->filter()->values();
+                            @endphp
+                            @foreach ($allOptions as $cat)
+                                <option value="{{ $cat }}" {{ old('category', 'Architecture & Systems') === $cat ? 'selected' : '' }}>
+                                    {{ $cat }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <!-- Quick Category Pills -->
-                    <div class="flex items-center gap-1.5 flex-wrap mt-2">
-                        <span class="text-[10px] font-mono text-slate-500">Suggestions:</span>
-                        @php
-                            $suggestedCats = ['Architecture & Systems', 'UI/UX Designs', 'Photography', 'Workspace', 'Certificates', 'Events', 'Mobile Apps', 'Branding'];
-                        @endphp
-                        @foreach ($suggestedCats as $sc)
-                            <button type="button" onclick="document.getElementById('gallery_category_input').value = '{{ $sc }}'"
-                                class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-300 border border-white/5 hover:border-cyan-500/30 transition-all">
-                                {{ $sc }}
+                    <div class="flex items-center gap-1.5 flex-wrap mt-2.5">
+                        <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Quick:</span>
+                        @foreach ($allOptions->take(7) as $pill)
+                            <button type="button" ng-click="setCategory('{{ addslashes($pill) }}')"
+                                class="px-2.5 py-1 rounded-full text-[10px] font-mono bg-white/5 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/30 transition-all cursor-pointer">
+                                {{ $pill }}
                             </button>
                         @endforeach
                     </div>
@@ -68,32 +92,16 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Target Theme *</label>
-                    <select name="theme"
+                    <select name="theme" ng-model="theme"
                         class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
-                        <option value="all" {{ old('theme', $selectedTheme) === 'all' ? 'selected' : '' }}>
-                            🌟 Global Showcase (All Themes)
-                        </option>
-                        <option value="laravel_developer" {{ old('theme', $selectedTheme) === 'laravel_developer' ? 'selected' : '' }}>
-                            ⚡ Full-Stack Laravel Developer
-                        </option>
-                        <option value="developer" {{ old('theme', $selectedTheme) === 'developer' ? 'selected' : '' }}>
-                            💻 Modern Software Engineer / Developer
-                        </option>
-                        <option value="uiux_designer" {{ old('theme', $selectedTheme) === 'uiux_designer' ? 'selected' : '' }}>
-                            🎨 UI/UX Product Designer
-                        </option>
-                        <option value="graphic_designer" {{ old('theme', $selectedTheme) === 'graphic_designer' ? 'selected' : '' }}>
-                            ✒️ Creative Graphic Designer
-                        </option>
-                        <option value="digital_designer_illustrator" {{ old('theme', $selectedTheme) === 'digital_designer_illustrator' ? 'selected' : '' }}>
-                            ✨ Digital Designer & Illustrator
-                        </option>
-                        <option value="app_developer" {{ old('theme', $selectedTheme) === 'app_developer' ? 'selected' : '' }}>
-                            📱 Mobile App Developer (iOS & Android)
-                        </option>
-                        <option value="app_software_developer" {{ old('theme', $selectedTheme) === 'app_software_developer' ? 'selected' : '' }}>
-                            🚀 Application & Software Specialist
-                        </option>
+                        <option value="all">🌟 Global Showcase (All Themes)</option>
+                        <option value="laravel_developer">⚡ Full-Stack Laravel Developer</option>
+                        <option value="developer">💻 Modern Software Engineer / Developer</option>
+                        <option value="uiux_designer">🎨 UI/UX Product Designer</option>
+                        <option value="graphic_designer">✒️ Creative Graphic Designer</option>
+                        <option value="digital_designer_illustrator">✨ Digital Designer & Illustrator</option>
+                        <option value="app_developer">📱 Mobile App Developer (iOS & Android)</option>
+                        <option value="app_software_developer">🚀 Application & Software Specialist</option>
                     </select>
                 </div>
 
@@ -111,13 +119,13 @@
                         <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                         <label class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-300">Photo Asset (High-Resolution)</label>
                     </div>
-                    <span class="text-[10px] font-mono text-slate-500">Max size: 10MB • Compatible with Pictureflect viewer</span>
+                    <span class="text-[10px] font-mono text-slate-500">Max size: 10MB • High resolution supported</span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
                     <!-- Image Preview Area -->
                     <div class="md:col-span-5">
-                        <div class="relative w-full aspect-4/3 rounded-xl bg-[#09101d] border border-white/10 flex items-center justify-center overflow-hidden group shadow-inner">
+                        <div class="relative w-full h-56 rounded-xl bg-[#09101d] border border-white/10 flex items-center justify-center overflow-hidden group shadow-inner">
                             <span id="preview_badge" class="absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-black/70 text-slate-400 backdrop-blur border border-white/10">
                                 No Photo Selected
                             </span>
@@ -161,13 +169,6 @@
                 </div>
             </div>
 
-            <!-- Caption / Story Description -->
-            <div>
-                <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Caption &amp; Story Description (Optional)</label>
-                <textarea name="caption" rows="3" placeholder="Context, technical specifications, camera details, or background story shown inside Pictureflect inspector..."
-                    class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">{{ old('caption') }}</textarea>
-            </div>
-
             <!-- Toggles: Featured & Active -->
             <div class="flex flex-wrap items-center gap-6 p-4 rounded-2xl bg-black/20 border border-white/5">
                 <label class="flex items-center gap-2.5 cursor-pointer">
@@ -204,8 +205,41 @@
         </form>
     </div>
 
-    <!-- Live Preview Script -->
+    <!-- AngularJS & Select2 Integration Script -->
     <script>
+        adminApp.controller('GalleryFormController', ['$scope', function($scope) {
+            $scope.category = {!! json_encode(old('category', 'Architecture & Systems')) !!};
+            $scope.theme = {!! json_encode(old('theme', $selectedTheme ?? 'laravel_developer')) !!};
+
+            $scope.setCategory = function(cat) {
+                $scope.category = cat;
+                var $sel = $('#galleryCategorySelect');
+                if ($sel.find("option[value='" + cat + "']").length === 0) {
+                    var newOption = new Option(cat, cat, true, true);
+                    $sel.append(newOption);
+                }
+                $sel.val(cat).trigger('change');
+            };
+        }]);
+
+        $(document).ready(function() {
+            var $catSelect = $('#galleryCategorySelect');
+            $catSelect.select2({
+                tags: true, // Enables typing custom new category
+                width: '100%',
+                placeholder: 'Select or type a category...',
+                allowClear: false
+            }).on('change', function() {
+                var val = $(this).val();
+                var scope = angular.element(document.querySelector('[ng-controller="GalleryFormController"]')).scope();
+                if (scope) {
+                    scope.$evalAsync(function() {
+                        scope.category = val;
+                    });
+                }
+            });
+        });
+
         function handleGalleryImagePreview(input) {
             const preview = document.getElementById('gallery_image_preview');
             const placeholder = document.getElementById('preview_placeholder');

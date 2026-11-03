@@ -21,16 +21,37 @@ class GalleryController extends Controller
     {
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->query('theme', $activeTheme);
+        $themes = SiteSetting::getAvailableThemes();
 
-        $query = Gallery::query()->orderBy('sort_order')->orderByDesc('id');
+        $galleries = Gallery::query()->orderBy('sort_order')->orderByDesc('id')->get();
 
-        $galleries = $query->get();
-        $categories = Gallery::getCategories();
+        // Compute categories per theme so only relevant categories are shown for the selected theme
+        $themeCategories = [];
+        foreach (array_keys($themes) as $themeKey) {
+            $themeCategories[$themeKey] = Gallery::whereIn('theme', [$themeKey, 'all'])
+                ->pluck('category')
+                ->map(fn($c) => trim($c))
+                ->filter()
+                ->unique()
+                ->values();
+        }
+        $themeCategories['everything'] = Gallery::pluck('category')
+            ->map(fn($c) => trim($c))
+            ->filter()
+            ->unique()
+            ->values();
+        $themeCategories['all'] = Gallery::where('theme', 'all')
+            ->pluck('category')
+            ->map(fn($c) => trim($c))
+            ->filter()
+            ->unique()
+            ->values();
 
         $this->data['galleries'] = $galleries;
-        $this->data['categories'] = $categories;
+        $this->data['themeCategories'] = $themeCategories;
         $this->data['activeTheme'] = $activeTheme;
         $this->data['selectedTheme'] = $selectedTheme;
+        $this->data['themes'] = $themes;
 
         return view('admin.galleries.index', $this->data);
     }
@@ -63,7 +84,6 @@ class GalleryController extends Controller
             'theme'       => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'image_file'  => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:10240',
             'image_url'   => 'nullable|string|max:500',
-            'caption'     => 'nullable|string',
             'is_featured' => 'nullable|boolean',
             'is_active'   => 'nullable|boolean',
             'sort_order'  => 'nullable|integer',
@@ -130,7 +150,6 @@ class GalleryController extends Controller
             'theme'       => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'image_file'  => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:10240',
             'image_url'   => 'nullable|string|max:500',
-            'caption'     => 'nullable|string',
             'is_featured' => 'nullable|boolean',
             'is_active'   => 'nullable|boolean',
             'sort_order'  => 'nullable|integer',

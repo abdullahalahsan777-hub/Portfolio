@@ -103,7 +103,6 @@
                 '      <div class="pf-inspector-row"><span class="pf-inspector-label">Resolution:</span><span class="pf-inspector-value" id="pfInspRes">-</span></div>',
                 '      <div class="pf-inspector-row"><span class="pf-inspector-label">Aspect Ratio:</span><span class="pf-inspector-value" id="pfInspRatio">-</span></div>',
                 '      <div class="pf-inspector-row"><span class="pf-inspector-label">Zoom Level:</span><span class="pf-inspector-value" id="pfInspZoom">100%</span></div>',
-                '      <div class="pf-inspector-caption" id="pfInspCaption"></div>',
                 '    </div>',
                 '  </div>',
                 '</div>',
@@ -158,8 +157,7 @@
                 inspTheme: document.getElementById('pfInspTheme'),
                 inspRes: document.getElementById('pfInspRes'),
                 inspRatio: document.getElementById('pfInspRatio'),
-                inspZoom: document.getElementById('pfInspZoom'),
-                inspCaption: document.getElementById('pfInspCaption')
+                inspZoom: document.getElementById('pfInspZoom')
             };
         },
 
@@ -191,7 +189,6 @@
                         var src = el.getAttribute('data-src') || el.getAttribute('href') || (el.tagName === 'IMG' ? el.src : '');
                         var title = el.getAttribute('data-title') || el.getAttribute('title') || el.getAttribute('alt') || 'Photo';
                         var category = el.getAttribute('data-category') || 'Gallery';
-                        var caption = el.getAttribute('data-caption') || el.getAttribute('data-description') || '';
                         var theme = el.getAttribute('data-theme') || '';
                         var thumb = el.getAttribute('data-thumb') || src;
 
@@ -199,7 +196,6 @@
                             src: src,
                             title: title,
                             category: category,
-                            caption: caption,
                             theme: theme,
                             thumb: thumb
                         });
@@ -554,8 +550,6 @@
             } else {
                 this.el.inspRatio.textContent = 'Auto';
             }
-
-            this.el.inspCaption.textContent = item.caption || item.title || 'No additional caption provided.';
         },
 
         /**
@@ -619,3 +613,4 @@
     }
 
 })(window, document);
+

@@ -683,17 +683,17 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach($recentGalleries->take(8) as $item)
-                        <div class="rounded-2xl bg-[#121826] border border-white/10 overflow-hidden hover:border-[#ff6b00]/40 transition-all group flex flex-col justify-between cursor-pointer"
+                        <div class="gallery-item-card rounded-2xl bg-[#121826] border border-white/10 overflow-hidden hover:border-[#ff6b00]/40 transition-all group flex flex-col justify-between cursor-pointer"
                             data-pictureflect
                             data-gallery="home-gallery"
                             data-src="{{ $item->image_url }}"
                             data-title="{{ $item->title }}"
-                            data-category="{{ $item->category }}"
-                            data-caption="{{ $item->caption }}">
+                            data-category="{{ $item->category }}">
                             <div>
-                                <div class="relative aspect-4/3 w-full overflow-hidden bg-slate-900">
+                                <div class="relative h-48 w-full overflow-hidden bg-slate-900">
                                     <img src="{{ $item->image_url }}" alt="{{ $item->title }}" loading="lazy"
-                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                        onerror="this.closest('.gallery-item-card')?.remove();">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity"></div>
 
                                     <div class="absolute top-2.5 left-2.5 z-10">
@@ -717,14 +717,9 @@
                                 </div>
 
                                 <div class="p-4 space-y-1">
-                                    <h3 class="text-xs font-bold text-white group-hover:text-[#ff6b00] transition-colors line-clamp-1">
+                                    <h3 class="text-xs font-bold text-white group-hover:text-[#ff6b00] transition-colors line-clamp-2">
                                         {{ $item->title }}
                                     </h3>
-                                    @if (!empty($item->caption))
-                                        <p class="text-[11px] text-neutral-400 line-clamp-2 leading-relaxed">
-                                            {{ $item->caption }}
-                                        </p>
-                                    @endif
                                 </div>
                             </div>
 

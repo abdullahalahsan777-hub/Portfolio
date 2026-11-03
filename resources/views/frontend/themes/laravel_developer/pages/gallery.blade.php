@@ -63,14 +63,14 @@
                         data-gallery="laravel-gallery"
                         data-src="{{ $item->image_url }}"
                         data-title="{{ $item->title }}"
-                        data-category="{{ $item->category }}"
-                        data-caption="{{ $item->caption }}">
+                        data-category="{{ $item->category }}">
 
                         <div>
-                            <!-- Aspect Photo Container with Hover Effect -->
-                            <div class="relative aspect-4/3 w-full overflow-hidden bg-slate-900">
+                            <!-- Photo Container with Guaranteed Height -->
+                            <div class="relative h-56 w-full overflow-hidden bg-slate-900">
                                 <img src="{{ $item->image_url }}" alt="{{ $item->title }}" loading="lazy"
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    onerror="this.closest('.gallery-item-card')?.remove();">
 
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity"></div>
 
@@ -104,15 +104,10 @@
                             </div>
 
                             <!-- Card Body -->
-                            <div class="p-5 space-y-2">
-                                <h3 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[var(--theme-primary)] transition-colors line-clamp-1">
+                            <div class="p-5 space-y-1">
+                                <h3 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[var(--theme-primary)] transition-colors line-clamp-2">
                                     {{ $item->title }}
                                 </h3>
-                                @if (!empty($item->caption))
-                                    <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
-                                        {{ $item->caption }}
-                                    </p>
-                                @endif
                             </div>
                         </div>
 
@@ -167,3 +162,4 @@
     }
 </script>
 @endsection
+

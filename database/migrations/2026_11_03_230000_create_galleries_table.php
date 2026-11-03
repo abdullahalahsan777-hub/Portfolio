@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('category')->default('General');
             $table->string('image_url');
-            $table->text('caption')->nullable();
             $table->string('theme')->default('all'); // 'all', 'laravel_developer', 'developer', etc.
             $table->boolean('is_featured')->default(false); // Highlight on home page
             $table->boolean('is_active')->default(true);
@@ -36,3 +35,4 @@ return new class extends Migration
         Schema::dropIfExists('galleries');
     }
 };
+

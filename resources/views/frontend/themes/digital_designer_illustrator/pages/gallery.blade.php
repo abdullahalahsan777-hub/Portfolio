@@ -43,19 +43,19 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="digiGalleryGrid">
                 @forelse($galleries as $item)
                     <div data-category="{{ $item->category }}"
-                        class="digi-gallery-card rounded-2xl bg-white dark:bg-[#15161c] border border-slate-200 dark:border-white/10 overflow-hidden hover:border-[#e26d9b]/40 transition-all group flex flex-col justify-between cursor-pointer"
+                        class="gallery-item-card digi-gallery-card rounded-2xl bg-white dark:bg-[#15161c] border border-slate-200 dark:border-white/10 overflow-hidden hover:border-[#e26d9b]/40 transition-all group flex flex-col justify-between cursor-pointer"
                         data-pictureflect
                         data-gallery="digi-gallery"
                         data-src="{{ $item->image_url }}"
                         data-title="{{ $item->title }}"
-                        data-category="{{ $item->category }}"
-                        data-caption="{{ $item->caption }}">
+                        data-category="{{ $item->category }}">
 
                         <div>
-                            <!-- Aspect Photo -->
-                            <div class="relative aspect-4/3 w-full overflow-hidden bg-slate-900">
+                            <!-- Photo Container -->
+                            <div class="relative h-56 w-full overflow-hidden bg-slate-900">
                                 <img src="{{ $item->image_url }}" alt="{{ $item->title }}" loading="lazy"
-                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    onerror="this.closest('.gallery-item-card')?.remove();">
 
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity"></div>
 
@@ -80,15 +80,10 @@
                             </div>
 
                             <!-- Body -->
-                            <div class="p-4 space-y-1.5">
-                                <h3 class="text-sm font-bold text-[#111215] dark:text-white group-hover:text-[#e26d9b] transition-colors line-clamp-1">
+                            <div class="p-4 space-y-1">
+                                <h3 class="text-sm font-bold text-[#111215] dark:text-white group-hover:text-[#e26d9b] transition-colors line-clamp-2">
                                     {{ $item->title }}
                                 </h3>
-                                @if (!empty($item->caption))
-                                    <p class="text-xs text-[#596070] dark:text-neutral-400 line-clamp-2 leading-relaxed">
-                                        {{ $item->caption }}
-                                    </p>
-                                @endif
                             </div>
                         </div>
 
@@ -135,3 +130,4 @@
     }
 </script>
 @endsection
+

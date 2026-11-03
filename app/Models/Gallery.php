@@ -15,7 +15,6 @@ class Gallery extends Model
         'title',
         'category',
         'image_url',
-        'caption',
         'theme',
         'is_featured',
         'is_active',
@@ -29,6 +28,26 @@ class Gallery extends Model
             'is_active'   => 'boolean',
             'sort_order'  => 'integer',
         ];
+    }
+
+    /**
+     * Check if the image exists and is valid.
+     */
+    public function hasValidImage(): bool
+    {
+        $raw = $this->attributes['image_url'] ?? null;
+        if (empty($raw)) {
+            return false;
+        }
+
+        // Remote URLs: check valid URL scheme
+        if (str_starts_with($raw, 'http://') || str_starts_with($raw, 'https://') || str_starts_with($raw, '//')) {
+            return (bool) filter_var($raw, FILTER_VALIDATE_URL) || str_starts_with($raw, '//');
+        }
+
+        // Local public files: verify file existence on disk
+        $relativePath = ltrim($raw, '/\\');
+        return file_exists(public_path($relativePath));
     }
 
     /**

@@ -47,6 +47,7 @@ class PortfolioController extends Controller
         if (request()->has('mode') && in_array(request()->query('mode'), ['dark', 'light', 'system'], true)) {
             return request()->query('mode');
         }
+
         $themeMode = session('user_theme_mode', SiteSetting::get('theme_mode', 'system'));
         return in_array($themeMode, ['dark', 'light', 'system'], true) ? $themeMode : 'system';
     }
@@ -70,16 +71,10 @@ class PortfolioController extends Controller
     private function getBlogPosts(?string $theme = null)
     {
         $theme = $theme ?: $this->getActiveTheme();
-        $posts = BlogPost::where('is_published', true)
-            ->where('theme', $theme)
-            ->orderBy('sort_order')
-            ->get();
+        $posts = BlogPost::where('is_published', true)->where('theme', $theme)->orderBy('sort_order')->get();
 
         if ($posts->isEmpty()) {
-            $posts = BlogPost::where('is_published', true)
-                ->whereIn('theme', ['all', $theme])
-                ->orderBy('sort_order')
-                ->get();
+            $posts = BlogPost::where('is_published', true)->whereIn('theme', ['all', $theme])->orderBy('sort_order')->get();
         }
 
         if ($posts->isEmpty()) {
@@ -202,6 +197,9 @@ class PortfolioController extends Controller
                 ->get();
         }
 
+        // Only keep items that have a valid, accessible image
+        $recentGalleries = $recentGalleries->filter(fn ($item) => $item->hasValidImage())->values();
+
         $viewName = "frontend.themes.{$activeTheme}.index";
         if (! view()->exists($viewName)) {
             $viewName = 'frontend.themes.graphic_designer.index';
@@ -308,6 +306,9 @@ class PortfolioController extends Controller
         if ($galleries->isEmpty()) {
             $galleries = Gallery::active()->orderBy('sort_order')->orderByDesc('id')->get();
         }
+
+        // Only keep items that have a valid, accessible image
+        $galleries = $galleries->filter(fn ($item) => $item->hasValidImage())->values();
 
         $categories = $galleries->pluck('category')->map(fn ($c) => trim($c))->filter()->unique()->values();
 

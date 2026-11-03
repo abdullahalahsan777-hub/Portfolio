@@ -11,7 +11,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <h1 class="text-2xl font-extrabold text-white flex items-center gap-3">
-                    <span class="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg shadow-lg shadow-cyan-500/10">
+                    <span class="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg shadow-lg shadow-cyan-500/10 shrink-0">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -25,20 +25,21 @@
                     Manage visual showcase items across all themes with categories, home featured status, and high-res Pictureflect Viewer preview.
                 </p>
             </div>
-            <div class="flex items-center gap-2">
+            <!-- Header Action Buttons in One Single Line -->
+            <div class="flex items-center gap-2.5 shrink-0 flex-nowrap">
                 <a href="{{ route('gallery') }}" target="_blank"
-                    class="px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all flex items-center gap-2">
-                    <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    class="whitespace-nowrap shrink-0 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-all inline-flex items-center gap-2">
+                    <svg class="w-4 h-4 text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
-                    <span>Frontend View</span>
+                    <span class="whitespace-nowrap">Frontend View</span>
                 </a>
                 <a href="{{ route('admin.galleries.create') }}"
-                    class="theme-aware-create-btn px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/20 transition-all flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    class="theme-aware-create-btn whitespace-nowrap shrink-0 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/20 transition-all inline-flex items-center gap-2">
+                    <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
-                    <span>Add New Photo</span>
+                    <span class="whitespace-nowrap">Add New Photo</span>
                 </a>
             </div>
         </div>
@@ -46,25 +47,27 @@
         <!-- TOP THEME FILTER COMPONENT -->
         @include('admin.components.theme-filter')
 
-        <!-- Category Filter Pills Bar -->
-        @if ($categories->isNotEmpty())
-            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs">
-                <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider font-semibold mr-1">Categories:</span>
+        <!-- Theme-Specific Categories Bar (Clean single-line pill design, no broken layout) -->
+        <div id="categoryFilterContainer" class="p-3.5 rounded-2xl bg-[#09101d] border border-white/10 shadow-lg">
+            <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs flex-nowrap sm:flex-wrap" id="categoryFilterBar">
+                <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider font-semibold mr-1 shrink-0 inline-flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                    </svg>
+                    <span>Categories:</span>
+                </span>
+
                 <button type="button" onclick="filterGalleryCategory('all')" id="catBtn_all"
-                    class="cat-filter-btn px-3 py-1.5 rounded-xl font-mono text-[11px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 transition-all">
-                    All ({{ $galleries->count() }})
+                    class="cat-filter-btn active whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-mono text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 transition-all">
+                    <span>All</span>
+                    <span id="catCount_all" class="px-1.5 py-0.2 rounded-full text-[10px] bg-cyan-500/30 text-white font-mono">0</span>
                 </button>
-                @foreach ($categories as $cat)
-                    @php
-                        $catCount = $galleries->where('category', $cat)->count();
-                    @endphp
-                    <button type="button" onclick="filterGalleryCategory('{{ addslashes($cat) }}')" id="catBtn_{{ md5($cat) }}"
-                        class="cat-filter-btn px-3 py-1.5 rounded-xl font-mono text-[11px] font-medium bg-[#09101d] text-slate-400 border border-white/10 hover:border-white/25 hover:text-white transition-all">
-                        {{ $cat }} ({{ $catCount }})
-                    </button>
-                @endforeach
+
+                <div id="dynamicThemeCategories" class="inline-flex items-center gap-2 shrink-0 flex-nowrap sm:flex-wrap">
+                    <!-- Populated dynamically for selected theme -->
+                </div>
             </div>
-        @endif
+        </div>
 
         <!-- Galleries Grid with data-theme & data-cat filtering -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="galleriesGrid">
@@ -74,77 +77,69 @@
                 @endphp
                 <div data-theme="{{ $item->theme }}" data-category="{{ $item->category }}"
                     class="gallery-admin-card rounded-2xl bg-[#09101d] border border-white/10 overflow-hidden shadow-xl flex flex-col justify-between hover:border-cyan-500/40 transition-all duration-300 group">
-                    <div>
-                        <!-- Image Container with Pictureflect trigger -->
-                        <div class="aspect-4/3 w-full bg-slate-900 overflow-hidden relative cursor-pointer group/img"
-                            data-pictureflect
-                            data-gallery="admin-galleries"
-                            data-src="{{ $item->image_url }}"
-                            data-title="{{ $item->title }}"
-                            data-category="{{ $item->category }}"
-                            data-theme="{{ $themeMeta['name'] ?? $item->theme }}"
-                            data-caption="{{ $item->caption }}">
-                            
-                            <img src="{{ $item->image_url }}" alt="{{ $item->title }}" loading="lazy"
-                                class="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-110">
-                            
-                            <!-- Dark Gradient Overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 opacity-70 group-hover/img:opacity-90 transition-opacity"></div>
+                    
+                    <!-- Image Showcase Area with Pictureflect Trigger -->
+                    <div class="relative w-full h-52 sm:h-56 bg-slate-900 overflow-hidden cursor-pointer group/img shrink-0"
+                        data-pictureflect
+                        data-gallery="admin-galleries"
+                        data-src="{{ $item->image_url }}"
+                        data-title="{{ $item->title }}"
+                        data-category="{{ $item->category }}"
+                        data-theme="{{ $themeMeta['name'] ?? $item->theme }}">
+                        
+                        <img src="{{ $item->image_url }}" alt="{{ $item->title }}" loading="lazy"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-110"
+                            onerror="this.style.opacity='0.3';">
+                        
+                        <!-- Top Floating Theme Badge -->
+                        <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 flex-wrap z-10 pointer-events-none">
+                            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-black/80 backdrop-blur border {{ $themeMeta['badge'] }}">
+                                <span class="w-1.5 h-1.5 rounded-full" style="background-color: {{ $themeMeta['color'] }}"></span>
+                                <span>{{ $themeMeta['short'] }}</span>
+                            </span>
+                        </div>
 
-                            <!-- Top Badges -->
-                            <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 flex-wrap z-10">
-                                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-black/80 backdrop-blur border {{ $themeMeta['badge'] }}">
-                                    <span class="w-1.5 h-1.5 rounded-full" style="background-color: {{ $themeMeta['color'] }}"></span>
-                                    <span>{{ $themeMeta['short'] }}</span>
+                        <!-- Top Right Status Badges -->
+                        <div class="absolute top-2.5 right-2.5 flex items-center gap-1 z-10 pointer-events-none">
+                            @if ($item->is_featured)
+                                <span title="Featured on Home Page"
+                                    class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/40 backdrop-blur flex items-center gap-1">
+                                    ★ Home
                                 </span>
-                            </div>
+                            @endif
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase {{ $item->is_active ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30' }} backdrop-blur">
+                                {{ $item->is_active ? 'Live' : 'Hidden' }}
+                            </span>
+                        </div>
 
-                            <div class="absolute top-2.5 right-2.5 flex items-center gap-1 z-10">
-                                @if ($item->is_featured)
-                                    <span title="Featured on Home Page"
-                                        class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/40 backdrop-blur flex items-center gap-1">
-                                        ★ Home
-                                    </span>
-                                @endif
-                                <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase {{ $item->is_active ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30' }} backdrop-blur">
-                                    {{ $item->is_active ? 'Live' : 'Hidden' }}
-                                </span>
-                            </div>
+                        <!-- Hover Pictureflect Preview Pill -->
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity z-10 pointer-events-none bg-black/30">
+                            <span class="px-3 py-1.5 rounded-full bg-cyan-500 text-black text-xs font-bold tracking-wider uppercase font-mono shadow-lg shadow-cyan-500/30 flex items-center gap-1.5 transform translate-y-2 group-hover/img:translate-y-0 transition-transform">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                                </svg>
+                                <span>Pictureflect View</span>
+                            </span>
+                        </div>
 
-                            <!-- Hover Pictureflect Preview Pill -->
-                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity z-10">
-                                <span class="px-3 py-1.5 rounded-full bg-cyan-500/90 text-black text-xs font-bold tracking-wider uppercase font-mono shadow-lg shadow-cyan-500/30 flex items-center gap-1.5 transform translate-y-2 group-hover/img:translate-y-0 transition-transform">
-                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                        <circle cx="11" cy="11" r="8"></circle>
-                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                        <line x1="11" y1="8" x2="11" y2="14"></line>
-                                        <line x1="8" y1="11" x2="14" y2="11"></line>
-                                    </svg>
-                                    <span>Pictureflect View</span>
-                                </span>
-                            </div>
-
-                            <!-- Category Bottom Floating Tag -->
-                            <div class="absolute bottom-2.5 left-2.5 z-10">
-                                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-black/75 text-cyan-300 border border-cyan-500/30 backdrop-blur">
+                        <!-- Image Title overlaid at bottom of image with blur background -->
+                        <div class="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/95 via-black/80 to-transparent backdrop-blur-md border-t border-white/10 z-10 flex flex-col gap-1">
+                            <div class="flex items-center justify-between gap-1.5">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shrink-0">
                                     {{ $item->category }}
                                 </span>
                             </div>
-                        </div>
-
-                        <!-- Card Content -->
-                        <div class="p-4 space-y-1.5">
-                            <h3 class="text-sm font-bold text-white truncate" title="{{ $item->title }}">{{ $item->title }}</h3>
-                            @if (!empty($item->caption))
-                                <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">{{ $item->caption }}</p>
-                            @else
-                                <p class="text-xs text-slate-500 italic">No description provided</p>
-                            @endif
+                            <h3 class="text-xs sm:text-sm font-bold text-white truncate drop-shadow leading-snug" title="{{ $item->title }}">
+                                {{ $item->title }}
+                            </h3>
                         </div>
                     </div>
 
-                    <!-- Footer Controls -->
-                    <div class="p-4 pt-2 border-t border-white/5 flex items-center justify-between text-xs mt-2">
+                    <!-- Footer Action Controls (Remaining Same) -->
+                    <div class="p-3 bg-[#09101d] border-t border-white/5 flex items-center justify-between text-xs">
                         <span class="font-mono text-[10px] text-slate-500">#{{ $item->sort_order }}</span>
 
                         <div class="flex items-center gap-1">
@@ -217,33 +212,128 @@
         </div>
     </div>
 
-    <!-- Category Filter Script -->
+    <!-- Category Filter & Reactive Theme Category Script -->
     <script>
+        let currentActiveCategory = 'all';
+        let currentActiveTheme = '{{ $selectedTheme ?? $activeTheme }}';
+
+        function getCurrentFilterTheme() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('theme') || '{{ $selectedTheme ?? $activeTheme }}';
+        }
+
+        // Dynamically compute and refresh category buttons for the active/selected theme
+        function refreshCategoriesForTheme(themeKey) {
+            currentActiveTheme = themeKey || getCurrentFilterTheme();
+            const cards = document.querySelectorAll('.gallery-admin-card');
+            const catCounts = {};
+            let totalThemeCount = 0;
+
+            cards.forEach(card => {
+                const cardTheme = (card.getAttribute('data-theme') || '').toLowerCase().trim();
+                const cardCat = card.getAttribute('data-category') || 'General';
+
+                let match = false;
+                if (currentActiveTheme === 'everything') {
+                    match = true;
+                } else if (currentActiveTheme === 'all') {
+                    match = (cardTheme === 'all');
+                } else {
+                    match = (cardTheme === currentActiveTheme || cardTheme === 'all');
+                }
+
+                if (match) {
+                    totalThemeCount++;
+                    catCounts[cardCat] = (catCounts[cardCat] || 0) + 1;
+                }
+            });
+
+            // Update "All" counter
+            const allCountEl = document.getElementById('catCount_all');
+            if (allCountEl) allCountEl.textContent = totalThemeCount;
+
+            // Render theme-only category pill buttons
+            const container = document.getElementById('dynamicThemeCategories');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const sortedCats = Object.keys(catCounts).sort();
+            sortedCats.forEach(cat => {
+                const count = catCounts[cat];
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'cat-filter-btn whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-mono text-xs font-medium bg-[#060b13] text-slate-300 border border-white/10 hover:border-cyan-500/40 hover:text-white transition-all';
+                btn.setAttribute('data-category', cat);
+                btn.onclick = function() { filterGalleryCategory(cat); };
+                btn.innerHTML = `<span>${cat}</span><span class="cat-pill-count px-1.5 py-0.2 rounded-full text-[10px] bg-white/10 text-slate-400 font-mono">${count}</span>`;
+                container.appendChild(btn);
+            });
+        }
+
+        // Filter cards by category within the current theme
         function filterGalleryCategory(cat) {
+            currentActiveCategory = cat;
             const cards = document.querySelectorAll('.gallery-admin-card');
             const buttons = document.querySelectorAll('.cat-filter-btn');
 
             buttons.forEach(b => {
-                b.classList.remove('bg-cyan-500/20', 'text-cyan-300', 'border-cyan-500/40');
-                b.classList.add('bg-[#09101d]', 'text-slate-400', 'border-white/10');
+                b.classList.remove('bg-cyan-500/20', 'text-cyan-300', 'border-cyan-500/40', 'font-bold');
+                b.classList.add('bg-[#060b13]', 'text-slate-300', 'border-white/10');
             });
 
-            const activeBtn = cat === 'all' 
-                ? document.getElementById('catBtn_all') 
-                : document.querySelector(`[onclick*="${cat}"]`);
-            if (activeBtn) {
-                activeBtn.classList.add('bg-cyan-500/20', 'text-cyan-300', 'border-cyan-500/40');
-                activeBtn.classList.remove('bg-[#09101d]', 'text-slate-400', 'border-white/10');
+            if (cat === 'all') {
+                const allBtn = document.getElementById('catBtn_all');
+                if (allBtn) {
+                    allBtn.classList.add('bg-cyan-500/20', 'text-cyan-300', 'border-cyan-500/40', 'font-bold');
+                    allBtn.classList.remove('bg-[#060b13]', 'text-slate-300', 'border-white/10');
+                }
+            } else {
+                const activeBtn = document.querySelector(`.cat-filter-btn[data-category="${cat}"]`);
+                if (activeBtn) {
+                    activeBtn.classList.add('bg-cyan-500/20', 'text-cyan-300', 'border-cyan-500/40', 'font-bold');
+                    activeBtn.classList.remove('bg-[#060b13]', 'text-slate-300', 'border-white/10');
+                }
             }
 
             cards.forEach(card => {
+                const cardTheme = (card.getAttribute('data-theme') || '').toLowerCase().trim();
                 const cardCat = card.getAttribute('data-category');
-                if (cat === 'all' || cardCat === cat) {
+
+                let themeMatch = false;
+                if (currentActiveTheme === 'everything') {
+                    themeMatch = true;
+                } else if (currentActiveTheme === 'all') {
+                    themeMatch = (cardTheme === 'all');
+                } else {
+                    themeMatch = (cardTheme === currentActiveTheme || cardTheme === 'all');
+                }
+
+                const catMatch = (cat === 'all' || cardCat === cat);
+
+                if (themeMatch && catMatch) {
                     card.style.display = '';
+                    card.classList.remove('hidden');
                 } else {
                     card.style.display = 'none';
+                    card.classList.add('hidden');
                 }
             });
         }
+
+        // Initialize and listen to theme switch
+        document.addEventListener('DOMContentLoaded', function() {
+            const initialTheme = getCurrentFilterTheme();
+            refreshCategoriesForTheme(initialTheme);
+
+            // Hook into window.selectTheme to update categories when theme changes
+            if (typeof window.selectTheme === 'function') {
+                const originalSelectTheme = window.selectTheme;
+                window.selectTheme = function(themeKey) {
+                    originalSelectTheme(themeKey);
+                    refreshCategoriesForTheme(themeKey);
+                    filterGalleryCategory('all');
+                };
+            }
+        });
     </script>
 @endsection
