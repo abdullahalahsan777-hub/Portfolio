@@ -87,9 +87,10 @@
 
                     <!-- Image Showcase Area with Pictureflect Trigger -->
                     <div class="relative w-full h-52 sm:h-56 bg-slate-900 overflow-hidden cursor-pointer group/img shrink-0"
-                        data-pictureflect data-gallery="admin-galleries" data-src="{{ $item->image_url }}"
+                        data-pictureflect data-gallery="theme-{{ $item->theme }}" data-src="{{ $item->image_url }}"
                         data-title="{{ $item->title }}" data-category="{{ $item->category }}"
-                        data-pf-theme="{{ $themeMeta['name'] ?? $item->theme }}">
+                        data-pf-theme="{{ $themeMeta['name'] ?? $item->theme }}"
+                        data-pf-theme-key="{{ $item->theme }}">
 
                         <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
                             class="absolute inset-0 w-full h-full object-cover block transition-transform duration-500 group-hover/img:scale-110 z-0"
@@ -244,6 +245,7 @@
         // Dynamically compute and refresh category buttons for the active/selected theme
         function refreshCategoriesForTheme(themeKey) {
             currentActiveTheme = themeKey || getCurrentFilterTheme();
+            window.currentActiveTheme = currentActiveTheme;
             const cards = document.querySelectorAll('.gallery-admin-card');
             const catCounts = {};
             let totalThemeCount = 0;

@@ -24,10 +24,10 @@
     left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    max-width: 100vw !important;
-    max-height: 100vh !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     box-sizing: border-box !important;
@@ -297,11 +297,11 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: rgba(15, 23, 42, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     color: #fff;
     display: flex;
     align-items: center;
@@ -309,8 +309,10 @@
     cursor: pointer;
     z-index: 30;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     outline: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 .pf-nav-btn:hover {
@@ -318,23 +320,23 @@
     border-color: var(--pf-accent);
     color: var(--pf-accent);
     box-shadow: 0 0 24px var(--pf-accent-glow);
-    transform: translateY(-50%) scale(1.1);
+    transform: translateY(-50%) scale(1.08);
 }
 
 .pf-nav-btn svg {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     stroke-width: 2.5;
     fill: none;
     stroke: currentColor;
 }
 
 .pf-prev-btn {
-    left: 24px;
+    left: 28px;
 }
 
 .pf-next-btn {
-    right: 24px;
+    right: 28px;
 }
 
 /* Loading spinner */

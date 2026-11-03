@@ -119,7 +119,7 @@
                 '</div>'
             ].join('');
 
-            document.body.appendChild(container);
+            (document.documentElement || document.body).appendChild(container);
 
             // Cache DOM elements
             this.el = {
@@ -176,16 +176,64 @@
                 trigger.addEventListener('click', function (e) {
                     e.preventDefault();
 
-                    var galleryGroup = trigger.getAttribute('data-gallery') || 'default';
-                    var groupTriggers = document.querySelectorAll('[data-pictureflect][data-gallery="' + galleryGroup + '"]');
-                    if (!groupTriggers || groupTriggers.length === 0) {
-                        groupTriggers = document.querySelectorAll('[data-pictureflect]');
+                    var triggerCard = trigger.closest('[data-theme], .gallery-admin-card, .gallery-item-card');
+                    var triggerThemeKey = trigger.getAttribute('data-pf-theme-key') || 
+                                          (triggerCard ? triggerCard.getAttribute('data-theme') : '') || '';
+                    var galleryGroup = trigger.getAttribute('data-gallery') || '';
+
+                    // Active theme filter if running in admin or dynamic theme page
+                    var activeFilterTheme = '';
+                    if (typeof window.currentActiveTheme !== 'undefined' && window.currentActiveTheme) {
+                        activeFilterTheme = String(window.currentActiveTheme).toLowerCase().trim();
+                    }
+
+                    // Candidate pool: all triggers
+                    var allTriggers = document.querySelectorAll('[data-pictureflect]');
+                    var groupTriggers = [];
+
+                    allTriggers.forEach(function (el) {
+                        // 1. Check visibility: skip any element or parent card that is hidden by filter
+                        var card = el.closest('[data-theme], .gallery-admin-card, .gallery-item-card');
+                        if (card) {
+                            if (card.style.display === 'none' || card.classList.contains('hidden') || card.offsetParent === null) {
+                                return;
+                            }
+                        } else if (el.style.display === 'none' || el.classList.contains('hidden') || el.offsetParent === null) {
+                            return;
+                        }
+
+                        // 2. Theme-wise grouping:
+                        var elThemeKey = (el.getAttribute('data-pf-theme-key') || (card ? card.getAttribute('data-theme') : '') || '').toLowerCase().trim();
+
+                        if (activeFilterTheme && activeFilterTheme !== 'everything') {
+                            if (activeFilterTheme === 'all') {
+                                if (elThemeKey !== 'all') return;
+                            } else {
+                                if (elThemeKey !== activeFilterTheme && elThemeKey !== 'all') return;
+                            }
+                        } else if (triggerThemeKey && triggerThemeKey !== 'all') {
+                            if (elThemeKey && elThemeKey !== 'all' && elThemeKey !== triggerThemeKey) {
+                                return;
+                            }
+                        } else if (galleryGroup && galleryGroup !== 'default' && galleryGroup !== 'admin-galleries') {
+                            var elGroup = el.getAttribute('data-gallery') || '';
+                            if (elGroup && elGroup !== galleryGroup) {
+                                return;
+                            }
+                        }
+
+                        groupTriggers.push(el);
+                    });
+
+                    // Ensure at least clicked trigger is present if none matched
+                    if (groupTriggers.length === 0 || groupTriggers.indexOf(trigger) === -1) {
+                        groupTriggers = [trigger];
                     }
 
                     var items = [];
                     var clickedIndex = 0;
 
-                    Array.prototype.forEach.call(groupTriggers, function (el, idx) {
+                    groupTriggers.forEach(function (el, idx) {
                         var src = el.getAttribute('data-src') || el.getAttribute('href') || (el.tagName === 'IMG' ? el.src : '');
                         var title = el.getAttribute('data-title') || el.getAttribute('title') || el.getAttribute('alt') || 'Photo';
                         var category = el.getAttribute('data-category') || 'Gallery';
@@ -385,8 +433,17 @@
             this.currentIndex = typeof index === 'number' && index >= 0 && index < items.length ? index : 0;
             this.isOpen = true;
 
+            if (this.items.length <= 1) {
+                if (this.el.prev) this.el.prev.style.display = 'none';
+                if (this.el.next) this.el.next.style.display = 'none';
+            } else {
+                if (this.el.prev) this.el.prev.style.display = 'flex';
+                if (this.el.next) this.el.next.style.display = 'flex';
+            }
+
             this.el.viewer.classList.add('pf-active');
-            document.body.style.overflow = 'hidden';
+            if (document.documentElement) document.documentElement.style.overflow = 'hidden';
+            if (document.body) document.body.style.overflow = 'hidden';
 
             this.renderThumbnails();
             this.loadImage(this.currentIndex);
@@ -400,7 +457,8 @@
             this.stopSlideshow();
             this.toggleInspector(false);
             this.el.viewer.classList.remove('pf-active');
-            document.body.style.overflow = '';
+            if (document.documentElement) document.documentElement.style.overflow = '';
+            if (document.body) document.body.style.overflow = '';
             if (document.fullscreenElement) {
                 document.exitFullscreen().catch(function () {});
             }
