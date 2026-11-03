@@ -30,6 +30,7 @@
                     <li><a href="{{ route('about') }}" class="hover:text-[#ccff00] transition-colors">About</a></li>
                     <li><a href="{{ route('portfolio') }}" class="hover:text-[#ccff00] transition-colors">Portfolio</a>
                     </li>
+                    <li><a href="{{ route('gallery') }}" class="hover:text-[#ccff00] transition-colors">Gallery</a></li>
                     <li><a href="{{ route('blog') }}" class="hover:text-[#ccff00] transition-colors">Blog</a></li>
                     <li><a href="{{ route('faq') }}" class="hover:text-[#ccff00] transition-colors">FAQ</a></li>
                     <li><a href="{{ route('contact') }}" class="hover:text-[#ccff00] transition-colors">Contact</a></li>

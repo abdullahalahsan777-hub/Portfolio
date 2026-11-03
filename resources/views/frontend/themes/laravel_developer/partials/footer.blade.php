@@ -186,6 +186,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('gallery') }}" class="footer-nav-link">
+                            Gallery
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('blog') }}" class="footer-nav-link">
                             Blog
                         </a>

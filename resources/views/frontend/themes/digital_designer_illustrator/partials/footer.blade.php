@@ -70,6 +70,8 @@
                             class="hover:text-[#e26d9b] dark:hover:text-[#e26d9b] transition-colors">About</a></li>
                     <li><a href="{{ route('portfolio') }}"
                             class="hover:text-[#e26d9b] dark:hover:text-[#e26d9b] transition-colors">Works</a></li>
+                    <li><a href="{{ route('gallery') }}"
+                            class="hover:text-[#e26d9b] dark:hover:text-[#e26d9b] transition-colors">Gallery</a></li>
                     <li><a href="{{ route('blog') }}"
                             class="hover:text-[#e26d9b] dark:hover:text-[#e26d9b] transition-colors">Blog</a></li>
                     <li><a href="{{ route('faq') }}"

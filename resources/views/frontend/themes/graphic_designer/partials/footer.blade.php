@@ -30,6 +30,8 @@
                             class="hover:text-[#7c3aed] dark:hover:text-[#c084fc] transition-colors">About</a></li>
                     <li><a href="{{ route('portfolio') }}"
                             class="hover:text-[#7c3aed] dark:hover:text-[#c084fc] transition-colors">Portfolio</a></li>
+                    <li><a href="{{ route('gallery') }}"
+                            class="hover:text-[#7c3aed] dark:hover:text-[#c084fc] transition-colors">Gallery</a></li>
                     <li><a href="{{ route('blog') }}"
                             class="hover:text-[#7c3aed] dark:hover:text-[#c084fc] transition-colors">Blog</a></li>
                     <li><a href="{{ route('faq') }}"
