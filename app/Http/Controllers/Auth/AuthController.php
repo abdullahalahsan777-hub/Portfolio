@@ -37,9 +37,7 @@ class AuthController extends Controller
                 request()->session()->invalidate();
                 request()->session()->regenerateToken();
 
-                return view('auth.login', [
-                    'isMaintenance' => $isMaintenance,
-                ])->withErrors([
+                return redirect()->route('login')->withErrors([
                     'email' => 'Client portal is currently offline for server upgrade. Only administrators can sign in at this time.',
                 ]);
             }
