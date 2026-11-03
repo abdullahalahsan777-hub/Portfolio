@@ -1,8 +1,8 @@
 @php
     use App\Models\SiteSetting;
 
-    $activeTheme = $activeTheme ?? SiteSetting::getActiveTheme();
-    $themes = $themes ?? SiteSetting::getAvailableThemes();
+    $activeTheme = $activeTheme ?? \App\Models\SiteSetting::getActiveTheme();
+    $themes = $themes ?? \App\Models\SiteSetting::getAvailableThemes();
     $showGlobalOptions = $showGlobalOptions ?? true;
     $selectedTheme = request()->query('theme', $selectedTheme ?? $activeTheme);
     if (
@@ -12,10 +12,10 @@
         $selectedTheme = $activeTheme;
     }
 
-    $activeThemeMeta = $themes[$activeTheme] ?? SiteSetting::getThemeDetails($activeTheme);
+    $activeThemeMeta = $themes[$activeTheme] ?? \App\Models\SiteSetting::getThemeDetails($activeTheme);
     $selectedThemeMeta =
         $selectedTheme === 'all'
-            ? SiteSetting::getThemeDetails('all')
+            ? \App\Models\SiteSetting::getThemeDetails('all')
             : ($selectedTheme === 'everything'
                 ? [
                     'name' => 'All Elements (No Filter)',
@@ -25,7 +25,7 @@
                     'border' => 'border-indigo-500',
                     'description' => 'Display all elements regardless of theme',
                 ]
-                : $themes[$selectedTheme] ?? SiteSetting::getThemeDetails($selectedTheme));
+                : $themes[$selectedTheme] ?? \App\Models\SiteSetting::getThemeDetails($selectedTheme));
 
     $elementName = $elementName ?? 'Elements';
     $themeCounts = $themeCounts ?? [];

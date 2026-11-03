@@ -14,6 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        if (!class_exists('SiteSetting', false)) {
+            class_alias(\App\Models\SiteSetting::class, 'SiteSetting');
+        }
+
         $helperPath = app_path('Helpers/Helper.php');
         if (file_exists($helperPath)) {
             require_once $helperPath;
