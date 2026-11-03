@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\SiteSetting;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +45,9 @@ class CheckMaintenanceMode
         }
 
         // Allow authenticated admin preview with ?preview=1
-        if ($request->has('preview') && Auth::check() && Auth::user()->isAdmin()) {
+        /** @var User|null $currentUser */
+        $currentUser = Auth::user();
+        if ($request->has('preview') && $currentUser instanceof User && $currentUser->isAdmin()) {
             return $next($request);
         }
 

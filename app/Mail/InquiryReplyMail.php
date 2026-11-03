@@ -10,6 +10,7 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class InquiryReplyMail extends Mailable implements ShouldQueue
 {
@@ -99,7 +100,7 @@ class InquiryReplyMail extends Mailable implements ShouldQueue
 
                 $disk = $item['disk'] ?? (str_starts_with($item['path'], 'attachments') ? 'public' : 'local');
 
-                if (\Illuminate\Support\Facades\Storage::disk($disk)->exists($item['path'])) {
+                if (Storage::disk($disk)->exists($item['path'])) {
                     $attachments[] = Attachment::fromStorageDisk($disk, $item['path'])
                         ->as($item['name'] ?? basename($item['path']))
                         ->withMime($item['mime'] ?? 'application/octet-stream');
