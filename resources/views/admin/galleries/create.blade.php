@@ -48,40 +48,29 @@
                             ng-model="category"
                             data-placeholder="Select or type a category...">
                             @php
-                                $presetCats = [
-                                    'Architecture & Systems',
-                                    'Performance & Queues',
-                                    'DevOps & Cloud',
-                                    'Database Engineering',
-                                    'Workspace',
-                                    'Certificates',
-                                    'UI/UX Designs',
-                                    'Mobile Apps',
-                                    'Photography',
-                                    'Branding',
-                                    'Software Engineering',
-                                    'Events',
-                                ];
-                                $allOptions = collect($presetCats)->merge($categories ?? [])->unique()->filter()->values();
+                                $categoryOptions = collect($categories ?? [])->map(fn($c) => trim($c))->filter()->unique()->values();
+                                $defaultCat = old('category', $categoryOptions->first() ?? 'Architecture & Systems');
                             @endphp
-                            @foreach ($allOptions as $cat)
-                                <option value="{{ $cat }}" {{ old('category', 'Architecture & Systems') === $cat ? 'selected' : '' }}>
+                            @foreach ($categoryOptions as $cat)
+                                <option value="{{ $cat }}" {{ $defaultCat === $cat ? 'selected' : '' }}>
                                     {{ $cat }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
-                    <!-- Quick Category Pills -->
-                    <div class="flex items-center gap-1.5 flex-wrap mt-2.5">
-                        <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Quick:</span>
-                        @foreach ($allOptions->take(7) as $pill)
-                            <button type="button" ng-click="setCategory('{{ addslashes($pill) }}')"
-                                class="px-2.5 py-1 rounded-full text-[10px] font-mono bg-white/5 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/30 transition-all cursor-pointer">
-                                {{ $pill }}
-                            </button>
-                        @endforeach
-                    </div>
+                    <!-- Quick Category Pills (From Galleries Table) -->
+                    @if ($categoryOptions->isNotEmpty())
+                        <div class="flex items-center gap-1.5 flex-wrap mt-2.5">
+                            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Quick:</span>
+                            @foreach ($categoryOptions->take(8) as $pill)
+                                <button type="button" ng-click="setCategory('{{ addslashes($pill) }}')"
+                                    class="px-2.5 py-1 rounded-full text-[10px] font-mono bg-white/5 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/30 transition-all cursor-pointer">
+                                    {{ $pill }}
+                                </button>
+                            @endforeach
+                        </div>
+                    @endif
                     @error('category')
                         <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
                     @enderror
@@ -342,7 +331,7 @@
     <!-- AngularJS & Select2 Integration Script -->
     <script>
         adminApp.controller('GalleryFormController', ['$scope', function($scope) {
-            $scope.category = {!! json_encode(old('category', 'Architecture & Systems')) !!};
+            $scope.category = {!! json_encode(old('category', $categories->first() ?? 'Architecture & Systems')) !!};
             $scope.theme = {!! json_encode(old('theme', $selectedTheme ?? 'laravel_developer')) !!};
 
             $scope.setCategory = function(cat) {

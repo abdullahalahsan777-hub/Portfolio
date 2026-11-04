@@ -48,45 +48,35 @@
                             ng-model="category"
                             data-placeholder="Select or type a category...">
                             @php
-                                $presetCats = [
-                                    'Architecture & Systems',
-                                    'Performance & Queues',
-                                    'DevOps & Cloud',
-                                    'Database Engineering',
-                                    'Workspace',
-                                    'Certificates',
-                                    'UI/UX Designs',
-                                    'Mobile Apps',
-                                    'Photography',
-                                    'Branding',
-                                    'Software Engineering',
-                                    'Events',
-                                ];
-                                $allOptions = collect($presetCats)
-                                    ->merge($categories ?? [])
+                                $categoryOptions = collect($categories ?? [])
                                     ->push($gallery->category)
-                                    ->unique()
+                                    ->map(fn($c) => trim($c))
                                     ->filter()
+                                    ->unique()
+                                    ->sort()
                                     ->values();
+                                $selectedCat = old('category', $gallery->category);
                             @endphp
-                            @foreach ($allOptions as $cat)
-                                <option value="{{ $cat }}" {{ old('category', $gallery->category) === $cat ? 'selected' : '' }}>
+                            @foreach ($categoryOptions as $cat)
+                                <option value="{{ $cat }}" {{ $selectedCat === $cat ? 'selected' : '' }}>
                                     {{ $cat }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
-                    <!-- Quick Category Pills -->
-                    <div class="flex items-center gap-1.5 flex-wrap mt-2.5">
-                        <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Quick:</span>
-                        @foreach ($allOptions->take(7) as $pill)
-                            <button type="button" ng-click="setCategory('{{ addslashes($pill) }}')"
-                                class="px-2.5 py-1 rounded-full text-[10px] font-mono bg-white/5 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/30 transition-all cursor-pointer">
-                                {{ $pill }}
-                            </button>
-                        @endforeach
-                    </div>
+                    <!-- Quick Category Pills (From Galleries Table) -->
+                    @if ($categoryOptions->isNotEmpty())
+                        <div class="flex items-center gap-1.5 flex-wrap mt-2.5">
+                            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Quick:</span>
+                            @foreach ($categoryOptions->take(8) as $pill)
+                                <button type="button" ng-click="setCategory('{{ addslashes($pill) }}')"
+                                    class="px-2.5 py-1 rounded-full text-[10px] font-mono bg-white/5 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/30 transition-all cursor-pointer">
+                                    {{ $pill }}
+                                </button>
+                            @endforeach
+                        </div>
+                    @endif
                     @error('category')
                         <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
                     @enderror

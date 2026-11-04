@@ -107,16 +107,26 @@ class Gallery extends Model
     }
 
     /**
-     * Get unique categories for a specific theme or globally.
+     * Get unique categories from galleries table (SELECT DISTINCT category FROM galleries GROUP BY category).
      */
     public static function getCategories(?string $theme = null): Collection
     {
-        $query = static::query()->active();
+        $query = static::query()
+            ->select('category')
+            ->distinct()
+            ->whereNotNull('category')
+            ->where('category', '!=', '');
 
         if ($theme && $theme !== 'all' && $theme !== 'everything') {
             $query->whereIn('theme', ['all', $theme]);
         }
 
-        return $query->pluck('category')->map(fn($c) => trim($c))->filter()->unique()->values();
+        return $query->groupBy('category')
+            ->orderBy('category')
+            ->pluck('category')
+            ->map(fn($c) => trim($c))
+            ->filter()
+            ->unique()
+            ->values();
     }
 }
