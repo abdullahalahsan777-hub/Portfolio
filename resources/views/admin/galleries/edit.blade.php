@@ -329,10 +329,39 @@
             box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.25) !important;
         }
 
+        .select2-results {
+            background-color: transparent !important;
+            overflow: visible !important;
+        }
+
+        .select2-container--default .select2-results > .select2-results__options,
         .select2-results__options {
             padding: 0.4rem !important;
             max-height: 240px !important;
             background-color: #09101d !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: thin !important;
+            scrollbar-color: rgba(6, 182, 212, 0.45) rgba(0, 0, 0, 0.25) !important;
+        }
+
+        .select2-results__options::-webkit-scrollbar {
+            width: 6px !important;
+        }
+
+        .select2-results__options::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.25) !important;
+            border-radius: 9999px !important;
+        }
+
+        .select2-results__options::-webkit-scrollbar-thumb {
+            background: rgba(6, 182, 212, 0.45) !important;
+            border-radius: 9999px !important;
+        }
+
+        .select2-results__options::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4 !important;
         }
 
         .select2-container--default .select2-results__option {

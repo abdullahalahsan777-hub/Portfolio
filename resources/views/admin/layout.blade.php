@@ -84,9 +84,7 @@
             border-width: 0 4px 5px 4px !important;
         }
 
-        .select2-dropdown,
-        .select2-results,
-        .select2-results__options {
+        .select2-dropdown {
             background-color: #0d1627 !important;
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
             border-radius: 0.85rem !important;
@@ -97,11 +95,13 @@
             margin-top: 4px;
         }
 
-        .select2-dropdown .select2-results,
-        .select2-dropdown .select2-results__options {
+        .select2-results {
+            background-color: transparent !important;
             border: none !important;
             box-shadow: none !important;
-            margin-top: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
         }
 
         .select2-dropdown--above {
@@ -131,9 +131,16 @@
             box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
         }
 
+        .select2-container--default .select2-results > .select2-results__options,
         .select2-results__options {
+            background-color: #0d1627 !important;
             padding: 0.4rem !important;
             max-height: 260px !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: thin !important;
+            scrollbar-color: rgba(99, 102, 241, 0.4) transparent !important;
         }
 
         /* Custom sleek scrollbar for Select2 */
