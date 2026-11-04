@@ -55,6 +55,7 @@
                                     ->unique()
                                     ->sort()
                                     ->values();
+                                $quickPills = collect($quickCategories ?? \App\Models\Gallery::getQuickCategories());
                                 $selectedCat = old('category', $gallery->category);
                             @endphp
                             @foreach ($categoryOptions as $cat)
@@ -66,12 +67,13 @@
                     </div>
 
                     <!-- Quick Category Pills (From Galleries Table) -->
-                    @if ($categoryOptions->isNotEmpty())
-                        <div class="flex items-center gap-1.5 flex-wrap mt-2.5">
-                            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">Quick:</span>
-                            @foreach ($categoryOptions->take(8) as $pill)
+                    @if ($quickPills->isNotEmpty())
+                        <div class="flex items-center gap-1.5 flex-nowrap overflow-hidden mt-2.5 max-w-full">
+                            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider shrink-0">Quick:</span>
+                            @foreach ($quickPills as $pill)
                                 <button type="button" ng-click="setCategory('{{ addslashes($pill) }}')"
-                                    class="px-2.5 py-1 rounded-full text-[10px] font-mono bg-white/5 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/30 transition-all cursor-pointer">
+                                    title="{{ $pill }}"
+                                    class="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-full text-[10px] font-mono bg-white/5 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/30 transition-all cursor-pointer">
                                     {{ $pill }}
                                 </button>
                             @endforeach

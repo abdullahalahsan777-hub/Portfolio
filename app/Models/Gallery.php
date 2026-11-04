@@ -129,4 +129,34 @@ class Gallery extends Model
             ->unique()
             ->values();
     }
+
+    /**
+     * Get quick-select categories from galleries table:
+     * - The most frequently used category appears 1st.
+     * - The remaining categories are randomized on each call/reload.
+     */
+    public static function getQuickCategories(?string $theme = null): Collection
+    {
+        $query = static::query()
+            ->select('category', \Illuminate\Support\Facades\DB::raw('count(*) as usage_count'))
+            ->whereNotNull('category')
+            ->where('category', '!=', '');
+
+        if ($theme && $theme !== 'all' && $theme !== 'everything') {
+            $query->whereIn('theme', ['all', $theme]);
+        }
+
+        $counts = $query->groupBy('category')
+            ->orderByDesc('usage_count')
+            ->pluck('usage_count', 'category');
+
+        if ($counts->isEmpty()) {
+            return collect();
+        }
+
+        $mostUsed = $counts->keys()->first();
+        $randomOthers = $counts->keys()->slice(1)->shuffle();
+
+        return collect([$mostUsed])->concat($randomOthers)->values();
+    }
 }

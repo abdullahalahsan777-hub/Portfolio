@@ -65,10 +65,12 @@ class GalleryController extends Controller
         $selectedTheme = $request->query('theme', $activeTheme);
 
         $categories = Gallery::getCategories();
+        $quickCategories = Gallery::getQuickCategories();
 
         $this->data['selectedTheme'] = $selectedTheme;
         $this->data['activeTheme'] = $activeTheme;
         $this->data['categories'] = $categories;
+        $this->data['quickCategories'] = $quickCategories;
 
         return view('admin.galleries.create', $this->data);
     }
@@ -131,10 +133,12 @@ class GalleryController extends Controller
     {
         $activeTheme = SiteSetting::getActiveTheme();
         $categories = Gallery::getCategories();
+        $quickCategories = Gallery::getQuickCategories();
 
         $this->data['gallery'] = $gallery;
         $this->data['activeTheme'] = $activeTheme;
         $this->data['categories'] = $categories;
+        $this->data['quickCategories'] = $quickCategories;
 
         return view('admin.galleries.edit', $this->data);
     }
