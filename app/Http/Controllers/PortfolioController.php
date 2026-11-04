@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Models\Notification;
 use App\Models\PricingPlan;
 use App\Models\Project;
 use App\Models\Service;
@@ -100,6 +101,16 @@ class PortfolioController extends Controller
         $validated['is_important'] = $hasImportance;
 
         $message = ContactMessage::create($validated);
+
+        Notification::record([
+            'user_id'    => null,
+            'type'       => 'contact',
+            'title'      => 'New Contact Message',
+            'message'    => "Received new message from {$validated['name']} ({$validated['email']}).",
+            'action_url' => route('admin.messages.show', $message->id),
+            'icon'       => 'mail',
+            'color'      => 'indigo',
+        ]);
 
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([

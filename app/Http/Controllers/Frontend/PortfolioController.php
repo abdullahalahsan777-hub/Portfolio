@@ -7,6 +7,7 @@ use App\Models\BlogPost;
 use App\Models\ContactMessage;
 use App\Models\Faq;
 use App\Models\Gallery;
+use App\Models\Notification;
 use App\Models\PricingPlan;
 use App\Models\Project;
 use App\Models\ResumeItem;
@@ -419,7 +420,17 @@ class PortfolioController extends Controller
         $validated['type'] = $hasImportance ? 'important' : 'inbox';
         $validated['is_important'] = $hasImportance;
 
-        ContactMessage::create($validated);
+        $message = ContactMessage::create($validated);
+
+        Notification::record([
+            'user_id'    => null,
+            'type'       => 'contact',
+            'title'      => 'New Contact Message',
+            'message'    => "Received new message from {$validated['name']} ({$validated['email']}).",
+            'action_url' => route('admin.messages.show', $message->id),
+            'icon'       => 'mail',
+            'color'      => 'indigo',
+        ]);
 
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([

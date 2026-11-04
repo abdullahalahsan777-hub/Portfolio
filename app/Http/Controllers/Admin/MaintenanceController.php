@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\BroadcastServerStatusEmailJob;
 use App\Mail\ServerDownMail;
 use App\Mail\ServerUpMail;
 use App\Models\SiteSetting;
@@ -61,6 +62,14 @@ class MaintenanceController extends Controller
         $frameworkCachePath = storage_path('framework/cache');
         $cacheSize = File::exists($frameworkCachePath) ? count(File::allFiles($frameworkCachePath)).' items' : '0 items';
 
+        // Queue jobs counts
+        $pendingJobs = 0;
+        $failedJobs = 0;
+        try {
+            $pendingJobs = DB::table('jobs')->count();
+            $failedJobs = DB::table('failed_jobs')->count();
+        } catch (\Throwable $e) {}
+
         // System info
         $systemInfo = [
             'php_version' => PHP_VERSION,
@@ -72,6 +81,9 @@ class MaintenanceController extends Controller
             'cache_driver' => config('cache.default'),
             'session_driver' => config('session.driver'),
             'storage_status' => is_writable(storage_path()) ? 'Writable' : 'Read Only',
+            'queue_connection' => config('queue.default', 'database'),
+            'queue_pending_jobs' => $pendingJobs,
+            'queue_failed_jobs' => $failedJobs,
             'is_maintenance' => $isDown,
             'server_status' => SiteSetting::get('server_status', 'up'),
             'maintenance_title' => SiteSetting::get('maintenance_title', 'System Upgrade in Progress'),
@@ -155,8 +167,8 @@ class MaintenanceController extends Controller
 
                 $emailSummary = '';
                 if ($shouldSendEmail) {
-                    $stats = $this->broadcastStatusEmail('up');
-                    $emailSummary = " &bull; 📧 Live notification sent to {$stats['sent']}/{$stats['total']} user(s).";
+                    BroadcastServerStatusEmailJob::dispatch('up');
+                    $emailSummary = ' &bull; 📧 Server status notification dispatched to background queue worker for delivery.';
                 }
 
                 \App\Models\Notification::record([
@@ -179,8 +191,8 @@ class MaintenanceController extends Controller
 
                 $emailSummary = '';
                 if ($shouldSendEmail) {
-                    $stats = $this->broadcastStatusEmail('down');
-                    $emailSummary = " &bull; 📧 503 notification sent to {$stats['sent']}/{$stats['total']} user(s).";
+                    BroadcastServerStatusEmailJob::dispatch('down');
+                    $emailSummary = ' &bull; 📧 503 notification dispatched to background queue worker for delivery.';
                 }
 
                 \App\Models\Notification::record([
@@ -220,8 +232,8 @@ class MaintenanceController extends Controller
 
                 $emailSummary = '';
                 if ($shouldSendEmail) {
-                    $stats = $this->broadcastStatusEmail('up');
-                    $emailSummary = " &bull; 📧 Live notification sent to {$stats['sent']}/{$stats['total']} user(s).";
+                    BroadcastServerStatusEmailJob::dispatch('up');
+                    $emailSummary = ' &bull; 📧 Live notification dispatched to background queue worker for delivery.';
                 }
 
                 \App\Models\Notification::record([
@@ -259,12 +271,12 @@ class MaintenanceController extends Controller
 
                 $emailSummary = '';
                 if ($shouldSendEmail) {
-                    $stats = $this->broadcastStatusEmail('down', [
+                    BroadcastServerStatusEmailJob::dispatch('down', [
                         'title' => $validated['title'] ?? null,
                         'noticeMessage' => $validated['message'] ?? null,
                         'estimatedTime' => $validated['estimated_time'] ?? null,
                     ]);
-                    $emailSummary = " &bull; 📧 503 notification sent to {$stats['sent']}/{$stats['total']} user(s).";
+                    $emailSummary = ' &bull; 📧 503 notification dispatched to background queue worker for delivery.';
                 }
 
                 \App\Models\Notification::record([
@@ -419,6 +431,75 @@ class MaintenanceController extends Controller
             }
         } catch (\Throwable $e) {
             flash()->danger("Failed to dispatch test email: " . $e->getMessage());
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Run the Queue Worker to process pending queued jobs batch.
+     */
+    public function runQueueWorker(Request $request): RedirectResponse
+    {
+        try {
+            $pendingBefore = DB::table('jobs')->count();
+            Artisan::call('queue:work', [
+                '--stop-when-empty' => true,
+                '--tries'            => 3,
+                '--timeout'          => 60,
+                '--memory'           => 128,
+            ]);
+            $pendingAfter = DB::table('jobs')->count();
+            $processed = max(0, $pendingBefore - $pendingAfter);
+
+            flash()->success("🚀 Queue Worker executed: {$processed} job(s) processed. Remaining pending: {$pendingAfter}.");
+        } catch (\Throwable $e) {
+            flash()->danger('Queue worker execution error: ' . $e->getMessage());
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Retry all failed jobs.
+     */
+    public function retryFailedJobs(Request $request): RedirectResponse
+    {
+        try {
+            Artisan::call('queue:retry', ['id' => ['all']]);
+            flash()->success('All failed jobs have been pushed back into the queue for re-processing.');
+        } catch (\Throwable $e) {
+            flash()->danger('Failed to retry jobs: ' . $e->getMessage());
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Flush all failed jobs.
+     */
+    public function flushFailedJobs(Request $request): RedirectResponse
+    {
+        try {
+            Artisan::call('queue:flush');
+            flash()->success('Failed jobs table has been completely cleared.');
+        } catch (\Throwable $e) {
+            flash()->danger('Failed to flush failed jobs: ' . $e->getMessage());
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Clear all pending queued jobs.
+     */
+    public function clearQueue(Request $request): RedirectResponse
+    {
+        try {
+            Artisan::call('queue:clear', ['--force' => true]);
+            flash()->warning('Pending queue cleared. All waiting background jobs have been purged.');
+        } catch (\Throwable $e) {
+            flash()->danger('Failed to clear queue: ' . $e->getMessage());
         }
 
         return redirect()->back();

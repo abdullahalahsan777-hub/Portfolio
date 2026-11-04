@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\NotificationCreated;
+use App\Jobs\RecordNotificationJob;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -85,9 +86,25 @@ class Notification extends Model
     }
 
     /**
-     * Convenient static method to record any application notification and broadcast it.
+     * Convenient static method to record any application notification.
+     * Dispatches as a background Queue Job so all actions (Login, Logout, Store, Update, Delete)
+     * redirect and flash messages INSTANTLY without blocking the HTTP response.
      */
-    public static function record(array $attributes): self
+    public static function record(array $attributes): ?self
+    {
+        try {
+            RecordNotificationJob::dispatch($attributes);
+            return null;
+        } catch (\Throwable $e) {
+            Log::warning('Queue dispatch failed, falling back to sync notification: ' . $e->getMessage());
+            return self::recordSync($attributes);
+        }
+    }
+
+    /**
+     * Synchronous recording fallback.
+     */
+    public static function recordSync(array $attributes): self
     {
         $notification = self::create([
             'user_id'   => $attributes['user_id'] ?? null,
@@ -102,7 +119,7 @@ class Notification extends Model
             'data'      => $attributes['data'] ?? null,
         ]);
 
-        // Attempt broadcasting event
+        // Attempt broadcasting event (now queued via ShouldBroadcast)
         try {
             event(new NotificationCreated($notification));
         } catch (\Throwable $e) {

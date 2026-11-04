@@ -201,6 +201,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         Route::post('/maintenance/upgrade-status', [AdminMaintenanceController::class, 'upgradeStatus'])->name('maintenance.upgradeStatus');
         Route::get('/maintenance/preview-email', [AdminMaintenanceController::class, 'previewEmail'])->name('maintenance.previewEmail');
         Route::post('/maintenance/send-test-email', [AdminMaintenanceController::class, 'sendTestEmail'])->name('maintenance.sendTestEmail');
+        Route::post('/maintenance/queue/work', [AdminMaintenanceController::class, 'runQueueWorker'])->name('maintenance.queueWork');
+        Route::post('/maintenance/queue/retry', [AdminMaintenanceController::class, 'retryFailedJobs'])->name('maintenance.queueRetry');
+        Route::post('/maintenance/queue/flush', [AdminMaintenanceController::class, 'flushFailedJobs'])->name('maintenance.queueFlush');
+        Route::post('/maintenance/queue/clear', [AdminMaintenanceController::class, 'clearQueue'])->name('maintenance.queueClear');
 
         // User Management Module
         Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');

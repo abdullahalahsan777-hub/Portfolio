@@ -271,7 +271,138 @@
         </div>
     </div>
 
-    <!-- 4. EMAIL BROADCAST NOTIFICATION TEMPLATES (SERVER DOWN & UP) -->
+    <!-- 4. JOBS QUEUE (WORKER) CONTROL & BACKGROUND PIPELINE -->
+    <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-cyan-500/20 shadow-xl space-y-6 relative overflow-hidden">
+        <div class="absolute -right-16 -top-16 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                    Asynchronous Pipeline
+                </div>
+                <h2 class="text-xl font-bold text-white mt-1">Jobs Queue &amp; Background Worker Control</h2>
+                <p class="text-xs text-slate-400">
+                    All application events (Login, Logout, Store, Update, Delete, Notifications, Mail Dispatches) redirect instantly with zero latency and are processed by the Queue Worker.
+                </p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+                <!-- Status metrics pills -->
+                <div class="px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-xs font-mono flex items-center gap-2">
+                    <span class="text-slate-400">Driver:</span>
+                    <span class="text-cyan-400 font-bold uppercase">{{ $systemInfo['queue_connection'] }}</span>
+                </div>
+                <div class="px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-xs font-mono flex items-center gap-2">
+                    <span class="text-slate-400">Waiting:</span>
+                    <span class="text-emerald-400 font-bold">{{ $systemInfo['queue_pending_jobs'] }} job(s)</span>
+                </div>
+                <div class="px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-xs font-mono flex items-center gap-2">
+                    <span class="text-slate-400">Failed:</span>
+                    <span class="{{ $systemInfo['queue_failed_jobs'] > 0 ? 'text-rose-400 font-bold' : 'text-slate-500' }}">
+                        {{ $systemInfo['queue_failed_jobs'] }} job(s)
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Worker Actions Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- 1. Process Batch Now -->
+            <div class="p-5 rounded-2xl bg-black/40 border border-cyan-500/30 hover:border-cyan-500/50 transition-all flex flex-col justify-between space-y-4">
+                <div>
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-sm text-white">Process Queue Batch</h3>
+                        <span class="text-[10px] font-mono text-cyan-400">worker</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1">
+                        Processes all pending jobs in the queue immediately until empty.
+                    </p>
+                </div>
+                <form action="{{ route('admin.maintenance.queueWork') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full py-2.5 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg transition-all flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>Run Worker Batch</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- 2. Retry Failed Jobs -->
+            <div class="p-5 rounded-2xl bg-black/40 border border-white/5 hover:border-amber-500/40 transition-all flex flex-col justify-between space-y-4">
+                <div>
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-sm text-white">Retry Failed Jobs</h3>
+                        <span class="text-[10px] font-mono text-amber-400">retry</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1">
+                        Pushes all failed job entries back into the pending queue for re-processing.
+                    </p>
+                </div>
+                <form action="{{ route('admin.maintenance.queueRetry') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full py-2.5 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-amber-600/80 hover:bg-amber-500 text-white shadow-lg transition-all flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        <span>Retry All Failed</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- 3. Flush Failed Jobs -->
+            <div class="p-5 rounded-2xl bg-black/40 border border-white/5 hover:border-rose-500/40 transition-all flex flex-col justify-between space-y-4">
+                <div>
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-sm text-white">Flush Failed Jobs</h3>
+                        <span class="text-[10px] font-mono text-rose-400">flush</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1">
+                        Deletes all records from the failed jobs log permanently.
+                    </p>
+                </div>
+                <form action="{{ route('admin.maintenance.queueFlush') }}" method="POST" onsubmit="return confirm('Flush all failed jobs?');">
+                    @csrf
+                    <button type="submit" class="w-full py-2.5 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-slate-800 hover:bg-rose-950 hover:text-rose-300 text-slate-300 border border-white/5 transition-all">
+                        Flush Failed Records
+                    </button>
+                </form>
+            </div>
+
+            <!-- 4. Purge Pending Queue -->
+            <div class="p-5 rounded-2xl bg-black/40 border border-white/5 hover:border-rose-500/40 transition-all flex flex-col justify-between space-y-4">
+                <div>
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-sm text-white">Purge Pending Queue</h3>
+                        <span class="text-[10px] font-mono text-rose-400">clear</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1">
+                        Deletes all unexecuted jobs from the queue table.
+                    </p>
+                </div>
+                <form action="{{ route('admin.maintenance.queueClear') }}" method="POST" onsubmit="return confirm('Are you sure you want to purge all pending jobs in the queue?');">
+                    @csrf
+                    <button type="submit" class="w-full py-2.5 px-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-slate-800 hover:bg-rose-950 hover:text-rose-300 text-slate-300 border border-white/5 transition-all">
+                        Purge Waiting Queue
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Terminal Command Quick Info -->
+        <div class="p-4 rounded-2xl bg-black/50 border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
+            <div class="flex items-center gap-2 text-slate-300">
+                <span class="text-cyan-400 font-bold">&gt;_</span>
+                <span>Continuous Daemon Command:</span>
+                <code class="px-2 py-0.5 rounded bg-black/70 text-cyan-300 border border-cyan-500/30">php artisan queue:work --tries=3</code>
+            </div>
+            <span class="text-[11px] text-slate-500">Auto-scheduled via Laravel console scheduler every minute</span>
+        </div>
+    </div>
+
+    <!-- 5. EMAIL BROADCAST NOTIFICATION TEMPLATES (SERVER DOWN & UP) -->
     <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
         <div class="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -438,6 +569,18 @@
             <div class="p-4 rounded-xl bg-black/30 border border-white/5">
                 <span class="text-[11px] font-mono text-slate-500 block">Storage Writable Status</span>
                 <span class="text-sm font-bold text-emerald-400 font-mono">{{ $systemInfo['storage_status'] }}</span>
+            </div>
+            <div class="p-4 rounded-xl bg-black/30 border border-white/5">
+                <span class="text-[11px] font-mono text-slate-500 block">Queue Pipeline</span>
+                <span class="text-sm font-bold text-cyan-400 font-mono uppercase">{{ $systemInfo['queue_connection'] }}</span>
+            </div>
+            <div class="p-4 rounded-xl bg-black/30 border border-white/5">
+                <span class="text-[11px] font-mono text-slate-500 block">Queue Waiting Jobs</span>
+                <span class="text-sm font-bold text-emerald-400 font-mono">{{ $systemInfo['queue_pending_jobs'] }}</span>
+            </div>
+            <div class="p-4 rounded-xl bg-black/30 border border-white/5">
+                <span class="text-[11px] font-mono text-slate-500 block">Queue Failed Jobs</span>
+                <span class="text-sm font-bold {{ $systemInfo['queue_failed_jobs'] > 0 ? 'text-rose-400' : 'text-slate-400' }} font-mono">{{ $systemInfo['queue_failed_jobs'] }}</span>
             </div>
         </div>
     </div>
