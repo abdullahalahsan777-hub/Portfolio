@@ -32,6 +32,8 @@ class ServiceController extends Controller
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->query('theme', $activeTheme);
         $this->data['selectedTheme'] = $selectedTheme;
+        $this->data['categories'] = Service::getCategories();
+        $this->data['quickCategories'] = Service::getQuickCategories();
 
         return view('admin.services.create', $this->data);
     }
@@ -67,6 +69,8 @@ class ServiceController extends Controller
     public function edit(Service $service): View
     {
         $this->data['service'] = $service;
+        $this->data['categories'] = Service::getCategories();
+        $this->data['quickCategories'] = Service::getQuickCategories();
 
         return view('admin.services.edit', $this->data);
     }

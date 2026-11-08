@@ -32,6 +32,8 @@ class SkillController extends Controller
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->query('theme', $activeTheme);
         $this->data['selectedTheme'] = $selectedTheme;
+        $this->data['categories'] = Skill::getCategories();
+        $this->data['quickCategories'] = Skill::getQuickCategories();
 
         return view('admin.skills.create', $this->data);
     }
@@ -67,6 +69,8 @@ class SkillController extends Controller
     public function edit(Skill $skill): View
     {
         $this->data['skill'] = $skill;
+        $this->data['categories'] = Skill::getCategories();
+        $this->data['quickCategories'] = Skill::getQuickCategories();
 
         return view('admin.skills.edit', $this->data);
     }

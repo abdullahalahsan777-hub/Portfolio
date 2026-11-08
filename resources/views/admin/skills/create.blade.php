@@ -23,9 +23,40 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-mono text-slate-400 mb-1">Category *</label>
-                    <input type="text" name="category" required placeholder="e.g. Backend, Frontend, Design"
-                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
+                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Category * (Select or Type New)</label>
+                    <div class="relative custom-category-wrapper">
+                        <select name="category" id="skillCategorySelect" required
+                            class="select2-category-tags no-select2 w-full px-4 py-2.5 rounded-xl bg-[#0d1627] border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors"
+                            data-placeholder="Select or type a category...">
+                            @php
+                                $categoryOptions = collect($categories ?? \App\Models\Skill::getCategories())->map(fn($c) => trim($c))->filter()->unique()->values();
+                                $quickPills = collect($quickCategories ?? \App\Models\Skill::getQuickCategories());
+                                $defaultCat = old('category', $categoryOptions->first() ?? '');
+                            @endphp
+                            @foreach ($categoryOptions as $cat)
+                                <option value="{{ $cat }}" {{ $defaultCat === $cat ? 'selected' : '' }}>
+                                    {{ $cat }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Quick Category Pills -->
+                    @if ($quickPills->isNotEmpty())
+                        <div class="flex items-center gap-1.5 flex-nowrap overflow-hidden mt-2.5 max-w-full">
+                            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider shrink-0">Quick:</span>
+                            @foreach ($quickPills as $pill)
+                                <button type="button" onclick="setSelectCategory('skillCategorySelect', '{{ addslashes($pill) }}')"
+                                    title="{{ $pill }}"
+                                    class="whitespace-nowrap shrink-0 px-2.5 py-1 rounded-full text-[10px] font-mono bg-white/5 hover:bg-cyan-500/20 text-slate-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/30 transition-all cursor-pointer">
+                                    {{ $pill }}
+                                </button>
+                            @endforeach
+                        </div>
+                    @endif
+                    @error('category')
+                        <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>

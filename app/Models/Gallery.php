@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasCategoryOptions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Support\Collection;
 
 class Gallery extends Model
 {
-    use HasFactory;
+    use HasFactory, HasCategoryOptions;
 
     protected $fillable = [
         'title',
@@ -104,59 +105,5 @@ class Gallery extends Model
     public function scopeFeatured(Builder $query): Builder
     {
         return $query->where('is_featured', true);
-    }
-
-    /**
-     * Get unique categories from galleries table (SELECT DISTINCT category FROM galleries GROUP BY category).
-     */
-    public static function getCategories(?string $theme = null): Collection
-    {
-        $query = static::query()
-            ->select('category')
-            ->distinct()
-            ->whereNotNull('category')
-            ->where('category', '!=', '');
-
-        if ($theme && $theme !== 'all' && $theme !== 'everything') {
-            $query->whereIn('theme', ['all', $theme]);
-        }
-
-        return $query->groupBy('category')
-            ->orderBy('category')
-            ->pluck('category')
-            ->map(fn($c) => trim($c))
-            ->filter()
-            ->unique()
-            ->values();
-    }
-
-    /**
-     * Get quick-select categories from galleries table:
-     * - The most frequently used category appears 1st.
-     * - The remaining categories are randomized on each call/reload.
-     */
-    public static function getQuickCategories(?string $theme = null): Collection
-    {
-        $query = static::query()
-            ->select('category', \Illuminate\Support\Facades\DB::raw('count(*) as usage_count'))
-            ->whereNotNull('category')
-            ->where('category', '!=', '');
-
-        if ($theme && $theme !== 'all' && $theme !== 'everything') {
-            $query->whereIn('theme', ['all', $theme]);
-        }
-
-        $counts = $query->groupBy('category')
-            ->orderByDesc('usage_count')
-            ->pluck('usage_count', 'category');
-
-        if ($counts->isEmpty()) {
-            return collect();
-        }
-
-        $mostUsed = $counts->keys()->first();
-        $randomOthers = $counts->keys()->slice(1)->shuffle();
-
-        return collect([$mostUsed])->concat($randomOthers)->values();
     }
 }

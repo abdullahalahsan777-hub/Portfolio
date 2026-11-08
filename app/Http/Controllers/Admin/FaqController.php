@@ -34,6 +34,8 @@ class FaqController extends Controller
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->get('theme', $activeTheme);
         $this->data['selectedTheme'] = $selectedTheme;
+        $this->data['categories'] = Faq::getCategories();
+        $this->data['quickCategories'] = Faq::getQuickCategories();
 
         return view('admin.faqs.create', $this->data);
     }
@@ -73,6 +75,8 @@ class FaqController extends Controller
     public function edit(Faq $faq): View
     {
         $this->data['faq'] = $faq;
+        $this->data['categories'] = Faq::getCategories();
+        $this->data['quickCategories'] = Faq::getQuickCategories();
 
         return view('admin.faqs.edit', $this->data);
     }

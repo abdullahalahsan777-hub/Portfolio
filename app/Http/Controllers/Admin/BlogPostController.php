@@ -34,6 +34,8 @@ class BlogPostController extends Controller
         $activeTheme    = SiteSetting::getActiveTheme();
         $selectedTheme  = $request->get('theme', $activeTheme);
         $this->data['selectedTheme'] = $selectedTheme;
+        $this->data['categories'] = BlogPost::getCategories();
+        $this->data['quickCategories'] = BlogPost::getQuickCategories();
 
         return view('admin.blog.create', $this->data);
     }
@@ -100,6 +102,8 @@ class BlogPostController extends Controller
     public function edit(BlogPost $blog): View
     {
         $this->data['blog'] = $blog;
+        $this->data['categories'] = BlogPost::getCategories();
+        $this->data['quickCategories'] = BlogPost::getQuickCategories();
 
         return view('admin.blog.edit', $this->data);
     }

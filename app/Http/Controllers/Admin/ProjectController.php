@@ -32,6 +32,8 @@ class ProjectController extends Controller
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->query('theme', $activeTheme);
         $this->data['selectedTheme'] = $selectedTheme;
+        $this->data['categories'] = Project::getCategories();
+        $this->data['quickCategories'] = Project::getQuickCategories();
 
         return view('admin.projects.create', $this->data);
     }
@@ -82,6 +84,8 @@ class ProjectController extends Controller
     public function edit(Project $project): View
     {
         $this->data['project'] = $project;
+        $this->data['categories'] = Project::getCategories();
+        $this->data['quickCategories'] = Project::getQuickCategories();
 
         return view('admin.projects.edit', $this->data);
     }
