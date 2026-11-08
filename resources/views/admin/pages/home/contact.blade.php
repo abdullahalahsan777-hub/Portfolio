@@ -249,8 +249,10 @@
             <div class="flex items-center gap-2 text-xs text-slate-400">
                 <span class="w-2 h-2 rounded-full animate-pulse"
                     style="background-color: {{ $themeColor }};"></span>
-                <span>Active Theme: <strong class="text-white font-mono">{{ $themeName }}</strong> • Saved to <code
-                        class="text-indigo-300 font-mono">theme_contents</code></span>
+                <span>
+                    Active Theme: <strong class="text-white font-mono">{{ $themeName }}</strong> <br />
+                    Saved to <code class="text-indigo-300 font-mono">theme_contents</code>
+                </span>
             </div>
             <button type="submit"
                 class="w-full sm:w-auto px-2.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"

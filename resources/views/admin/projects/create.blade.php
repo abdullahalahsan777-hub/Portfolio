@@ -241,5 +241,4 @@
             handleProjectImageUrl(initialVal);
         }
     </script>
-    </div>
 @endsection

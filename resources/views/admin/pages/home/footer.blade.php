@@ -66,7 +66,7 @@
                         <label class="block text-xs font-mono text-slate-400 mb-1.5">Footer Bio / Tagline</label>
                         <textarea name="footer_about_text" rows="2"
                             placeholder="{{ $contents['footer_about_text'] ?? 'Crafting meaningful digital experiences and timeless brand systems.' }}"
-                            class="w-full px-4 py-2.5 rounded-xl bg-[#060b13] border border-white/10 text-white text-xs resize-none focus:border-indigo-500 
+                            class="w-full px-4 py-2.5 rounded-xl bg-[#060b13] border border-white/10 text-white text-xs resize-none focus:border-indigo-500
                             focus:outline-none transition-colors">{{ $contents['footer_about_text'] ?? 'Crafting meaningful digital experiences and timeless brand systems.' }}</textarea>
                     </div>
                 </div>
@@ -239,8 +239,10 @@
             <div class="flex items-center gap-2 text-xs text-slate-400">
                 <span class="w-2 h-2 rounded-full animate-pulse"
                     style="background-color: {{ $themeColor }};"></span>
-                <span>Active Theme: <strong class="text-white font-mono">{{ $themeName }}</strong> • Saved to <code
-                        class="text-indigo-300 font-mono">theme_contents</code></span>
+                <span>
+                    Active Theme: <strong class="text-white font-mono">{{ $themeName }}</strong> <br />
+                    Saved to <code class="text-indigo-300 font-mono">theme_contents</code>
+                </span>
             </div>
             <button type="submit"
                 class="w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"

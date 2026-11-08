@@ -72,9 +72,10 @@
                             class="w-full px-4 py-2.5 rounded-xl bg-[#060b13] border border-white/10 text-emerald-400 font-mono text-xs font-bold focus:border-emerald-500 focus:outline-none transition-colors">
                     </div>
                     <div>
-                        <label class="block text-xs font-mono text-slate-400 mb-1.5">Headline Prefix / Greeting Lead</label>
-                        <input type="text" name="hero_title_1"
-                            value="{{ $contents['hero_title_1'] ?? '' }}" placeholder="e.g. I'M A FREELANCE"
+                        <label class="block text-xs font-mono text-slate-400 mb-1.5">Headline Prefix / Greeting
+                            Lead</label>
+                        <input type="text" name="hero_title_1" value="{{ $contents['hero_title_1'] ?? '' }}"
+                            placeholder="e.g. I'M A FREELANCE"
                             class="w-full px-4 py-2.5 rounded-xl bg-[#060b13] border border-white/10 text-emerald-300 font-mono text-xs font-bold focus:border-emerald-500 focus:outline-none transition-colors">
                     </div>
                     <div>
@@ -99,7 +100,8 @@
                             class="w-full px-4 py-2.5 rounded-xl bg-[#060b13] border border-white/10 text-purple-300 text-base font-bold italic focus:border-purple-500 focus:outline-none transition-colors">
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-xs font-mono text-slate-400 mb-1.5">Mastered Software / Tools Stack Text</label>
+                        <label class="block text-xs font-mono text-slate-400 mb-1.5">Mastered Software / Tools Stack
+                            Text</label>
                         <input type="text" name="hero_software_text"
                             value="{{ $contents['hero_software_text'] ?? '' }}"
                             placeholder="e.g. Photoshop, Illustrator, Figma, After Effects, Cinema 4D"
@@ -109,7 +111,8 @@
 
                 <div>
                     <label class="block text-xs font-mono text-slate-400 mb-1.5">Hero Lead Bio / Introduction</label>
-                    <textarea name="hero_description" rows="3" data-height="160" placeholder="Crafting high-impact digital experiences..."
+                    <textarea name="hero_description" rows="3" data-height="160"
+                        placeholder="Crafting high-impact digital experiences..."
                         class="summernote w-full px-4 py-2.5 rounded-xl bg-[#060b13] border border-white/10 text-white text-sm leading-relaxed focus:border-indigo-500 focus:outline-none transition-colors">{{ $contents['hero_description'] ?? 'Crafting high-impact digital experiences, award-winning visual identities, and interactive web applications.' }}</textarea>
                 </div>
             </div>
@@ -118,7 +121,8 @@
             <div class="p-5 sm:p-6 rounded-2xl bg-black/40 border border-white/10 space-y-6">
                 <div class="flex items-center gap-2 pb-3 border-b border-white/5">
                     <span class="w-2 h-2 rounded-full bg-pink-400"></span>
-                    <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-pink-300">Avatar Portrait & Accent Artwork</h3>
+                    <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-pink-300">Avatar Portrait &
+                        Accent Artwork</h3>
                 </div>
                 <!-- Avatar Portrait -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
@@ -139,7 +143,8 @@
                             <input type="file" name="hero_image_file" accept="image/*"
                                 onchange="previewHomeHeroImage(event)"
                                 class="w-full px-3 py-2 rounded-xl bg-[#060b13] border border-white/10 text-slate-300 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-600/20 file:text-indigo-300 hover:file:bg-indigo-600/30 cursor-pointer">
-                            <p class="text-[10px] text-slate-500 mt-1">Recommended: Square PNG/JPG (800x800px), under 2MB.</p>
+                            <p class="text-[10px] text-slate-500 mt-1">Recommended: Square PNG/JPG (800x800px), under
+                                2MB.</p>
                         </div>
                         <div>
                             <label class="block text-xs font-mono text-slate-400 mb-1.5">Or Direct Image URL</label>
@@ -165,16 +170,18 @@
 
                     <div class="md:col-span-2 space-y-4">
                         <div>
-                            <label class="block text-xs font-mono text-slate-400 mb-1.5">Upload Hero Accent / Floating Graphic</label>
+                            <label class="block text-xs font-mono text-slate-400 mb-1.5">Upload Hero Accent / Floating
+                                Graphic</label>
                             <input type="file" name="hero_accent_image_file" accept="image/*"
                                 onchange="previewHomeAccentImage(event)"
                                 class="w-full px-3 py-2 rounded-xl bg-[#060b13] border border-white/10 text-slate-300 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-purple-600/20 file:text-purple-300 hover:file:bg-purple-600/30 cursor-pointer">
-                            <p class="text-[10px] text-slate-500 mt-1">Floating badge / decorative sticker used in creative & illustrator themes.</p>
+                            <p class="text-[10px] text-slate-500 mt-1">Floating badge / decorative sticker used in
+                                creative & illustrator themes.</p>
                         </div>
                         <div>
                             <label class="block text-xs font-mono text-slate-400 mb-1.5">Or Accent Graphic URL</label>
-                            <input type="text" name="hero_accent_image" value="{{ $contents['hero_accent_image'] ?? '' }}"
-                                placeholder="https://..."
+                            <input type="text" name="hero_accent_image"
+                                value="{{ $contents['hero_accent_image'] ?? '' }}" placeholder="https://..."
                                 class="w-full px-4 py-2.5 rounded-xl bg-[#060b13] border border-white/10 text-white text-xs font-mono focus:border-purple-500 focus:outline-none transition-colors">
                         </div>
                     </div>
@@ -231,14 +238,16 @@
             <div class="p-5 sm:p-6 rounded-2xl bg-black/40 border border-white/10 space-y-4">
                 <div class="flex items-center gap-2 pb-3 border-b border-white/5">
                     <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                    <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-amber-300">Ticker Marquee Headline</h3>
+                    <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-amber-300">Ticker Marquee
+                        Headline</h3>
                 </div>
                 <div>
                     <label class="block text-xs font-mono text-slate-400 mb-1.5">Continuous Marquee Text</label>
                     <textarea name="marquee_text" rows="2"
                         placeholder="e.g. * CREATIVE DIRECTION * UI/UX DESIGN * FRONTEND ENGINEERING * MOTION DESIGN"
                         class="w-full px-4 py-2.5 rounded-xl bg-[#060b13] border border-white/10 text-amber-300 font-mono text-xs font-bold focus:border-amber-500 focus:outline-none transition-colors">{{ $contents['marquee_text'] ?? '* CREATIVE DIRECTION * UI/UX DESIGN * FRONTEND ARCHITECTURE * DIGITAL EXPERIENCES' }}</textarea>
-                    <p class="text-[10px] text-slate-500 mt-1">Displayed in the infinite running marquee ticker bar across pages.</p>
+                    <p class="text-[10px] text-slate-500 mt-1">Displayed in the infinite running marquee ticker bar
+                        across pages.</p>
                 </div>
             </div>
         </div>
@@ -274,8 +283,10 @@
             <div class="flex items-center gap-2 text-xs text-slate-400">
                 <span class="w-2 h-2 rounded-full animate-pulse"
                     style="background-color: {{ $themeColor }};"></span>
-                <span>Active Theme: <strong class="text-white font-mono">{{ $themeName }}</strong> • Saved to <code
-                        class="text-indigo-300 font-mono">theme_contents</code></span>
+                <span>
+                    Active Theme: <strong class="text-white font-mono">{{ $themeName }}</strong> <br />
+                    Saved to <code class="text-indigo-300 font-mono">theme_contents</code>
+                </span>
             </div>
             <button type="submit"
                 class="w-full sm:w-auto px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"

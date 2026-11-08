@@ -1,3 +1,7 @@
+@php
+    use App\Models\SiteSetting;
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -131,7 +135,7 @@
             box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
         }
 
-        .select2-container--default .select2-results > .select2-results__options,
+        .select2-container--default .select2-results>.select2-results__options,
         .select2-results__options {
             background-color: #0d1627 !important;
             padding: 0.4rem !important;
@@ -165,13 +169,16 @@
         #adminSidebar .overflow-y-auto::-webkit-scrollbar {
             width: 4px;
         }
+
         #adminSidebar .overflow-y-auto::-webkit-scrollbar-track {
             background: transparent;
         }
+
         #adminSidebar .overflow-y-auto::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 9999px;
         }
+
         #adminSidebar .overflow-y-auto::-webkit-scrollbar-thumb:hover {
             background: rgba(99, 102, 241, 0.4);
         }
@@ -181,6 +188,7 @@
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
+
         #paginationContainer::-webkit-scrollbar {
             display: none;
         }
@@ -552,7 +560,8 @@
                         class="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
                         title="Close sidebar" aria-label="Close sidebar">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
@@ -872,24 +881,30 @@
                         <a href="{{ route('errors.index') }}" target="_blank"
                             class="flex items-center justify-between px-3 py-2 rounded-xl font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all">
                             <div class="flex items-center gap-3">
-                                <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                 </svg>
                                 <span>Error Pages Suite</span>
                             </div>
-                            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-slate-400 border border-white/5">12</span>
+                            <span
+                                class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-slate-400 border border-white/5">12</span>
                         </a>
 
                         <!-- Unified Error & System Logs (Admin Only) -->
                         <a href="{{ route('admin.logs.index') }}"
                             class="flex items-center justify-between px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.logs.*') ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
                             <div class="flex items-center gap-3">
-                                <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                <svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                                 <span>Error &amp; System Logs</span>
                             </div>
-                            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 font-bold">LOG</span>
+                            <span
+                                class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 font-bold">LOG</span>
                         </a>
 
                         <!-- User Management -->
@@ -907,13 +922,15 @@
                         <a href="{{ route('admin.versions.index') }}"
                             class="flex items-center justify-between px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.versions.*') ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
                             <div class="flex items-center gap-3">
-                                <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
                                 </svg>
                                 <span>Version Control</span>
                             </div>
-                            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold">
+                            <span
+                                class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold">
                                 v{{ config('app.version', '1.2.0') }}
                             </span>
                         </a>
@@ -1148,7 +1165,8 @@
             </button>
 
             <!-- Sidebar Bottom Version Indicator -->
-            <div class="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500 px-1">
+            <div
+                class="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500 px-1">
                 <span class="truncate">Portfolio Studio</span>
                 <a href="{{ route('admin.versions.index') }}"
                     class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/5 hover:bg-[#0090e7]/15 text-slate-400 hover:text-[#0090e7] transition-all font-semibold"
@@ -1170,10 +1188,12 @@
                     class="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
                     title="Toggle Sidebar Menu" aria-label="Open sidebar menu">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
-                <h2 class="text-sm sm:text-base font-bold text-white truncate max-w-[130px] sm:max-w-xs md:max-w-none">@yield('page_title', 'Dashboard')</h2>
+                <h2 class="text-sm sm:text-base font-bold text-white truncate max-w-[130px] sm:max-w-xs md:max-w-none">
+                    @yield('page_title', 'Dashboard')</h2>
                 <span class="text-xs text-slate-500 font-mono hidden md:inline">/ @yield('page_subtitle', 'Overview')</span>
                 <a href="{{ route('admin.versions.index') }}"
                     class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#0090e7]/15 hover:bg-[#0090e7]/25 text-[#0090e7] border border-[#0090e7]/30 shadow-sm transition-colors"
@@ -1185,8 +1205,8 @@
             <div class="flex items-center gap-2 sm:gap-3">
                 @php
                     $isServerMaintenance =
-                        \App\Models\SiteSetting::get('maintenance_mode', '0') === '1' ||
-                        \App\Models\SiteSetting::get('server_status', 'up') === 'maintenance';
+                        SiteSetting::get('maintenance_mode', '0') === '1' ||
+                        SiteSetting::get('server_status', 'up') === 'maintenance';
                 @endphp
                 @if ($isServerMaintenance)
                     @if (auth()->check() && auth()->user()->isAdmin())
@@ -1196,7 +1216,9 @@
                             <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
                             <span class="font-bold hidden sm:inline">503 Maintenance</span>
                             <span class="font-bold sm:hidden">503</span>
-                            <span class="text-[9px] sm:text-[10px] bg-amber-400 text-black px-1 sm:px-1.5 py-0.5 rounded font-black hidden md:inline">UPGRADE &rarr;</span>
+                            <span
+                                class="text-[9px] sm:text-[10px] bg-amber-400 text-black px-1 sm:px-1.5 py-0.5 rounded font-black hidden md:inline">UPGRADE
+                                &rarr;</span>
                         </a>
                     @else
                         <div
@@ -1394,7 +1416,8 @@
         </main>
 
         <!-- Admin Studio Footer -->
-        <footer class="px-4 sm:px-6 lg:px-8 py-4 border-t border-white/5 bg-[#070c16]/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+        <footer
+            class="px-4 sm:px-6 lg:px-8 py-4 border-t border-white/5 bg-[#070c16]/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
             <div class="flex items-center gap-2">
                 <span class="font-bold text-slate-300">Portfolio Studio</span>
                 <span>&bull;</span>
@@ -1410,7 +1433,8 @@
                     class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#0090e7]/10 text-[#0090e7] border border-[#0090e7]/30 hover:bg-[#0090e7]/20 transition-all font-semibold"
                     title="GitHub Repository & Release Notes">
                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
                     </svg>
                     v{{ config('app.version', '1.0.0') }}
                 </a>
@@ -1975,7 +1999,9 @@
                     if (backdrop) backdrop.classList.add('hidden');
                 }
             }
-        }, { passive: true });
+        }, {
+            passive: true
+        });
     </script>
 
     <!-- Global Toastr Configuration & Notification Handler -->

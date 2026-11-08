@@ -81,3 +81,4 @@ class BroadcastServerStatusEmailJob implements ShouldQueue
         Log::info("BroadcastServerStatusEmailJob completed for status '{$this->status}'. Sent: {$sent}, Failed: {$failed}");
     }
 }
+

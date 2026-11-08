@@ -77,3 +77,4 @@ class RecordNotificationJob implements ShouldQueue
         }
     }
 }
+

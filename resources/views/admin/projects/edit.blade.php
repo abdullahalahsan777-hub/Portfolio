@@ -236,5 +236,4 @@
             badge.className = 'absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-500/80 text-white backdrop-blur border border-rose-400/30';
         });
     </script>
-    </div>
 @endsection
