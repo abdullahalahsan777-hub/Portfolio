@@ -2,18 +2,37 @@
 
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Trait HasCategoryOptions
+ *
+ * Trait providing distinct category listing and randomized quick-select pills
+ * for Eloquent models that have a 'category' column.
+ *
+ * @mixin Model
+ */
 trait HasCategoryOptions
 {
+    /**
+     * Get the database table name for the model using this trait.
+     */
+    public static function getModelTable(): string
+    {
+        /** @var Model $instance */
+        $instance = new static();
+        return $instance->getTable();
+    }
+
     /**
      * Get unique categories sorted alphabetically from the model table.
      */
     public static function getCategories(?string $theme = null): Collection
     {
-        $table = (new static)->getTable();
+        $table = static::getModelTable();
         $query = static::query()
             ->select('category')
             ->distinct()
@@ -40,7 +59,7 @@ trait HasCategoryOptions
      */
     public static function getQuickCategories(?string $theme = null): Collection
     {
-        $table = (new static)->getTable();
+        $table = static::getModelTable();
         $query = static::query()
             ->select('category', DB::raw('count(*) as usage_count'))
             ->whereNotNull('category')
@@ -64,3 +83,5 @@ trait HasCategoryOptions
         return collect([$mostUsed])->concat($randomOthers)->values();
     }
 }
+
+
