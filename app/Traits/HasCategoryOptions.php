@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Schema;
  * for Eloquent models that have a 'category' column.
  *
  * @mixin Model
+ * @method static Builder query()
  */
 trait HasCategoryOptions
 {
@@ -32,8 +34,11 @@ trait HasCategoryOptions
      */
     public static function getCategories(?string $theme = null): Collection
     {
-        $table = static::getModelTable();
-        $query = static::query()
+        /** @var Model $instance */
+        $instance = new static();
+        $table = $instance->getTable();
+
+        $query = $instance->newQuery()
             ->select('category')
             ->distinct()
             ->whereNotNull('category')
@@ -59,8 +64,11 @@ trait HasCategoryOptions
      */
     public static function getQuickCategories(?string $theme = null): Collection
     {
-        $table = static::getModelTable();
-        $query = static::query()
+        /** @var Model $instance */
+        $instance = new static();
+        $table = $instance->getTable();
+
+        $query = $instance->newQuery()
             ->select('category', DB::raw('count(*) as usage_count'))
             ->whereNotNull('category')
             ->where('category', '!=', '');
@@ -83,5 +91,6 @@ trait HasCategoryOptions
         return collect([$mostUsed])->concat($randomOthers)->values();
     }
 }
+
 
 
