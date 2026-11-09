@@ -5,17 +5,19 @@
 @section('page_subtitle', 'Group: Website')
 
 @section('content')
-    <div class="w-full space-y-6 max-w-5xl" ng-controller="GalleryEditController">
+    <div class="w-full space-y-6 max-w-full" ng-controller="GalleryEditController">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
                 <h1 class="text-xl font-bold text-white flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">
+                    <span
+                        class="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">
                         ✎
                     </span>
                     <span>Edit Photo: {{ $gallery->title }}</span>
                 </h1>
-                <p class="text-xs text-slate-400 mt-0.5">Update photo details, replace high-res asset, or adjust category and theme routing.</p>
+                <p class="text-xs text-slate-400 mt-0.5">Update photo details, replace high-res asset, or adjust category and
+                    theme routing.</p>
             </div>
             <a href="{{ route('admin.galleries.index') }}"
                 class="text-xs text-slate-400 hover:text-white inline-flex items-center gap-1.5 transition-colors">
@@ -23,7 +25,8 @@
             </a>
         </div>
 
-        <form id="editGalleryForm" action="{{ route('admin.galleries.update', $gallery) }}" method="POST" enctype="multipart/form-data"
+        <form id="editGalleryForm" action="{{ route('admin.galleries.update', $gallery) }}" method="POST"
+            enctype="multipart/form-data"
             class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
             @csrf
             @method('PUT')
@@ -41,12 +44,12 @@
 
                 <!-- Category: Select2 with AngularJS -->
                 <div>
-                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Category * (Select or Type New)</label>
+                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Category * (Select or Type
+                        New)</label>
                     <div class="relative gallery-category-wrapper">
                         <select name="category" id="galleryCategorySelect" required
                             class="no-select2 w-full px-4 py-2.5 rounded-xl bg-[#0d1627] border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors"
-                            ng-model="category"
-                            data-placeholder="Select or type a category...">
+                            ng-model="category" data-placeholder="Select or type a category...">
                             @php
                                 $categoryOptions = collect($categories ?? [])
                                     ->push($gallery->category)
@@ -69,7 +72,8 @@
                     <!-- Quick Category Pills (From Galleries Table) -->
                     @if ($quickPills->isNotEmpty())
                         <div class="flex items-center gap-1.5 flex-nowrap overflow-hidden mt-2.5 max-w-full">
-                            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider shrink-0">Quick:</span>
+                            <span
+                                class="text-[10px] font-mono text-slate-500 uppercase tracking-wider shrink-0">Quick:</span>
                             @foreach ($quickPills as $pill)
                                 <button type="button" ng-click="setCategory('{{ addslashes($pill) }}')"
                                     title="{{ $pill }}"
@@ -114,7 +118,8 @@
                 <div class="flex items-center justify-between pb-2 border-b border-white/5">
                     <div class="flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-                        <label class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-300">Current Photo &amp; Replace Asset</label>
+                        <label class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-300">Current Photo
+                            &amp; Replace Asset</label>
                     </div>
                     <span class="text-[10px] font-mono text-slate-500">Click photo to launch in Pictureflect Viewer</span>
                 </div>
@@ -123,25 +128,24 @@
                     <!-- Image Preview Area with Pictureflect Trigger -->
                     <div class="md:col-span-5">
                         <div class="relative w-full h-56 rounded-xl bg-[#09101d] border border-white/10 flex items-center justify-center overflow-hidden group shadow-inner cursor-pointer"
-                            data-pictureflect
-                            data-gallery="edit-preview"
-                            data-src="{{ $gallery->image_url }}"
-                            data-title="{{ $gallery->title }}"
-                            data-category="{{ $gallery->category }}">
-                            
-                            <span id="preview_badge" class="absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-black/70 text-cyan-300 backdrop-blur border border-cyan-500/30">
+                            data-pictureflect data-gallery="edit-preview" data-src="{{ $gallery->image_url }}"
+                            data-title="{{ $gallery->title }}" data-category="{{ $gallery->category }}">
+
+                            <span id="preview_badge"
+                                class="absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-black/70 text-cyan-300 backdrop-blur border border-cyan-500/30">
                                 Current Asset
                             </span>
 
-                            <img id="gallery_image_preview"
-                                src="{{ $gallery->image_url }}"
-                                alt="{{ $gallery->title }}"
+                            <img id="gallery_image_preview" src="{{ $gallery->image_url }}" alt="{{ $gallery->title }}"
                                 class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
 
                             <!-- Hover Pictureflect Preview Pill -->
-                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 z-10">
-                                <span class="px-3 py-1.5 rounded-full bg-cyan-500 text-black text-xs font-bold tracking-wider uppercase font-mono shadow-lg flex items-center gap-1.5">
-                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <div
+                                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 z-10">
+                                <span
+                                    class="px-3 py-1.5 rounded-full bg-cyan-500 text-black text-xs font-bold tracking-wider uppercase font-mono shadow-lg flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5">
                                         <circle cx="11" cy="11" r="8"></circle>
                                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                         <line x1="11" y1="8" x2="11" y2="14"></line>
@@ -156,8 +160,10 @@
                     <!-- Replace Controls -->
                     <div class="md:col-span-7 space-y-4">
                         <div>
-                            <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Replace Image File</label>
-                            <input type="file" name="image_file" id="gallery_image_file" accept="image/*" onchange="handleGalleryImagePreview(this)"
+                            <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Replace Image
+                                File</label>
+                            <input type="file" name="image_file" id="gallery_image_file" accept="image/*"
+                                onchange="handleGalleryImagePreview(this)"
                                 class="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-slate-300 text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-cyan-600/30 file:text-cyan-300 hover:file:bg-cyan-600/50 cursor-pointer">
                         </div>
 
@@ -169,7 +175,8 @@
 
                         <div>
                             <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Image URL</label>
-                            <input type="url" name="image_url" id="gallery_image_url" value="{{ old('image_url', $gallery->getRawOriginal('image_url')) }}"
+                            <input type="url" name="image_url" id="gallery_image_url"
+                                value="{{ old('image_url', $gallery->getRawOriginal('image_url')) }}"
                                 oninput="handleGalleryUrlPreview(this.value)"
                                 class="w-full px-4 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs font-mono focus:outline-none focus:border-cyan-500">
                         </div>
@@ -180,7 +187,8 @@
             <!-- Toggles: Featured & Active -->
             <div class="flex flex-wrap items-center gap-6 p-4 rounded-2xl bg-black/20 border border-white/5">
                 <label class="flex items-center gap-2.5 cursor-pointer">
-                    <input type="checkbox" name="is_featured" value="1" {{ old('is_featured', $gallery->is_featured) ? 'checked' : '' }}
+                    <input type="checkbox" name="is_featured" value="1"
+                        {{ old('is_featured', $gallery->is_featured) ? 'checked' : '' }}
                         class="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500 bg-black/40 border-white/20">
                     <span class="text-xs font-mono text-slate-300 font-bold flex items-center gap-1.5">
                         <span class="text-amber-400">★</span> Feature on Home Page Gallery Section
@@ -188,7 +196,8 @@
                 </label>
 
                 <label class="flex items-center gap-2.5 cursor-pointer">
-                    <input type="checkbox" name="is_active" value="1" {{ old('is_active', $gallery->is_active) ? 'checked' : '' }}
+                    <input type="checkbox" name="is_active" value="1"
+                        {{ old('is_active', $gallery->is_active) ? 'checked' : '' }}
                         class="w-4 h-4 rounded text-cyan-600 focus:ring-cyan-500 bg-black/40 border-white/20">
                     <span class="text-xs font-mono text-slate-300 font-bold">
                         Publish to Live Gallery
@@ -242,7 +251,8 @@
         .gallery-category-wrapper .select2-container--default .select2-selection--single {
             background-color: #0d1627 !important;
             border: 1px solid rgba(255, 255, 255, 0.12) !important;
-            border-radius: 0.75rem !important; /* rounded-xl */
+            border-radius: 0.75rem !important;
+            /* rounded-xl */
             height: 42px !important;
             display: flex !important;
             align-items: center !important;
@@ -259,7 +269,8 @@
 
         .gallery-category-wrapper .select2-container--default.select2-container--open .select2-selection--single,
         .gallery-category-wrapper .select2-container--default.select2-container--focus .select2-selection--single {
-            border-color: #06b6d4 !important; /* cyan-500 */
+            border-color: #06b6d4 !important;
+            /* cyan-500 */
             background-color: #0d1627 !important;
             box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.22) !important;
         }
@@ -336,7 +347,7 @@
             overflow: visible !important;
         }
 
-        .select2-container--default .select2-results > .select2-results__options,
+        .select2-container--default .select2-results>.select2-results__options,
         .select2-results__options {
             padding: 0.4rem !important;
             max-height: 240px !important;
@@ -420,7 +431,8 @@
                 allowClear: false
             }).on('change', function() {
                 var val = $(this).val();
-                var scope = angular.element(document.querySelector('[ng-controller="GalleryEditController"]')).scope();
+                var scope = angular.element(document.querySelector(
+                    '[ng-controller="GalleryEditController"]')).scope();
                 if (scope) {
                     scope.$evalAsync(function() {
                         scope.category = val;

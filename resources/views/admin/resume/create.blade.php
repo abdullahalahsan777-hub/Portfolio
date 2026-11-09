@@ -8,7 +8,8 @@
     <div class="w-full space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <h1 class="text-xl font-bold text-white">Create New Career Milestone</h1>
-            <a href="{{ route('admin.resume.index') }}" class="text-xs text-slate-400 hover:text-white inline-flex items-center gap-1.5">&larr; Back to
+            <a href="{{ route('admin.resume.index') }}"
+                class="text-xs text-slate-400 hover:text-white inline-flex items-center gap-1.5">&larr; Back to
                 Resume</a>
         </div>
 
@@ -83,6 +84,25 @@
                         placeholder="e.g. GPA 3.92 / 4.0 or Distinction or Honors"
                         class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
                 </div>
+
+                {{-- Theme --}}
+                <div>
+                    <label class="block text-xs font-mono text-slate-400 mb-1">Display Theme</label>
+                    @php
+                        $targetTheme = old('theme', request('theme', $selectedTheme ?? \App\Models\SiteSetting::getActiveTheme()));
+                    @endphp
+                    <select name="theme"
+                        class="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs">
+                        <option value="all" {{ $targetTheme === 'all' ? 'selected' : '' }}>All Themes</option>
+                        <option value="developer" {{ $targetTheme === 'developer' ? 'selected' : '' }}>Developer</option>
+                        <option value="graphic_designer" {{ $targetTheme === 'graphic_designer' ? 'selected' : '' }}>Graphic Designer</option>
+                        <option value="uiux_designer" {{ $targetTheme === 'uiux_designer' ? 'selected' : '' }}>UI/UX Designer</option>
+                        <option value="app_developer" {{ $targetTheme === 'app_developer' ? 'selected' : '' }}>App Developer</option>
+                        <option value="app_software_developer" {{ $targetTheme === 'app_software_developer' ? 'selected' : '' }}>App &amp; Software Developer</option>
+                        <option value="digital_designer_illustrator" {{ $targetTheme === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer &amp; Illustrator</option>
+                        <option value="laravel_developer" {{ $targetTheme === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
+                    </select>
+                </div>
             </div>
 
 
@@ -90,31 +110,9 @@
             <div>
                 <label class="block text-xs font-mono text-slate-400 mb-1">Description / Key Responsibilities (Optional, for
                     Experience)</label>
-                <textarea name="description" rows="5" data-height="200" placeholder="Describe role achievements, responsibilities, or impact..."
+                <textarea name="description" rows="5" data-height="200"
+                    placeholder="Describe role achievements, responsibilities, or impact..."
                     class="summernote w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">{{ old('description') }}</textarea>
-            </div>
-
-            <!-- Display Theme & Sort Order -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-mono text-slate-400 mb-1">Display Theme</label>
-                    <select name="theme"
-                        class="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs">
-                        <option value="all">All Themes</option>
-                        <option value="graphic_designer">Graphic Designer</option>
-                        <option value="digital_designer_illustrator">Digital Designer &amp; Illustrator</option>
-                        <option value="laravel_developer">Full-Stack Laravel Developer</option>
-                        <option value="app_developer">App Developer</option>
-                        <option value="developer">Developer</option>
-                        <option value="uiux_designer">UI/UX Designer</option>
-                        <option value="app_software_developer">App &amp; Software Developer</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-mono text-slate-400 mb-1">Display Order</label>
-                    <input type="number" name="sort_order" value="1"
-                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
-                </div>
             </div>
 
             <div class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-white/10">
