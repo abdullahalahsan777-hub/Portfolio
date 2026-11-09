@@ -8,7 +8,8 @@
     <div class="w-full space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <h1 class="text-xl font-bold text-white">Edit: {{ $project->title }}</h1>
-            <a href="{{ route('admin.projects.index') }}" class="text-xs text-slate-400 hover:text-white inline-flex items-center gap-1.5">&larr; Back to
+            <a href="{{ route('admin.projects.index') }}"
+                class="text-xs text-slate-400 hover:text-white inline-flex items-center gap-1.5">&larr; Back to
                 Projects</a>
         </div>
 
@@ -21,8 +22,17 @@
                 <div>
                     <label class="block text-xs font-mono text-slate-400 mb-1">Project Title *</label>
                     <input type="text" name="title" required value="{{ old('title', $project->title) }}"
+                        placeholder="e.g. Nordic Living Store"
                         class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
                 </div>
+
+                <div>
+                    <label class="block text-xs font-mono text-slate-400 mb-1">Subtitle / Impact Summary</label>
+                    <input type="text" name="subtitle" value="{{ old('subtitle', $project->subtitle) }}"
+                        placeholder="e.g. High-conversion shopping experience"
+                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
+                </div>
+
                 <div>
                     <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Category * (Select or Type New)</label>
                     <div class="relative custom-category-wrapper">
@@ -65,12 +75,27 @@
                         <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
                     @enderror
                 </div>
-            </div>
 
-            <div>
-                <label class="block text-xs font-mono text-slate-400 mb-1">Subtitle / Impact Summary</label>
-                <input type="text" name="subtitle" value="{{ old('subtitle', $project->subtitle) }}"
-                    class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
+                <!-- Tags / Technologies -->
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">
+                        Tags / Technologies <span class="text-slate-500 font-normal text-[11px]">(Press Enter or Comma to add)</span>
+                    </label>
+                    <div class="tags-input-widget relative w-full min-h-[42px] px-3.5 py-1.5 rounded-xl bg-[#0d1627] border border-white/10 hover:border-white/20 text-white text-sm focus-within:border-cyan-500 transition-colors cursor-text flex items-center">
+                        <div class="tag-pills-box flex flex-wrap items-center gap-1.5 w-full">
+                            <input type="text"
+                                class="tag-text-input flex-1 min-w-[120px] bg-transparent border-0 outline-none text-white text-sm font-mono placeholder:text-slate-500 focus:outline-none focus:ring-0 p-0.5"
+                                placeholder="Type tag & press Enter or comma..."
+                                data-default-placeholder="Type tag & press Enter or comma..."
+                                autocomplete="off">
+                        </div>
+
+                        <input type="hidden" name="tags" id="project_tags_input" value="{{ old('tags', $project->tags) }}">
+                    </div>
+                    @error('tags')
+                        <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
 
             <!-- Project Showcase Image (Upload / Replace / URL / Live Preview) -->
@@ -144,29 +169,8 @@
 
             <div>
                 <label class="block text-xs font-mono text-slate-400 mb-1">Description</label>
-                <textarea name="description" rows="5" data-height="220"
+                <textarea name="description" rows="5" data-height="220" placeholder="Case study overview..."
                     class="summernote w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">{{ old('description', $project->description) }}</textarea>
-            </div>
-
-            <!-- Tags / Technologies -->
-            <div>
-                <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">
-                    Tags / Technologies <span class="text-slate-500 font-normal text-[11px]">(Press Enter or Comma to add)</span>
-                </label>
-                <div class="tags-input-widget relative w-full min-h-[42px] px-3.5 py-1.5 rounded-xl bg-[#0d1627] border border-white/10 hover:border-white/20 text-white text-sm focus-within:border-cyan-500 transition-colors cursor-text flex items-center">
-                    <div class="tag-pills-box flex flex-wrap items-center gap-1.5 w-full">
-                        <input type="text"
-                            class="tag-text-input flex-1 min-w-[120px] bg-transparent border-0 outline-none text-white text-sm font-mono placeholder:text-slate-500 focus:outline-none focus:ring-0 p-0.5"
-                            placeholder="Type tag & press Enter or comma..."
-                            data-default-placeholder="Type tag & press Enter or comma..."
-                            autocomplete="off">
-                    </div>
-
-                    <input type="hidden" name="tags" id="project_tags_input" value="{{ old('tags', $project->tags) }}">
-                </div>
-                @error('tags')
-                    <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
-                @enderror
             </div>
 
             <div class="grid grid-cols-2 gap-4">
@@ -175,22 +179,13 @@
                     <select name="theme"
                         class="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs">
                         <option value="all" {{ $project->theme === 'all' ? 'selected' : '' }}>All Themes</option>
-                        <option value="developer" {{ $project->theme === 'developer' ? 'selected' : '' }}>Developer
-                        </option>
-                        <option value="graphic_designer" {{ $project->theme === 'graphic_designer' ? 'selected' : '' }}>
-                            Graphic Designer</option>
-                        <option value="uiux_designer" {{ $project->theme === 'uiux_designer' ? 'selected' : '' }}>UI/UX
-                            Designer</option>
-                        <option value="app_developer" {{ $project->theme === 'app_developer' ? 'selected' : '' }}>App
-                            Developer</option>
-                        <option value="app_software_developer"
-                            {{ $project->theme === 'app_software_developer' ? 'selected' : '' }}>App &amp; Software
-                            Developer</option>
-                        <option value="digital_designer_illustrator"
-                            {{ $project->theme === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer
-                            &amp; Illustrator</option>
-                        <option value="laravel_developer"
-                            {{ $project->theme === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
+                        <option value="developer" {{ $project->theme === 'developer' ? 'selected' : '' }}>Developer</option>
+                        <option value="graphic_designer" {{ $project->theme === 'graphic_designer' ? 'selected' : '' }}>Graphic Designer</option>
+                        <option value="uiux_designer" {{ $project->theme === 'uiux_designer' ? 'selected' : '' }}>UI/UX Designer</option>
+                        <option value="app_developer" {{ $project->theme === 'app_developer' ? 'selected' : '' }}>App Developer</option>
+                        <option value="app_software_developer" {{ $project->theme === 'app_software_developer' ? 'selected' : '' }}>App &amp; Software Developer</option>
+                        <option value="digital_designer_illustrator" {{ $project->theme === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer &amp; Illustrator</option>
+                        <option value="laravel_developer" {{ $project->theme === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
                     </select>
                 </div>
                 <div>
@@ -204,8 +199,7 @@
                 <a href="{{ route('admin.projects.index') }}"
                     class="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs text-slate-400 hover:text-white text-center">Cancel</a>
                 <button type="submit"
-                    class="w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg text-center">Update
-                    Project</button>
+                    class="w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg text-center">Update Project</button>
             </div>
         </form>
     </div>
@@ -238,7 +232,6 @@
             const placeholder = document.getElementById('preview_placeholder');
             const badge = document.getElementById('preview_badge');
 
-            // Only update preview from URL if no new file is queued
             if (!fileInput.files.length) {
                 const trimmed = val.trim();
                 if (trimmed) {
