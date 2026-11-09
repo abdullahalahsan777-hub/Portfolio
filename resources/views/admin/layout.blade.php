@@ -1640,7 +1640,7 @@
 
                 tags.forEach(function(tag, idx) {
                     var $pill = $(
-                        '<span class="tag-pill-item inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-[#1e2333] hover:bg-[#252b3e] text-slate-200 border border-white/10 shadow-sm transition-colors">' +
+                        '<span class="tag-pill-item inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 shadow-sm transition-colors">' +
                             '<span>' + $('<div>').text(tag).html() + '</span>' +
                             '<button type="button" class="text-slate-400 hover:text-rose-400 hover:bg-white/10 rounded-full w-4 h-4 inline-flex items-center justify-center text-xs font-bold transition-all focus:outline-none leading-none cursor-pointer" title="Remove ' + $('<div>').text(tag).html() + '">&times;</button>' +
                         '</span>'

@@ -76,22 +76,20 @@
 
                 <!-- Tags / Technologies -->
                 <div>
-                    <fieldset class="tags-input-widget relative rounded-2xl border border-purple-500/70 bg-[#0d1627] px-4 pt-1.5 pb-2.5 transition-all duration-200 focus-within:border-purple-400 focus-within:ring-2 focus-within:ring-purple-500/20 hover:border-purple-500">
-                        <legend class="px-2 text-xs font-mono font-medium text-purple-400 flex items-center gap-1.5">
-                            <span>Tags / Technologies</span>
-                            <span class="text-slate-500 text-[10px] font-normal hidden sm:inline">(Press Enter or Comma to add)</span>
-                        </legend>
-
-                        <div class="tag-pills-box flex flex-wrap items-center gap-2 min-h-[38px] cursor-text pt-1">
+                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">
+                        Tags / Technologies <span class="text-slate-500 font-normal text-[11px]">(Press Enter or Comma to add)</span>
+                    </label>
+                    <div class="tags-input-widget relative w-full min-h-[42px] px-3.5 py-1.5 rounded-xl bg-[#0d1627] border border-white/10 hover:border-white/20 text-white text-sm focus-within:border-cyan-500 transition-colors cursor-text flex items-center">
+                        <div class="tag-pills-box flex flex-wrap items-center gap-1.5 w-full">
                             <input type="text"
-                                class="tag-text-input flex-1 min-w-[140px] bg-transparent border-0 outline-none text-white text-xs font-mono placeholder:text-slate-500 focus:outline-none focus:ring-0 p-1"
+                                class="tag-text-input flex-1 min-w-[120px] bg-transparent border-0 outline-none text-white text-sm font-mono placeholder:text-slate-500 focus:outline-none focus:ring-0 p-0.5"
                                 placeholder="e.g. Laravel 12, Vue 3, Redis"
                                 data-default-placeholder="e.g. Laravel 12, Vue 3, Redis"
                                 autocomplete="off">
                         </div>
 
                         <input type="hidden" name="tags" id="project_tags_input" value="{{ old('tags') }}">
-                    </fieldset>
+                    </div>
                     @error('tags')
                         <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
                     @enderror
