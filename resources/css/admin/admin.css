@@ -108,8 +108,7 @@
 }
 
 .datepicker.hidden,
-.datepicker[hidden],
-.datepicker:not(.active) {
+.datepicker[hidden] {
     display: none !important;
 }
 
@@ -143,8 +142,12 @@
     box-shadow: none !important;
 }
 
-.datepicker-controls .button {
-    background-color: rgba(255, 255, 255, 0.04) !important;
+.datepicker-controls button,
+.datepicker-controls .button,
+.datepicker-controls .prev-btn,
+.datepicker-controls .next-btn,
+.datepicker-controls .view-switch {
+    background-color: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #e2e8f0 !important;
     border-radius: 0.6rem !important;
@@ -154,23 +157,36 @@
     padding: 0.35rem 0.65rem !important;
 }
 
-.datepicker-controls .button:hover {
+.datepicker-controls button:hover,
+.datepicker-controls .button:hover,
+.datepicker-controls .prev-btn:hover,
+.datepicker-controls .next-btn:hover,
+.datepicker-controls .view-switch:hover {
     background-color: rgba(6, 182, 212, 0.2) !important;
     border-color: rgba(6, 182, 212, 0.4) !important;
     color: #22d3ee !important;
 }
 
+.datepicker-controls .view-switch,
 .datepicker-controls .button.view-switch {
     font-family: 'JetBrains Mono', monospace !important;
     font-weight: 700 !important;
     color: #ffffff !important;
+    font-size: 0.8125rem !important;
+    padding: 0.35rem 0.85rem !important;
 }
 
+.datepicker-controls .prev-btn,
+.datepicker-controls .next-btn,
 .datepicker-controls .button.prev-btn,
 .datepicker-controls .button.next-btn {
     width: 2rem !important;
     height: 2rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     padding: 0 !important;
+    font-size: 1rem !important;
 }
 
 .datepicker-view .dow {
@@ -191,6 +207,15 @@
     transition: all 0.15s ease !important;
     height: 2.1rem !important;
     line-height: 2.1rem !important;
+}
+
+.datepicker-cell.month,
+.datepicker-cell.year,
+.datepicker-cell.decade {
+    height: 2.5rem !important;
+    line-height: 2.5rem !important;
+    margin: 0.15rem 0 !important;
+    font-size: 0.8125rem !important;
 }
 
 .datepicker-cell:not(.disabled):not(.selected):hover {

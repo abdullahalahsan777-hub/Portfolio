@@ -141,8 +141,14 @@
                                 <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                             </svg>
                         </div>
+                        @php
+                            $formattedDate = $blog->date;
+                            if ($blog->date && strtotime($blog->date)) {
+                                $formattedDate = date('M d, Y', strtotime($blog->date));
+                            }
+                        @endphp
                         <input datepicker datepicker-autohide datepicker-format="M dd, yyyy" type="text" name="date" id="blog_publish_date"
-                            value="{{ old('date', $blog->date) }}"
+                            value="{{ old('date', $formattedDate) }}"
                             placeholder="Select date..."
                             class="flowbite-datepicker ps-9 w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
                     </div>

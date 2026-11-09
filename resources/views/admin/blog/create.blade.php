@@ -126,16 +126,18 @@
                         class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-mono text-slate-400 mb-1" for="blog_publish_date">Publish Date Display</label>
+                    <label class="block text-xs font-mono text-slate-400 mb-1" for="blog_publish_date">Publish Date
+                        Display</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-slate-400">
-                            <svg class="w-4 h-4 text-cyan-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                            <svg class="w-4 h-4 text-cyan-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                             </svg>
                         </div>
-                        <input datepicker datepicker-autohide datepicker-format="M dd, yyyy" type="text" name="date" id="blog_publish_date"
-                            value="{{ old('date', date('M d, Y')) }}"
-                            placeholder="Select date..."
+                        <input datepicker datepicker-autohide datepicker-format="M dd, yyyy" type="text" name="date"
+                            id="blog_publish_date" value="{{ old('date', date('M d, Y')) }}" placeholder="Select date..."
                             class="flowbite-datepicker ps-9 w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
                     </div>
                 </div>

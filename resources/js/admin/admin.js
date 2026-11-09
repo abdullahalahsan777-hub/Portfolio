@@ -18,52 +18,78 @@ export function initAdminPanel() {
         console.warn('Flowbite init error:', e);
     }
 
-    // Helper to close all open datepicker popups
-    function closeAllDatepickers() {
-        document.querySelectorAll('.datepicker').forEach(p => {
-            p.classList.remove('active', 'block');
-            p.classList.add('hidden');
+    // Helper to close all open datepicker popups cleanly via instances
+    function hideAllDatepickers() {
+        document.querySelectorAll('[datepicker], [data-datepicker], .flowbite-datepicker').forEach(input => {
+            const dp = input.datepicker || input._datepicker;
+            if (dp && typeof dp.hide === 'function') {
+                dp.hide();
+            }
+        });
+        document.querySelectorAll('.datepicker:not(.inline)').forEach(picker => {
+            picker.classList.add('hidden');
+            picker.classList.remove('active', 'block');
         });
     }
 
-    // 1. Listen for date selection and click events on Flowbite Datepicker
+    // 1. Initialize & Manage Flowbite Datepickers
     const datepickerElements = document.querySelectorAll('[datepicker], [data-datepicker], .flowbite-datepicker');
     datepickerElements.forEach(el => {
-        // When a date is selected, flowbite dispatches 'changeDate'
-        el.addEventListener('changeDate', () => {
-            closeAllDatepickers();
-        });
-
-        // Also close if value changes
-        el.addEventListener('change', () => {
-            closeAllDatepickers();
-        });
-    });
-
-    // Close when clicking on a date cell in days view
-    document.addEventListener('click', (e) => {
-        const cell = e.target.closest('.datepicker-cell');
-        if (cell && !cell.classList.contains('disabled')) {
-            // Check if this is a day selection cell (inside days grid)
-            const isDayCell = cell.closest('.days') || cell.dataset.date;
-            if (isDayCell) {
-                setTimeout(closeAllDatepickers, 80);
-                return;
+        // Initialize instance if not already done by initFlowbite()
+        if (!el.datepicker) {
+            const format = el.getAttribute('datepicker-format') || 'M dd, yyyy';
+            const autohide = el.hasAttribute('datepicker-autohide') ? (el.getAttribute('datepicker-autohide') !== 'false') : true;
+            try {
+                new Datepicker(el, {
+                    format: format,
+                    autohide: autohide,
+                });
+            } catch (err) {
+                console.warn('Datepicker init error on element:', el, err);
             }
         }
 
-        // Close on outside click (not inside input and not inside picker)
-        const isInput = e.target.closest('[datepicker], [data-datepicker], .flowbite-datepicker');
-        const isPicker = e.target.closest('.datepicker');
-        if (!isInput && !isPicker) {
-            closeAllDatepickers();
-        }
+        // When a full date is selected (Flowbite dispatches 'changeDate' only on day pick)
+        el.addEventListener('changeDate', () => {
+            const dp = el.datepicker || el._datepicker;
+            if (dp && typeof dp.hide === 'function') {
+                dp.hide();
+            }
+            if (dp && dp.picker && dp.picker.element) {
+                dp.picker.element.classList.add('hidden');
+                dp.picker.element.classList.remove('active', 'block');
+            }
+        });
     });
 
-    // Close on Escape key
+    // 2. Global click delegator for datepicker popups
+    document.addEventListener('click', (e) => {
+        // A. If clicking a day cell in the days view, let the selection complete then hide
+        const dayCell = e.target.closest('.datepicker-cell.day');
+        if (dayCell && !dayCell.classList.contains('disabled')) {
+            setTimeout(hideAllDatepickers, 80);
+            return;
+        }
+
+        // B. If clicking on any other part of the datepicker (view switch, month, year, decade, prev/next arrows):
+        // NEVER close! Let Flowbite navigate views freely.
+        if (e.target.closest('.datepicker')) {
+            return;
+        }
+
+        // C. If clicking on any datepicker input field, let it open
+        if (e.target.closest('[datepicker], [data-datepicker], .flowbite-datepicker')) {
+            return;
+        }
+
+        // D. Clicked outside both the datepicker popup and input: close open datepickers
+        hideAllDatepickers();
+    });
+
+    // 3. Close on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            closeAllDatepickers();
+            hideAllDatepickers();
         }
     });
     // 1. Theme Radio Selector Interactive Cards
