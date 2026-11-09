@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Trait to automatically copy primary ID to sort_order upon creation.
  *
- * @mixin Model
- * @method static void created(\Closure|callable|string $callback)
- * @method static void updating(\Closure|callable|string $callback)
+ * @mixin \Illuminate\Database\Eloquent\Model
+ *
+ * @method static void created(callable|\Closure $callback)
+ * @method static void updating(callable|\Closure $callback)
  */
 trait AutoSortOrderById
 {
