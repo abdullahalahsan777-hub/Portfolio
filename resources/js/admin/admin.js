@@ -1,9 +1,39 @@
+import { initFlowbite, Datepicker } from 'flowbite';
+
+window.Datepicker = Datepicker;
+window.initFlowbite = initFlowbite;
+
 /**
  * Admin Panel Dedicated JavaScript
- * Handles sidebar toggles, theme switcher radio card feedback, and dismissible alerts.
+ * Handles Flowbite initialization, datepickers, sidebar toggles, theme switcher radio card feedback, and dismissible alerts.
  */
 
 export function initAdminPanel() {
+    // 0. Initialize Flowbite components (modals, dropdowns, tooltips, etc.)
+    try {
+        if (typeof initFlowbite === 'function') {
+            initFlowbite();
+        }
+    } catch (e) {
+        console.warn('Flowbite init error:', e);
+    }
+
+    // 1. Initialize Flowbite Datepickers
+    const datepickerElements = document.querySelectorAll('[datepicker], [data-datepicker], .flowbite-datepicker');
+    datepickerElements.forEach(el => {
+        if (!el._datepicker) {
+            const format = el.getAttribute('datepicker-format') || 'M dd, yyyy';
+            const autohide = el.getAttribute('datepicker-autohide') !== 'false';
+            try {
+                el._datepicker = new Datepicker(el, {
+                    format: format,
+                    autohide: autohide,
+                });
+            } catch (err) {
+                console.warn('Datepicker init error on element:', el, err);
+            }
+        }
+    });
     // 1. Theme Radio Selector Interactive Cards
     const themeCards = document.querySelectorAll('input[name="active_theme"]');
     if (themeCards.length > 0) {

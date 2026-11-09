@@ -77,7 +77,7 @@ class BlogPostController extends Controller
         }
 
         $validated['is_published'] = $request->has('is_published');
-        $validated['author']       = $validated['author'] ?: 'Alex Rivera';
+        $validated['author']       = $validated['author'] ?: (Auth::user()?->name ?: 'Admin');
         $validated['read_time']    = $validated['read_time'] ?: '5 min read';
         $validated['date']         = $validated['date'] ?: date('M d, Y');
         $validated['sort_order']   = $validated['sort_order'] ?? ((BlogPost::max('sort_order') ?? 0) + 1);

@@ -8,6 +8,8 @@
 @source '../**/*.js';
 
 /* Import Modular Separated CSS Files */
+@import 'flowbite';
+@import '../../node_modules/flowbite-datepicker/dist/css/datepicker.css';
 @import './frontend/frontend.css';
 @import './frontend/scroll_animations.css';
 @import './frontend/graphic_designer.css';
