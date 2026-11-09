@@ -1616,6 +1616,115 @@
             $sel.val(cat).trigger('change');
         };
 
+        // -------------------------------------------------------------------------
+        // Interactive Tags / Technologies Input (Enter & Comma to add pill)
+        // -------------------------------------------------------------------------
+        window.initTagsInputWidget = function(widget) {
+            var $widget = $(widget);
+            if ($widget.data('tags-initialized')) return;
+            $widget.data('tags-initialized', true);
+
+            var $hidden = $widget.find('input[type="hidden"]');
+            var $textInput = $widget.find('.tag-text-input');
+            var $pillsBox = $widget.find('.tag-pills-box');
+            if (!$hidden.length || !$textInput.length || !$pillsBox.length) return;
+
+            var tags = [];
+            var raw = ($hidden.val() || '').trim();
+            if (raw) {
+                tags = raw.split(',').map(function(t) { return t.trim(); }).filter(function(t) { return t.length > 0; });
+            }
+
+            function syncAndRender() {
+                $pillsBox.find('.tag-pill-item').remove();
+
+                tags.forEach(function(tag, idx) {
+                    var $pill = $(
+                        '<span class="tag-pill-item inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-[#1e2333] hover:bg-[#252b3e] text-slate-200 border border-white/10 shadow-sm transition-colors">' +
+                            '<span>' + $('<div>').text(tag).html() + '</span>' +
+                            '<button type="button" class="text-slate-400 hover:text-rose-400 hover:bg-white/10 rounded-full w-4 h-4 inline-flex items-center justify-center text-xs font-bold transition-all focus:outline-none leading-none cursor-pointer" title="Remove ' + $('<div>').text(tag).html() + '">&times;</button>' +
+                        '</span>'
+                    );
+
+                    $pill.find('button').on('click', function(e) {
+                        e.stopPropagation();
+                        removeTag(idx);
+                    });
+
+                    $textInput.before($pill);
+                });
+
+                $hidden.val(tags.join(', '));
+                $textInput.attr('placeholder', tags.length === 0 ? ($textInput.data('default-placeholder') || 'Type tag & press Enter or comma...') : 'Add more...');
+            }
+
+            function addTags(rawStr) {
+                if (!rawStr) return;
+                var parts = rawStr.split(/[,;\n]+/).map(function(t) { return t.trim(); }).filter(function(t) { return t.length > 0; });
+                var changed = false;
+
+                parts.forEach(function(part) {
+                    var exists = tags.some(function(t) { return t.toLowerCase() === part.toLowerCase(); });
+                    if (!exists) {
+                        tags.push(part);
+                        changed = true;
+                    }
+                });
+
+                if (changed) {
+                    syncAndRender();
+                }
+                $textInput.val('');
+            }
+
+            function removeTag(idx) {
+                if (idx >= 0 && idx < tags.length) {
+                    tags.splice(idx, 1);
+                    syncAndRender();
+                    $textInput.focus();
+                }
+            }
+
+            $textInput.on('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Do NOT submit parent form
+                    addTags($(this).val());
+                } else if (e.key === ',') {
+                    e.preventDefault(); // Do NOT insert comma character into input
+                    addTags($(this).val());
+                } else if (e.key === 'Backspace' && $(this).val() === '') {
+                    if (tags.length > 0) {
+                        removeTag(tags.length - 1);
+                    }
+                }
+            });
+
+            $textInput.on('paste', function(e) {
+                var clipboardData = (e.originalEvent && e.originalEvent.clipboardData) || window.clipboardData;
+                if (clipboardData) {
+                    e.preventDefault();
+                    var pasted = clipboardData.getData('text');
+                    addTags(pasted);
+                }
+            });
+
+            $textInput.on('blur', function() {
+                var v = $(this).val().trim();
+                if (v) {
+                    addTags(v);
+                }
+            });
+
+            $widget.on('click', function(e) {
+                if (!$(e.target).closest('button').length) {
+                    $textInput.focus();
+                }
+            });
+
+            // Initial render
+            syncAndRender();
+        };
+
         $(document).ready(function() {
             $('select:not(.no-select2):not(.dataTables_length select)').each(function() {
                 applySelect2ToElement($(this));
@@ -1630,6 +1739,11 @@
                     placeholder: $el.attr('data-placeholder') || 'Select or type a category...',
                     allowClear: false
                 });
+            });
+
+            // Auto initialize interactive tags inputs
+            $('.tags-input-widget').each(function() {
+                window.initTagsInputWidget(this);
             });
         });
 

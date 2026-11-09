@@ -148,10 +148,27 @@
                     class="summernote w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">{{ old('description', $project->description) }}</textarea>
             </div>
 
+            <!-- Tags / Technologies -->
             <div>
-                <label class="block text-xs font-mono text-slate-400 mb-1">Tags / Technologies (comma separated)</label>
-                <input type="text" name="tags" value="{{ old('tags', $project->tags) }}"
-                    class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
+                <fieldset class="tags-input-widget relative rounded-2xl border border-purple-500/70 bg-[#0d1627] px-4 pt-1.5 pb-2.5 transition-all duration-200 focus-within:border-purple-400 focus-within:ring-2 focus-within:ring-purple-500/20 hover:border-purple-500">
+                    <legend class="px-2 text-xs font-mono font-medium text-purple-400 flex items-center gap-1.5">
+                        <span>Tags / Technologies</span>
+                        <span class="text-slate-500 text-[10px] font-normal hidden sm:inline">(Press Enter or Comma to add)</span>
+                    </legend>
+
+                    <div class="tag-pills-box flex flex-wrap items-center gap-2 min-h-[38px] cursor-text pt-1">
+                        <input type="text"
+                            class="tag-text-input flex-1 min-w-[140px] bg-transparent border-0 outline-none text-white text-xs font-mono placeholder:text-slate-500 focus:outline-none focus:ring-0 p-1"
+                            placeholder="Type tag & press Enter or comma..."
+                            data-default-placeholder="Type tag & press Enter or comma..."
+                            autocomplete="off">
+                    </div>
+
+                    <input type="hidden" name="tags" id="project_tags_input" value="{{ old('tags', $project->tags) }}">
+                </fieldset>
+                @error('tags')
+                    <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="grid grid-cols-2 gap-4">
