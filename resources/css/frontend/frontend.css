@@ -1,7 +1,163 @@
 /* ==========================================================================
-   Frontend Common Styles
+   Frontend Common Styles & Modern Professional Typography System
    Smooth scrolling, typography, glassmorphism, responsive utilities.
    ========================================================================== */
+
+:root {
+    --font-stack-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-stack-display: 'Outfit', 'Space Grotesk', -apple-system, sans-serif;
+    --font-stack-grotesk: 'Space Grotesk', -apple-system, sans-serif;
+    --font-stack-syne: 'Syne', sans-serif;
+    --font-stack-urbanist: 'Urbanist', -apple-system, sans-serif;
+    --font-stack-serif: 'Italiana', Georgia, serif;
+    --font-stack-headline: 'Bebas Neue', 'Outfit', sans-serif;
+    --font-stack-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Global Optical Typography & Anti-Aliasing Smoothing */
+html {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+body {
+    font-family: var(--font-stack-sans);
+    letter-spacing: -0.011em;
+    line-height: 1.68;
+}
+
+/* Modern Heading Hierarchy & Balance */
+h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+}
+
+h1 {
+    font-family: var(--font-stack-display);
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    font-weight: 800;
+}
+
+h2 {
+    font-family: var(--font-stack-display);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    font-weight: 700;
+}
+
+h3 {
+    font-family: var(--font-stack-display);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+h4, h5, h6 {
+    letter-spacing: -0.015em;
+    font-weight: 600;
+}
+
+p {
+    text-wrap: pretty;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+}
+
+/* Editorial Kicker / Eyebrow Pill Tag */
+.typography-kicker,
+.section-kicker {
+    font-family: var(--font-stack-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Modern Headline Display */
+.typography-hero-title {
+    font-family: var(--font-stack-display);
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+/* Modern Section Headline */
+.typography-section-title {
+    font-family: var(--font-stack-display);
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    font-weight: 800;
+}
+
+/* Tabular Metric Numbers */
+.typography-stat-number,
+.stat-counter-number {
+    font-family: var(--font-stack-display);
+    font-feature-settings: 'tnum';
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    font-weight: 900;
+}
+
+/* Tech Code Chip / Monospace Accent */
+.typography-mono-badge {
+    font-family: var(--font-stack-mono);
+    font-feature-settings: 'tnum';
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+}
+
+/* Silk Multi-Stop Gradient Text Utilities */
+.text-gradient-cyan {
+    background: linear-gradient(135deg, #00e5ff 0%, #00b4d8 45%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-emerald {
+    background: linear-gradient(135deg, #00ff88 0%, #10b981 50%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-purple {
+    background: linear-gradient(135deg, #a855f7 0%, #c084fc 40%, #f472b6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-lime {
+    background: linear-gradient(135deg, #ccff00 0%, #a3e635 60%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-crimson {
+    background: linear-gradient(135deg, #ff0033 0%, #ff3366 50%, #ff88a3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-orange {
+    background: linear-gradient(135deg, #ff6b00 0%, #ff9500 50%, #ffd000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
 html, body {
     scroll-behavior: smooth;

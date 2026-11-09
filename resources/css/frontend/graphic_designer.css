@@ -26,6 +26,22 @@
     background-color: var(--gd-bg-main);
     color: var(--gd-text-primary);
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.01em;
+}
+
+.theme-graphic_designer h1,
+.theme-graphic_designer h2,
+.theme-graphic_designer h3 {
+    font-family: 'Syne', 'Outfit', -apple-system, sans-serif;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+}
+
+.theme-graphic_designer .gd-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.16em;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 /* Custom Geometric Flower Shape (as seen behind designer in the hero & testimonial) */

@@ -3,6 +3,26 @@
    Minimalist Silver-Stone Grey (#cfd3d8) & Rose Poppy Botanical Accent (#e26d9b)
    ========================================================================== */
 
+/* Modern Editorial & Botanical Typography */
+.theme-digital_designer_illustrator {
+    font-family: 'Urbanist', 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+.theme-digital_designer_illustrator h1,
+.theme-digital_designer_illustrator .font-serif-display {
+    font-family: 'Italiana', Georgia, serif;
+    letter-spacing: 0.015em;
+    font-weight: 400;
+}
+
+.theme-digital_designer_illustrator h2,
+.theme-digital_designer_illustrator h3 {
+    font-family: 'Urbanist', 'Outfit', sans-serif;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+}
+
 /* Glassmorphism Frosted Stone Card */
 .illustrator-card {
     background: rgba(255, 255, 255, 0.45);

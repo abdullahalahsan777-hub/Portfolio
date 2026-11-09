@@ -24,6 +24,32 @@
     background-color: var(--dev-bg-main);
     color: var(--dev-text-primary);
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.011em;
+}
+
+.theme-developer h1,
+.theme-developer h2,
+.theme-developer h3 {
+    font-family: 'Outfit', 'Space Grotesk', -apple-system, sans-serif;
+    letter-spacing: -0.03em;
+}
+
+.theme-developer .dev-hero-title {
+    font-family: 'Outfit', 'Space Grotesk', -apple-system, sans-serif;
+    letter-spacing: -0.038em;
+    line-height: 1.04;
+    font-weight: 900;
+}
+
+.theme-developer .dev-hero-desc {
+    letter-spacing: -0.01em;
+    line-height: 1.75;
+}
+
+.theme-developer .dev-hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.14em;
+    font-weight: 700;
 }
 
 /* Emerald Neon Glow Utilities */

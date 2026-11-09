@@ -8,11 +8,11 @@
     <meta name="description"
         content="Portfolio of Tanu, elite App & Software Developer specializing in enterprise software architecture, mobile apps, high-throughput cloud backends, and responsive digital products.">
 
-    <!-- Google Fonts: Outfit (Display & Headlines), Plus Jakarta Sans (Body), JetBrains Mono (Technical Details) -->
+    <!-- Google Fonts: Modern Professional Typography Suite -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Italiana&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
         rel="stylesheet">
 
     <!-- Theme Mode Initialization (Dark / Light / System) -->

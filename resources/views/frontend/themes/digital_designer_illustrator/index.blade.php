@@ -8,11 +8,11 @@
     <meta name="description"
         content="Portfolio of Alex Walker, digital designer & illustrator crafting refined brand systems, editorial visual design, and interactive 3D digital experiences.">
 
-    <!-- Google Fonts: Urbanist (Blayden Original), Plus Jakarta Sans & Outfit -->
+    <!-- Google Fonts: Modern Professional Typography Suite -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Italiana&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Italiana&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
         rel="stylesheet">
 
     <!-- Phosphor Icons -->

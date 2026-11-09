@@ -25,6 +25,22 @@
     background-color: var(--uiux-bg-main);
     color: var(--uiux-text-primary);
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.012em;
+}
+
+.theme-uiux_designer h1,
+.theme-uiux_designer h2,
+.theme-uiux_designer h3 {
+    font-family: 'Outfit', 'Space Grotesk', -apple-system, sans-serif;
+    letter-spacing: -0.035em;
+    font-weight: 900;
+}
+
+.theme-uiux_designer .uiux-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.18em;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 /* Neon Lime Glow */

@@ -2,6 +2,20 @@
    APP & SOFTWARE DEVELOPER THEME STYLES (Amber Orange #ff6b00 & Onyx #080808)
    ========================================================================== */
 
+/* Industrial Tech & Software Typography */
+.theme-app_software_developer {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+.theme-app_software_developer h1,
+.theme-app_software_developer h2,
+.theme-app_software_developer h3 {
+    font-family: 'Outfit', 'Space Grotesk', sans-serif;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+}
+
 /* Watermark backdrop text */
 .watermark-text {
     font-size: clamp(4rem, 15vw, 12rem);
