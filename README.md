@@ -2,7 +2,7 @@
 
 > Complete multi-theme portfolio with admin panel to maintain everything.
 
-[![Current Version](https://img.shields.io/badge/Version-v1.2.0-0090e7?style=flat-square&logo=git&logoColor=white)](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0)
+[![Current Version](https://img.shields.io/badge/Version-v1.3.0-0090e7?style=flat-square&logo=git&logoColor=white)](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.3.0)
 [![Release Status](https://img.shields.io/badge/Release-Stable-emerald?style=flat-square)](https://github.com/abdullahalahsan777-hub/Portfolio/releases)
 [![Laravel 12](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com)
 [![PHP 8.2+](https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
@@ -46,9 +46,9 @@
 
 | Metric | Details |
 | :--- | :--- |
-| **Current Stable Version** | **`v1.2.0`** |
-| **Release Date** | October 2, 2026 |
-| **Git Tag** | [`v1.2.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0) |
+| **Current Stable Version** | **`v1.3.0`** |
+| **Release Date** | November 10, 2026 |
+| **Git Tag** | [`v1.3.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.3.0) |
 | **Release Status** | **Stable** (Production-Ready) |
 | **Laravel Compatibility** | Laravel `12.x` / PHP `8.2+` |
 | **Default Branch** | [`main`](https://github.com/abdullahalahsan777-hub/Portfolio/tree/main) |
@@ -56,9 +56,9 @@
 
 ---
 
-## Software Version Control & Releases Matrix (v1.0.0 – v1.2.0)
+## Software Version Control & Releases Matrix (v1.0.0 – v1.3.0)
 
-All releases from **v1.0.0** to **v1.2.0** are stable versions tracked by Git tags on GitHub.
+All releases from **v1.0.0** to **v1.3.0** are stable versions tracked by Git tags on GitHub.
 
 ### Unified Foundational Architecture (Retained in ALL Versions)
 Across all versions, the foundational modules remain identical, unified, and fully operational:
@@ -75,7 +75,8 @@ Across all versions, the foundational modules remain identical, unified, and ful
 
 | Version | Status | Release Date | Subsystem / Key Feature Focus | Direct Downloads | GitHub Release |
 | :--- | :---: | :---: | :--- | :---: | :---: |
-| **`v1.2.0`** | **Current Stable** | Oct 02, 2026 | **Enterprise Security & Full Responsive Polish**<br>&bull; Root `.htaccess` gateway protecting `.env`, `composer.json`, `.git`<br>&bull; Upload folder script execution prohibition (`php_flag engine off`)<br>&bull; `uploadFile()` extension blacklist<br>&bull; `SecurityHeadersMiddleware` (CSP/SAMEORIGIN/nosniff)<br>&bull; Public route rate-limiting throttle (15/min)<br>&bull; Fixed 100vh admin sidebar with slim custom scrollbars<br>&bull; Full device responsiveness (desktop, laptop, tab, mobile)<br>&bull; Version Control Releases Hub (`/admin/versions`) | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.2.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.2.0.tar.gz) | [`v1.2.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0) |
+| **`v1.3.0`** | **Current Stable** | Nov 10, 2026 | **Theme-Scoped Sort Ordering & Flowbite Dark UI Suite**<br>&bull; Independent `1..N` sort ordering per theme across all 9 Website modules<br>&bull; `AutoSortOrderById` trait assigning sequential order automatically<br>&bull; Removed manual sort inputs from create/edit forms<br>&bull; Interactive SortableJS drag-and-drop reordering with live badge updates<br>&bull; Integrated Flowbite Tailwind components & autohiding datepicker (`YYYY-MM-DD`)<br>&bull; Zero static/hardcoded data: 100% dynamic MySQL retrieval<br>&bull; Standardized blog date column to SQL `date` type | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.3.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.3.0.tar.gz) | [`v1.3.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.3.0) |
+| **`v1.2.0`** | Stable | Oct 02, 2026 | **Enterprise Security & Full Responsive Polish**<br>&bull; Root `.htaccess` gateway protecting `.env`, `composer.json`, `.git`<br>&bull; Upload folder script execution prohibition (`php_flag engine off`)<br>&bull; `uploadFile()` extension blacklist<br>&bull; `SecurityHeadersMiddleware` (CSP/SAMEORIGIN/nosniff)<br>&bull; Public route rate-limiting throttle (15/min)<br>&bull; Fixed 100vh admin sidebar with slim custom scrollbars<br>&bull; Full device responsiveness (desktop, laptop, tab, mobile)<br>&bull; Version Control Releases Hub (`/admin/versions`) | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.2.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.2.0.tar.gz) | [`v1.2.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0) |
 | **`v1.1.9`** | Stable | Sep 15, 2026 | **Newsletter Engine & Pro Pagination**<br>&bull; Newsletter subscriber management & database migration<br>&bull; Public subscription endpoint (`/newsletter/subscribe`)<br>&bull; Dashboard newsletter audience health metrics card<br>&bull; Mathematical windowed pagination (capped to 7 items)<br>&bull; Scroll-to-top button auto-hide on scroll stop | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.9.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.9.tar.gz) | [`v1.1.9 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.9) |
 | **`v1.1.8`** | Stable | Sep 01, 2026 | **Unified System & Browser Diagnostics Center**<br>&bull; Dual-source log viewer: backend `laravel.log` + client `browser.log`<br>&bull; Automated frontend JavaScript error beacon<br>&bull; Structured severity & runtime environment metric cards<br>&bull; One-click combined log download & dual-file clear | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.8.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.8.tar.gz) | [`v1.1.8 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.8) |
 | **`v1.1.4`** | Stable | Aug 02, 2026 | **Client Inquiries & Communications Hub**<br>&bull; Gmail-style dark mode mailbox with hover action buttons<br>&bull; Folder navigation (Inbox, Sent, Drafts, Important, Trash)<br>&bull; Background autosave drafts with UUID `temp_id`<br>&bull; VIP importance badge inheritance from client history<br>&bull; Background file attachments & HTML email replies | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.4.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.4.tar.gz) | [`v1.1.4 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.4) |
@@ -530,7 +531,27 @@ portfolio/
 
 ## Changelog
 
-### [`v1.2.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0) — *Current Stable Release* (October 2, 2026)
+### [`v1.3.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.3.0) — *Current Stable Release* (November 10, 2026)
+
+- **Theme-Scoped Sort Ordering Engine**:
+  - Applied independent `1..N` sequential sort order scoping to all 9 Website group modules (`services`, `projects`, `galleries`, `skills`, `resume_items`, `pricing_plans`, `testimonials`, `blog_posts`, `faqs`), eliminating cross-theme collisions.
+  - Compound ordering separation for `resume_items` scoped by both `type` (`education`, `experience`) and `theme`.
+  - Removed manual order inputs from all admin create and edit forms.
+  - Implemented `AutoSortOrderById` Eloquent model trait to automatically assign `max('sort_order') + 1` within the model's theme upon creation.
+- **Interactive Drag-and-Drop Reordering**:
+  - Modular SortableJS integration isolating reordering to active theme containers and global containers independently.
+  - Immediate real-time UI badge updates (`Order: #1`, `#2`...) upon drag release.
+  - Asynchronous transactional database persistence via `ReorderController` (`/admin/reorder`).
+- **Flowbite Dark UI & Datepicker Modernization**:
+  - Integrated Flowbite Tailwind CSS dark components across admin management panels.
+  - Standardized datepicker with autohiding behavior and ISO `yyyy-mm-dd` format.
+  - Enhanced form styling with styled SVG icons and Obsidian-dark inputs.
+- **Zero Static Data & Database Hardening**:
+  - Migrated blog post date column to native SQL `date` type.
+  - Removed all hardcoded static/fallback arrays across all themes in favor of 100% dynamic MySQL database retrieval.
+  - Fully typed Eloquent model accessors and mutators.
+
+### [`v1.2.0`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0) — *Stable Release* (October 2, 2026)
 
 - **Enterprise Security Hardening**:
   - Added root gateway `.htaccess` policy blocking direct HTTP access to `.env`, `composer.json`, `.git`, and core Laravel folders.

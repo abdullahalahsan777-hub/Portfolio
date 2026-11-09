@@ -27,23 +27,43 @@ class VersionController extends Controller
     ];
 
     /**
-     * Structured Release Matrix: All stable versions from v1.0.0 to v1.2.0.
+     * Structured Release Matrix: All stable versions from v1.0.0 to v1.3.0.
      */
     protected function getVersionsList(): array
     {
-        $currentAppVersion = config('app.version', '1.2.0');
+        $currentAppVersion = config('app.version', '1.3.0');
 
         return [
             [
-                'version'       => 'v1.2.0',
-                'raw_version'   => '1.2.0',
-                'name'          => 'Enterprise Security Hardening & Full Responsive Overhaul',
-                'release_date'  => '2026-10-02',
+                'version'       => 'v1.3.0',
+                'raw_version'   => '1.3.0',
+                'name'          => 'Theme-Scoped Sort Ordering Engine & Flowbite Dark UI Suite',
+                'release_date'  => '2026-11-10',
                 'is_current'    => true,
                 'is_stable'     => true,
                 'status_label'  => 'Current Stable Release',
                 'status_color'  => 'emerald',
                 'commit'        => 'HEAD',
+                'summary'       => 'Theme-wise sequential sort order engine across all 9 Website modules, SortableJS drag-and-drop reordering with immediate badge feedback, AutoSortOrderById trait with automatic creation sequencing, Flowbite Tailwind dark components and Datepicker with standard YYYY-MM-DD formatting, and complete elimination of static dummy data.',
+                'version_features' => [
+                    'Theme-Scoped Sort Order Sequencing' => 'Independent 1..N order sequencing across all 9 Website modules (Services, Projects, Galleries, Skills, Resume Items, Pricing, Testimonials, Blog, FAQs), preventing theme ordering collisions.',
+                    'AutoSortOrderById Trait' => 'Automatic sequential assignment on model creation scoped by theme (and type for resume items); removed manual order number inputs from create and edit forms.',
+                    'SortableJS Drag-and-Drop Reordering' => 'Interactive drag handles with real-time UI badge updates and asynchronous backend transaction synchronization per theme container.',
+                    'Flowbite Dark UI Suite Integration' => 'Integrated Flowbite Tailwind components, autohiding datepicker with standard yyyy-mm-dd ISO format, and styled SVG calendar pickers.',
+                    'Zero Static Data Enforcement' => 'Eliminated all hardcoded array fallbacks across all frontend themes and admin modules; all content is dynamically queried and served from MySQL database.',
+                    'Database Type Hardening' => 'Standardized blog post date field to native SQL DATE type and unified model accessors/mutators with strict PHP type declarations.',
+                ],
+            ],
+            [
+                'version'       => 'v1.2.0',
+                'raw_version'   => '1.2.0',
+                'name'          => 'Enterprise Security Hardening & Full Responsive Overhaul',
+                'release_date'  => '2026-10-02',
+                'is_current'    => false,
+                'is_stable'     => true,
+                'status_label'  => 'Stable Release',
+                'status_color'  => 'indigo',
+                'commit'        => '3a1d133',
                 'summary'       => 'Comprehensive enterprise security fortification, SQL injection audit verification, script execution prohibition in uploads, SecurityHeaders middleware, rate-limiting throttle protection, fixed 100vh admin sidebar, and full responsiveness across all screen sizes.',
                 'version_features' => [
                     'Root Gateway Security Policy' => 'Root-level .htaccess protecting .env, composer.json, .git, and all internal Laravel directories from unauthorized direct HTTP requests.',
@@ -192,7 +212,7 @@ class VersionController extends Controller
             $cleanVersion = 'v' . $cleanVersion;
         }
 
-        $validVersions = ['v1.0.0', 'v1.1.0', 'v1.1.1', 'v1.1.4', 'v1.1.8', 'v1.1.9', 'v1.2.0'];
+        $validVersions = ['v1.0.0', 'v1.1.0', 'v1.1.1', 'v1.1.4', 'v1.1.8', 'v1.1.9', 'v1.2.0', 'v1.3.0'];
         if (!in_array($cleanVersion, $validVersions, true)) {
             flash()->danger("Requested version '{$version}' is not recognized.");
 

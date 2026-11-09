@@ -98,7 +98,7 @@
             </div>
         </div>
 
-        <!-- 3. Software Version Releases Matrix (v1.2.0 to v1.0.0) -->
+        <!-- 3. Software Version Releases Matrix (v1.3.0 to v1.0.0) -->
         <div class="space-y-4">
             <div class="flex items-center justify-between px-1">
                 <div class="flex items-center gap-2">
