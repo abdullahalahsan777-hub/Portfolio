@@ -107,6 +107,12 @@
     z-index: 99999 !important;
 }
 
+.datepicker.hidden,
+.datepicker[hidden],
+.datepicker:not(.active) {
+    display: none !important;
+}
+
 .datepicker-dropdown {
     z-index: 99999 !important;
 }

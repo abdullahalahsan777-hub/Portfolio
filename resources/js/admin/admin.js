@@ -9,7 +9,7 @@ window.initFlowbite = initFlowbite;
  */
 
 export function initAdminPanel() {
-    // 0. Initialize Flowbite components (modals, dropdowns, tooltips, etc.)
+    // 0. Initialize Flowbite components (modals, dropdowns, tooltips, datepicker, etc.)
     try {
         if (typeof initFlowbite === 'function') {
             initFlowbite();
@@ -18,20 +18,52 @@ export function initAdminPanel() {
         console.warn('Flowbite init error:', e);
     }
 
-    // 1. Initialize Flowbite Datepickers
+    // Helper to close all open datepicker popups
+    function closeAllDatepickers() {
+        document.querySelectorAll('.datepicker').forEach(p => {
+            p.classList.remove('active', 'block');
+            p.classList.add('hidden');
+        });
+    }
+
+    // 1. Listen for date selection and click events on Flowbite Datepicker
     const datepickerElements = document.querySelectorAll('[datepicker], [data-datepicker], .flowbite-datepicker');
     datepickerElements.forEach(el => {
-        if (!el._datepicker) {
-            const format = el.getAttribute('datepicker-format') || 'M dd, yyyy';
-            const autohide = el.getAttribute('datepicker-autohide') !== 'false';
-            try {
-                el._datepicker = new Datepicker(el, {
-                    format: format,
-                    autohide: autohide,
-                });
-            } catch (err) {
-                console.warn('Datepicker init error on element:', el, err);
+        // When a date is selected, flowbite dispatches 'changeDate'
+        el.addEventListener('changeDate', () => {
+            closeAllDatepickers();
+        });
+
+        // Also close if value changes
+        el.addEventListener('change', () => {
+            closeAllDatepickers();
+        });
+    });
+
+    // Close when clicking on a date cell in days view
+    document.addEventListener('click', (e) => {
+        const cell = e.target.closest('.datepicker-cell');
+        if (cell && !cell.classList.contains('disabled')) {
+            // Check if this is a day selection cell (inside days grid)
+            const isDayCell = cell.closest('.days') || cell.dataset.date;
+            if (isDayCell) {
+                setTimeout(closeAllDatepickers, 80);
+                return;
             }
+        }
+
+        // Close on outside click (not inside input and not inside picker)
+        const isInput = e.target.closest('[datepicker], [data-datepicker], .flowbite-datepicker');
+        const isPicker = e.target.closest('.datepicker');
+        if (!isInput && !isPicker) {
+            closeAllDatepickers();
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeAllDatepickers();
         }
     });
     // 1. Theme Radio Selector Interactive Cards
