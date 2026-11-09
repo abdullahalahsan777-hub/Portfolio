@@ -335,18 +335,56 @@ class PortfolioController extends Controller
         $allPosts = $this->getBlogPosts();
 
         $post = BlogPost::where('slug', $slug)->first() ?? $allPosts->first();
-        $relatedPosts = $allPosts->filter(fn ($p) => ($p['slug'] ?? $p->slug) !== ($post['slug'] ?? $post->slug))->take(2)->values();
+
+        // Determine true Previous and Next posts relative to current post's sort order
+        $currentSortOrder = $post->sort_order ?? 0;
+        $prevPost = $allPosts->filter(fn ($p) => ($p->sort_order ?? 0) < $currentSortOrder)->last();
+        $nextPost = $allPosts->filter(fn ($p) => ($p->sort_order ?? 0) > $currentSortOrder)->first();
+
+        // If at start, cycle to last post so Prev always points to a valid article
+        if (! $prevPost && $allPosts->count() > 1) {
+            $prevPost = $allPosts->filter(fn ($p) => ($p->slug ?? '') !== ($post->slug ?? ''))->last();
+        }
+        // If at end, cycle to first post so Next always points to a valid article
+        if (! $nextPost && $allPosts->count() > 1) {
+            $nextPost = $allPosts->filter(fn ($p) => ($p->slug ?? '') !== ($post->slug ?? ''))->first();
+        }
+
+        $relatedList = collect();
+        if ($prevPost) {
+            $relatedList->push($prevPost);
+        }
+        if ($nextPost && ($nextPost->slug ?? '') !== ($prevPost->slug ?? '')) {
+            $relatedList->push($nextPost);
+        }
+
+        // Fallback fill to guarantee 2 cards when at boundaries or low count
+        if ($relatedList->count() < 2) {
+            $remaining = $allPosts->filter(function ($p) use ($post, $relatedList) {
+                $pSlug = $p['slug'] ?? $p->slug;
+                $currentSlug = $post['slug'] ?? $post->slug;
+                $alreadyIncluded = $relatedList->contains(fn ($item) => ($item['slug'] ?? $item->slug) === $pSlug);
+
+                return $pSlug !== $currentSlug && ! $alreadyIncluded;
+            })->take(2 - $relatedList->count());
+
+            $relatedList = $relatedList->concat($remaining);
+        }
+
+        $relatedPosts = $relatedList->values();
 
         $viewName = "frontend.themes.{$activeTheme}.pages.blog-detail";
         if (! view()->exists($viewName)) {
             $viewName = 'frontend.themes.graphic_designer.pages.blog-detail';
         }
 
-        $this->data['activeTheme'] = $activeTheme;
-        $this->data['themeMode'] = $themeMode;
-        $this->data['settings'] = $settings;
-        $this->data['post'] = $post;
-        $this->data['relatedPosts'] = $relatedPosts;
+        $this->data['activeTheme']   = $activeTheme;
+        $this->data['themeMode']     = $themeMode;
+        $this->data['settings']      = $settings;
+        $this->data['post']          = $post;
+        $this->data['relatedPosts']  = $relatedPosts;
+        $this->data['prevPost']      = $prevPost;
+        $this->data['nextPost']      = $nextPost;
 
         return view($viewName, $this->data);
     }
