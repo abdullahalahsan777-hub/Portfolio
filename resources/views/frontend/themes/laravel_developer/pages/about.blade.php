@@ -132,8 +132,10 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Card 1: Identity -->
                 <div class="p-6 rounded-3xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm space-y-3">
-                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-[var(--theme-primary)] flex items-center justify-center font-bold">
-                        👤
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-[var(--theme-primary)] flex items-center justify-center font-bold">
+                        <svg class="w-5 h-5 text-[var(--theme-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
                     </div>
                     <h3 class="font-bold text-base text-slate-900 dark:text-white font-['Outfit']">Personal Identity</h3>
                     <ul class="text-xs space-y-2 text-slate-600 dark:text-slate-300 font-mono">
@@ -148,22 +150,27 @@
 
                 <!-- Card 2: Contact & Location -->
                 <div class="p-6 rounded-3xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm space-y-3">
-                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
-                        📍
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center font-bold">
+                        <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
                     </div>
                     <h3 class="font-bold text-base text-slate-900 dark:text-white font-['Outfit']">Contact &amp; Location</h3>
                     <ul class="text-xs space-y-2 text-slate-600 dark:text-slate-300 font-mono">
                         <li><span class="text-slate-400">Present Address:</span> 53/20, Razbollovpur, Sherpur Town, Sherpur</li>
                         <li><span class="text-slate-400">Permanent Address:</span> 53/20, Razbollovpur, Sherpur Town, Sherpur</li>
-                        <li><span class="text-slate-400">Direct Phone:</span> <a href="tel:+8801718926673" class="hover:text-[var(--theme-primary)] text-slate-900 dark:text-white font-bold">+8801718926673</a></li>
-                        <li><span class="text-slate-400">Direct Email:</span> <a href="mailto:abdullahalahsan1990@gmail.com" class="hover:text-[var(--theme-primary)] text-slate-900 dark:text-white font-bold break-all">abdullahalahsan1990@gmail.com</a></li>
+                        <li><span class="text-slate-400">Direct Phone:</span> <a href="tel:{{ $settings['contact_phone'] ?? '+8801718926673' }}" class="hover:text-[var(--theme-primary)] text-slate-900 dark:text-white font-bold">{{ $settings['contact_phone'] ?? '+8801718926673' }}</a></li>
+                        <li><span class="text-slate-400">Direct Email:</span> <a href="mailto:{{ $settings['contact_email'] ?? 'abdullahalahsan1990@gmail.com' }}" class="hover:text-[var(--theme-primary)] text-slate-900 dark:text-white font-bold break-all">{{ $settings['contact_email'] ?? 'abdullahalahsan1990@gmail.com' }}</a></li>
                     </ul>
                 </div>
 
                 <!-- Card 3: Professional Accreditation -->
                 <div class="p-6 rounded-3xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm space-y-3">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
-                        🏆
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                        <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
                     </div>
                     <h3 class="font-bold text-base text-slate-900 dark:text-white font-['Outfit']">Accreditation</h3>
                     <ul class="text-xs space-y-2 text-slate-600 dark:text-slate-300 font-mono">

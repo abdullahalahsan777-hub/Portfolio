@@ -47,11 +47,15 @@
                     <div class="p-6 rounded-3xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm space-y-3">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-mono font-bold text-[var(--theme-primary)] uppercase tracking-wider block">// DIRECT EMAIL</span>
-                            <span class="w-8 h-8 rounded-xl bg-cyan-500/10 text-[var(--theme-primary)] flex items-center justify-center text-sm font-bold">✉</span>
+                            <span class="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-[var(--theme-primary)] flex items-center justify-center">
+                                <svg class="w-4 h-4 text-[var(--theme-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                            </span>
                         </div>
                         <h4 class="text-lg sm:text-xl font-bold font-['Outfit'] text-slate-900 dark:text-white">
-                            <a href="mailto:abdullahalahsan1990@gmail.com" class="hover:text-[var(--theme-primary)] transition-colors break-all">
-                                abdullahalahsan1990@gmail.com
+                            <a href="mailto:{{ $settings['contact_email'] ?? 'abdullahalahsan@hotmail.com' }}" class="hover:text-[var(--theme-primary)] transition-colors break-all">
+                                {{ $settings['contact_email'] ?? 'abdullahalahsan@hotmail.com' }}
                             </a>
                         </h4>
                         <p class="text-xs text-slate-500 dark:text-slate-400 font-mono">Response time: under 2 business hours.</p>
@@ -61,11 +65,15 @@
                     <div class="p-6 rounded-3xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm space-y-3">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider block">// TELEPHONE / WHATSAPP</span>
-                            <span class="w-8 h-8 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-sm font-bold">☎</span>
+                            <span class="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                            </span>
                         </div>
                         <h4 class="text-xl font-bold font-['Outfit'] text-slate-900 dark:text-white">
-                            <a href="tel:+8801718926673" class="hover:text-[var(--theme-primary)] transition-colors font-mono">
-                                +8801718926673
+                            <a href="tel:{{ $settings['contact_phone'] ?? '+8801718926673' }}" class="hover:text-[var(--theme-primary)] transition-colors font-mono">
+                                {{ $settings['contact_phone'] ?? '+8801718926673' }}
                             </a>
                         </h4>
                         <p class="text-xs text-slate-500 dark:text-slate-400 font-mono">Available 9:00 AM – 9:00 PM (GMT+6) &amp; worldwide timezones.</p>
@@ -75,10 +83,15 @@
                     <div class="p-6 rounded-3xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm space-y-3">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-mono font-bold text-blue-400 uppercase tracking-wider block">// WORKPLACE &amp; LOCATION</span>
-                            <span class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-sm font-bold">📍</span>
+                            <span class="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </span>
                         </div>
                         <h4 class="text-base font-bold font-['Outfit'] text-slate-900 dark:text-white leading-relaxed">
-                            53/20, Razbollovpur, Sherpur Town, Sherpur, Bangladesh
+                            {!! $settings['contact_location'] ?? '53/20, Razbollovpur, Sherpur Town, Sherpur, Bangladesh' !!}
                         </h4>
                         <p class="text-xs text-slate-500 dark:text-slate-400 font-mono">Open for 100% remote worldwide contracts &amp; on-site consulting.</p>
                     </div>
@@ -86,7 +99,9 @@
                     <!-- Professional Cert Badge -->
                     <div class="p-6 rounded-3xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 space-y-2">
                         <div class="flex items-center gap-2 text-xs font-mono font-bold uppercase">
-                            <span>🏆</span>
+                            <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
                             <span>GOVERNMENT NSDA CERTIFIED</span>
                         </div>
                         <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
