@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MaintenanceController as AdminMaintenanceControll
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 use App\Http\Controllers\Admin\PricingPlanController as AdminPricingController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\ReorderController as AdminReorderController;
 use App\Http\Controllers\Admin\ResumeController as AdminResumeController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
@@ -123,6 +124,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('faqs', AdminFaqController::class);
     Route::resource('pricing', AdminPricingController::class);
     Route::resource('testimonials', AdminTestimonialController::class);
+    Route::post('/reorder', [AdminReorderController::class, 'reorder'])->name('reorder');
 
     // Inquiries / Messages Module
     Route::get('/messages', [AdminMessageController::class, 'index'])->name('messages.index');

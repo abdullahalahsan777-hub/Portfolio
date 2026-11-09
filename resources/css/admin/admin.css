@@ -307,3 +307,34 @@
     }
 }
 
+/* ==========================================================================
+   SortableJS Drag and Drop Styling
+   ========================================================================== */
+.drag-handle {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-drag: none;
+    touch-action: none;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+.sortable-ghost {
+    opacity: 0.3 !important;
+    outline: 2px dashed #6366f1 !important;
+    outline-offset: -2px;
+}
+
+.sortable-chosen {
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4) !important;
+}
+
+.sortable-drag {
+    cursor: grabbing !important;
+    opacity: 0.95 !important;
+    transform: scale(1.02);
+}
+
+

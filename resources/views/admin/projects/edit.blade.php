@@ -173,26 +173,19 @@
                     class="summernote w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">{{ old('description', $project->description) }}</textarea>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-mono text-slate-400 mb-1">Display Theme</label>
-                    <select name="theme"
-                        class="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs">
-                        <option value="all" {{ $project->theme === 'all' ? 'selected' : '' }}>All Themes</option>
-                        <option value="developer" {{ $project->theme === 'developer' ? 'selected' : '' }}>Developer</option>
-                        <option value="graphic_designer" {{ $project->theme === 'graphic_designer' ? 'selected' : '' }}>Graphic Designer</option>
-                        <option value="uiux_designer" {{ $project->theme === 'uiux_designer' ? 'selected' : '' }}>UI/UX Designer</option>
-                        <option value="app_developer" {{ $project->theme === 'app_developer' ? 'selected' : '' }}>App Developer</option>
-                        <option value="app_software_developer" {{ $project->theme === 'app_software_developer' ? 'selected' : '' }}>App &amp; Software Developer</option>
-                        <option value="digital_designer_illustrator" {{ $project->theme === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer &amp; Illustrator</option>
-                        <option value="laravel_developer" {{ $project->theme === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-mono text-slate-400 mb-1">Display Order</label>
-                    <input type="number" name="sort_order" value="{{ old('sort_order', $project->sort_order) }}"
-                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
-                </div>
+            <div>
+                <label class="block text-xs font-mono text-slate-400 mb-1">Display Theme</label>
+                <select name="theme"
+                    class="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs">
+                    <option value="all" {{ $project->theme === 'all' ? 'selected' : '' }}>All Themes</option>
+                    <option value="developer" {{ $project->theme === 'developer' ? 'selected' : '' }}>Developer</option>
+                    <option value="graphic_designer" {{ $project->theme === 'graphic_designer' ? 'selected' : '' }}>Graphic Designer</option>
+                    <option value="uiux_designer" {{ $project->theme === 'uiux_designer' ? 'selected' : '' }}>UI/UX Designer</option>
+                    <option value="app_developer" {{ $project->theme === 'app_developer' ? 'selected' : '' }}>App Developer</option>
+                    <option value="app_software_developer" {{ $project->theme === 'app_software_developer' ? 'selected' : '' }}>App &amp; Software Developer</option>
+                    <option value="digital_designer_illustrator" {{ $project->theme === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer &amp; Illustrator</option>
+                    <option value="laravel_developer" {{ $project->theme === 'laravel_developer' ? 'selected' : '' }}>Full-Stack Laravel Developer</option>
+                </select>
             </div>
 
             <div class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-white/10">

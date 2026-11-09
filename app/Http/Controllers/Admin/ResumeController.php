@@ -57,8 +57,8 @@ class ResumeController extends Controller
             'sort_order' => 'nullable|integer',
         ]);
 
-        if (empty($validated['sort_order'])) {
-            $validated['sort_order'] = (ResumeItem::where('type', $validated['type'])->max('sort_order') ?? 0) + 1;
+        if (!$request->filled('sort_order')) {
+            unset($validated['sort_order']);
         }
 
         // Synchronize organization field if one is provided
@@ -108,6 +108,10 @@ class ResumeController extends Controller
             'theme' => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
             'sort_order' => 'nullable|integer',
         ]);
+
+        if (!$request->filled('sort_order')) {
+            unset($validated['sort_order']);
+        }
 
         // Synchronize organization field if one is provided
         if (!empty($validated['institution']) && empty($validated['company'])) {

@@ -11,8 +11,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <h1 class="text-2xl font-extrabold text-white">Resume & Career History</h1>
-                <p class="text-xs text-slate-400 mt-1">Manage Education milestones and Work Experience timeline entries shown
-                    on the frontend.</p>
+                <p class="text-xs text-slate-400 mt-1">Manage Education milestones and Work Experience timeline entries shown on the frontend.</p>
             </div>
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full sm:w-auto">
                 <a href="{{ route('admin.resume.create', ['type' => 'education']) }}"
@@ -37,15 +36,22 @@
         <!-- TOP THEME FILTER COMPONENT (Select2 / Selectpicker / AngularJS Style) -->
         @include('admin.components.theme-filter')
 
+        @php
+            $themeEdu = $education->filter(fn($e) => $e->theme !== 'all');
+            $globalEdu = $education->filter(fn($e) => $e->theme === 'all');
+            $themeExp = $experience->filter(fn($e) => $e->theme !== 'all');
+            $globalExp = $experience->filter(fn($e) => $e->theme === 'all');
+            $selectedThemeMeta = \App\Models\SiteSetting::getThemeDetails($selectedTheme ?? \App\Models\SiteSetting::getActiveTheme());
+        @endphp
+
         <!-- Main 2-Column Grid (Education on Left, Experience on Right) -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
             <!-- Column 1: Education Section -->
-            <div class="space-y-4">
+            <div class="space-y-6">
                 <div class="flex items-center justify-between pb-3 border-b border-white/10">
                     <div class="flex items-center gap-2.5">
-                        <div
-                            class="w-8 h-8 rounded-lg bg-violet-600/20 text-violet-400 border border-violet-500/30 flex items-center justify-center font-bold">
+                        <div class="w-8 h-8 rounded-lg bg-violet-600/20 text-violet-400 border border-violet-500/30 flex items-center justify-center font-bold">
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
@@ -53,81 +59,161 @@
                         </div>
                         <div>
                             <h2 class="text-base font-bold text-white">Education Milestones</h2>
-                            <span class="text-[11px] font-mono text-slate-400">Degrees, Diplomas & Certifications</span>
+                            <span class="text-[11px] font-mono text-slate-400">Degrees, Diplomas &amp; Certifications</span>
                         </div>
                     </div>
                     <a href="{{ route('admin.resume.create', ['type' => 'education']) }}"
                         class="text-xs text-violet-400 hover:text-violet-300 font-mono">+ Add</a>
                 </div>
 
-                <div class="space-y-3" id="educationList">
-                    @forelse($education as $edu)
-                        @php
-                            $themeMeta = \App\Models\SiteSetting::getThemeDetails($edu->theme);
-                        @endphp
-                        <div data-theme="{{ $edu->theme }}"
-                            class="p-5 rounded-2xl bg-[#09101d] border border-white/10 hover:border-violet-500/40 transition-all duration-300 flex flex-col justify-between space-y-3 shadow-lg relative group">
-                            <div class="flex items-start justify-between gap-3">
-                                <div>
-                                    <div class="flex items-center gap-2 flex-wrap mb-1.5">
-                                        <span
-                                            class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-violet-500/20 text-violet-300 border border-violet-500/30 inline-block">{{ $edu->period }}</span>
-                                        <span
-                                            class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border {{ $themeMeta['badge'] }}">
-                                            <span class="w-1.5 h-1.5 rounded-full"
-                                                style="background-color: {{ $themeMeta['color'] }}"></span>
-                                            <span>{{ $themeMeta['short'] }}</span>
-                                        </span>
-                                    </div>
-                                    <h3 class="text-sm font-bold text-white">{{ $edu->title }}</h3>
-                                    <p class="text-xs text-slate-400 mt-0.5">{{ $edu->institution }}</p>
-                                </div>
-                                @if (!empty($edu->grade))
-                                    <span
-                                        class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 shrink-0">{{ $edu->grade }}</span>
-                                @endif
-                            </div>
+                <!-- Theme Education Sub-group -->
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between text-xs text-slate-400 font-mono pb-1 border-b border-white/5">
+                        <span class="text-violet-300 font-bold">Theme Education</span>
+                        <span class="text-[10px]">Drag to reorder</span>
+                    </div>
 
-                            <div
-                                class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-white/5">
-                                <span class="text-slate-400">Order: #{{ $edu->sort_order }}</span>
-                                <div class="flex items-center gap-1.5">
-                                    <a href="{{ route('admin.resume.edit', $edu) }}" title="Edit"
-                                        class="p-1.5 rounded-lg text-violet-400 hover:text-white hover:bg-violet-600/30 transition-all">
-                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                        </svg>
-                                    </a>
-                                    <form action="{{ route('admin.resume.destroy', $edu) }}" method="POST"
-                                        onsubmit="return confirm('Delete this education entry?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" title="Delete"
-                                            class="p-1.5 rounded-lg text-rose-400 hover:text-white hover:bg-rose-500/30 transition-all">
-                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    <div class="space-y-3" data-sortable-grid="resume" id="activeEduList">
+                        @forelse($themeEdu as $edu)
+                            @php
+                                $themeMeta = \App\Models\SiteSetting::getThemeDetails($edu->theme);
+                            @endphp
+                            <div data-id="{{ $edu->id }}" data-theme="{{ $edu->theme }}"
+                                class="p-5 rounded-2xl bg-[#09101d] border border-white/10 hover:border-violet-500/40 transition-all duration-300 flex flex-col justify-between space-y-3 shadow-lg relative group">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div>
+                                        <div class="flex items-center gap-2 flex-wrap mb-1.5">
+                                            <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-violet-500/20 text-violet-300 border border-violet-500/30 inline-block">{{ $edu->period }}</span>
+                                            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border {{ $themeMeta['badge'] }}">
+                                                <span class="w-1.5 h-1.5 rounded-full" style="background-color: {{ $themeMeta['color'] }}"></span>
+                                                <span>{{ $themeMeta['short'] }}</span>
+                                            </span>
+                                        </div>
+                                        <h3 class="text-sm font-bold text-white">{{ $edu->title }}</h3>
+                                        <p class="text-xs text-slate-400 mt-0.5">{{ $edu->institution }}</p>
+                                    </div>
+                                    @if (!empty($edu->grade))
+                                        <span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 shrink-0">{{ $edu->grade }}</span>
+                                    @endif
+                                </div>
+
+                                <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" class="drag-handle p-1 rounded text-slate-400 hover:text-white hover:bg-white/5 transition-all cursor-grab active:cursor-grabbing" title="Drag to reorder">
+                                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-12a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
                                             </svg>
                                         </button>
-                                    </form>
+                                        <span class="order-badge text-slate-400">Order: #{{ $edu->sort_order }}</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5">
+                                        <a href="{{ route('admin.resume.edit', $edu) }}" title="Edit"
+                                            class="p-1.5 rounded-lg text-violet-400 hover:text-white hover:bg-violet-600/30 transition-all">
+                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </a>
+                                        <form action="{{ route('admin.resume.destroy', $edu) }}" method="POST"
+                                            onsubmit="return confirm('Delete this education entry?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" title="Delete"
+                                                class="p-1.5 rounded-lg text-rose-400 hover:text-white hover:bg-rose-500/30 transition-all">
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @empty
-                        <div class="p-8 text-center bg-[#09101d] rounded-2xl border border-white/5 text-xs text-slate-400">
-                            No education records found. Click <strong>+ Add Education</strong> to create one.
-                        </div>
-                    @endforelse
+                        @empty
+                            <div class="p-6 text-center bg-[#09101d] rounded-2xl border border-white/5 text-xs text-slate-400">
+                                No theme education records yet.
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+
+                <!-- Global Education Sub-group -->
+                <div class="space-y-2 pt-2">
+                    <div class="flex items-center justify-between text-xs text-slate-400 font-mono pb-1 border-b border-white/5">
+                        <span class="text-indigo-300 font-bold">Global Education (All Themes)</span>
+                        <span class="text-[10px]">Drag to reorder</span>
+                    </div>
+
+                    <div class="space-y-3" data-sortable-grid="resume" id="globalEduList">
+                        @forelse($globalEdu as $edu)
+                            @php
+                                $themeMeta = \App\Models\SiteSetting::getThemeDetails('all');
+                            @endphp
+                            <div data-id="{{ $edu->id }}" data-theme="all"
+                                class="p-5 rounded-2xl bg-[#09101d] border border-white/10 hover:border-violet-500/40 transition-all duration-300 flex flex-col justify-between space-y-3 shadow-lg relative group">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div>
+                                        <div class="flex items-center gap-2 flex-wrap mb-1.5">
+                                            <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-violet-500/20 text-violet-300 border border-violet-500/30 inline-block">{{ $edu->period }}</span>
+                                            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border {{ $themeMeta['badge'] }}">
+                                                <span class="w-1.5 h-1.5 rounded-full" style="background-color: {{ $themeMeta['color'] }}"></span>
+                                                <span>{{ $themeMeta['short'] }}</span>
+                                            </span>
+                                        </div>
+                                        <h3 class="text-sm font-bold text-white">{{ $edu->title }}</h3>
+                                        <p class="text-xs text-slate-400 mt-0.5">{{ $edu->institution }}</p>
+                                    </div>
+                                    @if (!empty($edu->grade))
+                                        <span class="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 shrink-0">{{ $edu->grade }}</span>
+                                    @endif
+                                </div>
+
+                                <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" class="drag-handle p-1 rounded text-slate-400 hover:text-white hover:bg-white/5 transition-all cursor-grab active:cursor-grabbing" title="Drag to reorder">
+                                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-12a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
+                                            </svg>
+                                        </button>
+                                        <span class="order-badge text-slate-400">Order: #{{ $edu->sort_order }}</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5">
+                                        <a href="{{ route('admin.resume.edit', $edu) }}" title="Edit"
+                                            class="p-1.5 rounded-lg text-violet-400 hover:text-white hover:bg-violet-600/30 transition-all">
+                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </a>
+                                        <form action="{{ route('admin.resume.destroy', $edu) }}" method="POST"
+                                            onsubmit="return confirm('Delete this education entry?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" title="Delete"
+                                                class="p-1.5 rounded-lg text-rose-400 hover:text-white hover:bg-rose-500/30 transition-all">
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="p-6 text-center bg-[#09101d] rounded-2xl border border-white/5 text-xs text-slate-400">
+                                No global education records yet.
+                            </div>
+                        @endforelse
+                    </div>
                 </div>
             </div>
 
             <!-- Column 2: Experience Section -->
-            <div class="space-y-4">
+            <div class="space-y-6">
                 <div class="flex items-center justify-between pb-3 border-b border-white/10">
                     <div class="flex items-center gap-2.5">
-                        <div
-                            class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold">
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -135,73 +221,155 @@
                         </div>
                         <div>
                             <h2 class="text-base font-bold text-white">Work Experience</h2>
-                            <span class="text-[11px] font-mono text-slate-400">Career Positions & Key Roles</span>
+                            <span class="text-[11px] font-mono text-slate-400">Career Positions &amp; Key Roles</span>
                         </div>
                     </div>
                     <a href="{{ route('admin.resume.create', ['type' => 'experience']) }}"
                         class="text-xs text-indigo-400 hover:text-indigo-300 font-mono">+ Add</a>
                 </div>
 
-                <div class="space-y-3" id="experienceList">
-                    @forelse($experience as $exp)
-                        @php
-                            $themeMeta = \App\Models\SiteSetting::getThemeDetails($exp->theme);
-                        @endphp
-                        <div data-theme="{{ $exp->theme }}"
-                            class="p-5 rounded-2xl bg-[#09101d] border border-white/10 hover:border-indigo-500/40 transition-all duration-300 flex flex-col justify-between space-y-3 shadow-lg relative group">
-                            <div class="flex items-start justify-between gap-3">
-                                <div>
-                                    <div class="flex items-center gap-2 flex-wrap mb-1.5">
-                                        <span
-                                            class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 inline-block">{{ $exp->period }}</span>
-                                        <span
-                                            class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border {{ $themeMeta['badge'] }}">
-                                            <span class="w-1.5 h-1.5 rounded-full"
-                                                style="background-color: {{ $themeMeta['color'] }}"></span>
-                                            <span>{{ $themeMeta['short'] }}</span>
-                                        </span>
+                <!-- Theme Experience Sub-group -->
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between text-xs text-slate-400 font-mono pb-1 border-b border-white/5">
+                        <span class="text-indigo-300 font-bold">Theme Experience</span>
+                        <span class="text-[10px]">Drag to reorder</span>
+                    </div>
+
+                    <div class="space-y-3" data-sortable-grid="resume" id="activeExpList">
+                        @forelse($themeExp as $exp)
+                            @php
+                                $themeMeta = \App\Models\SiteSetting::getThemeDetails($exp->theme);
+                            @endphp
+                            <div data-id="{{ $exp->id }}" data-theme="{{ $exp->theme }}"
+                                class="p-5 rounded-2xl bg-[#09101d] border border-white/10 hover:border-indigo-500/40 transition-all duration-300 flex flex-col justify-between space-y-3 shadow-lg relative group">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div>
+                                        <div class="flex items-center gap-2 flex-wrap mb-1.5">
+                                            <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 inline-block">{{ $exp->period }}</span>
+                                            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold border {{ $themeMeta['badge'] }}">
+                                                <span class="w-1.5 h-1.5 rounded-full" style="background-color: {{ $themeMeta['color'] }}"></span>
+                                                <span>{{ $themeMeta['short'] }}</span>
+                                            </span>
+                                        </div>
+                                        <h3 class="text-sm font-bold text-white">{{ $exp->title }}</h3>
+                                        <p class="text-xs font-semibold text-slate-300 mt-0.5">{{ $exp->company }}</p>
                                     </div>
-                                    <h3 class="text-sm font-bold text-white">{{ $exp->title }}</h3>
-                                    <p class="text-xs font-semibold text-slate-300 mt-0.5">{{ $exp->company }}</p>
                                 </div>
-                            </div>
 
-                            @if (!empty($exp->description))
-                                <p class="text-xs text-slate-400 leading-relaxed">{{ $exp->description }}</p>
-                            @endif
+                                @if (!empty($exp->description))
+                                    <div class="text-xs text-slate-400 leading-relaxed max-h-24 overflow-y-auto">{!! $exp->description !!}</div>
+                                @endif
 
-                            <div
-                                class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-white/5">
-                                <span class="text-slate-400">Order: #{{ $exp->sort_order }}</span>
-                                <div class="flex items-center gap-1.5">
-                                    <a href="{{ route('admin.resume.edit', $exp) }}" title="Edit"
-                                        class="p-1.5 rounded-lg text-indigo-400 hover:text-white hover:bg-indigo-600/30 transition-all">
-                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                        </svg>
-                                    </a>
-                                    <form action="{{ route('admin.resume.destroy', $exp) }}" method="POST"
-                                        onsubmit="return confirm('Delete this experience entry?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" title="Delete"
-                                            class="p-1.5 rounded-lg text-rose-400 hover:text-white hover:bg-rose-500/30 transition-all">
-                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" class="drag-handle p-1 rounded text-slate-400 hover:text-white hover:bg-white/5 transition-all cursor-grab active:cursor-grabbing" title="Drag to reorder">
+                                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-12a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
                                             </svg>
                                         </button>
-                                    </form>
+                                        <span class="order-badge text-slate-400">Order: #{{ $exp->sort_order }}</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5">
+                                        <a href="{{ route('admin.resume.edit', $exp) }}" title="Edit"
+                                            class="p-1.5 rounded-lg text-indigo-400 hover:text-white hover:bg-indigo-600/30 transition-all">
+                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </a>
+                                        <form action="{{ route('admin.resume.destroy', $exp) }}" method="POST"
+                                            onsubmit="return confirm('Delete this experience entry?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" title="Delete"
+                                                class="p-1.5 rounded-lg text-rose-400 hover:text-white hover:bg-rose-500/30 transition-all">
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @empty
-                        <div class="p-8 text-center bg-[#09101d] rounded-2xl border border-white/5 text-xs text-slate-400">
-                            No experience records found. Click <strong>+ Add Experience</strong> to create one.
-                        </div>
-                    @endforelse
+                        @empty
+                            <div class="p-6 text-center bg-[#09101d] rounded-2xl border border-white/5 text-xs text-slate-400">
+                                No theme experience records yet.
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+
+                <!-- Global Experience Sub-group -->
+                <div class="space-y-2 pt-2">
+                    <div class="flex items-center justify-between text-xs text-slate-400 font-mono pb-1 border-b border-white/5">
+                        <span class="text-indigo-300 font-bold">Global Experience (All Themes)</span>
+                        <span class="text-[10px]">Drag to reorder</span>
+                    </div>
+
+                    <div class="space-y-3" data-sortable-grid="resume" id="globalExpList">
+                        @forelse($globalExp as $exp)
+                            @php
+                                $themeMeta = \App\Models\SiteSetting::getThemeDetails('all');
+                            @endphp
+                            <div data-id="{{ $exp->id }}" data-theme="all"
+                                class="p-5 rounded-2xl bg-[#09101d] border border-white/10 hover:border-indigo-500/40 transition-all duration-300 flex flex-col justify-between space-y-3 shadow-lg relative group">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div>
+                                        <div class="flex items-center gap-2 flex-wrap mb-1.5">
+                                            <span class="px-2 py-0.5 rounded font-mono text-[11px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 inline-block">{{ $exp->period }}</span>
+                                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9px] font-mono font-bold border {{ $themeMeta['badge'] }}">
+                                                <span class="w-1.5 h-1.5 rounded-full" style="background-color: {{ $themeMeta['color'] }}"></span>
+                                                <span>{{ $themeMeta['short'] }}</span>
+                                            </span>
+                                        </div>
+                                        <h3 class="text-sm font-bold text-white">{{ $exp->title }}</h3>
+                                        <p class="text-xs font-semibold text-slate-300 mt-0.5">{{ $exp->company }}</p>
+                                    </div>
+                                </div>
+
+                                @if (!empty($exp->description))
+                                    <div class="text-xs text-slate-400 leading-relaxed max-h-24 overflow-y-auto">{!! $exp->description !!}</div>
+                                @endif
+
+                                <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" class="drag-handle p-1 rounded text-slate-400 hover:text-white hover:bg-white/5 transition-all cursor-grab active:cursor-grabbing" title="Drag to reorder">
+                                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-12a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
+                                            </svg>
+                                        </button>
+                                        <span class="order-badge text-slate-400">Order: #{{ $exp->sort_order }}</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5">
+                                        <a href="{{ route('admin.resume.edit', $exp) }}" title="Edit"
+                                            class="p-1.5 rounded-lg text-indigo-400 hover:text-white hover:bg-indigo-600/30 transition-all">
+                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </a>
+                                        <form action="{{ route('admin.resume.destroy', $exp) }}" method="POST"
+                                            onsubmit="return confirm('Delete this experience entry?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" title="Delete"
+                                                class="p-1.5 rounded-lg text-rose-400 hover:text-white hover:bg-rose-500/30 transition-all">
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="p-6 text-center bg-[#09101d] rounded-2xl border border-white/5 text-xs text-slate-400">
+                                No global experience records yet.
+                            </div>
+                        @endforelse
+                    </div>
                 </div>
             </div>
 

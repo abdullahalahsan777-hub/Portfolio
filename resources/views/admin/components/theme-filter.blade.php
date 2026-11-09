@@ -570,6 +570,22 @@
                 });
             }
 
+            // Update Active Theme Section Label & Visibility
+            const activeThemeSection = document.getElementById('activeThemeSection');
+            const activeThemeSectionLabel = document.getElementById('activeThemeSectionLabel');
+            if (activeThemeSection) {
+                if (themeKey === 'all') {
+                    activeThemeSection.style.display = 'none';
+                    activeThemeSection.classList.add('hidden');
+                } else {
+                    activeThemeSection.style.display = '';
+                    activeThemeSection.classList.remove('hidden');
+                    if (activeThemeSectionLabel) {
+                        activeThemeSectionLabel.textContent = meta.name || meta.short;
+                    }
+                }
+            }
+
             // 6. Update Counter Label (On bottom row, full details)
             const countLabel = document.getElementById('tfCountLabel');
             if (countLabel) {

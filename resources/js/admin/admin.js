@@ -1,7 +1,9 @@
 import { initFlowbite, Datepicker } from 'flowbite';
+import Sortable from 'sortablejs';
 
 window.Datepicker = Datepicker;
 window.initFlowbite = initFlowbite;
+window.Sortable = Sortable;
 
 /**
  * Admin Panel Dedicated JavaScript
@@ -130,4 +132,58 @@ export function initAdminPanel() {
             adminSidebar.classList.toggle('hidden');
         });
     }
+
+    // 4. Initialize SortableJS for Drag-and-Drop Reordering across all modules
+    const sortableContainers = document.querySelectorAll('[data-sortable-grid]');
+    sortableContainers.forEach(container => {
+        const model = container.getAttribute('data-sortable-grid');
+        if (!model) return;
+
+        Sortable.create(container, {
+            animation: 200,
+            handle: '.drag-handle',
+            ghostClass: 'sortable-ghost',
+            chosenClass: 'sortable-chosen',
+            dragClass: 'sortable-drag',
+            draggable: '[data-id]',
+            onEnd: function(evt) {
+                if (evt.oldIndex === evt.newIndex) return;
+
+                const itemElements = Array.from(container.querySelectorAll(':scope > [data-id]'));
+                const orderedIds = itemElements.map(el => parseInt(el.getAttribute('data-id'), 10)).filter(id => !isNaN(id));
+
+                if (orderedIds.length === 0) return;
+
+                // Update UI badges immediately for instant feedback
+                itemElements.forEach((el, index) => {
+                    const badge = el.querySelector('.order-badge');
+                    if (badge) {
+                        badge.textContent = `Order: #${index + 1}`;
+                    }
+                });
+
+                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+                window.axios.post('/admin/reorder', {
+                    model: model,
+                    ordered_ids: orderedIds,
+                }, {
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                    }
+                }).then(response => {
+                    if (window.toastr) {
+                        window.toastr.success(response.data.message || 'Display order updated successfully.');
+                    }
+                }).catch(error => {
+                    console.error('Reorder error:', error);
+                    if (window.toastr) {
+                        const errMsg = error.response?.data?.message || 'Failed to update order. Please refresh.';
+                        window.toastr.error(errMsg);
+                    }
+                });
+            }
+        });
+    });
 }

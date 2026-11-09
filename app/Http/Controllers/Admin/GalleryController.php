@@ -93,7 +93,9 @@ class GalleryController extends Controller
 
         $validated['is_featured'] = $request->boolean('is_featured');
         $validated['is_active']   = $request->boolean('is_active', true);
-        $validated['sort_order']  = (int) ($request->input('sort_order', 0));
+        if (!$request->filled('sort_order')) {
+            unset($validated['sort_order']);
+        }
 
         // Handle Image Upload
         if ($request->hasFile('image_file')) {
@@ -161,7 +163,9 @@ class GalleryController extends Controller
 
         $validated['is_featured'] = $request->boolean('is_featured');
         $validated['is_active']   = $request->boolean('is_active');
-        $validated['sort_order']  = (int) ($request->input('sort_order', 0));
+        if (!$request->filled('sort_order')) {
+            unset($validated['sort_order']);
+        }
 
         // Handle Image Upload Replacement
         if ($request->hasFile('image_file')) {

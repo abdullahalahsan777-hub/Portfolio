@@ -76,159 +76,328 @@
             </div>
         </div>
 
-        <!-- Galleries Grid with data-theme & data-cat filtering -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="galleriesGrid">
-            @forelse($galleries as $item)
-                @php
-                    $themeMeta = \App\Models\SiteSetting::getThemeDetails($item->theme);
-                @endphp
-                <div data-theme="{{ $item->theme }}" data-category="{{ $item->category }}"
-                    class="gallery-admin-card rounded-2xl bg-[#09101d] border border-white/10 overflow-hidden shadow-xl flex flex-col justify-between hover:border-cyan-500/40 transition-all duration-300 group">
+        @php
+            $themeGalleries = $galleries->filter(fn($g) => $g->theme !== 'all');
+            $globalGalleries = $galleries->filter(fn($g) => $g->theme === 'all');
+            $selectedThemeMeta = \App\Models\SiteSetting::getThemeDetails($selectedTheme ?? \App\Models\SiteSetting::getActiveTheme());
+        @endphp
 
-                    <!-- Image Showcase Area with Pictureflect Trigger -->
-                    <div class="relative w-full h-52 sm:h-56 bg-slate-900 overflow-hidden cursor-pointer group/img shrink-0"
-                        data-pictureflect data-gallery="theme-{{ $item->theme }}" data-src="{{ $item->image_url }}"
-                        data-title="{{ $item->title }}" data-category="{{ $item->category }}"
-                        data-pf-theme="{{ $themeMeta['name'] ?? $item->theme }}"
-                        data-pf-theme-key="{{ $item->theme }}">
+        <!-- 1. Active Theme Specific Galleries Section -->
+        <div id="activeThemeSection" class="space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-white/5">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                    <h2 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider font-mono">
+                        Theme Elements: <span class="text-cyan-300" id="activeThemeSectionLabel">{{ $selectedThemeMeta['name'] ?? 'Active Theme' }}</span>
+                    </h2>
+                </div>
+                <span class="text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-12a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
+                    </svg>
+                    Drag to reorder
+                </span>
+            </div>
 
-                        <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
-                            class="absolute inset-0 w-full h-full object-cover block transition-transform duration-500 group-hover/img:scale-110 z-0"
-                            onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'%3E%3Crect width=\'600\' height=\'400\' fill=\'%230b101e\'/%3E%3Ccircle cx=\'300\' cy=\'180\' r=\'40\' fill=\'%2306b6d4\' opacity=\'0.2\'/%3E%3Ctext x=\'50%25\' y=\'65%25\' text-anchor=\'middle\' fill=\'%2364748b\' font-family=\'sans-serif\' font-size=\'14\'%3EImage Preview%3C/text%3E%3C/svg%3E';">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" data-sortable-grid="gallery" id="activeGalleriesGrid">
+                @forelse($themeGalleries as $item)
+                    @php
+                        $themeMeta = \App\Models\SiteSetting::getThemeDetails($item->theme);
+                    @endphp
+                    <div data-id="{{ $item->id }}" data-theme="{{ $item->theme }}" data-category="{{ $item->category }}"
+                        class="gallery-admin-card rounded-2xl bg-[#09101d] border border-white/10 overflow-hidden shadow-xl flex flex-col justify-between hover:border-cyan-500/40 transition-all duration-300 group">
 
-                        <!-- Top Floating Theme Badge -->
-                        <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 flex-wrap z-10 pointer-events-none">
-                            <span
-                                class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-black/80 backdrop-blur border {{ $themeMeta['badge'] }}">
-                                <span class="w-1.5 h-1.5 rounded-full"
-                                    style="background-color: {{ $themeMeta['color'] }}"></span>
-                                <span>{{ $themeMeta['short'] }}</span>
-                            </span>
-                        </div>
+                        <!-- Image Showcase Area with Pictureflect Trigger -->
+                        <div class="relative w-full h-52 sm:h-56 bg-slate-900 overflow-hidden cursor-pointer group/img shrink-0"
+                            data-pictureflect data-gallery="theme-{{ $item->theme }}" data-src="{{ $item->image_url }}"
+                            data-title="{{ $item->title }}" data-category="{{ $item->category }}"
+                            data-pf-theme="{{ $themeMeta['name'] ?? $item->theme }}"
+                            data-pf-theme-key="{{ $item->theme }}">
 
-                        <!-- Top Right Status Badges -->
-                        <div class="absolute top-2.5 right-2.5 flex items-center gap-1 z-10 pointer-events-none">
-                            @if ($item->is_featured)
-                                <span title="Featured on Home Page"
-                                    class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/40 backdrop-blur flex items-center gap-1">
-                                    ★ Home
-                                </span>
-                            @endif
-                            <span
-                                class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase {{ $item->is_active ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30' }} backdrop-blur">
-                                {{ $item->is_active ? 'Live' : 'Hidden' }}
-                            </span>
-                        </div>
+                            <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
+                                class="absolute inset-0 w-full h-full object-cover block transition-transform duration-500 group-hover/img:scale-110 z-0"
+                                onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'%3E%3Crect width=\'600\' height=\'400\' fill=\'%230b101e\'/%3E%3Ccircle cx=\'300\' cy=\'180\' r=\'40\' fill=\'%2306b6d4\' opacity=\'0.2\'/%3E%3Ctext x=\'50%25\' y=\'65%25\' text-anchor=\'middle\' fill=\'%2364748b\' font-family=\'sans-serif\' font-size=\'14\'%3EImage Preview%3C/text%3E%3C/svg%3E';">
 
-                        <!-- Hover Pictureflect Preview Pill -->
-                        <div
-                            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity z-10 pointer-events-none bg-black/30">
-                            <span
-                                class="px-3 py-1.5 rounded-full bg-cyan-500 text-black text-xs font-bold tracking-wider uppercase font-mono shadow-lg shadow-cyan-500/30 flex items-center gap-1.5 transform translate-y-2 group-hover/img:translate-y-0 transition-transform">
-                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5">
-                                    <circle cx="11" cy="11" r="8"></circle>
-                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                    <line x1="11" y1="8" x2="11" y2="14"></line>
-                                    <line x1="8" y1="11" x2="14" y2="11"></line>
-                                </svg>
-                                <span>Pictureflect View</span>
-                            </span>
-                        </div>
-
-                        <!-- Image Title overlaid at bottom of image with blur background -->
-                        <div
-                            class="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/95 via-black/80 to-transparent backdrop-blur-md border-t border-white/10 z-10 flex flex-col gap-1">
-                            <div class="flex items-center justify-between gap-1.5">
+                            <!-- Top Floating Theme Badge -->
+                            <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 flex-wrap z-10 pointer-events-none">
                                 <span
-                                    class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shrink-0">
-                                    {{ $item->category }}
+                                    class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-black/80 backdrop-blur border {{ $themeMeta['badge'] }}">
+                                    <span class="w-1.5 h-1.5 rounded-full"
+                                        style="background-color: {{ $themeMeta['color'] }}"></span>
+                                    <span>{{ $themeMeta['short'] }}</span>
                                 </span>
                             </div>
-                            <h3 class="text-xs sm:text-sm font-bold text-white truncate drop-shadow leading-snug"
-                                title="{{ $item->title }}">
-                                {{ $item->title }}
-                            </h3>
+
+                            <!-- Top Right Status Badges -->
+                            <div class="absolute top-2.5 right-2.5 flex items-center gap-1 z-10 pointer-events-none">
+                                @if ($item->is_featured)
+                                    <span title="Featured on Home Page"
+                                        class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/40 backdrop-blur flex items-center gap-1">
+                                        ★ Home
+                                    </span>
+                                @endif
+                                <span
+                                    class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase {{ $item->is_active ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30' }} backdrop-blur">
+                                    {{ $item->is_active ? 'Live' : 'Hidden' }}
+                                </span>
+                            </div>
+
+                            <!-- Hover Pictureflect Preview Pill -->
+                            <div
+                                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity z-10 pointer-events-none bg-black/30">
+                                <span
+                                    class="px-3 py-1.5 rounded-full bg-cyan-500 text-black text-xs font-bold tracking-wider uppercase font-mono shadow-lg shadow-cyan-500/30 flex items-center gap-1.5 transform translate-y-2 group-hover/img:translate-y-0 transition-transform">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        <line x1="11" y1="8" x2="11" y2="14"></line>
+                                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                                    </svg>
+                                    <span>Pictureflect View</span>
+                                </span>
+                            </div>
+
+                            <!-- Image Title overlaid at bottom of image with blur background -->
+                            <div
+                                class="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/95 via-black/80 to-transparent backdrop-blur-md border-t border-white/10 z-10 flex flex-col gap-1">
+                                <div class="flex items-center justify-between gap-1.5">
+                                    <span
+                                        class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shrink-0">
+                                        {{ $item->category }}
+                                    </span>
+                                </div>
+                                <h3 class="text-xs sm:text-sm font-bold text-white truncate drop-shadow leading-snug"
+                                    title="{{ $item->title }}">
+                                    {{ $item->title }}
+                                </h3>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Footer Action Controls (Remaining Same) -->
-                    <div class="p-3 bg-[#09101d] border-t border-white/5 flex items-center justify-between text-xs">
-                        <span class="font-mono text-[10px] text-slate-500">#{{ $item->sort_order }}</span>
-
-                        <div class="flex items-center gap-1">
-                            <!-- Toggle Featured -->
-                            <form action="{{ route('admin.galleries.toggleFeatured', $item) }}" method="POST"
-                                class="inline">
-                                @csrf
-                                <button type="submit"
-                                    title="{{ $item->is_featured ? 'Remove from Home Showcase' : 'Feature on Home Showcase' }}"
-                                    class="p-1.5 rounded-lg {{ $item->is_featured ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-slate-500 hover:text-amber-300 hover:bg-white/5' }} transition-all">
-                                    <svg class="w-4 h-4" fill="{{ $item->is_featured ? 'currentColor' : 'none' }}"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                        <!-- Footer Action Controls -->
+                        <div class="p-3 bg-[#09101d] border-t border-white/5 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-1.5">
+                                <button type="button" class="drag-handle p-1 rounded text-slate-400 hover:text-white hover:bg-white/5 transition-all cursor-grab active:cursor-grabbing" title="Drag to reorder">
+                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-12a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
                                     </svg>
                                 </button>
-                            </form>
+                                <span class="order-badge font-mono text-[10px] text-slate-500">Order: #{{ $item->sort_order }}</span>
+                            </div>
 
-                            <!-- Toggle Active -->
-                            <form action="{{ route('admin.galleries.toggleActive', $item) }}" method="POST"
-                                class="inline">
-                                @csrf
-                                <button type="submit" title="{{ $item->is_active ? 'Hide Photo' : 'Publish Photo' }}"
-                                    class="p-1.5 rounded-lg {{ $item->is_active ? 'text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20' : 'text-slate-500 hover:text-emerald-300 hover:bg-white/5' }} transition-all">
+                            <div class="flex items-center gap-1">
+                                <!-- Toggle Featured -->
+                                <form action="{{ route('admin.galleries.toggleFeatured', $item) }}" method="POST"
+                                    class="inline">
+                                    @csrf
+                                    <button type="submit"
+                                        title="{{ $item->is_featured ? 'Remove from Home Showcase' : 'Feature on Home Showcase' }}"
+                                        class="p-1.5 rounded-lg {{ $item->is_featured ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-slate-500 hover:text-amber-300 hover:bg-white/5' }} transition-all">
+                                        <svg class="w-4 h-4" fill="{{ $item->is_featured ? 'currentColor' : 'none' }}"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                        </svg>
+                                    </button>
+                                </form>
+
+                                <!-- Toggle Active -->
+                                <form action="{{ route('admin.galleries.toggleActive', $item) }}" method="POST"
+                                    class="inline">
+                                    @csrf
+                                    <button type="submit" title="{{ $item->is_active ? 'Hide Photo' : 'Publish Photo' }}"
+                                        class="p-1.5 rounded-lg {{ $item->is_active ? 'text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20' : 'text-slate-500 hover:text-emerald-300 hover:bg-white/5' }} transition-all">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="{{ $item->is_active ? 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' : 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18' }}" />
+                                        </svg>
+                                    </button>
+                                </form>
+
+                                <!-- Edit -->
+                                <a href="{{ route('admin.galleries.edit', $item) }}" title="Edit Photo"
+                                    class="p-1.5 rounded-lg text-cyan-400 hover:text-white hover:bg-cyan-600/30 transition-all">
                                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="{{ $item->is_active ? 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' : 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18' }}" />
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
-                                </button>
-                            </form>
+                                </a>
 
-                            <!-- Edit -->
-                            <a href="{{ route('admin.galleries.edit', $item) }}" title="Edit Photo"
-                                class="p-1.5 rounded-lg text-cyan-400 hover:text-white hover:bg-cyan-600/30 transition-all">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                </svg>
-                            </a>
-
-                            <!-- Delete -->
-                            <form action="{{ route('admin.galleries.destroy', $item) }}" method="POST"
-                                onsubmit="return confirm('Are you sure you want to permanently delete this photo?')"
-                                class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" title="Delete Photo"
-                                    class="p-1.5 rounded-lg text-rose-400 hover:text-white hover:bg-rose-600/30 transition-all">
-                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                </button>
-                            </form>
+                                <!-- Delete -->
+                                <form action="{{ route('admin.galleries.destroy', $item) }}" method="POST"
+                                    onsubmit="return confirm('Are you sure you want to permanently delete this photo?')"
+                                    class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" title="Delete Photo"
+                                        class="p-1.5 rounded-lg text-rose-400 hover:text-white hover:bg-rose-600/30 transition-all">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                @empty
+                    <div class="col-span-full py-8 text-center text-xs text-slate-400">No theme-specific photos configured yet.</div>
+                @endforelse
+            </div>
+        </div>
+
+        <!-- 2. Global Galleries Section (All Themes) -->
+        <div id="globalThemeSection" class="space-y-4 pt-6">
+            <div class="flex items-center justify-between pb-2 border-b border-white/5">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span>
+                    <h2 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider font-mono">
+                        Global Elements: <span class="text-indigo-300">Shared Across All Themes</span>
+                    </h2>
                 </div>
-            @empty
-                <div class="col-span-full py-16 text-center rounded-3xl bg-[#09101d] border border-white/10 space-y-4">
-                    <div
-                        class="w-16 h-16 rounded-3xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mx-auto text-2xl shadow-xl shadow-cyan-500/10">
-                        📷
+                <span class="text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-12a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
+                    </svg>
+                    Drag to reorder
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" data-sortable-grid="gallery" id="globalGalleriesGrid">
+                @forelse($globalGalleries as $item)
+                    @php
+                        $themeMeta = \App\Models\SiteSetting::getThemeDetails('all');
+                    @endphp
+                    <div data-id="{{ $item->id }}" data-theme="all" data-category="{{ $item->category }}"
+                        class="gallery-admin-card rounded-2xl bg-[#09101d] border border-white/10 overflow-hidden shadow-xl flex flex-col justify-between hover:border-cyan-500/40 transition-all duration-300 group">
+
+                        <div class="relative w-full h-52 sm:h-56 bg-slate-900 overflow-hidden cursor-pointer group/img shrink-0"
+                            data-pictureflect data-gallery="theme-all" data-src="{{ $item->image_url }}"
+                            data-title="{{ $item->title }}" data-category="{{ $item->category }}"
+                            data-pf-theme="{{ $themeMeta['name'] ?? 'All Themes' }}"
+                            data-pf-theme-key="all">
+
+                            <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
+                                class="absolute inset-0 w-full h-full object-cover block transition-transform duration-500 group-hover/img:scale-110 z-0"
+                                onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'%3E%3Crect width=\'600\' height=\'400\' fill=\'%230b101e\'/%3E%3Ccircle cx=\'300\' cy=\'180\' r=\'40\' fill=\'%2306b6d4\' opacity=\'0.2\'/%3E%3Ctext x=\'50%25\' y=\'65%25\' text-anchor=\'middle\' fill=\'%2364748b\' font-family=\'sans-serif\' font-size=\'14\'%3EImage Preview%3C/text%3E%3C/svg%3E';">
+
+                            <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 flex-wrap z-10 pointer-events-none">
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-black/80 backdrop-blur border {{ $themeMeta['badge'] }}">
+                                    <span class="w-1.5 h-1.5 rounded-full"
+                                        style="background-color: {{ $themeMeta['color'] }}"></span>
+                                    <span>{{ $themeMeta['short'] }}</span>
+                                </span>
+                            </div>
+
+                            <div class="absolute top-2.5 right-2.5 flex items-center gap-1 z-10 pointer-events-none">
+                                @if ($item->is_featured)
+                                    <span title="Featured on Home Page"
+                                        class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/40 backdrop-blur flex items-center gap-1">
+                                        ★ Home
+                                    </span>
+                                @endif
+                                <span
+                                    class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase {{ $item->is_active ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30' }} backdrop-blur">
+                                    {{ $item->is_active ? 'Live' : 'Hidden' }}
+                                </span>
+                            </div>
+
+                            <div
+                                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity z-10 pointer-events-none bg-black/30">
+                                <span
+                                    class="px-3 py-1.5 rounded-full bg-cyan-500 text-black text-xs font-bold tracking-wider uppercase font-mono shadow-lg shadow-cyan-500/30 flex items-center gap-1.5 transform translate-y-2 group-hover/img:translate-y-0 transition-transform">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        <line x1="11" y1="8" x2="11" y2="14"></line>
+                                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                                    </svg>
+                                    <span>Pictureflect View</span>
+                                </span>
+                            </div>
+
+                            <div
+                                class="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/95 via-black/80 to-transparent backdrop-blur-md border-t border-white/10 z-10 flex flex-col gap-1">
+                                <div class="flex items-center justify-between gap-1.5">
+                                    <span
+                                        class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 shrink-0">
+                                        {{ $item->category }}
+                                    </span>
+                                </div>
+                                <h3 class="text-xs sm:text-sm font-bold text-white truncate drop-shadow leading-snug"
+                                    title="{{ $item->title }}">
+                                    {{ $item->title }}
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-[#09101d] border-t border-white/5 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-1.5">
+                                <button type="button" class="drag-handle p-1 rounded text-slate-400 hover:text-white hover:bg-white/5 transition-all cursor-grab active:cursor-grabbing" title="Drag to reorder">
+                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-12a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
+                                    </svg>
+                                </button>
+                                <span class="order-badge font-mono text-[10px] text-slate-500">Order: #{{ $item->sort_order }}</span>
+                            </div>
+
+                            <div class="flex items-center gap-1">
+                                <form action="{{ route('admin.galleries.toggleFeatured', $item) }}" method="POST"
+                                    class="inline">
+                                    @csrf
+                                    <button type="submit"
+                                        title="{{ $item->is_featured ? 'Remove from Home Showcase' : 'Feature on Home Showcase' }}"
+                                        class="p-1.5 rounded-lg {{ $item->is_featured ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-slate-500 hover:text-amber-300 hover:bg-white/5' }} transition-all">
+                                        <svg class="w-4 h-4" fill="{{ $item->is_featured ? 'currentColor' : 'none' }}"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                        </svg>
+                                    </button>
+                                </form>
+
+                                <form action="{{ route('admin.galleries.toggleActive', $item) }}" method="POST"
+                                    class="inline">
+                                    @csrf
+                                    <button type="submit" title="{{ $item->is_active ? 'Hide Photo' : 'Publish Photo' }}"
+                                        class="p-1.5 rounded-lg {{ $item->is_active ? 'text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20' : 'text-slate-500 hover:text-emerald-300 hover:bg-white/5' }} transition-all">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="{{ $item->is_active ? 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' : 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18' }}" />
+                                        </svg>
+                                    </button>
+                                </form>
+
+                                <a href="{{ route('admin.galleries.edit', $item) }}" title="Edit Photo"
+                                    class="p-1.5 rounded-lg text-cyan-400 hover:text-white hover:bg-cyan-600/30 transition-all">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                </a>
+
+                                <form action="{{ route('admin.galleries.destroy', $item) }}" method="POST"
+                                    onsubmit="return confirm('Are you sure you want to permanently delete this photo?')"
+                                    class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" title="Delete Photo"
+                                        class="p-1.5 rounded-lg text-rose-400 hover:text-white hover:bg-rose-600/30 transition-all">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-base font-bold text-white">No Gallery Photos Yet</h3>
-                        <p class="text-xs text-slate-400 max-w-sm mx-auto mt-1">
-                            Upload high-resolution photography, system architectures, UI previews, or project screenshots.
-                        </p>
-                    </div>
-                    <a href="{{ route('admin.galleries.create') }}"
-                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg transition-all">
-                        <span>Upload First Photo</span>
-                    </a>
-                </div>
-            @endforelse
+                @empty
+                    <div class="col-span-full py-8 text-center text-xs text-slate-400">No global photos configured yet.</div>
+                @endforelse
+            </div>
         </div>
     </div>
 

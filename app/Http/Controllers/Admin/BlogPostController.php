@@ -80,7 +80,9 @@ class BlogPostController extends Controller
         $validated['author']       = $validated['author'] ?: (Auth::user()?->name ?: 'Admin');
         $validated['read_time']    = $validated['read_time'] ?: '5 min read';
         $validated['date']         = $validated['date'] ?: date('Y-m-d');
-        $validated['sort_order']   = $validated['sort_order'] ?? ((BlogPost::max('sort_order') ?? 0) + 1);
+        if (!$request->filled('sort_order')) {
+            unset($validated['sort_order']);
+        }
 
         $blog = BlogPost::create($validated);
 
@@ -138,6 +140,9 @@ class BlogPostController extends Controller
         }
 
         $validated['is_published'] = $request->has('is_published');
+        if (!$request->filled('sort_order')) {
+            unset($validated['sort_order']);
+        }
 
         $blog->update($validated);
 

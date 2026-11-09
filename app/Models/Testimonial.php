@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\AutoSortOrderById;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Testimonial extends Model
 {
-    use HasFactory;
+    use HasFactory, AutoSortOrderById;
     
     protected $fillable = [
         'client_name',

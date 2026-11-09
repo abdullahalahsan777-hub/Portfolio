@@ -87,28 +87,19 @@
             </div>
 
             <!-- Target Theme & Ordering -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Target Theme *</label>
-                    <select name="theme" ng-model="theme"
-                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
-                        <option value="all">🌟 Global Showcase (All Themes)</option>
-                        <option value="laravel_developer">⚡ Full-Stack Laravel Developer</option>
-                        <option value="developer">💻 Modern Software Engineer / Developer</option>
-                        <option value="uiux_designer">🎨 UI/UX Product Designer</option>
-                        <option value="graphic_designer">✒️ Creative Graphic Designer</option>
-                        <option value="digital_designer_illustrator">✨ Digital Designer & Illustrator</option>
-                        <option value="app_developer">📱 Mobile App Developer (iOS & Android)</option>
-                        <option value="app_software_developer">🚀 Application & Software Specialist</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Sort Order (Lower numbers
-                        appear first)</label>
-                    <input type="number" name="sort_order" value="{{ old('sort_order', 0) }}"
-                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
-                </div>
+            <div>
+                <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Target Theme *</label>
+                <select name="theme" ng-model="theme"
+                    class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
+                    <option value="all">🌟 Global Showcase (All Themes)</option>
+                    <option value="laravel_developer">⚡ Full-Stack Laravel Developer</option>
+                    <option value="developer">💻 Modern Software Engineer / Developer</option>
+                    <option value="uiux_designer">🎨 UI/UX Product Designer</option>
+                    <option value="graphic_designer">✒️ Creative Graphic Designer</option>
+                    <option value="digital_designer_illustrator">✨ Digital Designer & Illustrator</option>
+                    <option value="app_developer">📱 Mobile App Developer (iOS & Android)</option>
+                    <option value="app_software_developer">🚀 Application & Software Specialist</option>
+                </select>
             </div>
 
             <!-- Photo Upload & Live Pictureflect Preview Box -->

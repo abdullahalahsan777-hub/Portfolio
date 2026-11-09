@@ -116,7 +116,7 @@
                 </div>
 
                 <!-- Display Theme (Selected by Theme Settings) -->
-                <div>
+                <div class="sm:col-span-2">
                     <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Display Theme</label>
                     @php
                         $targetTheme = old(
@@ -143,14 +143,6 @@
                         <option value="laravel_developer" {{ $targetTheme === 'laravel_developer' ? 'selected' : '' }}>
                             Full-Stack Laravel Developer</option>
                     </select>
-                </div>
-
-                <!-- Display Order -->
-                <div>
-                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Display Order (Sort
-                        Index)</label>
-                    <input type="number" name="sort_order" value="{{ old('sort_order', 1) }}" min="1"
-                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500">
                 </div>
             </div>
 

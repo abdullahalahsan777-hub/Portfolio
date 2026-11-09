@@ -52,7 +52,9 @@ class FaqController extends Controller
         ]);
 
         $validated['is_published'] = $request->has('is_published');
-        $validated['sort_order'] = $validated['sort_order'] ?? ((Faq::max('sort_order') ?? 0) + 1);
+        if (!$request->filled('sort_order')) {
+            unset($validated['sort_order']);
+        }
 
         $faq = Faq::create($validated);
         $qSnippet = Str::limit($faq->question, 60);
@@ -93,6 +95,9 @@ class FaqController extends Controller
         ]);
 
         $validated['is_published'] = $request->has('is_published');
+        if (!$request->filled('sort_order')) {
+            unset($validated['sort_order']);
+        }
 
         $faq->update($validated);
         $qSnippet = Str::limit($faq->question, 60);

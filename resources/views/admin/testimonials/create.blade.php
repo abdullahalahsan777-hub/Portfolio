@@ -43,7 +43,7 @@
                         class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
                 </div>
 
-                <div>
+                <div class="sm:col-span-2">
                     @php
                         $targetTheme = request('theme', $selectedTheme ?? \App\Models\SiteSetting::getActiveTheme());
                     @endphp
@@ -67,11 +67,6 @@
                         <option value="laravel_developer" {{ $targetTheme === 'laravel_developer' ? 'selected' : '' }}>
                             Full-Stack Laravel Developer</option>
                     </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-mono text-slate-400 mb-1">Display Order</label>
-                    <input type="number" name="sort_order" value="{{ old('sort_order', 1) }}"
-                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
                 </div>
             </div>
 

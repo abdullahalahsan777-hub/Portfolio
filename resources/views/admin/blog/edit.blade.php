@@ -127,8 +127,8 @@
                 </div>
             </div>
 
-            <!-- Author, Read Time, Date & Order -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <!-- Author, Read Time, Date -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-xs font-mono text-slate-400 mb-1">Author Name</label>
                     <input type="text" name="author" value="{{ old('author', $blog->author) }}"
@@ -163,15 +163,6 @@
                             class="flowbite-datepicker ps-9 w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
                     </div>
                     @error('date')
-                        <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label class="block text-xs font-mono text-slate-400 mb-1">Display Order</label>
-                    <input type="number" name="sort_order" value="{{ old('sort_order', $blog->sort_order) }}"
-                        class="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs">
-                    @error('sort_order')
                         <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
                     @enderror
                 </div>
