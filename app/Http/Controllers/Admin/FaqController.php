@@ -19,7 +19,7 @@ class FaqController extends Controller
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->get('theme', $activeTheme);
 
-        $faqs = Faq::orderBy('sort_order')->get();
+        $faqs = Faq::orderBy('theme')->orderBy('sort_order')->get();
 
         $this->data['faqs'] = $faqs;
         $this->data['activeTheme'] = $activeTheme;

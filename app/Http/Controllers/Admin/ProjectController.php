@@ -18,7 +18,7 @@ class ProjectController extends Controller
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->query('theme', $activeTheme);
 
-        $projects = Project::orderBy('sort_order')->get();
+        $projects = Project::orderBy('theme')->orderBy('sort_order')->get();
 
         $this->data['projects'] = $projects;
         $this->data['activeTheme'] = $activeTheme;

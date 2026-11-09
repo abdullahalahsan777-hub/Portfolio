@@ -5,29 +5,40 @@ namespace App\Traits;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Trait to automatically copy primary ID to sort_order upon creation.
+ * Trait to automatically assign theme-wise sequential sort_order upon creation.
  *
  * @mixin \Illuminate\Database\Eloquent\Model
  *
- * @method static void created(callable|\Closure $callback)
+ * @method static void creating(callable|\Closure $callback)
  * @method static void updating(callable|\Closure $callback)
  */
 trait AutoSortOrderById
 {
     /**
-     * Boot the trait to auto-populate sort_order with id on creation.
+     * Boot the trait to auto-populate sort_order theme-wise on creation.
      */
     public static function bootAutoSortOrderById(): void
     {
-        static::created(function (Model $model): void {
+        static::creating(function (Model $model): void {
             if (empty($model->sort_order)) {
-                $model->sort_order = $model->id;
-                $model->saveQuietly();
+                $query = static::query();
+
+                // If model has a theme attribute, sequence within that theme
+                if (isset($model->theme)) {
+                    $query->where('theme', $model->theme);
+                }
+
+                // If model has a type attribute (e.g. ResumeItem education vs experience), sequence within type too
+                if (isset($model->type)) {
+                    $query->where('type', $model->type);
+                }
+
+                $maxOrder = $query->max('sort_order') ?? 0;
+                $model->sort_order = $maxOrder + 1;
             }
         });
 
         static::updating(function (Model $model): void {
-            // Preserve existing sort_order if updated data left sort_order empty
             if (empty($model->sort_order) && !empty($model->getOriginal('sort_order'))) {
                 $model->sort_order = $model->getOriginal('sort_order');
             }

@@ -23,7 +23,7 @@ class GalleryController extends Controller
         $selectedTheme = $request->query('theme', $activeTheme);
         $themes = SiteSetting::getAvailableThemes();
 
-        $galleries = Gallery::query()->orderBy('sort_order')->orderByDesc('id')->get();
+        $galleries = Gallery::query()->orderBy('theme')->orderBy('sort_order')->orderByDesc('id')->get();
 
         // Compute categories per theme so only relevant categories are shown for the selected theme
         $themeCategories = [];

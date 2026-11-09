@@ -43,7 +43,7 @@
                         class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
                 </div>
 
-                <div class="sm:col-span-2">
+                <div>
                     @php
                         $targetTheme = request('theme', $selectedTheme ?? \App\Models\SiteSetting::getActiveTheme());
                     @endphp

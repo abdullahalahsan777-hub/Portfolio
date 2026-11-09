@@ -19,7 +19,7 @@ class BlogPostController extends Controller
         $activeTheme    = SiteSetting::getActiveTheme();
         $selectedTheme  = $request->get('theme', $activeTheme);
 
-        $posts = BlogPost::orderBy('sort_order')->get();
+        $posts = BlogPost::orderBy('theme')->orderBy('sort_order')->get();
 
         $this->data['posts']         = $posts;
         $this->data['activeTheme']   = $activeTheme;

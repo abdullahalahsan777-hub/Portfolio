@@ -18,7 +18,7 @@ class SkillController extends Controller
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->query('theme', $activeTheme);
 
-        $skills = Skill::orderBy('sort_order')->get();
+        $skills = Skill::orderBy('theme')->orderBy('sort_order')->get();
 
         $this->data['skills'] = $skills;
         $this->data['activeTheme'] = $activeTheme;

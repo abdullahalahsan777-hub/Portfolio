@@ -29,18 +29,18 @@
             class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
             @csrf
 
-            <!-- Title & Category Row -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Photo Title *</label>
-                    <input type="text" name="title" required value="{{ old('title') }}"
-                        placeholder="e.g. High-Concurrency Server Architecture Schema"
-                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
-                    @error('title')
-                        <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
-                    @enderror
-                </div>
+            <!-- Title -->
+            <div>
+                <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Photo Title *</label>
+                <input type="text" name="title" required value="{{ old('title') }}"
+                    placeholder="e.g. High-Concurrency Server Architecture Schema"
+                    class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
+                @error('title')
+                    <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
+                @enderror
+            </div>
 
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <!-- Category: Select2 with AngularJS -->
                 <div>
                     <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Category * (Select or Type
@@ -84,23 +84,24 @@
                         <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
                     @enderror
                 </div>
+
+                <!-- Target Theme & Ordering -->
+                <div>
+                    <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Target Theme *</label>
+                    <select name="theme" ng-model="theme"
+                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
+                        <option value="all">🌟 Global Showcase (All Themes)</option>
+                        <option value="laravel_developer">⚡ Full-Stack Laravel Developer</option>
+                        <option value="developer">💻 Modern Software Engineer / Developer</option>
+                        <option value="uiux_designer">🎨 UI/UX Product Designer</option>
+                        <option value="graphic_designer">✒️ Creative Graphic Designer</option>
+                        <option value="digital_designer_illustrator">✨ Digital Designer & Illustrator</option>
+                        <option value="app_developer">📱 Mobile App Developer (iOS & Android)</option>
+                        <option value="app_software_developer">🚀 Application & Software Specialist</option>
+                    </select>
+                </div>
             </div>
 
-            <!-- Target Theme & Ordering -->
-            <div>
-                <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">Target Theme *</label>
-                <select name="theme" ng-model="theme"
-                    class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors">
-                    <option value="all">🌟 Global Showcase (All Themes)</option>
-                    <option value="laravel_developer">⚡ Full-Stack Laravel Developer</option>
-                    <option value="developer">💻 Modern Software Engineer / Developer</option>
-                    <option value="uiux_designer">🎨 UI/UX Product Designer</option>
-                    <option value="graphic_designer">✒️ Creative Graphic Designer</option>
-                    <option value="digital_designer_illustrator">✨ Digital Designer & Illustrator</option>
-                    <option value="app_developer">📱 Mobile App Developer (iOS & Android)</option>
-                    <option value="app_software_developer">🚀 Application & Software Specialist</option>
-                </select>
-            </div>
 
             <!-- Photo Upload & Live Pictureflect Preview Box -->
             <div class="p-5 rounded-2xl bg-[#060b13] border border-white/10 space-y-4">
@@ -115,9 +116,9 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
                     <!-- Image Preview Area -->
-                    <div class="md:col-span-5">
+                    <div class="md:col-span-4">
                         <div
-                            class="relative w-full h-56 rounded-xl bg-[#09101d] border border-white/10 flex items-center justify-center overflow-hidden group shadow-inner">
+                            class="relative w-full h-48 rounded-xl bg-[#09101d] border border-white/10 flex items-center justify-center overflow-hidden group shadow-inner">
                             <span id="preview_badge"
                                 class="absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-black/70 text-slate-400 backdrop-blur border border-white/10">
                                 No Photo Selected
@@ -138,7 +139,7 @@
                     </div>
 
                     <!-- Input Controls -->
-                    <div class="md:col-span-7 space-y-4">
+                    <div class="md:col-span-8 space-y-4">
                         <div>
                             <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Upload File
                                 (Recommended)</label>

@@ -17,17 +17,46 @@
             class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-4">
             @csrf
 
+            <div>
+                <label class="block text-xs font-mono text-slate-400 mb-1">Project Title *</label>
+                <input type="text" name="title" required placeholder="e.g. Nordic Living Store"
+                    class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
+            </div>
+
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-mono text-slate-400 mb-1">Project Title *</label>
-                    <input type="text" name="title" required placeholder="e.g. Nordic Living Store"
-                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
-                </div>
 
                 <div>
                     <label class="block text-xs font-mono text-slate-400 mb-1">Subtitle / Impact Summary</label>
                     <input type="text" name="subtitle" placeholder="e.g. High-conversion shopping experience"
                         class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono text-slate-400 mb-1">Display Theme</label>
+                    @php
+                        $targetTheme = request('theme', $selectedTheme ?? \App\Models\SiteSetting::getActiveTheme());
+                    @endphp
+                    <select name="theme"
+                        class="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs">
+                        <option value="all" {{ $targetTheme === 'all' ? 'selected' : '' }}>All Themes</option>
+                        <option value="developer" {{ $targetTheme === 'developer' ? 'selected' : '' }}>Developer</option>
+                        <option value="graphic_designer" {{ $targetTheme === 'graphic_designer' ? 'selected' : '' }}>
+                            Graphic
+                            Designer</option>
+                        <option value="uiux_designer" {{ $targetTheme === 'uiux_designer' ? 'selected' : '' }}>UI/UX
+                            Designer</option>
+                        <option value="app_developer" {{ $targetTheme === 'app_developer' ? 'selected' : '' }}>App
+                            Developer
+                        </option>
+                        <option value="app_software_developer"
+                            {{ $targetTheme === 'app_software_developer' ? 'selected' : '' }}>App &amp; Software Developer
+                        </option>
+                        <option value="digital_designer_illustrator"
+                            {{ $targetTheme === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer &amp;
+                            Illustrator</option>
+                        <option value="laravel_developer" {{ $targetTheme === 'laravel_developer' ? 'selected' : '' }}>
+                            Full-Stack Laravel Developer</option>
+                    </select>
                 </div>
 
                 <div>
@@ -77,15 +106,16 @@
                 <!-- Tags / Technologies -->
                 <div>
                     <label class="block text-xs font-mono text-slate-300 font-semibold mb-1.5">
-                        Tags / Technologies <span class="text-slate-500 font-normal text-[11px]">(Press Enter or Comma to add)</span>
+                        Tags / Technologies <span class="text-slate-500 font-normal text-[11px]">(Press Enter or Comma to
+                            add)</span>
                     </label>
-                    <div class="tags-input-widget relative w-full min-h-[42px] px-3.5 py-1.5 rounded-xl bg-[#0d1627] border border-white/10 hover:border-white/20 text-white text-sm focus-within:border-cyan-500 transition-colors cursor-text flex items-center">
+                    <div
+                        class="tags-input-widget relative w-full min-h-[42px] px-3.5 py-1.5 rounded-xl bg-[#0d1627] border border-white/10 hover:border-white/20 text-white text-sm focus-within:border-cyan-500 transition-colors cursor-text flex items-center">
                         <div class="tag-pills-box flex flex-wrap items-center gap-1.5 w-full">
                             <input type="text"
                                 class="tag-text-input flex-1 min-w-[120px] bg-transparent border-0 outline-none text-white text-sm font-mono placeholder:text-slate-500 focus:outline-none focus:ring-0 p-0.5"
                                 placeholder="e.g. Laravel 12, Vue 3, Redis"
-                                data-default-placeholder="e.g. Laravel 12, Vue 3, Redis"
-                                autocomplete="off">
+                                data-default-placeholder="e.g. Laravel 12, Vue 3, Redis" autocomplete="off">
                         </div>
 
                         <input type="hidden" name="tags" id="project_tags_input" value="{{ old('tags') }}">
@@ -167,7 +197,8 @@
                                     class="text-[10px] font-mono text-rose-400 hover:text-rose-300 transition-colors">Clear</button>
                             </div>
                             <input type="text" name="image_url" id="project_image_url_input"
-                                value="{{ old('image_url') }}" placeholder="https://images.unsplash.com/... or /images/..."
+                                value="{{ old('image_url') }}"
+                                placeholder="https://images.unsplash.com/... or /images/..."
                                 oninput="handleProjectImageUrl(this.value)"
                                 class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs font-mono focus:outline-none focus:border-indigo-500 transition-colors">
                         </div>
@@ -179,34 +210,6 @@
                 <label class="block text-xs font-mono text-slate-400 mb-1">Description</label>
                 <textarea name="description" rows="5" data-height="220" placeholder="Case study overview..."
                     class="summernote w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">{{ old('description') }}</textarea>
-            </div>
-
-            <div>
-                <label class="block text-xs font-mono text-slate-400 mb-1">Display Theme</label>
-                @php
-                    $targetTheme = request('theme', $selectedTheme ?? \App\Models\SiteSetting::getActiveTheme());
-                @endphp
-                <select name="theme"
-                    class="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs">
-                    <option value="all" {{ $targetTheme === 'all' ? 'selected' : '' }}>All Themes</option>
-                    <option value="developer" {{ $targetTheme === 'developer' ? 'selected' : '' }}>Developer</option>
-                    <option value="graphic_designer" {{ $targetTheme === 'graphic_designer' ? 'selected' : '' }}>
-                        Graphic
-                        Designer</option>
-                    <option value="uiux_designer" {{ $targetTheme === 'uiux_designer' ? 'selected' : '' }}>UI/UX
-                        Designer</option>
-                    <option value="app_developer" {{ $targetTheme === 'app_developer' ? 'selected' : '' }}>App
-                        Developer
-                    </option>
-                    <option value="app_software_developer"
-                        {{ $targetTheme === 'app_software_developer' ? 'selected' : '' }}>App &amp; Software Developer
-                    </option>
-                    <option value="digital_designer_illustrator"
-                        {{ $targetTheme === 'digital_designer_illustrator' ? 'selected' : '' }}>Digital Designer &amp;
-                        Illustrator</option>
-                    <option value="laravel_developer" {{ $targetTheme === 'laravel_developer' ? 'selected' : '' }}>
-                        Full-Stack Laravel Developer</option>
-                </select>
             </div>
 
             <div class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-white/10">

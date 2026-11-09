@@ -19,8 +19,8 @@ class ResumeController extends Controller
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->get('theme', $activeTheme);
 
-        $education = ResumeItem::where('type', 'education')->orderBy('sort_order')->get();
-        $experience = ResumeItem::where('type', 'experience')->orderBy('sort_order')->get();
+        $education = ResumeItem::where('type', 'education')->orderBy('theme')->orderBy('sort_order')->get();
+        $experience = ResumeItem::where('type', 'experience')->orderBy('theme')->orderBy('sort_order')->get();
 
         $this->data['education'] = $education;
         $this->data['experience'] = $experience;

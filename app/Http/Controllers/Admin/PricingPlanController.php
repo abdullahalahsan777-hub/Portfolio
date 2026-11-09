@@ -18,7 +18,7 @@ class PricingPlanController extends Controller
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->query('theme', $activeTheme);
 
-        $plans = PricingPlan::orderBy('sort_order')->get();
+        $plans = PricingPlan::orderBy('theme')->orderBy('sort_order')->get();
 
         $this->data['plans'] = $plans;
         $this->data['activeTheme'] = $activeTheme;

@@ -18,7 +18,7 @@ class ServiceController extends Controller
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->query('theme', $activeTheme);
 
-        $services = Service::orderBy('sort_order')->get();
+        $services = Service::orderBy('theme')->orderBy('sort_order')->get();
 
         $this->data['services'] = $services;
         $this->data['activeTheme'] = $activeTheme;

@@ -119,7 +119,7 @@
                 </div>
 
                 <!-- Display Theme (Selected by Theme Settings) -->
-                <div class="sm:col-span-2">
+                <div>
                     <label class="block text-xs font-mono text-slate-300 font-semibold mb-1">Display Theme</label>
                     @php
                         $targetTheme = old(

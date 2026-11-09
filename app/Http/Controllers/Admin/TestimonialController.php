@@ -18,7 +18,7 @@ class TestimonialController extends Controller
         $activeTheme = SiteSetting::getActiveTheme();
         $selectedTheme = $request->query('theme', $activeTheme);
 
-        $testimonials = Testimonial::orderBy('sort_order')->get();
+        $testimonials = Testimonial::orderBy('theme')->orderBy('sort_order')->get();
 
         $this->data['testimonials'] = $testimonials;
         $this->data['activeTheme'] = $activeTheme;
