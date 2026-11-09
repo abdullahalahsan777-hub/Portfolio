@@ -32,12 +32,15 @@ class BlogPost extends Model
     /**
      * Accessor: date falls back to formatted created_at if empty.
      * Formats nicely for display (e.g. 'Oct 18, 2026').
+     *
+     * @param string|\DateTimeInterface|null $value
+     * @return string|null
      */
-    public function getDateAttribute($value = null): ?string
+    public function getDateAttribute(string|\DateTimeInterface|null $value = null): ?string
     {
         if (!empty($value)) {
-            $ts = strtotime($value);
-            return $ts ? date('M d, Y', $ts) : $value;
+            $ts = is_string($value) ? strtotime($value) : $value->getTimestamp();
+            return $ts ? date('M d, Y', $ts) : (string) $value;
         }
 
         return $this->created_at?->format('M d, Y') ?? date('M d, Y');
@@ -49,8 +52,8 @@ class BlogPost extends Model
     public function getDateInputAttribute(): string
     {
         $raw = $this->getRawOriginal('date');
-        if (!empty($raw) && strtotime($raw)) {
-            return date('Y-m-d', strtotime($raw));
+        if (!empty($raw) && strtotime((string) $raw)) {
+            return date('Y-m-d', strtotime((string) $raw));
         }
 
         return $this->created_at?->format('Y-m-d') ?? date('Y-m-d');
@@ -58,12 +61,15 @@ class BlogPost extends Model
 
     /**
      * Mutator: ensure any saved date is converted into valid MySQL YYYY-MM-DD.
+     *
+     * @param string|\DateTimeInterface|null $value
+     * @return void
      */
-    public function setDateAttribute($value): void
+    public function setDateAttribute(string|\DateTimeInterface|null $value): void
     {
         if (!empty($value)) {
-            $ts = strtotime($value);
-            $this->attributes['date'] = $ts ? date('Y-m-d', $ts) : $value;
+            $ts = is_string($value) ? strtotime($value) : $value->getTimestamp();
+            $this->attributes['date'] = $ts ? date('Y-m-d', $ts) : (string) $value;
         } else {
             $this->attributes['date'] = date('Y-m-d');
         }
@@ -71,8 +77,11 @@ class BlogPost extends Model
 
     /**
      * Accessor: resolve local image path to full URL.
+     *
+     * @param string|null $value
+     * @return string|null
      */
-    public function getImageAttribute($value = null): ?string
+    public function getImageAttribute(?string $value = null): ?string
     {
         if (empty($value)) {
             return null;
