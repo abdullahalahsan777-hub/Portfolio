@@ -37,7 +37,7 @@ export function initAdminPanel() {
     datepickerElements.forEach(el => {
         // Initialize instance if not already done by initFlowbite()
         if (!el.datepicker) {
-            const format = el.getAttribute('datepicker-format') || 'M dd, yyyy';
+            const format = el.getAttribute('datepicker-format') || 'yyyy-mm-dd';
             const autohide = el.hasAttribute('datepicker-autohide') ? (el.getAttribute('datepicker-autohide') !== 'false') : true;
             try {
                 new Datepicker(el, {
