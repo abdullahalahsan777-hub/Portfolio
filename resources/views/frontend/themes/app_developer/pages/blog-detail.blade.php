@@ -15,7 +15,15 @@
             <h1 class="text-3xl sm:text-5xl font-black font-['Outfit'] uppercase tracking-tight text-white leading-tight">
                 {{ $post['title'] }}
             </h1>
-            <div class="flex items-center justify-center gap-4 text-xs font-mono text-neutral-400">
+            @php
+                $authorAvatar = is_array($post) ? ($post['author_avatar'] ?? null) : ($post->author_avatar ?? null);
+            @endphp
+            <div class="flex items-center justify-center gap-3 text-xs font-mono text-neutral-400">
+                @if(!empty($authorAvatar))
+                    <img src="{{ str_starts_with($authorAvatar, 'http') ? $authorAvatar : asset($authorAvatar) }}"
+                        alt="{{ $post['author'] ?? 'Alex Rivera' }}"
+                        class="w-6 h-6 rounded-full object-cover border border-[#ff0033]/40 shrink-0">
+                @endif
                 <span>By {{ $post['author'] ?? 'Alex Rivera' }}</span>
                 <span>&bull;</span>
                 <span>{{ $post['date'] }}</span>

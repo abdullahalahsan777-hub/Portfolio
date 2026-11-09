@@ -52,13 +52,23 @@
         </div>
 
         <!-- Author / Footer Box -->
+        @php
+            $authorName = is_array($post) ? ($post['author'] ?? 'Glint Engineering') : ($post->author ?? 'Glint Engineering');
+            $authorAvatar = is_array($post) ? ($post['author_avatar'] ?? null) : ($post->author_avatar ?? null);
+        @endphp
         <div class="mt-12 p-6 rounded-2xl bg-[#111111] border border-white/10 flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full bg-[#00ff88] text-[#070707] font-black flex items-center justify-center font-['Outfit'] text-lg">
-                    G
-                </div>
+                @if(!empty($authorAvatar))
+                    <img src="{{ str_starts_with($authorAvatar, 'http') ? $authorAvatar : asset($authorAvatar) }}"
+                        alt="{{ $authorName }}"
+                        class="w-12 h-12 rounded-full object-cover border-2 border-[#00ff88]">
+                @else
+                    <div class="w-12 h-12 rounded-full bg-[#00ff88] text-[#070707] font-black flex items-center justify-center font-['Outfit'] text-lg">
+                        {{ strtoupper(substr($authorName, 0, 1)) }}
+                    </div>
+                @endif
                 <div>
-                    <h4 class="text-sm font-bold text-white uppercase font-['Outfit']">Published by Glint Engineering</h4>
+                    <h4 class="text-sm font-bold text-white uppercase font-['Outfit']">Published by {{ $authorName }}</h4>
                     <span class="text-xs text-neutral-400 font-mono">Lead Architecture &amp; DevOps</span>
                 </div>
             </div>

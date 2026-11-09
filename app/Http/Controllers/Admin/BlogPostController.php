@@ -43,19 +43,21 @@ class BlogPostController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'title'      => 'required|string|max:200',
-            'slug'       => 'nullable|string|max:200|unique:blog_posts,slug',
-            'category'   => 'required|string|max:100',
-            'date'       => 'nullable|string|max:50',
-            'read_time'  => 'nullable|string|max:50',
-            'author'     => 'nullable|string|max:100',
-            'image_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:5120',
-            'image'      => 'nullable|string|max:500',
-            'excerpt'    => 'required|string|max:500',
-            'content'    => 'required|string',
-            'theme'      => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
-            'sort_order' => 'nullable|integer',
-            'is_published'=> 'nullable|boolean',
+            'title'              => 'required|string|max:200',
+            'slug'               => 'nullable|string|max:200|unique:blog_posts,slug',
+            'category'           => 'required|string|max:100',
+            'date'               => 'nullable|string|max:50',
+            'read_time'          => 'nullable|string|max:50',
+            'author'             => 'nullable|string|max:100',
+            'author_avatar_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:5120',
+            'author_avatar'      => 'nullable|string|max:500',
+            'image_file'         => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:5120',
+            'image'              => 'nullable|string|max:500',
+            'excerpt'            => 'required|string|max:500',
+            'content'            => 'required|string',
+            'theme'              => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
+            'sort_order'         => 'nullable|integer',
+            'is_published'       => 'nullable|boolean',
         ]);
 
         if (empty($validated['slug'])) {
@@ -74,6 +76,15 @@ class BlogPostController extends Controller
             if ($uploadedPath) {
                 $validated['image'] = $uploadedPath;
             }
+        }
+
+        if ($request->hasFile('author_avatar_file')) {
+            $uploadedAvatar = uploadFile($request->file('author_avatar_file'), 'uploads/blog/authors', 'author');
+            if ($uploadedAvatar) {
+                $validated['author_avatar'] = $uploadedAvatar;
+            }
+        } elseif (empty($validated['author_avatar']) && Auth::user()?->avatar) {
+            $validated['author_avatar'] = Auth::user()->avatar;
         }
 
         $validated['is_published'] = $request->has('is_published');
@@ -113,19 +124,21 @@ class BlogPostController extends Controller
     public function update(Request $request, BlogPost $blog): RedirectResponse
     {
         $validated = $request->validate([
-            'title'      => 'required|string|max:200',
-            'slug'       => 'required|string|max:200|unique:blog_posts,slug,' . $blog->id,
-            'category'   => 'required|string|max:100',
-            'date'       => 'nullable|string|max:50',
-            'read_time'  => 'nullable|string|max:50',
-            'author'     => 'nullable|string|max:100',
-            'image_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:5120',
-            'image'      => 'nullable|string|max:500',
-            'excerpt'    => 'required|string|max:500',
-            'content'    => 'required|string',
-            'theme'      => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
-            'sort_order' => 'nullable|integer',
-            'is_published'=> 'nullable|boolean',
+            'title'              => 'required|string|max:200',
+            'slug'               => 'required|string|max:200|unique:blog_posts,slug,' . $blog->id,
+            'category'           => 'required|string|max:100',
+            'date'               => 'nullable|string|max:50',
+            'read_time'          => 'nullable|string|max:50',
+            'author'             => 'nullable|string|max:100',
+            'author_avatar_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:5120',
+            'author_avatar'      => 'nullable|string|max:500',
+            'image_file'         => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:5120',
+            'image'              => 'nullable|string|max:500',
+            'excerpt'            => 'required|string|max:500',
+            'content'            => 'required|string',
+            'theme'              => 'required|string|in:all,developer,graphic_designer,uiux_designer,app_developer,app_software_developer,digital_designer_illustrator,laravel_developer',
+            'sort_order'         => 'nullable|integer',
+            'is_published'       => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('image_file')) {
@@ -136,6 +149,17 @@ class BlogPostController extends Controller
                     @unlink(public_path($oldImage));
                 }
                 $validated['image'] = $uploadedPath;
+            }
+        }
+
+        if ($request->hasFile('author_avatar_file')) {
+            $uploadedAvatar = uploadFile($request->file('author_avatar_file'), 'uploads/blog/authors', 'author');
+            if ($uploadedAvatar) {
+                $oldAvatar = $blog->getRawOriginal('author_avatar');
+                if (!empty($oldAvatar) && !str_starts_with($oldAvatar, 'http') && file_exists(public_path($oldAvatar))) {
+                    @unlink(public_path($oldAvatar));
+                }
+                $validated['author_avatar'] = $uploadedAvatar;
             }
         }
 
@@ -167,6 +191,11 @@ class BlogPostController extends Controller
         $oldImage = $blog->getRawOriginal('image');
         if (!empty($oldImage) && !str_starts_with($oldImage, 'http') && file_exists(public_path($oldImage))) {
             @unlink(public_path($oldImage));
+        }
+
+        $oldAvatar = $blog->getRawOriginal('author_avatar');
+        if (!empty($oldAvatar) && !str_starts_with($oldAvatar, 'http') && file_exists(public_path($oldAvatar))) {
+            @unlink(public_path($oldAvatar));
         }
 
         $blog->delete();

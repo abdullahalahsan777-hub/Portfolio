@@ -112,14 +112,73 @@
                 </div>
             </div>
 
-            <!-- Author, Read Time, Date -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                    <label class="block text-xs font-mono text-slate-400 mb-1">Author Name</label>
-                    <input type="text" name="author" value="{{ old('author', auth()->user()?->name ?? '') }}"
-                        placeholder="Author name..."
-                        class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
+            <!-- Author Dossier & Avatar -->
+            <div class="p-5 rounded-2xl bg-[#060b13] border border-white/10 space-y-4">
+                <div class="flex items-center justify-between pb-2 border-b border-white/5">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                        <label class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-300">Author &amp; Avatar</label>
+                    </div>
+                    <span class="text-[10px] font-mono text-slate-500">Avatar displayed in frontend article dossier &amp; cards</span>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+                    <!-- Author Avatar Preview Box -->
+                    <div class="md:col-span-3 lg:col-span-2 flex flex-col items-center">
+                        <div class="relative w-20 h-20 rounded-2xl bg-[#09101d] border border-white/10 flex items-center justify-center overflow-hidden shadow-inner group">
+                            @php
+                                $defaultUserAvatar = auth()->user()?->avatar ? (str_starts_with(auth()->user()->avatar, 'http') ? auth()->user()->avatar : asset(auth()->user()->avatar)) : '';
+                            @endphp
+                            <img id="author_avatar_preview" src="{{ $defaultUserAvatar }}" alt="Author Avatar Preview"
+                                class="w-full h-full object-cover {{ $defaultUserAvatar ? '' : 'hidden' }}">
+                            <div id="author_avatar_placeholder" class="text-center p-2 text-slate-500 {{ $defaultUserAvatar ? 'hidden' : '' }}">
+                                <svg class="w-8 h-8 mx-auto text-slate-600 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                                <span class="text-[9px] font-mono block">No Avatar</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-mono text-slate-400 mt-1.5">Avatar Preview</span>
+                    </div>
+
+                    <!-- Author Details & Upload Controls -->
+                    <div class="md:col-span-9 lg:col-span-10 space-y-3.5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-mono text-slate-400 mb-1">Author Name</label>
+                                <input type="text" name="author" value="{{ old('author', auth()->user()?->name ?? '') }}"
+                                    placeholder="Author name..."
+                                    class="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm focus:outline-none focus:border-cyan-500">
+                                @error('author')
+                                    <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-slate-400 mb-1">Upload Author Avatar File</label>
+                                <input type="file" name="author_avatar_file" id="author_avatar_file" accept="image/*"
+                                    onchange="handleAuthorAvatarFile(this)"
+                                    class="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-slate-300 text-xs file:mr-3 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-cyan-600/30 file:text-cyan-300 hover:file:bg-cyan-600/50 cursor-pointer">
+                                @error('author_avatar_file')
+                                    <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-mono text-slate-400 mb-1">Or External Avatar URL (Optional)</label>
+                            <input type="text" name="author_avatar" id="author_avatar_url_input" value="{{ old('author_avatar') }}"
+                                placeholder="https://example.com/author.jpg"
+                                oninput="handleAuthorAvatarUrl(this.value)"
+                                class="w-full px-4 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs font-mono focus:outline-none focus:border-cyan-500">
+                            @error('author_avatar')
+                                <p class="text-[11px] text-rose-400 mt-1 font-mono">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Read Time & Date -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-mono text-slate-400 mb-1">Read Time Estimate</label>
                     <input type="text" name="read_time" value="{{ old('read_time', '5 min read') }}"
@@ -335,5 +394,51 @@
         if (initialVal) {
             handleBlogImageUrl(initialVal);
         }
+
+        // Author Avatar Preview Handling
+        const defaultAuthorAvatar = "{{ $defaultUserAvatar ?? '' }}";
+
+        function handleAuthorAvatarFile(input) {
+            const previewImg = document.getElementById('author_avatar_preview');
+            const placeholder = document.getElementById('author_avatar_placeholder');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewImg.classList.remove('hidden');
+                    placeholder?.classList.add('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function handleAuthorAvatarUrl(val) {
+            const fileInput = document.getElementById('author_avatar_file');
+            const previewImg = document.getElementById('author_avatar_preview');
+            const placeholder = document.getElementById('author_avatar_placeholder');
+
+            if (!fileInput.files.length) {
+                const trimmed = val.trim();
+                if (trimmed) {
+                    previewImg.src = trimmed;
+                    previewImg.classList.remove('hidden');
+                    placeholder?.classList.add('hidden');
+                } else if (defaultAuthorAvatar) {
+                    previewImg.src = defaultAuthorAvatar;
+                    previewImg.classList.remove('hidden');
+                    placeholder?.classList.add('hidden');
+                } else {
+                    previewImg.classList.add('hidden');
+                    placeholder?.classList.remove('hidden');
+                }
+            }
+        }
+
+        document.getElementById('author_avatar_preview')?.addEventListener('error', function() {
+            const placeholder = document.getElementById('author_avatar_placeholder');
+            this.classList.add('hidden');
+            placeholder?.classList.remove('hidden');
+        });
     </script>
 @endsection

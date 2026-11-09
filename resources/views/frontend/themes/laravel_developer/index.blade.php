@@ -1494,9 +1494,16 @@
 
                             <div
                                 class="pt-4 mt-4 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-xs font-mono">
-                                <span class="text-slate-400 text-[11px]">{{ $post->author }}</span>
+                                <div class="flex items-center gap-2 min-w-0">
+                                    @if (!empty($post->author_avatar))
+                                        <img src="{{ str_starts_with($post->author_avatar, 'http') ? $post->author_avatar : asset($post->author_avatar) }}"
+                                            alt="{{ $post->author }}"
+                                            class="w-5 h-5 rounded-full object-cover border border-cyan-500/30 shrink-0">
+                                    @endif
+                                    <span class="text-slate-400 text-[11px] truncate">{{ $post->author }}</span>
+                                </div>
                                 <a href="{{ route('blog.detail', $post->slug) }}"
-                                    class="text-[var(--theme-primary)] font-bold hover:underline">
+                                    class="text-[var(--theme-primary)] font-bold hover:underline shrink-0">
                                     Read →
                                 </a>
                             </div>

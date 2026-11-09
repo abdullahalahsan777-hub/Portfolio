@@ -52,6 +52,7 @@
                         $date = is_array($post) ? ($post['date'] ?? '') : ($post->date ?? 'Recently');
                         $readTime = is_array($post) ? ($post['read_time'] ?? '') : ($post->read_time ?? '5 min read');
                         $author = is_array($post) ? ($post['author'] ?? 'Md. Abdullah Al Ahsan') : ($post->author ?? 'Md. Abdullah Al Ahsan');
+                        $authorAvatar = is_array($post) ? ($post['author_avatar'] ?? null) : ($post->author_avatar ?? null);
                         $excerpt = is_array($post) ? ($post['excerpt'] ?? '') : ($post->excerpt ?? '');
                     @endphp
 
@@ -98,9 +99,15 @@
                         <!-- Card Footer -->
                         <div class="pt-5 mt-5 border-t border-slate-100 dark:border-white/10 flex items-center justify-between">
                             <div class="flex items-center gap-2">
-                                <div class="w-6 h-6 rounded-full bg-cyan-500/20 text-[var(--theme-primary)] flex items-center justify-center text-[10px] font-bold">
-                                    A
-                                </div>
+                                @if (!empty($authorAvatar))
+                                    <img src="{{ str_starts_with($authorAvatar, 'http') ? $authorAvatar : asset($authorAvatar) }}"
+                                        alt="{{ $author }}"
+                                        class="w-6 h-6 rounded-full object-cover border border-[var(--theme-primary)]/40 shrink-0">
+                                @else
+                                    <div class="w-6 h-6 rounded-full bg-cyan-500/20 text-[var(--theme-primary)] flex items-center justify-center text-[10px] font-bold shrink-0">
+                                        {{ strtoupper(substr($author, 0, 1)) }}
+                                    </div>
+                                @endif
                                 <span class="text-xs font-mono text-slate-700 dark:text-slate-300">{{ $author }}</span>
                             </div>
 

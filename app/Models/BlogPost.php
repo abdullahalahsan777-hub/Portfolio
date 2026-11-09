@@ -18,6 +18,7 @@ class BlogPost extends Model
         'date',
         'read_time',
         'author',
+        'author_avatar',
         'image',
         'excerpt',
         'content',
@@ -83,6 +84,25 @@ class BlogPost extends Model
      * @return string|null
      */
     public function getImageAttribute(?string $value = null): ?string
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        if (str_starts_with($value, 'http://') || str_starts_with($value, 'https://') || str_starts_with($value, '//')) {
+            return $value;
+        }
+
+        return asset($value);
+    }
+
+    /**
+     * Accessor: resolve local author avatar image path to full URL.
+     *
+     * @param string|null $value
+     * @return string|null
+     */
+    public function getAuthorAvatarAttribute(?string $value = null): ?string
     {
         if (empty($value)) {
             return null;

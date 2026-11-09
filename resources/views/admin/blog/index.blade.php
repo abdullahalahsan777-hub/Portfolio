@@ -96,7 +96,20 @@
                                 </p>
                             </div>
 
-                            <div class="pt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                            <!-- Author Dossier Pill -->
+                            <div class="flex items-center gap-2.5 pt-3 border-t border-white/5">
+                                @if (!empty($post->author_avatar))
+                                    <img src="{{ $post->author_avatar }}" alt="{{ $post->author }}"
+                                        class="w-6 h-6 rounded-full object-cover border border-white/20 shrink-0">
+                                @else
+                                    <div class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0">
+                                        {{ strtoupper(substr($post->author ?: 'A', 0, 1)) }}
+                                    </div>
+                                @endif
+                                <span class="text-xs text-slate-300 font-medium truncate">{{ $post->author }}</span>
+                            </div>
+
+                            <div class="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-400">
                                 <div class="flex items-center gap-2">
                                     <button type="button" class="drag-handle p-1 rounded text-slate-400 hover:text-white hover:bg-white/5 transition-all cursor-grab active:cursor-grabbing" title="Drag to reorder">
                                         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
@@ -203,7 +216,20 @@
                                 </p>
                             </div>
 
-                            <div class="pt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                            <!-- Author Dossier Pill -->
+                            <div class="flex items-center gap-2.5 pt-3 border-t border-white/5">
+                                @if (!empty($post->author_avatar))
+                                    <img src="{{ $post->author_avatar }}" alt="{{ $post->author }}"
+                                        class="w-6 h-6 rounded-full object-cover border border-white/20 shrink-0">
+                                @else
+                                    <div class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px] font-bold shrink-0">
+                                        {{ strtoupper(substr($post->author ?: 'A', 0, 1)) }}
+                                    </div>
+                                @endif
+                                <span class="text-xs text-slate-300 font-medium truncate">{{ $post->author }}</span>
+                            </div>
+
+                            <div class="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-400">
                                 <div class="flex items-center gap-2">
                                     <button type="button" class="drag-handle p-1 rounded text-slate-400 hover:text-white hover:bg-white/5 transition-all cursor-grab active:cursor-grabbing" title="Drag to reorder">
                                         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">

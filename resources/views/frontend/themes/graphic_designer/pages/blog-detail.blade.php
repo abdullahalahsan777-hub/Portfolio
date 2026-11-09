@@ -43,11 +43,18 @@
             </div>
 
             <!-- Author Card -->
+            @php
+                $authorAvatar = is_array($post) ? ($post['author_avatar'] ?? null) : ($post->author_avatar ?? null);
+                $authorName = is_array($post) ? ($post['author'] ?? 'Alex Rivera') : ($post->author ?? 'Alex Rivera');
+                $defaultImg = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80';
+            @endphp
             <div class="mt-16 p-8 rounded-3xl bg-[#150f2c] border border-white/10 flex items-center gap-6">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" class="w-16 h-16 rounded-2xl object-cover border-2 border-[#7c3aed]">
+                <img src="{{ !empty($authorAvatar) ? (str_starts_with($authorAvatar, 'http') ? $authorAvatar : asset($authorAvatar)) : $defaultImg }}"
+                    alt="{{ $authorName }}"
+                    class="w-16 h-16 rounded-2xl object-cover border-2 border-[#7c3aed] shrink-0">
                 <div>
                     <span class="text-[10px] font-mono text-[#a855f7] uppercase font-bold">Author</span>
-                    <h4 class="text-base font-bold text-white font-['Outfit']">{{ $post['author'] }}</h4>
+                    <h4 class="text-base font-bold text-white font-['Outfit']">{{ $authorName }}</h4>
                     <p class="text-xs text-slate-400 mt-1">Award-winning Visual & Brand Identity Director crafting distinctive creative legacies.</p>
                 </div>
             </div>

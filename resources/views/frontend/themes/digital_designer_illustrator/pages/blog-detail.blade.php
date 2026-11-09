@@ -46,10 +46,21 @@
             </div>
 
             <!-- Author signature -->
+            @php
+                $authorAvatar = is_array($post) ? ($post['author_avatar'] ?? null) : ($post->author_avatar ?? null);
+                $authorName = is_array($post) ? ($post['author'] ?? 'Alex Walker') : ($post->author ?? 'Alex Walker');
+            @endphp
             <div class="mt-12 pt-8 border-t border-black/10 flex items-center justify-between">
-                <div>
-                    <span class="text-[10px] font-mono uppercase tracking-widest text-[#787f8d] block">Written By</span>
-                    <span class="font-bold text-[#151618] text-sm">{{ $post['author'] }}</span>
+                <div class="flex items-center gap-3">
+                    @if(!empty($authorAvatar))
+                        <img src="{{ str_starts_with($authorAvatar, 'http') ? $authorAvatar : asset($authorAvatar) }}"
+                            alt="{{ $authorName }}"
+                            class="w-10 h-10 rounded-full object-cover border-2 border-[#e26d9b] shrink-0">
+                    @endif
+                    <div>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-[#787f8d] block">Written By</span>
+                        <span class="font-bold text-[#151618] text-sm">{{ $authorName }}</span>
+                    </div>
                 </div>
                 <a href="{{ route('contact') }}" class="ddi-btn-pill">
                     <span>Discuss this post</span>
