@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin \Illuminate\Database\Eloquent\Model
  *
+ * @method static \Illuminate\Database\Eloquent\Builder query()
  * @method static void creating(callable|\Closure $callback)
  * @method static void updating(callable|\Closure $callback)
  */
@@ -21,7 +22,7 @@ trait AutoSortOrderById
     {
         static::creating(function (Model $model): void {
             if (empty($model->sort_order)) {
-                $query = static::query();
+                $query = $model->newQuery();
 
                 // If model has a theme attribute, sequence within that theme
                 if (isset($model->theme)) {
@@ -33,7 +34,7 @@ trait AutoSortOrderById
                     $query->where('type', $model->type);
                 }
 
-                $maxOrder = $query->max('sort_order') ?? 0;
+                $maxOrder = (int) ($query->max('sort_order') ?? 0);
                 $model->sort_order = $maxOrder + 1;
             }
         });
