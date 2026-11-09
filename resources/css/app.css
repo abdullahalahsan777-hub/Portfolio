@@ -6,9 +6,9 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+@source '../../node_modules/flowbite/**/*.js';
 
 /* Import Modular Separated CSS Files */
-@import 'flowbite';
 @import '../../node_modules/flowbite-datepicker/dist/css/datepicker.css';
 @import './frontend/frontend.css';
 @import './frontend/scroll_animations.css';
