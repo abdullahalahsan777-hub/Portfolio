@@ -234,7 +234,8 @@ class VersionController extends Controller
      */
     public function applyUpdate(Request $request, SystemUpdateService $updateService)
     {
-        $result = $updateService->applyUpdate();
+        $targetVersion = $request->input('target_version');
+        $result = $updateService->applyUpdate($targetVersion);
 
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json($result);

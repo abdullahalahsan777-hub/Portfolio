@@ -197,40 +197,62 @@ class SystemUpdateService
 
     /**
      * Apply remote update from GitHub with automated self-healing merge.
+     * Supports updating to latest origin/main or switching to any specific GitHub tagged release.
      * Guarantees conflict-free merge and runs all post-update maintenance.
      */
-    public function applyUpdate(): array
+    public function applyUpdate(?string $targetVersion = null): array
     {
         $basePath = base_path();
         $logOutput = [];
+        $isSpecificTag = !empty($targetVersion) && $targetVersion !== 'main' && $targetVersion !== 'latest';
 
         try {
-            // Step 1: Stash any local uncommitted files to prevent pull conflict
+            // Step 1: Stash any local uncommitted files to prevent pull/checkout conflict
             $stash = Process::path($basePath)->run('git stash --include-untracked');
             $logOutput[] = 'Stash local modifications: ' . trim($stash->output());
 
-            // Step 2: Fetch latest origin/main
-            $fetch = Process::path($basePath)->timeout(60)->run('git fetch origin main');
-            $logOutput[] = 'Fetch remote main: ' . ($fetch->successful() ? 'OK' : trim($fetch->errorOutput()));
+            if ($isSpecificTag) {
+                $cleanTag = 'v' . ltrim(trim($targetVersion), 'v');
 
-            // Step 3: Merge origin/main prioritizing remote changes (-X theirs)
-            $merge = Process::path($basePath)->timeout(60)->run('git merge origin/main -X theirs -m "Merge update from GitHub origin/main"');
-            $logOutput[] = 'Merge remote origin/main: ' . trim($merge->output());
+                // Step 2: Fetch latest tags from GitHub origin
+                $fetch = Process::path($basePath)->timeout(60)->run('git fetch --tags origin');
+                $logOutput[] = 'Fetch remote tags: ' . ($fetch->successful() ? 'OK' : trim($fetch->errorOutput()));
 
-            // Auto-heal if any conflict or dirty state remains
-            if (!$merge->successful()) {
-                $resolve = Process::path($basePath)->run('git checkout --theirs .');
-                $logOutput[] = 'Auto-resolve conflict favoring remote: ' . trim($resolve->output());
-
-                Process::path($basePath)->run('git add -A');
-                $commitProcess = Process::path($basePath)->run('git commit -m "Auto-resolved software update merge"');
-                $logOutput[] = 'Auto-commit merged files: ' . trim($commitProcess->output());
-
-                // If still not clean, do hard reset to origin/main
-                if (!$commitProcess->successful()) {
-                    $reset = Process::path($basePath)->run('git reset --hard origin/main');
-                    $logOutput[] = 'Hard sync to origin/main: ' . trim($reset->output());
+                // Step 3: Checkout target release tag
+                $checkout = Process::path($basePath)->timeout(60)->run("git checkout tags/{$cleanTag} --force");
+                if (!$checkout->successful()) {
+                    $checkout = Process::path($basePath)->timeout(60)->run("git checkout {$cleanTag} --force");
                 }
+                $logOutput[] = "Checkout version tag {$cleanTag}: " . ($checkout->successful() ? 'OK' : trim($checkout->errorOutput()));
+
+                $versionLabel = $cleanTag;
+            } else {
+                // Step 2: Checkout main and fetch latest origin/main
+                Process::path($basePath)->run('git checkout main --force');
+                $fetch = Process::path($basePath)->timeout(60)->run('git fetch origin main');
+                $logOutput[] = 'Fetch remote main: ' . ($fetch->successful() ? 'OK' : trim($fetch->errorOutput()));
+
+                // Step 3: Merge origin/main prioritizing remote changes (-X theirs)
+                $merge = Process::path($basePath)->timeout(60)->run('git merge origin/main -X theirs -m "Merge update from GitHub origin/main"');
+                $logOutput[] = 'Merge remote origin/main: ' . trim($merge->output());
+
+                // Auto-heal if any conflict or dirty state remains
+                if (!$merge->successful()) {
+                    $resolve = Process::path($basePath)->run('git checkout --theirs .');
+                    $logOutput[] = 'Auto-resolve conflict favoring remote: ' . trim($resolve->output());
+
+                    Process::path($basePath)->run('git add -A');
+                    $commitProcess = Process::path($basePath)->run('git commit -m "Auto-resolved software update merge"');
+                    $logOutput[] = 'Auto-commit merged files: ' . trim($commitProcess->output());
+
+                    // If still not clean, do hard reset to origin/main
+                    if (!$commitProcess->successful()) {
+                        $reset = Process::path($basePath)->run('git reset --hard origin/main');
+                        $logOutput[] = 'Hard sync to origin/main: ' . trim($reset->output());
+                    }
+                }
+
+                $versionLabel = $this->getStatus()['latest_version'] ?? 'v1.3.0';
             }
 
             // Step 4: Run database migrations if any were pulled
@@ -242,7 +264,22 @@ class SystemUpdateService
                 $logOutput[] = 'Migration notice: ' . $e->getMessage();
             }
 
-            // Step 5: Self-healing optimize & cache purge
+            // Step 5: Update APP_VERSION in .env if exists to keep configuration synchronized
+            try {
+                $envPath = base_path('.env');
+                if (file_exists($envPath)) {
+                    $envContent = file_get_contents($envPath);
+                    $rawVer = ltrim($versionLabel, 'v');
+                    if (preg_match('/^APP_VERSION=.*/m', $envContent)) {
+                        $envContent = preg_replace('/^APP_VERSION=.*/m', "APP_VERSION={$rawVer}", $envContent);
+                    } else {
+                        $envContent .= "\nAPP_VERSION={$rawVer}\n";
+                    }
+                    file_put_contents($envPath, $envContent);
+                }
+            } catch (\Throwable $e) {}
+
+            // Step 6: Self-healing optimize & cache purge
             Artisan::call('optimize:clear');
             Artisan::call('view:clear');
             Artisan::call('cache:clear');
@@ -261,12 +298,12 @@ class SystemUpdateService
                 $newCommitMsg = $parts[1] ?? 'Updated';
             }
 
-            // Step 6: Dispatch notification to system admins
+            // Step 7: Dispatch notification to system admins
             try {
                 Notification::create([
                     'type'       => 'system',
-                    'title'      => 'Software Updated Successfully',
-                    'message'    => "System updated and synchronized with GitHub to commit [{$newCommit}]: {$newCommitMsg}.",
+                    'title'      => "Software Updated to {$versionLabel}",
+                    'message'    => "System updated to [{$versionLabel}] at commit [{$newCommit}]: {$newCommitMsg}.",
                     'icon'       => 'arrow-path',
                     'color'      => 'emerald',
                     'action_url' => route('admin.versions.index'),
@@ -275,7 +312,8 @@ class SystemUpdateService
 
             return [
                 'success'    => true,
-                'message'    => "Software updated and merged successfully! Current commit: {$newCommit}.",
+                'message'    => "Software updated successfully to {$versionLabel} (commit {$newCommit})!",
+                'version'    => $versionLabel,
                 'commit'     => $newCommit,
                 'commit_msg' => $newCommitMsg,
                 'logs'       => $logOutput,
@@ -285,6 +323,7 @@ class SystemUpdateService
 
             // Emergency auto-heal: reset hard to origin/main if something broke
             try {
+                Process::path($basePath)->run('git checkout main --force');
                 Process::path($basePath)->run('git reset --hard origin/main');
                 Artisan::call('optimize:clear');
                 Cache::forget(self::CACHE_KEY);

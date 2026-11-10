@@ -49,25 +49,27 @@
         <!-- Header -->
         <div class="px-6 py-5 border-b border-white/10 flex items-center justify-between gap-4 relative z-10 bg-white/[0.02]">
             <div class="flex items-center gap-3.5">
-                <div class="w-11 h-11 rounded-2xl {{ !empty($modalUpdateStatus['update_available']) ? 'bg-gradient-to-br from-amber-500/30 to-orange-500/20 text-amber-400 border border-amber-500/40 shadow-lg shadow-amber-500/20' : 'bg-gradient-to-br from-cyan-500/30 to-blue-500/20 text-cyan-400 border border-cyan-500/40 shadow-lg shadow-cyan-500/20' }} flex items-center justify-center shrink-0">
+                <div id="modalHeaderIconBox" class="w-11 h-11 rounded-2xl {{ !empty($modalUpdateStatus['update_available']) ? 'bg-gradient-to-br from-amber-500/30 to-orange-500/20 text-amber-400 border border-amber-500/40 shadow-lg shadow-amber-500/20' : 'bg-gradient-to-br from-cyan-500/30 to-blue-500/20 text-cyan-400 border border-cyan-500/40 shadow-lg shadow-cyan-500/20' }} flex items-center justify-center shrink-0">
                     <svg class="w-6 h-6 {{ !empty($modalUpdateStatus['update_available']) ? 'animate-pulse' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                     </svg>
                 </div>
                 <div>
-                    <div class="flex flex-wrap items-center gap-2">
-                        <span class="text-[11px] font-mono uppercase tracking-widest text-cyan-400 font-bold">System Software Synchronization</span>
-                        @if (!empty($modalUpdateStatus['update_available']))
-                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5 animate-pulse">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                                Update Available
-                            </span>
-                        @else
-                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                                In Sync with GitHub
-                            </span>
-                        @endif
+                    <div class="flex flex-wrap items-center gap-2" id="modalStatusBadgeContainer">
+                        <span class="text-[11px] font-mono uppercase tracking-widest text-cyan-400 font-bold" id="modalSystemSubtitle">System Software Synchronization</span>
+                        <span id="modalStatusBadge">
+                            @if (!empty($modalUpdateStatus['update_available']))
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5 animate-pulse">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                    Update Available
+                                </span>
+                            @else
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                    In Sync with GitHub
+                                </span>
+                            @endif
+                        </span>
                     </div>
                     <h3 id="systemUpdateModalTitle" class="text-lg font-bold font-['Outfit'] text-white tracking-tight mt-0.5">
                         Software Update &amp; Release Manager
@@ -96,13 +98,13 @@
                 <div class="sm:col-span-5 space-y-1">
                     <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Currently Installed</span>
                     <div class="flex items-center gap-2">
-                        <span class="text-base font-bold font-mono text-white">{{ $modalUpdateStatus['current_version'] ?? 'v1.3.0' }}</span>
+                        <span id="modalCurrentVersionLabel" class="text-base font-bold font-mono text-white">{{ $modalUpdateStatus['current_version'] ?? 'v1.3.0' }}</span>
                         <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Local HEAD</span>
                     </div>
                     <p class="text-[11px] font-mono text-slate-400 truncate">
-                        Commit: <span class="text-cyan-400 font-bold">#{{ $modalUpdateStatus['current_commit'] }}</span>
+                        Commit: <span id="modalCurrentCommitLabel" class="text-cyan-400 font-bold">#{{ $modalUpdateStatus['current_commit'] }}</span>
                     </p>
-                    <p class="text-[10px] font-mono text-slate-500 truncate">
+                    <p id="modalCurrentMetaLabel" class="text-[10px] font-mono text-slate-500 truncate">
                         {{ $modalUpdateStatus['current_commit_date'] }} &bull; {{ $modalUpdateStatus['current_commit_author'] }}
                     </p>
                 </div>
@@ -116,27 +118,29 @@
                     </div>
                 </div>
 
-                <!-- GitHub Remote Version -->
+                <!-- GitHub Target Version -->
                 <div class="sm:col-span-5 space-y-1 sm:text-right">
-                    <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">GitHub Remote (origin/main)</span>
+                    <span id="modalTargetLabel" class="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">GitHub Remote (origin/main)</span>
                     <div class="flex items-center gap-2 sm:justify-end">
-                        <span class="text-base font-bold font-mono {{ !empty($modalUpdateStatus['update_available']) ? 'text-amber-300' : 'text-emerald-400' }}">
+                        <span id="modalTargetVersionLabel" class="text-base font-bold font-mono {{ !empty($modalUpdateStatus['update_available']) ? 'text-amber-300' : 'text-emerald-400' }}">
                             {{ $modalUpdateStatus['latest_version'] ?? $modalUpdateStatus['current_version'] }}
                         </span>
-                        @if (!empty($modalUpdateStatus['update_available']))
-                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold">
-                                {{ $modalUpdateStatus['commits_behind'] }} {{ Str::plural('Push', $modalUpdateStatus['commits_behind']) }} Behind
-                            </span>
-                        @else
-                            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                                Latest Release
-                            </span>
-                        @endif
+                        <span id="modalTargetBadge">
+                            @if (!empty($modalUpdateStatus['update_available']))
+                                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold">
+                                    {{ $modalUpdateStatus['commits_behind'] }} {{ Str::plural('Push', $modalUpdateStatus['commits_behind']) }} Behind
+                                </span>
+                            @else
+                                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                    Latest Release
+                                </span>
+                            @endif
+                        </span>
                     </div>
                     <p class="text-[11px] font-mono text-slate-400 truncate">
-                        Latest Commit: <span class="text-amber-300 font-bold">#{{ $modalUpdateStatus['remote_commit'] }}</span>
+                        Target Commit: <span id="modalTargetCommitLabel" class="text-amber-300 font-bold">#{{ $modalUpdateStatus['remote_commit'] }}</span>
                     </p>
-                    <p class="text-[10px] font-mono text-slate-500 truncate">
+                    <p id="modalTargetMetaLabel" class="text-[10px] font-mono text-slate-500 truncate">
                         {{ $modalUpdateStatus['remote_commit_date'] }} &bull; {{ $modalUpdateStatus['remote_commit_author'] }}
                     </p>
                 </div>
@@ -147,11 +151,11 @@
                 <div class="flex items-center justify-between gap-2 pb-2 border-b border-white/5">
                     <div class="flex items-center gap-2">
                         <span class="text-base">🚀</span>
-                        <h4 class="text-xs font-mono font-black uppercase tracking-wider text-amber-300">
+                        <h4 id="modalWhatsNewHeading" class="text-xs font-mono font-black uppercase tracking-wider text-amber-300">
                             What's New in this Update
                         </h4>
                     </div>
-                    <span class="text-[10px] font-mono text-slate-400">
+                    <span id="modalWhatsNewSubtitle" class="text-[10px] font-mono text-slate-400">
                         @if (!empty($modalUpdateStatus['is_behind']))
                             Incoming GitHub Commits
                         @else
@@ -160,64 +164,67 @@
                     </span>
                 </div>
 
-                @if (!empty($modalUpdateStatus['is_behind']) && !empty($modalUpdateStatus['recent_remote_commits']))
-                    <!-- List of Remote Commits pending merge -->
-                    <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 text-xs flex items-start gap-2.5">
-                        <svg class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <div>
-                            <p class="font-semibold text-amber-300">New updates are ready to be merged from GitHub.</p>
-                            <p class="text-[11px] text-amber-200/80">Clicking "Update Software Now" will automatically pull, merge, execute migrations, and optimize your application without errors.</p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-2 max-h-52 overflow-y-auto pr-1">
-                        @foreach ($modalUpdateStatus['recent_remote_commits'] as $c)
-                            <div class="p-3 rounded-xl bg-black/40 border border-white/5 hover:border-amber-500/30 transition-colors space-y-1">
-                                <div class="flex items-center justify-between gap-2">
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                                        #{{ $c['hash'] }}
-                                    </span>
-                                    <span class="text-[10px] font-mono text-slate-500">{{ $c['date'] }}</span>
-                                </div>
-                                <p class="text-xs font-semibold text-white leading-snug">
-                                    {{ $c['msg'] }}
-                                </p>
-                                <span class="text-[10px] font-mono text-slate-400 block">By {{ $c['author'] }}</span>
+                <!-- Dynamic Content Container -->
+                <div id="modalWhatsNewContentBox" class="space-y-3">
+                    @if (!empty($modalUpdateStatus['is_behind']) && !empty($modalUpdateStatus['recent_remote_commits']))
+                        <!-- List of Remote Commits pending merge -->
+                        <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-200 text-xs flex items-start gap-2.5">
+                            <svg class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <p class="font-semibold text-amber-300">New updates are ready to be merged from GitHub.</p>
+                                <p class="text-[11px] text-amber-200/80">Clicking "Update Software Now" will automatically pull, merge, execute migrations, and optimize your application without errors.</p>
                             </div>
-                        @endforeach
-                    </div>
-                @else
-                    <!-- When system is up-to-date or showing recent local commits -->
-                    <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-200 text-xs flex items-start gap-2.5">
-                        <svg class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <div>
-                            <p class="font-semibold text-emerald-300">Your software is currently synchronized with GitHub ({{ $modalUpdateStatus['current_version'] }}).</p>
-                            <p class="text-[11px] text-emerald-200/80">You can run a force update anytime to verify repository integrity, re-execute database migrations, and purge all application caches.</p>
                         </div>
-                    </div>
 
-                    @if (!empty($modalUpdateStatus['recent_local_commits']))
-                        <div class="space-y-2 max-h-48 overflow-y-auto pr-1">
-                            @foreach ($modalUpdateStatus['recent_local_commits'] as $c)
-                                <div class="p-2.5 rounded-xl bg-black/30 border border-white/5 hover:border-cyan-500/30 transition-colors space-y-0.5">
+                        <div class="space-y-2 max-h-52 overflow-y-auto pr-1">
+                            @foreach ($modalUpdateStatus['recent_remote_commits'] as $c)
+                                <div class="p-3 rounded-xl bg-black/40 border border-white/5 hover:border-amber-500/30 transition-colors space-y-1">
                                     <div class="flex items-center justify-between gap-2">
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
                                             #{{ $c['hash'] }}
                                         </span>
                                         <span class="text-[10px] font-mono text-slate-500">{{ $c['date'] }}</span>
                                     </div>
-                                    <p class="text-xs font-medium text-slate-200 leading-snug truncate">
+                                    <p class="text-xs font-semibold text-white leading-snug">
                                         {{ $c['msg'] }}
                                     </p>
+                                    <span class="text-[10px] font-mono text-slate-400 block">By {{ $c['author'] }}</span>
                                 </div>
                             @endforeach
                         </div>
+                    @else
+                        <!-- When system is up-to-date or showing recent local commits -->
+                        <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-200 text-xs flex items-start gap-2.5">
+                            <svg class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <p class="font-semibold text-emerald-300">Your software is currently synchronized with GitHub ({{ $modalUpdateStatus['current_version'] }}).</p>
+                                <p class="text-[11px] text-emerald-200/80">You can run a force update anytime to verify repository integrity, re-execute database migrations, and purge all application caches.</p>
+                            </div>
+                        </div>
+
+                        @if (!empty($modalUpdateStatus['recent_local_commits']))
+                            <div class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                                @foreach ($modalUpdateStatus['recent_local_commits'] as $c)
+                                    <div class="p-2.5 rounded-xl bg-black/30 border border-white/5 hover:border-cyan-500/30 transition-colors space-y-0.5">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                                                #{{ $c['hash'] }}
+                                            </span>
+                                            <span class="text-[10px] font-mono text-slate-500">{{ $c['date'] }}</span>
+                                        </div>
+                                        <p class="text-xs font-medium text-slate-200 leading-snug truncate">
+                                            {{ $c['msg'] }}
+                                        </p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     @endif
-                @endif
+                </div>
             </div>
 
             <!-- 3. Automated Self-Healing Guarantee Protection Grid -->
@@ -225,8 +232,8 @@
                 <div class="p-3 rounded-xl bg-black/30 border border-white/5 flex items-start gap-2.5">
                     <span class="text-base shrink-0">🔄</span>
                     <div>
-                        <h5 class="font-bold text-white text-xs">Conflict-Free Git Merge</h5>
-                        <p class="text-[11px] text-slate-400 mt-0.5 leading-snug">Automatically merges remote changes using <code class="text-indigo-300">-X theirs</code> prioritizing official updates without lockouts.</p>
+                        <h5 class="font-bold text-white text-xs">Conflict-Free Git Merge &amp; Checkout</h5>
+                        <p class="text-[11px] text-slate-400 mt-0.5 leading-snug">Automatically synchronizes versions using <code class="text-indigo-300">-X theirs</code> prioritizing official updates without lockouts.</p>
                     </div>
                 </div>
 
@@ -263,8 +270,8 @@
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
                     <div>
-                        <h5 class="font-bold text-white text-xs">Updating &amp; Merging Software from GitHub...</h5>
-                        <p class="text-[11px] text-amber-300/90 leading-snug">Please wait 10–30 seconds. Performing Git pull, auto-conflict resolution, schema migration, and cache purges.</p>
+                        <h5 id="modalProgressTitle" class="font-bold text-white text-xs">Updating &amp; Merging Software from GitHub...</h5>
+                        <p id="modalProgressDesc" class="text-[11px] text-amber-300/90 leading-snug">Please wait 10–30 seconds. Performing Git pull/checkout, auto-conflict resolution, schema migration, and cache purges.</p>
                     </div>
                 </div>
             </div>
@@ -298,13 +305,15 @@
                 <!-- Update Action Form & Button inside popup -->
                 <form id="systemUpdatePopupForm" action="{{ route('admin.systemUpdate.apply') }}" method="POST" onsubmit="return handleSystemUpdateModalSubmit(this)">
                     @csrf
+                    <input type="hidden" name="target_version" id="modalTargetVersionInput" value="">
+                    
                     <button type="submit"
                         id="systemUpdatePopupSubmitBtn"
                         class="px-5 py-2.5 rounded-2xl text-xs font-mono font-bold uppercase tracking-wider {{ !empty($modalUpdateStatus['update_available']) ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black shadow-xl shadow-amber-500/30' : 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-xl shadow-cyan-500/20' }} transition-all flex items-center justify-center gap-2 cursor-pointer">
                         <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                         </svg>
-                        <span>{{ !empty($modalUpdateStatus['update_available']) ? 'Update Software Now' : 'Force Sync & Update' }}</span>
+                        <span id="modalSubmitBtnLabel">{{ !empty($modalUpdateStatus['update_available']) ? 'Update Software Now' : 'Force Sync & Update' }}</span>
                     </button>
                 </form>
             </div>
@@ -314,10 +323,190 @@
 </div>
 
 <script>
-    // Open the System Update Modal
+    // Store original default HTML for restoration when opening generic update
+    let defaultWhatsNewHtml = '';
+    let defaultStatusBadgeHtml = '';
+    let defaultTargetLabel = '';
+    let defaultTargetVersion = '';
+    let defaultTargetCommit = '';
+    let defaultTargetMeta = '';
+    let defaultSubmitBtnText = '';
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const contentBox = document.getElementById('modalWhatsNewContentBox');
+        if (contentBox) defaultWhatsNewHtml = contentBox.innerHTML;
+
+        const badge = document.getElementById('modalStatusBadge');
+        if (badge) defaultStatusBadgeHtml = badge.innerHTML;
+
+        const targetLabel = document.getElementById('modalTargetLabel');
+        if (targetLabel) defaultTargetLabel = targetLabel.textContent;
+
+        const targetVersion = document.getElementById('modalTargetVersionLabel');
+        if (targetVersion) defaultTargetVersion = targetVersion.textContent;
+
+        const targetCommit = document.getElementById('modalTargetCommitLabel');
+        if (targetCommit) defaultTargetCommit = targetCommit.textContent;
+
+        const targetMeta = document.getElementById('modalTargetMetaLabel');
+        if (targetMeta) defaultTargetMeta = targetMeta.textContent;
+
+        const submitBtn = document.getElementById('modalSubmitBtnLabel');
+        if (submitBtn) defaultSubmitBtnText = submitBtn.textContent;
+    });
+
+    // Open General System Update Modal (Latest GitHub origin/main)
     window.openSystemUpdateModal = function() {
         const modal = document.getElementById('systemUpdateModal');
         if (!modal) return;
+
+        // Reset target_version input to empty (means latest origin/main)
+        const targetInput = document.getElementById('modalTargetVersionInput');
+        if (targetInput) targetInput.value = '';
+
+        // Reset title & subtitles
+        const title = document.getElementById('systemUpdateModalTitle');
+        if (title) title.textContent = 'Software Update & Release Manager';
+
+        const sub = document.getElementById('modalSystemSubtitle');
+        if (sub) sub.textContent = 'System Software Synchronization';
+
+        const badge = document.getElementById('modalStatusBadge');
+        if (badge && defaultStatusBadgeHtml) badge.innerHTML = defaultStatusBadgeHtml;
+
+        const targetLabel = document.getElementById('modalTargetLabel');
+        if (targetLabel && defaultTargetLabel) targetLabel.textContent = defaultTargetLabel;
+
+        const targetVersion = document.getElementById('modalTargetVersionLabel');
+        if (targetVersion && defaultTargetVersion) targetVersion.textContent = defaultTargetVersion;
+
+        const targetCommit = document.getElementById('modalTargetCommitLabel');
+        if (targetCommit && defaultTargetCommit) targetCommit.textContent = defaultTargetCommit;
+
+        const targetMeta = document.getElementById('modalTargetMetaLabel');
+        if (targetMeta && defaultTargetMeta) targetMeta.textContent = defaultTargetMeta;
+
+        const whatsNewHeading = document.getElementById('modalWhatsNewHeading');
+        if (whatsNewHeading) whatsNewHeading.textContent = "What's New in this Update";
+
+        const whatsNewSub = document.getElementById('modalWhatsNewSubtitle');
+        if (whatsNewSub) whatsNewSub.textContent = 'Incoming GitHub Commits';
+
+        const contentBox = document.getElementById('modalWhatsNewContentBox');
+        if (contentBox && defaultWhatsNewHtml) contentBox.innerHTML = defaultWhatsNewHtml;
+
+        const submitBtnText = document.getElementById('modalSubmitBtnLabel');
+        if (submitBtnText && defaultSubmitBtnText) submitBtnText.textContent = defaultSubmitBtnText;
+
+        const progressBox = document.getElementById('modalUpdateProgressBox');
+        if (progressBox) progressBox.classList.add('hidden');
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+    };
+
+    // Open Version Update Modal for a SPECIFIC GitHub Version
+    window.openVersionUpdateModal = function(release) {
+        if (!release) {
+            window.openSystemUpdateModal();
+            return;
+        }
+
+        const modal = document.getElementById('systemUpdateModal');
+        if (!modal) return;
+
+        // Set hidden target_version input
+        const targetInput = document.getElementById('modalTargetVersionInput');
+        if (targetInput) targetInput.value = release.version || '';
+
+        // Set Title & Badges
+        const title = document.getElementById('systemUpdateModalTitle');
+        if (title) title.textContent = `Update Software to ${release.version}: ${release.name || ''}`;
+
+        const sub = document.getElementById('modalSystemSubtitle');
+        if (sub) sub.textContent = `GitHub Tagged Version (${release.release_date || ''})`;
+
+        const badge = document.getElementById('modalStatusBadge');
+        if (badge) {
+            badge.innerHTML = `
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold ${release.is_current ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40'} flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full ${release.is_current ? 'bg-emerald-400 animate-pulse' : 'bg-indigo-400'}"></span>
+                    ${release.is_current ? 'Active Current Version' : 'GitHub Stable Release'}
+                </span>
+            `;
+        }
+
+        // Target Card Details
+        const targetLabel = document.getElementById('modalTargetLabel');
+        if (targetLabel) targetLabel.textContent = `Target Release (${release.version})`;
+
+        const targetVersion = document.getElementById('modalTargetVersionLabel');
+        if (targetVersion) targetVersion.textContent = release.version;
+
+        const targetCommit = document.getElementById('modalTargetCommitLabel');
+        if (targetCommit) targetCommit.textContent = '#' + (release.commit || 'RELEASE');
+
+        const targetMeta = document.getElementById('modalTargetMetaLabel');
+        if (targetMeta) targetMeta.textContent = `Released: ${release.release_date || 'Stable'}`;
+
+        // "What's New in [Version]" Content
+        const whatsNewHeading = document.getElementById('modalWhatsNewHeading');
+        if (whatsNewHeading) whatsNewHeading.textContent = `What's New in ${release.version}`;
+
+        const whatsNewSub = document.getElementById('modalWhatsNewSubtitle');
+        if (whatsNewSub) whatsNewSub.textContent = `Official Release Features & Highlights`;
+
+        const contentBox = document.getElementById('modalWhatsNewContentBox');
+        if (contentBox) {
+            let featuresHtml = '';
+            if (release.version_features && typeof release.version_features === 'object') {
+                featuresHtml = '<div class="space-y-2 max-h-56 overflow-y-auto pr-1">';
+                for (const [featTitle, featDesc] of Object.entries(release.version_features)) {
+                    featuresHtml += `
+                        <div class="p-2.5 rounded-xl bg-black/40 border border-white/5 hover:border-indigo-500/30 transition-colors space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                                <span class="text-xs font-bold text-white font-mono">${featTitle}</span>
+                            </div>
+                            <p class="text-[11px] text-slate-300 leading-relaxed font-sans pl-3.5">${featDesc}</p>
+                        </div>
+                    `;
+                }
+                featuresHtml += '</div>';
+            }
+
+            contentBox.innerHTML = `
+                <div class="p-3.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-200 text-xs flex items-start gap-2.5">
+                    <svg class="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                        <p class="font-semibold text-indigo-300">${release.name || ''}</p>
+                        <p class="text-[11px] text-indigo-200/90 mt-0.5 leading-relaxed">${release.summary || ''}</p>
+                    </div>
+                </div>
+                ${featuresHtml}
+            `;
+        }
+
+        // Submit Button text
+        const submitBtnText = document.getElementById('modalSubmitBtnLabel');
+        if (submitBtnText) {
+            submitBtnText.textContent = release.is_current
+                ? `Confirm & Re-Sync to ${release.version}`
+                : `Confirm & Update to ${release.version}`;
+        }
+
+        const progressTitle = document.getElementById('modalProgressTitle');
+        if (progressTitle) {
+            progressTitle.textContent = `Updating Software to ${release.version}...`;
+        }
+
+        const progressBox = document.getElementById('modalUpdateProgressBox');
+        if (progressBox) progressBox.classList.add('hidden');
+
+        // Open modal
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         document.body.classList.add('overflow-hidden');
@@ -337,6 +526,7 @@
         const submitBtn = document.getElementById('systemUpdatePopupSubmitBtn');
         const cancelBtn = document.getElementById('modalUpdateCancelBtn');
         const progressBox = document.getElementById('modalUpdateProgressBox');
+        const targetVersion = document.getElementById('modalTargetVersionInput')?.value;
 
         if (submitBtn) {
             submitBtn.disabled = true;
@@ -360,7 +550,7 @@
         }
 
         if (window.toastr) {
-            toastr.info('Updating software from GitHub... Merging changes and executing database migrations.');
+            toastr.info(`Updating software${targetVersion ? ' to ' + targetVersion : ''} from GitHub... Merging changes and executing database migrations.`);
         }
 
         return true;
@@ -379,6 +569,6 @@
     // Backwards-compatible bridge: if any legacy code calls confirmSystemUpdate, open the modal instead!
     window.confirmSystemUpdate = function(form) {
         window.openSystemUpdateModal();
-        return false; // Prevent immediate form submission so user views popup and clicks update inside!
+        return false;
     };
 </script>
