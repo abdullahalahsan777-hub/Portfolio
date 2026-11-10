@@ -190,6 +190,8 @@ class VersionController extends Controller
                 ],
             ],
         ];
+
+        return $versions;
     }
 
     /**
