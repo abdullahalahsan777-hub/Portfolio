@@ -68,6 +68,7 @@ class SystemUpdateService
             'is_behind'            => false,
             'update_available'     => false,
             'recent_remote_commits'=> [],
+            'recent_local_commits' => [],
             'repo_url'             => $this->repoUrl,
             'remote_branch'        => 'origin/main',
             'status_message'       => 'System is up to date.',
@@ -82,6 +83,23 @@ class SystemUpdateService
                 $status['current_commit_msg']    = $parts[1] ?? 'Current Commit';
                 $status['current_commit_author'] = $parts[2] ?? 'Developer';
                 $status['current_commit_date']   = $parts[3] ?? 'Recently';
+            }
+
+            // Extract last 5 local commits for changelog display in modal
+            $localRecentLog = Process::path($basePath)->run('git log -5 HEAD --format="%h||%s||%an||%cr"');
+            if ($localRecentLog->successful() && !empty(trim($localRecentLog->output()))) {
+                $lines = array_filter(explode("\n", trim($localRecentLog->output())));
+                foreach ($lines as $line) {
+                    $p = explode('||', trim($line));
+                    if (count($p) >= 2) {
+                        $status['recent_local_commits'][] = [
+                            'hash'   => $p[0] ?? '',
+                            'msg'    => $p[1] ?? '',
+                            'author' => $p[2] ?? '',
+                            'date'   => $p[3] ?? '',
+                        ];
+                    }
+                }
             }
 
             // Fetch latest references from GitHub with a reasonable timeout

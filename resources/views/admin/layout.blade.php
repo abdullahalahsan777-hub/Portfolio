@@ -2262,6 +2262,9 @@
     <!-- Global Browser Error Logger -->
     @include('partials.browser-logger')
 
+    <!-- Global System Software Update & What's New Modal -->
+    @include('admin.components.system-update-modal')
+
     @stack('scripts')
 
     <!-- Live Real-Time Toast Container -->

@@ -45,16 +45,14 @@
             <div
                 class="col-span-1 md:col-span-1 lg:col-span-3 flex flex-col flex-wrap sm:flex-row sm:items-center justify-between gap-3">
                 @if (!empty($updateStatus['update_available']))
-                    <form action="{{ route('admin.systemUpdate.apply') }}" method="POST" onsubmit="return confirmSystemUpdate(this)" class="w-full">
-                        @csrf
-                        <button type="submit"
-                            class="system-update-btn w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black shadow-lg shadow-amber-500/30 transition-all cursor-pointer">
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                            </svg>
-                            <span>Update Software Now</span>
-                        </button>
-                    </form>
+                    <button type="button"
+                        onclick="openSystemUpdateModal()"
+                        class="system-update-btn w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black shadow-lg shadow-amber-500/30 transition-all cursor-pointer">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <span>Update Software Now</span>
+                    </button>
                 @endif
                 <a href="{{ $repoUrl }}" target="_blank" rel="noopener noreferrer"
                     class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-white/20 transition-all shadow-sm">
@@ -111,16 +109,14 @@
                         <span>Check GitHub</span>
                     </a>
 
-                    <form action="{{ route('admin.systemUpdate.apply') }}" method="POST" onsubmit="return confirmSystemUpdate(this)">
-                        @csrf
-                        <button type="submit"
-                            class="system-update-btn px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider {{ !empty($updateStatus['update_available']) ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black shadow-lg shadow-amber-500/30' : 'bg-indigo-600 hover:bg-indigo-500 text-white' }} transition-all flex items-center gap-1.5 cursor-pointer">
-                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                            </svg>
-                            <span>{{ !empty($updateStatus['update_available']) ? 'Update Software Now' : 'Force Sync / Update' }}</span>
-                        </button>
-                    </form>
+                    <button type="button"
+                        onclick="openSystemUpdateModal()"
+                        class="system-update-btn px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider {{ !empty($updateStatus['update_available']) ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black shadow-lg shadow-amber-500/30' : 'bg-indigo-600 hover:bg-indigo-500 text-white' }} transition-all flex items-center gap-1.5 cursor-pointer">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <span>{{ !empty($updateStatus['update_available']) ? 'Update Software Now' : 'Force Sync / Update' }}</span>
+                    </button>
                 </div>
             </div>
 
