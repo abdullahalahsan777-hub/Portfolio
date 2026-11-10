@@ -55,6 +55,8 @@ class UserController extends Controller
             $query->latest();
         }
 
+        $allUsers = (clone $query)->get();
+
         // Per page
         $perPage = (int) $request->get('per_page', 10);
         if (!in_array($perPage, [5, 10, 20, 50, 100], true)) {
@@ -70,6 +72,7 @@ class UserController extends Controller
         $recentCount = User::where('created_at', '>=', now()->subDays(30))->count();
 
         $this->data['users'] = $users;
+        $this->data['allUsers'] = $allUsers;
         $this->data['totalUsers'] = $totalUsers;
         $this->data['adminCount'] = $adminCount;
         $this->data['regularCount'] = $regularCount;

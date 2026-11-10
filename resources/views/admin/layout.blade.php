@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!-- DataTables & Buttons CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
     <!-- Pictureflect Photo Viewer Plugin -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/pictureflect/pictureflect.css') }}?v=1.2.4">
 
@@ -55,7 +58,8 @@
         .gallery-category-wrapper .select2-container--default .select2-selection--single {
             background-color: #0d1627 !important;
             border: 1px solid rgba(255, 255, 255, 0.12) !important;
-            border-radius: 0.75rem !important; /* rounded-xl */
+            border-radius: 0.75rem !important;
+            /* rounded-xl */
             height: 42px !important;
             display: flex !important;
             align-items: center !important;
@@ -75,7 +79,8 @@
         .custom-category-wrapper .select2-container--default.select2-container--focus .select2-selection--single,
         .gallery-category-wrapper .select2-container--default.select2-container--open .select2-selection--single,
         .gallery-category-wrapper .select2-container--default.select2-container--focus .select2-selection--single {
-            border-color: #06b6d4 !important; /* cyan-500 */
+            border-color: #06b6d4 !important;
+            /* cyan-500 */
             background-color: #0d1627 !important;
             box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.22) !important;
         }
@@ -927,6 +932,16 @@
                         SYSTEM
                     </div>
 
+                    <!-- User Management -->
+                    <a href="{{ route('admin.users.index') }}"
+                        class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.users.*') ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
+                        <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <span>User Management</span>
+                    </a>
+
                     <!-- Notifications -->
                     <a href="{{ route('admin.notifications.index') }}"
                         class="flex items-center justify-between px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.notifications.*') ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
@@ -964,6 +979,23 @@
                             @endif
                         </a>
 
+                        <!-- Version Control & Releases -->
+                        <a href="{{ route('admin.versions.index') }}"
+                            class="flex items-center justify-between px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.versions.*') ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                                </svg>
+                                <span>Version Control</span>
+                            </div>
+                            <span
+                                class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold">
+                                v{{ config('app.version', '1.3.0') }}
+                            </span>
+                        </a>
+
                         <!-- Error Pages (4xx & 5xx) -->
                         <a href="{{ route('errors.index') }}" target="_blank"
                             class="flex items-center justify-between px-3 py-2 rounded-xl font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all">
@@ -992,34 +1024,6 @@
                             </div>
                             <span
                                 class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 font-bold">LOG</span>
-                        </a>
-
-                        <!-- User Management -->
-                        <a href="{{ route('admin.users.index') }}"
-                            class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.users.*') ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
-                            <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                            <span>User Management</span>
-                        </a>
-
-                        <!-- Version Control & Releases -->
-                        <a href="{{ route('admin.versions.index') }}"
-                            class="flex items-center justify-between px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.versions.*') ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
-                            <div class="flex items-center gap-3">
-                                <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
-                                </svg>
-                                <span>Version Control</span>
-                            </div>
-                            <span
-                                class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold">
-                                v{{ config('app.version', '1.3.0') }}
-                            </span>
                         </a>
                     @endif
                 </div>
@@ -1536,6 +1540,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+    <!-- DataTables JS & Export Extensions (Excel, Word, CSV, PDF, Image) -->
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <script>
         // AngularJS Module for Admin Studio
         var adminApp = angular.module('adminApp', []);
@@ -1632,7 +1645,11 @@
             var tags = [];
             var raw = ($hidden.val() || '').trim();
             if (raw) {
-                tags = raw.split(',').map(function(t) { return t.trim(); }).filter(function(t) { return t.length > 0; });
+                tags = raw.split(',').map(function(t) {
+                    return t.trim();
+                }).filter(function(t) {
+                    return t.length > 0;
+                });
             }
 
             function syncAndRender() {
@@ -1641,8 +1658,9 @@
                 tags.forEach(function(tag, idx) {
                     var $pill = $(
                         '<span class="tag-pill-item inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 shadow-sm transition-colors">' +
-                            '<span>' + $('<div>').text(tag).html() + '</span>' +
-                            '<button type="button" class="text-slate-400 hover:text-rose-400 hover:bg-white/10 rounded-full w-4 h-4 inline-flex items-center justify-center text-xs font-bold transition-all focus:outline-none leading-none cursor-pointer" title="Remove ' + $('<div>').text(tag).html() + '">&times;</button>' +
+                        '<span>' + $('<div>').text(tag).html() + '</span>' +
+                        '<button type="button" class="text-slate-400 hover:text-rose-400 hover:bg-white/10 rounded-full w-4 h-4 inline-flex items-center justify-center text-xs font-bold transition-all focus:outline-none leading-none cursor-pointer" title="Remove ' +
+                        $('<div>').text(tag).html() + '">&times;</button>' +
                         '</span>'
                     );
 
@@ -1655,16 +1673,23 @@
                 });
 
                 $hidden.val(tags.join(', '));
-                $textInput.attr('placeholder', tags.length === 0 ? ($textInput.data('default-placeholder') || 'Type tag & press Enter or comma...') : 'Add more...');
+                $textInput.attr('placeholder', tags.length === 0 ? ($textInput.data('default-placeholder') ||
+                    'Type tag & press Enter or comma...') : 'Add more...');
             }
 
             function addTags(rawStr) {
                 if (!rawStr) return;
-                var parts = rawStr.split(/[,;\n]+/).map(function(t) { return t.trim(); }).filter(function(t) { return t.length > 0; });
+                var parts = rawStr.split(/[,;\n]+/).map(function(t) {
+                    return t.trim();
+                }).filter(function(t) {
+                    return t.length > 0;
+                });
                 var changed = false;
 
                 parts.forEach(function(part) {
-                    var exists = tags.some(function(t) { return t.toLowerCase() === part.toLowerCase(); });
+                    var exists = tags.some(function(t) {
+                        return t.toLowerCase() === part.toLowerCase();
+                    });
                     if (!exists) {
                         tags.push(part);
                         changed = true;

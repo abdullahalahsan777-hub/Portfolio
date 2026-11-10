@@ -43,10 +43,95 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 flex-wrap">
                 <div class="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-slate-300 flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span>Active: <strong class="text-white">{{ $activeCount }}</strong></span>
+                </div>
+
+                <!-- Export Dropdown -->
+                <div class="relative" id="subscribersExportDropdownWrapper">
+                    <button type="button"
+                        id="subscribersExportDropdownBtn"
+                        onclick="toggleSubscribersExportDropdown(event)"
+                        class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-600/90 to-indigo-500/90 hover:from-indigo-600 hover:to-indigo-500 text-white text-xs font-mono font-bold tracking-wider uppercase border border-indigo-400/30 shadow-lg shadow-indigo-600/20 transition-all cursor-pointer">
+                        <svg class="w-4 h-4 text-indigo-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        <span>Export</span>
+                        <svg class="w-3.5 h-3.5 text-indigo-200 transition-transform duration-200" id="subscribersExportChevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div id="subscribersExportDropdownMenu"
+                        class="hidden absolute right-0 mt-2 w-56 rounded-2xl bg-[#09101d] border border-white/10 shadow-2xl p-2 z-50 backdrop-blur-xl space-y-1">
+                        <div class="px-3 py-1.5 text-[10px] font-mono uppercase font-bold text-slate-400 border-b border-white/5 mb-1 flex items-center justify-between">
+                            <span>Export Formats</span>
+                            <span class="text-indigo-400">DataTable JS</span>
+                        </div>
+                        
+                        <!-- 1. Excel (.xlsx) -->
+                        <button type="button" onclick="exportSubscribers('excel')"
+                            class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-mono text-slate-200 hover:text-white hover:bg-emerald-500/10 hover:border-emerald-500/20 border border-transparent transition-all group cursor-pointer">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] font-black border border-emerald-500/30 group-hover:scale-105 transition-transform">
+                                    XLS
+                                </span>
+                                <span>Excel Document</span>
+                            </div>
+                            <span class="text-[10px] text-slate-500 font-mono">.xlsx</span>
+                        </button>
+
+                        <!-- 2. Word (.doc) -->
+                        <button type="button" onclick="exportSubscribers('word')"
+                            class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-mono text-slate-200 hover:text-white hover:bg-blue-500/10 hover:border-blue-500/20 border border-transparent transition-all group cursor-pointer">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-[10px] font-black border border-blue-500/30 group-hover:scale-105 transition-transform">
+                                    DOC
+                                </span>
+                                <span>Word Document</span>
+                            </div>
+                            <span class="text-[10px] text-slate-500 font-mono">.doc</span>
+                        </button>
+
+                        <!-- 3. CSV (.csv) -->
+                        <button type="button" onclick="exportSubscribers('csv')"
+                            class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-mono text-slate-200 hover:text-white hover:bg-cyan-500/10 hover:border-cyan-500/20 border border-transparent transition-all group cursor-pointer">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-[10px] font-black border border-cyan-500/30 group-hover:scale-105 transition-transform">
+                                    CSV
+                                </span>
+                                <span>CSV Spreadsheet</span>
+                            </div>
+                            <span class="text-[10px] text-slate-500 font-mono">.csv</span>
+                        </button>
+
+                        <!-- 4. PDF (.pdf) -->
+                        <button type="button" onclick="exportSubscribers('pdf')"
+                            class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-mono text-slate-200 hover:text-white hover:bg-rose-500/10 hover:border-rose-500/20 border border-transparent transition-all group cursor-pointer">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-[10px] font-black border border-rose-500/30 group-hover:scale-105 transition-transform">
+                                    PDF
+                                </span>
+                                <span>PDF Document</span>
+                            </div>
+                            <span class="text-[10px] text-slate-500 font-mono">.pdf</span>
+                        </button>
+
+                        <!-- 5. Image (.png) -->
+                        <button type="button" onclick="exportSubscribers('image')"
+                            class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-mono text-slate-200 hover:text-white hover:bg-purple-500/10 hover:border-purple-500/20 border border-transparent transition-all group cursor-pointer">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center text-[10px] font-black border border-purple-500/30 group-hover:scale-105 transition-transform">
+                                    PNG
+                                </span>
+                                <span>High-Res Image</span>
+                            </div>
+                            <span class="text-[10px] text-slate-500 font-mono">.png</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -295,6 +380,58 @@
             </div>
 
         </div>
+
+        <!-- Dedicated DataTables Export Container (Off-Screen for DataTable JS & html2canvas) -->
+        <div id="subscribersExportContainer" style="position: absolute; left: -99999px; top: 0; width: 1200px; z-index: -100; pointer-events: none;">
+            <div id="subscribersExportVisualCard" style="background-color: #09101d; padding: 32px; border-radius: 24px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 24px;">
+                    <div>
+                        <h1 style="font-size: 22px; font-weight: 800; margin: 0; color: #ffffff; letter-spacing: -0.5px;">Newsletter Subscribers Directory</h1>
+                        <p style="font-size: 12px; color: #94a3b8; margin: 4px 0 0 0; font-family: monospace;">Exported via Portfolio Studio DataTable JS &bull; {{ date('Y-m-d H:i:s') }}</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="display: inline-block; padding: 6px 14px; border-radius: 9999px; background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4); color: #a5b4fc; font-weight: 700; font-size: 12px; font-family: monospace;">
+                            Total: {{ count($allSubscribers ?? $subscribers) }}
+                        </span>
+                    </div>
+                </div>
+
+                <table id="subscribersExportTable" class="display nowrap" style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="background-color: #0f172a; border-bottom: 2px solid rgba(99, 102, 241, 0.4);">
+                            <th style="padding: 12px 10px; font-size: 11px; text-transform: uppercase; font-family: monospace; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1);">#</th>
+                            <th style="padding: 12px 10px; font-size: 11px; text-transform: uppercase; font-family: monospace; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1);">Name</th>
+                            <th style="padding: 12px 10px; font-size: 11px; text-transform: uppercase; font-family: monospace; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1);">Email</th>
+                            <th style="padding: 12px 10px; font-size: 11px; text-transform: uppercase; font-family: monospace; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1);">Status</th>
+                            <th style="padding: 12px 10px; font-size: 11px; text-transform: uppercase; font-family: monospace; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1);">Email Host</th>
+                            <th style="padding: 12px 10px; font-size: 11px; text-transform: uppercase; font-family: monospace; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1);">IP Address</th>
+                            <th style="padding: 12px 10px; font-size: 11px; text-transform: uppercase; font-family: monospace; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1);">Subscribed Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse (($allSubscribers ?? $subscribers) as $sub)
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                                <td style="padding: 10px; font-size: 12px; font-family: monospace; color: #64748b;">{{ $loop->iteration }}</td>
+                                <td style="padding: 10px; font-size: 13px; font-weight: 600; color: #f1f5f9;">{{ $sub->name ?: 'N/A' }}</td>
+                                <td style="padding: 10px; font-size: 13px; font-family: monospace; color: #38bdf8;">{{ $sub->email }}</td>
+                                <td style="padding: 10px; font-size: 12px;">
+                                    <span style="color: {{ $sub->status === 'active' ? '#34d399' : '#f87171' }}; font-weight: 700; text-transform: uppercase; font-size: 10px; font-family: monospace;">
+                                        {{ $sub->status ?? 'active' }}
+                                    </span>
+                                </td>
+                                <td style="padding: 10px; font-size: 12px; font-family: monospace; color: #cbd5e1;">{{ $sub->email_host ?: 'Direct' }}</td>
+                                <td style="padding: 10px; font-size: 12px; font-family: monospace; color: #94a3b8;">{{ $sub->ip_address ?: 'N/A' }}</td>
+                                <td style="padding: 10px; font-size: 12px; font-family: monospace; color: #94a3b8;">{{ $sub->created_at ? $sub->created_at->format('M d, Y h:i A') : 'N/A' }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" style="padding: 20px; text-align: center; color: #94a3b8; font-size: 13px;">No subscribers found</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -414,6 +551,14 @@
                     paginationContainer.innerHTML = newPagination.innerHTML;
                     attachPaginationListeners();
                 }
+
+                // Swap export container so export data stays synced with active filters
+                const newExport = doc.getElementById('subscribersExportContainer');
+                const exportContainer = document.getElementById('subscribersExportContainer');
+                if (newExport && exportContainer) {
+                    exportContainer.innerHTML = newExport.innerHTML;
+                    initSubscribersDataTable();
+                }
             })
             .catch(err => {
                 console.error('Subscriber filter error:', err);
@@ -437,9 +582,210 @@
             });
         }
 
-        // Initialize pagination ajax hooks on load
+        // ==========================================
+        // DataTable JS & Export Handlers (Subscribers)
+        // ==========================================
+        let subscribersDataTable = null;
+
+        function initSubscribersDataTable() {
+            if (typeof $.fn.DataTable === 'undefined') return;
+
+            if ($.fn.DataTable.isDataTable('#subscribersExportTable')) {
+                $('#subscribersExportTable').DataTable().destroy();
+            }
+
+            subscribersDataTable = $('#subscribersExportTable').DataTable({
+                dom: 'Bfrtip',
+                paging: false,
+                searching: false,
+                info: false,
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Newsletter_Subscribers_' + new Date().toISOString().slice(0, 10),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        title: 'Newsletter_Subscribers_' + new Date().toISOString().slice(0, 10),
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'A4',
+                        title: 'Newsletter Subscribers Directory',
+                        exportOptions: {
+                            columns: ':visible'
+                        },
+                        customize: function(doc) {
+                            doc.defaultStyle.fontSize = 9;
+                            doc.styles.tableHeader.fillColor = '#09101d';
+                            doc.styles.tableHeader.color = '#ffffff';
+                            doc.styles.tableHeader.alignment = 'left';
+                            if (doc.content[1] && doc.content[1].table) {
+                                doc.content[1].table.widths = ['5%', '20%', '25%', '10%', '15%', '10%', '15%'];
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
+        function toggleSubscribersExportDropdown(event) {
+            if (event) event.stopPropagation();
+            const menu = document.getElementById('subscribersExportDropdownMenu');
+            const chevron = document.getElementById('subscribersExportChevron');
+            if (!menu) return;
+            const isHidden = menu.classList.contains('hidden');
+            if (isHidden) {
+                menu.classList.remove('hidden');
+                if (chevron) chevron.classList.add('rotate-180');
+            } else {
+                menu.classList.add('hidden');
+                if (chevron) chevron.classList.remove('rotate-180');
+            }
+        }
+
+        function closeSubscribersExportDropdown() {
+            const menu = document.getElementById('subscribersExportDropdownMenu');
+            const chevron = document.getElementById('subscribersExportChevron');
+            if (menu && !menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+                if (chevron) chevron.classList.remove('rotate-180');
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#subscribersExportDropdownWrapper')) {
+                closeSubscribersExportDropdown();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSubscribersExportDropdown();
+            }
+        });
+
+        function exportSubscribers(format) {
+            closeSubscribersExportDropdown();
+
+            if (!subscribersDataTable) {
+                initSubscribersDataTable();
+            }
+
+            const table = document.getElementById('subscribersExportTable');
+            const rowCount = table ? table.querySelectorAll('tbody tr').length : 0;
+            if (rowCount === 0) {
+                if (window.toastr) toastr.warning('No subscribers available to export.');
+                return;
+            }
+
+            const today = new Date().toISOString().slice(0, 10);
+            const filename = `Newsletter_Subscribers_${today}`;
+
+            if (format === 'excel') {
+                if (window.toastr) toastr.info('Exporting subscribers via DataTable Excel (XLSX)...');
+                if (subscribersDataTable) {
+                    subscribersDataTable.button('.buttons-excel').trigger();
+                    setTimeout(() => { if (window.toastr) toastr.success('Excel export ready!'); }, 800);
+                }
+            } else if (format === 'csv') {
+                if (window.toastr) toastr.info('Exporting subscribers via DataTable CSV...');
+                if (subscribersDataTable) {
+                    subscribersDataTable.button('.buttons-csv').trigger();
+                    setTimeout(() => { if (window.toastr) toastr.success('CSV export ready!'); }, 800);
+                }
+            } else if (format === 'pdf') {
+                if (window.toastr) toastr.info('Generating PDF document via DataTable PDF...');
+                if (subscribersDataTable) {
+                    subscribersDataTable.button('.buttons-pdf').trigger();
+                    setTimeout(() => { if (window.toastr) toastr.success('PDF document generated!'); }, 1000);
+                }
+            } else if (format === 'word') {
+                if (window.toastr) toastr.info('Generating Word (.doc) document...');
+                exportTableToWord('subscribersExportTable', filename);
+                if (window.toastr) toastr.success('Word document exported successfully!');
+            } else if (format === 'image') {
+                if (window.toastr) toastr.info('Capturing high-resolution report image (.png)...');
+                const card = document.getElementById('subscribersExportVisualCard');
+                if (!card) {
+                    if (window.toastr) toastr.error('Export template not found.');
+                    return;
+                }
+
+                if (typeof html2canvas === 'undefined') {
+                    if (window.toastr) toastr.error('Image export renderer is loading. Please try again.');
+                    return;
+                }
+
+                html2canvas(card, {
+                    backgroundColor: '#09101d',
+                    scale: 2,
+                    useCORS: true,
+                    logging: false
+                }).then(canvas => {
+                    const a = document.createElement('a');
+                    a.download = `${filename}.png`;
+                    a.href = canvas.toDataURL('image/png');
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    if (window.toastr) toastr.success('Subscribers image exported successfully!');
+                }).catch(err => {
+                    console.error('Image export capture error:', err);
+                    if (window.toastr) toastr.error('Failed to capture image export.');
+                });
+            }
+        }
+
+        function exportTableToWord(tableId, filename) {
+            const table = document.getElementById(tableId);
+            if (!table) return;
+
+            const html = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head>
+                    <meta charset='utf-8'>
+                    <title>${filename}</title>
+                    <style>
+                        body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10pt; color: #1e293b; margin: 24px; }
+                        h2 { font-size: 16pt; color: #0f172a; margin-bottom: 4px; }
+                        p.subtitle { color: #64748b; font-size: 9pt; margin-top: 0; margin-bottom: 16px; font-family: monospace; }
+                        table { border-collapse: collapse; width: 100%; margin-top: 10px; font-family: sans-serif; }
+                        th { background-color: #0f172a; color: #ffffff; padding: 10px 8px; border: 1px solid #cbd5e1; font-size: 9pt; text-align: left; }
+                        td { padding: 8px 8px; border: 1px solid #e2e8f0; font-size: 9pt; }
+                        tr:nth-child(even) td { background-color: #f8fafc; }
+                    </style>
+                </head>
+                <body>
+                    <h2>${filename.replace(/_/g, ' ')}</h2>
+                    <p class="subtitle">Generated on ${new Date().toLocaleString()} | Total Records: ${table.querySelectorAll('tbody tr').length}</p>
+                    ${table.outerHTML}
+                </body>
+                </html>
+            `;
+
+            const blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${filename}.doc`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize pagination and DataTable JS hooks on load
         document.addEventListener('DOMContentLoaded', function() {
             attachPaginationListeners();
+            initSubscribersDataTable();
         });
 
         window.addEventListener('popstate', function() {

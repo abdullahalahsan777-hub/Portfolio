@@ -29,13 +29,18 @@
                 <!-- Meta Tags -->
                 <div class="flex flex-wrap items-center gap-3 text-xs font-mono text-slate-500 dark:text-slate-400 mb-4">
                     @php
-                        $topAuthorAvatar = is_array($post) ? ($post['author_avatar'] ?? null) : ($post->author_avatar ?? null);
-                        $topAuthorName = is_array($post) ? ($post['author'] ?? 'Md. Abdullah Al Ahsan') : ($post->author ?? 'Md. Abdullah Al Ahsan');
+                        $topAuthorAvatar = is_array($post)
+                            ? $post['author_avatar'] ?? null
+                            : $post->author_avatar ?? null;
+                        $topAuthorName = is_array($post)
+                            ? $post['author'] ?? 'Md. Abdullah Al Ahsan'
+                            : $post->author ?? 'Md. Abdullah Al Ahsan';
                     @endphp
                     @if (!empty($topAuthorAvatar))
                         <div class="inline-flex items-center gap-1.5 text-slate-300">
                             <img src="{{ str_starts_with($topAuthorAvatar, 'http') ? $topAuthorAvatar : asset($topAuthorAvatar) }}"
-                                alt="{{ $topAuthorName }}" class="w-5 h-5 rounded-full object-cover border border-cyan-500/40">
+                                alt="{{ $topAuthorName }}"
+                                class="w-5 h-5 rounded-full object-cover border border-cyan-500/40">
                             <span class="text-[var(--theme-primary)] font-semibold">{{ $topAuthorName }}</span>
                         </div>
                         <span>•</span>
@@ -99,9 +104,7 @@
                     $authorName = is_array($post)
                         ? $post['author'] ?? 'Md. Abdullah Al Ahsan'
                         : $post->author ?? 'Md. Abdullah Al Ahsan';
-                    $authorAvatar = is_array($post)
-                        ? $post['author_avatar'] ?? null
-                        : $post->author_avatar ?? null;
+                    $authorAvatar = is_array($post) ? $post['author_avatar'] ?? null : $post->author_avatar ?? null;
                     $authorEmail =
                         $settings['contact_email'] ?? ($settings['email'] ?? 'abdullahalahsan1990@gmail.com');
                     $authorPhone = $settings['contact_phone'] ?? ($settings['whatsapp'] ?? '+8801718926673');
@@ -124,25 +127,6 @@
                                 <!-- Ambient Glow -->
                                 <div
                                     class="absolute -top-12 -right-12 w-36 h-36 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-cyan-500/20 transition-all duration-500">
-                                </div>
-
-                                <!-- Top Badges / Verification Header -->
-                                <div
-                                    class="flex items-center justify-between gap-2 pb-4 border-b border-slate-100 dark:border-white/5 mb-5">
-                                    <span
-                                        class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase font-bold tracking-widest bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-                                        ARTICLE AUTHOR
-                                    </span>
-                                    <span
-                                        class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                                        <svg class="w-3 h-3 text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                        Verified Architect
-                                    </span>
                                 </div>
 
                                 <!-- Profile Identity -->

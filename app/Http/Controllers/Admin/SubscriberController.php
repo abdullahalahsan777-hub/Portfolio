@@ -41,6 +41,8 @@ class SubscriberController extends Controller
             $query->latest();
         }
 
+        $allSubscribers = (clone $query)->get();
+
         $perPage = (int) $request->get('per_page', 20);
         if (!in_array($perPage, [5, 10, 20, 50, 100], true)) {
             $perPage = 20;
@@ -51,6 +53,7 @@ class SubscriberController extends Controller
         $activeCount = Subscriber::where('status', 'active')->count();
 
         $this->data['subscribers'] = $subscribers;
+        $this->data['allSubscribers'] = $allSubscribers;
         $this->data['totalSubscribers'] = $totalSubscribers;
         $this->data['activeCount'] = $activeCount;
         $this->data['search'] = $search;

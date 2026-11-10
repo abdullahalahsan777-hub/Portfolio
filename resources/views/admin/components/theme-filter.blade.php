@@ -106,7 +106,7 @@
 
                 <!-- Dropdown Menu (Select2 Style with Search and Rich Options) -->
                 <div id="themeSelectMenu"
-                    class="hidden absolute right-0 mt-2 w-80 sm:w-96 max-w-[calc(100vw-2rem)] rounded-2xl bg-[#09101d] border border-white/20 shadow-2xl z-50 overflow-hidden backdrop-blur-xl transition-all duration-200">
+                    class="hidden absolute right-0 mt-2 w-80 sm:w-108 max-w-[calc(100vw-2rem)] rounded-2xl bg-[#09101d] border border-white/20 shadow-2xl z-50 overflow-hidden backdrop-blur-xl transition-all duration-200">
 
                     <!-- Select2 Search Header -->
                     <div class="p-3 border-b border-white/10 bg-black/40">
@@ -278,7 +278,6 @@
                     <!-- Footer of dropdown with helper text -->
                     <div
                         class="p-2.5 border-t border-white/10 bg-black/50 flex items-center justify-between text-[10px] font-mono text-slate-400">
-                        <span>Select2 &bull; AngularJS Filter</span>
                         <a href="{{ route('admin.settings.theme') }}"
                             class="text-indigo-400 hover:text-indigo-300 underline">Change Default Active &rarr;</a>
                     </div>

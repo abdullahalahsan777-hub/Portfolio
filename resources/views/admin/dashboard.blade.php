@@ -77,14 +77,16 @@
                         @endif
                     </div>
 
-                    <h2 class="text-xl lg:text-2xl font-extrabold text-white tracking-tight">Platform Overview & System Status</h2>
+                    <h2 class="text-xl lg:text-2xl font-extrabold text-white tracking-tight">Platform Overview & System
+                        Status</h2>
                     <p class="text-xs text-slate-400 max-w-2xl leading-relaxed">
-                        System status tracking <strong
-                            class="text-indigo-400">{{ $stats['total_content_assets'] }}</strong> content assets,
+                        System status tracking <strong class="text-indigo-400">{{ $stats['total_content_assets'] }}</strong>
+                        content assets,
                         <strong class="text-cyan-400">{{ $stats['total_users'] }}</strong> registered user accounts,
                         <strong class="text-emerald-400">{{ $stats['total_messages'] }}</strong> client inquiries,
                         <strong class="text-teal-400">{{ $stats['total_subscribers'] }}</strong> newsletter subscribers, and
-                        <strong class="text-rose-400">{{ $stats['unread_notifications'] }}</strong> unread alerts across the
+                        <strong class="text-rose-400">{{ $stats['unread_notifications'] }}</strong> unread alerts across
+                        the
                         application.
                     </p>
                 </div>
@@ -94,7 +96,8 @@
                         <span
                             class="px-2.5 py-1 rounded-lg bg-[#0090e7]/10 border border-[#0090e7]/30 text-[10px] font-mono text-[#0090e7] font-semibold"
                             title="Official Release Version">
-                            Release <span class="font-bold">v{{ $stats['app_version'] ?? config('app.version', '1.0.0') }}</span>
+                            Release <span
+                                class="font-bold">v{{ $stats['app_version'] ?? config('app.version', '1.0.0') }}</span>
                         </span>
                         <span
                             class="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[10px] font-mono text-slate-300">
@@ -114,7 +117,8 @@
                     <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
                         @if (auth()->check() && auth()->user()->isAdmin())
                             <!-- Toggle Maintenance Button -->
-                            <form action="{{ route('admin.maintenance.toggle') }}" method="POST" class="inline flex-1 sm:flex-initial">
+                            <form action="{{ route('admin.maintenance.toggle') }}" method="POST"
+                                class="inline flex-1 sm:flex-initial">
                                 @csrf
                                 <button type="submit"
                                     title="{{ $stats['is_maintenance'] ? 'Resume Live Operations' : 'Put Website in Maintenance' }}"
@@ -128,7 +132,8 @@
                             </form>
 
                             <!-- Quick Cache Purge -->
-                            <form action="{{ route('admin.maintenance.clearCache') }}" method="POST" class="inline flex-1 sm:flex-initial">
+                            <form action="{{ route('admin.maintenance.clearCache') }}" method="POST"
+                                class="inline flex-1 sm:flex-initial">
                                 @csrf
                                 <input type="hidden" name="type" value="optimize">
                                 <button type="submit" title="Purge system caches"
@@ -187,7 +192,8 @@
                             class="text-3xl font-extrabold font-mono {{ $stats['unread_messages'] > 0 ? 'text-amber-400' : 'text-white' }}">
                             {{ $stats['unread_messages'] }}
                         </div>
-                        <span class="text-xs text-slate-400 font-mono">unread / {{ $stats['total_messages'] }} total</span>
+                        <span class="text-xs text-slate-400 font-mono">unread / {{ $stats['total_messages'] }}
+                            total</span>
                     </div>
 
                     <!-- Response Rate Progress Bar -->
@@ -355,7 +361,8 @@
                 <div class="space-y-3">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-mono text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full {{ $stats['unread_notifications'] > 0 ? 'bg-rose-400 animate-pulse' : 'bg-indigo-400' }}"></span>
+                            <span
+                                class="w-2 h-2 rounded-full {{ $stats['unread_notifications'] > 0 ? 'bg-rose-400 animate-pulse' : 'bg-indigo-400' }}"></span>
                             Notifications
                         </span>
                         @if ($stats['unread_notifications'] > 0)
@@ -376,7 +383,8 @@
                             class="text-3xl font-extrabold font-mono {{ $stats['unread_notifications'] > 0 ? 'text-rose-400' : 'text-white' }}">
                             {{ $stats['unread_notifications'] }}
                         </div>
-                        <span class="text-xs text-slate-400 font-mono">unread / {{ $stats['total_notifications'] }} total</span>
+                        <span class="text-xs text-slate-400 font-mono">unread / {{ $stats['total_notifications'] }}
+                            total</span>
                     </div>
 
                     <!-- Read Rate Progress Bar -->
@@ -434,7 +442,8 @@
                     <div class="space-y-1">
                         <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
                             <span>Audience Health</span>
-                            <span class="text-slate-300 font-mono">{{ $stats['active_subscribers'] }} Active &bull; {{ $stats['subscriber_active_rate'] }}%</span>
+                            <span class="text-slate-300 font-mono">{{ $stats['active_subscribers'] }} Active &bull;
+                                {{ $stats['subscriber_active_rate'] }}%</span>
                         </div>
                         <div class="w-full h-1.5 rounded-full bg-white/5 overflow-hidden flex">
                             <div class="h-full rounded-full bg-gradient-to-r from-teal-500 to-emerald-400 transition-all duration-500"
@@ -780,7 +789,7 @@
                                     @if ($msg->subject)
                                         <strong class="text-white">{{ $msg->subject }}:</strong>
                                     @endif
-                                    {{ $msg->message }}
+                                    {{ Str::limit($msg->message, 180) }}
                                 </p>
                             </div>
                         </div>
@@ -797,7 +806,8 @@
                             </span>
 
                             <!-- 1-Click Toggle Read -->
-                            <form action="{{ route('admin.messages.toggleRead', $msg) }}" method="POST" class="inline">
+                            <form action="{{ route('admin.messages.toggleRead', $msg) }}" method="POST"
+                                class="inline">
                                 @csrf
                                 <button type="submit" title="{{ $msg->is_read ? 'Mark as Unread' : 'Mark as Read' }}"
                                     class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-xs font-mono">
@@ -818,8 +828,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                         </svg>
-                        <div class="text-xs text-slate-400">No client messages received yet. All new inquiries will be
-                            reported here in real time.</div>
+                        <div class="text-xs text-slate-400">
+                            No client messages received yet. All new inquiries will be reported here in real time.
+                        </div>
                     </div>
                 @endforelse
             </div>
@@ -873,7 +884,8 @@
                                     </div>
                                 </div>
 
-                                <div class="flex items-center justify-between sm:justify-end gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/5 w-full sm:w-auto">
+                                <div
+                                    class="flex items-center justify-between sm:justify-end gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/5 w-full sm:w-auto">
                                     @if ($proj->is_featured)
                                         <span
                                             class="px-2 py-0.5 rounded text-[9px] font-mono bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
@@ -1080,9 +1092,11 @@
                     <div class="space-y-2.5 text-xs">
                         <div class="flex items-center justify-between py-1.5 border-b border-white/5">
                             <span class="text-slate-400 font-mono">Portfolio Release</span>
-                            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#0090e7]/15 border border-[#0090e7]/30 text-[#0090e7] font-mono font-bold text-[11px]">
+                            <span
+                                class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#0090e7]/15 border border-[#0090e7]/30 text-[#0090e7] font-mono font-bold text-[11px]">
                                 <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                                 </svg>
                                 v{{ $stats['app_version'] ?? config('app.version', '1.0.0') }}
                             </span>
