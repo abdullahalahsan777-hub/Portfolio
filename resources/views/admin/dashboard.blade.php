@@ -68,6 +68,14 @@
                             Version: <strong>v{{ $stats['app_version'] ?? config('app.version', '1.0.0') }}</strong>
                         </span>
 
+                        @if (!empty($stats['update_status']['update_available']))
+                            <a href="{{ route('admin.versions.index') }}"
+                                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition-all shadow-sm shadow-amber-500/20 animate-pulse">
+                                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                                Update Available: {{ $stats['update_status']['commits_behind'] ?? 1 }} new push
+                            </a>
+                        @endif
+
                         @if ($stats['unread_notifications'] > 0)
                             <a href="{{ route('admin.notifications.index') }}"
                                 class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-500/15 text-rose-300 border border-rose-500/30 hover:bg-rose-500/25 transition-all">
@@ -161,6 +169,92 @@
                 </div>
             </div>
         </div>
+
+        <!-- 1.5. Dynamic GitHub Synchronization & Software Update Module -->
+        @php
+            $uStatus = $stats['update_status'] ?? ($updateStatus ?? null);
+        @endphp
+        @if ($uStatus)
+            @if (!empty($uStatus['update_available']))
+                <div class="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-amber-950/40 via-[#181109] to-[#09101d] border-2 border-amber-500/40 shadow-2xl shadow-amber-500/10 flex flex-col lg:flex-row lg:items-center justify-between gap-5 relative overflow-hidden">
+                    <div class="absolute -top-12 -right-12 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <div class="flex items-start sm:items-center gap-4 relative z-10">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500/30 to-orange-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center shrink-0 shadow-inner">
+                            <svg class="w-6 h-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                            </svg>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="text-xs font-mono font-black uppercase tracking-wider text-amber-300">Software Update Available</span>
+                                @if (!empty($uStatus['is_behind']))
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                        {{ $uStatus['commits_behind'] }} {{ Str::plural('commit', $uStatus['commits_behind']) }} behind GitHub
+                                    </span>
+                                @endif
+                                @if (!empty($uStatus['has_new_version']))
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                        New Version {{ $uStatus['latest_version'] }} Available
+                                    </span>
+                                @endif
+                            </div>
+                            <p class="text-xs text-slate-200">
+                                Latest GitHub Push: <strong class="text-white">{{ $uStatus['remote_commit_msg'] }}</strong>
+                            </p>
+                            <p class="text-[11px] font-mono text-slate-400 flex flex-wrap items-center gap-2">
+                                <span>Commit: <span class="text-amber-300 font-bold">{{ $uStatus['remote_commit'] }}</span></span>
+                                <span>&bull;</span>
+                                <span>{{ $uStatus['remote_commit_date'] }} by {{ $uStatus['remote_commit_author'] }}</span>
+                                <span>&bull;</span>
+                                <span>Branch: <span class="text-indigo-300">{{ $uStatus['remote_branch'] }}</span></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 shrink-0 relative z-10 w-full sm:w-auto">
+                        <form action="{{ route('admin.systemUpdate.apply') }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirmSystemUpdate(this)">
+                            @csrf
+                            <button type="submit"
+                                class="system-update-btn w-full sm:w-auto px-5 py-3 rounded-2xl text-xs font-mono font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 via-amber-400 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black shadow-xl shadow-amber-500/30 transition-all flex items-center justify-center gap-2.5 cursor-pointer">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                                <span>Update Software Now</span>
+                            </button>
+                        </form>
+                        <a href="{{ route('admin.systemUpdate.check', ['refresh' => 1]) }}"
+                            title="Force check GitHub remote"
+                            class="px-4 py-3 rounded-2xl text-xs font-mono text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all flex items-center justify-center gap-2 shrink-0">
+                            <svg class="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            <span>Re-Check</span>
+                        </a>
+                    </div>
+                </div>
+            @else
+                <div class="px-5 py-3.5 rounded-2xl bg-[#09101d] border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                    <div class="flex items-center gap-3">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400/50"></span>
+                        <span class="text-slate-300 font-mono">
+                            Software is in sync with GitHub: <strong class="text-white">{{ $uStatus['current_version'] }}</strong>
+                            <span class="text-slate-400 font-mono text-[11px]">({{ $uStatus['current_commit'] }} &bull; {{ $uStatus['current_commit_msg'] }})</span>
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-3 shrink-0">
+                        <span class="text-[11px] font-mono text-slate-500">Checked: {{ $uStatus['last_checked_at'] }}</span>
+                        <a href="{{ route('admin.systemUpdate.check', ['refresh' => 1]) }}"
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono text-indigo-300 hover:text-indigo-200 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 transition-all">
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            <span>Check for Updates</span>
+                        </a>
+                    </div>
+                </div>
+            @endif
+        @endif
 
         <!-- 2. Primary Executive KPI Reporting Cards (4 Columns) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1129,3 +1223,29 @@
 
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function confirmSystemUpdate(form) {
+            if (!confirm('Are you sure you want to update your software from GitHub?\n\nThis will automatically merge remote changes, resolve conflicts, execute database migrations, and purge system caches.')) {
+                return false;
+            }
+            const btn = form.querySelector('.system-update-btn');
+            if (btn) {
+                btn.disabled = true;
+                btn.classList.add('opacity-75', 'cursor-not-allowed');
+                btn.innerHTML = `
+                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-black" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Updating &amp; Merging Software...</span>
+                `;
+            }
+            if (window.toastr) {
+                toastr.info('Updating software from GitHub... Merging and self-healing in progress.');
+            }
+            return true;
+        }
+    </script>
+@endpush

@@ -8,6 +8,7 @@ use App\Mail\ServerDownMail;
 use App\Mail\ServerUpMail;
 use App\Models\SiteSetting;
 use App\Models\User;
+use App\Services\SystemUpdateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -24,7 +25,7 @@ class MaintenanceController extends Controller
     /**
      * Show Maintenance & System Health Dashboard.
      */
-    public function index(): View
+    public function index(SystemUpdateService $updateService): View
     {
         $isDown = SiteSetting::get('maintenance_mode', '0') === '1'
             || SiteSetting::get('server_status', 'up') === 'maintenance';
@@ -92,8 +93,11 @@ class MaintenanceController extends Controller
             'registered_users_count' => User::whereNotNull('email')->count(),
         ];
 
+        $updateStatus = $updateService->getStatus();
+
         $this->data['systemInfo'] = $systemInfo;
         $this->data['isDown'] = $isDown;
+        $this->data['updateStatus'] = $updateStatus;
 
         return view('admin.maintenance.index', $this->data);
     }

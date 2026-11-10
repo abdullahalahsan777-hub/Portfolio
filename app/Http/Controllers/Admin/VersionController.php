@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\SystemUpdateService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -192,14 +194,59 @@ class VersionController extends Controller
     /**
      * Display the Version Control & Software Releases Center.
      */
-    public function index(): View
+    public function index(SystemUpdateService $updateService): View
     {
         $versions = $this->getVersionsList();
         $currentVersion = $versions[0];
         $coreModules = $this->foundationalCoreModules;
         $repoUrl = $this->githubRepoUrl;
+        $updateStatus = $updateService->getStatus();
 
-        return view('admin.versions.index', compact('versions', 'currentVersion', 'coreModules', 'repoUrl'));
+        return view('admin.versions.index', compact('versions', 'currentVersion', 'coreModules', 'repoUrl', 'updateStatus'));
+    }
+
+    /**
+     * Check GitHub repository for new commits or tagged releases.
+     */
+    public function checkUpdate(Request $request, SystemUpdateService $updateService)
+    {
+        $status = $updateService->getStatus(true);
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'status'  => $status,
+                'message' => $status['status_message'],
+            ]);
+        }
+
+        if ($status['update_available']) {
+            flash()->info($status['status_message']);
+        } else {
+            flash()->success($status['status_message']);
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Apply remote update from GitHub with automated self-healing merge.
+     */
+    public function applyUpdate(Request $request, SystemUpdateService $updateService)
+    {
+        $result = $updateService->applyUpdate();
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json($result);
+        }
+
+        if ($result['success']) {
+            flash()->success($result['message']);
+        } else {
+            flash()->danger($result['message']);
+        }
+
+        return redirect()->back();
     }
 
     /**

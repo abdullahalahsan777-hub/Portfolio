@@ -16,6 +16,7 @@ use App\Models\Skill;
 use App\Models\Subscriber;
 use App\Models\Testimonial;
 use App\Models\User;
+use App\Services\SystemUpdateService;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -27,8 +28,9 @@ class DashboardController extends Controller
     /**
      * Show the admin dashboard overview.
      */
-    public function index(): View
+    public function index(SystemUpdateService $updateService): View
     {
+        $updateStatus = $updateService->getStatus();
         $totalMessages = ContactMessage::where('type', 'inbox')->count();
         $unreadMessages = ContactMessage::where('type', 'inbox')->where('is_read', false)->count();
         $readMessages = $totalMessages - $unreadMessages;
@@ -160,6 +162,7 @@ class DashboardController extends Controller
             'today_subscribers'      => $todaySubscribers,
             'week_subscribers'       => $weekSubscribers,
             'subscriber_active_rate' => $subscriberActiveRate,
+            'update_status'          => $updateStatus,
         ];
 
         $recentMessages        = ContactMessage::where('type', 'inbox')->latest()->take(6)->get();
@@ -176,6 +179,7 @@ class DashboardController extends Controller
         $this->data['recentUsers']         = $recentUsers;
         $this->data['recentNotifications'] = $recentNotifications;
         $this->data['recentSubscribers']   = $recentSubscribers;
+        $this->data['updateStatus']        = $updateStatus;
 
         return view('admin.dashboard', $this->data);
     }

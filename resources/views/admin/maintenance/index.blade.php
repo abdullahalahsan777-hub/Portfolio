@@ -126,7 +126,142 @@
         </div>
     </div>
 
-    <!-- 2. CUSTOMIZE 503 SERVICE UNAVAILABLE MESSAGE & TIMELINE -->
+    <!-- 2. SOFTWARE VERSION & GITHUB UPDATE CONTROL -->
+    @php
+        $uStatus = $updateStatus ?? null;
+    @endphp
+    @if ($uStatus)
+        <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border {{ !empty($uStatus['update_available']) ? 'border-amber-500/50 shadow-2xl shadow-amber-500/10' : 'border-white/10 shadow-xl' }} space-y-6">
+            <div class="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl {{ !empty($uStatus['update_available']) ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' }} flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 {{ !empty($uStatus['update_available']) ? 'animate-pulse' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono uppercase tracking-widest text-indigo-400">Software Synchronization</span>
+                            @if (!empty($uStatus['update_available']))
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                    Update Available
+                                </span>
+                            @else
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                    In Sync
+                                </span>
+                            @endif
+                        </div>
+                        <h2 class="text-xl font-bold text-white mt-0.5">Software Version &amp; GitHub Update Control</h2>
+                        <p class="text-xs text-slate-400">Automated conflict-healing git merge, database migrations, and cache purges.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
+                    <a href="{{ route('admin.systemUpdate.check', ['refresh' => 1]) }}"
+                        class="px-3.5 py-2 rounded-xl text-xs font-mono font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <span>Check GitHub</span>
+                    </a>
+
+                    <form action="{{ route('admin.systemUpdate.apply') }}" method="POST" onsubmit="return confirmSystemUpdate(this)">
+                        @csrf
+                        <button type="submit"
+                            class="system-update-btn px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider {{ !empty($uStatus['update_available']) ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black shadow-lg shadow-amber-500/30' : 'bg-indigo-600 hover:bg-indigo-500 text-white' }} transition-all flex items-center gap-1.5 cursor-pointer">
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            <span>{{ !empty($uStatus['update_available']) ? 'Update Software Now' : 'Force Sync / Update' }}</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Status Metrics Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+                    <span class="text-[11px] font-mono text-slate-400 block">Installed Version</span>
+                    <div class="text-lg font-bold font-mono text-white flex items-center gap-2">
+                        <span>{{ $uStatus['current_version'] }}</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Release</span>
+                    </div>
+                    <span class="text-[10px] font-mono text-slate-500">Local Software Release</span>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+                    <span class="text-[11px] font-mono text-slate-400 block">Current Local Commit</span>
+                    <div class="text-lg font-bold font-mono text-indigo-400">
+                        {{ $uStatus['current_commit'] }}
+                    </div>
+                    <span class="text-[10px] font-mono text-slate-400 truncate block" title="{{ $uStatus['current_commit_msg'] }}">
+                        {{ Str::limit($uStatus['current_commit_msg'], 28) }}
+                    </span>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+                    <span class="text-[11px] font-mono text-slate-400 block">Remote GitHub Commit</span>
+                    <div class="text-lg font-bold font-mono {{ !empty($uStatus['update_available']) ? 'text-amber-400' : 'text-emerald-400' }}">
+                        {{ $uStatus['remote_commit'] }}
+                    </div>
+                    <span class="text-[10px] font-mono text-slate-400 truncate block" title="{{ $uStatus['remote_commit_msg'] }}">
+                        {{ Str::limit($uStatus['remote_commit_msg'], 28) }}
+                    </span>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+                    <span class="text-[11px] font-mono text-slate-400 block">Sync Status</span>
+                    <div class="text-lg font-bold font-mono {{ !empty($uStatus['update_available']) ? 'text-amber-300' : 'text-emerald-300' }}">
+                        @if (!empty($uStatus['is_behind']))
+                            Behind ({{ $uStatus['commits_behind'] }} new)
+                        @elseif (!empty($uStatus['has_new_version']))
+                            New Version Available
+                        @else
+                            Up to Date
+                        @endif
+                    </div>
+                    <span class="text-[10px] font-mono text-slate-500">Last checked: {{ $uStatus['last_checked_at'] }}</span>
+                </div>
+            </div>
+
+            <!-- Pending Commits List if Behind -->
+            @if (!empty($uStatus['recent_remote_commits']))
+                <div class="p-4 rounded-2xl bg-black/30 border border-amber-500/20 space-y-2">
+                    <div class="flex items-center justify-between text-xs font-mono">
+                        <span class="text-amber-400 font-bold uppercase">Pending GitHub Commits To Pull</span>
+                        <span class="text-slate-400">{{ count($uStatus['recent_remote_commits']) }} commits</span>
+                    </div>
+                    <div class="divide-y divide-white/5">
+                        @foreach ($uStatus['recent_remote_commits'] as $c)
+                            <div class="py-2 flex items-center justify-between gap-3 text-xs">
+                                <div class="flex items-center gap-2 truncate">
+                                    <span class="font-mono text-amber-300 bg-amber-500/10 px-1.5 py-0.5 rounded text-[11px] border border-amber-500/20">{{ $c['hash'] }}</span>
+                                    <span class="text-white truncate">{{ $c['msg'] }}</span>
+                                </div>
+                                <div class="text-[10px] font-mono text-slate-400 shrink-0">
+                                    {{ $c['date'] }} &bull; {{ $c['author'] }}
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
+            <!-- Self-Healing Feature Banner -->
+            <div class="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-slate-400">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>Automated Error-Healing: Stashes local edits, auto-resolves merge conflicts, migrates database, and purges all caches.</span>
+                </div>
+                <a href="{{ $uStatus['repo_url'] }}" target="_blank" class="text-indigo-400 hover:text-indigo-300 underline shrink-0">
+                    GitHub Repo ↗
+                </a>
+            </div>
+        </div>
+    @endif
+
+    <!-- 3. CUSTOMIZE 503 SERVICE UNAVAILABLE MESSAGE & TIMELINE -->
     <div class="p-4 sm:p-6 lg:p-8 rounded-3xl bg-[#09101d] border border-white/10 shadow-xl space-y-6">
         <div class="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -586,3 +721,29 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function confirmSystemUpdate(form) {
+            if (!confirm('Are you sure you want to update your software from GitHub?\n\nThis will automatically merge remote changes, resolve conflicts, execute database migrations, and purge system caches.')) {
+                return false;
+            }
+            const btn = form.querySelector('.system-update-btn');
+            if (btn) {
+                btn.disabled = true;
+                btn.classList.add('opacity-75', 'cursor-not-allowed');
+                btn.innerHTML = `
+                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-black" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Updating &amp; Merging Software...</span>
+                `;
+            }
+            if (window.toastr) {
+                toastr.info('Updating software from GitHub... Merging and self-healing in progress.');
+            }
+            return true;
+        }
+    </script>
+@endpush
