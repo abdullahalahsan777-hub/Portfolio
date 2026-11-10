@@ -72,14 +72,14 @@ class PortfolioController extends Controller
     private function getBlogPosts(?string $theme = null)
     {
         $theme = $theme ?: $this->getActiveTheme();
-        $posts = BlogPost::where('is_published', true)->where('theme', $theme)->orderBy('sort_order')->get();
+        $posts = BlogPost::where('is_published', true)->where('theme', $theme)->orderBy('sort_order')->orderBy('id')->get();
 
         if ($posts->isEmpty()) {
-            $posts = BlogPost::where('is_published', true)->whereIn('theme', ['all', $theme])->orderBy('sort_order')->get();
+            $posts = BlogPost::where('is_published', true)->whereIn('theme', ['all', $theme])->orderBy('sort_order')->orderBy('id')->get();
         }
 
         if ($posts->isEmpty()) {
-            $posts = BlogPost::where('is_published', true)->orderBy('sort_order')->get();
+            $posts = BlogPost::where('is_published', true)->orderBy('sort_order')->orderBy('id')->get();
         }
 
         return $posts;
@@ -91,14 +91,14 @@ class PortfolioController extends Controller
     private function getFaqs(?string $theme = null)
     {
         $theme = $theme ?: $this->getActiveTheme();
-        $faqs = Faq::where('is_published', true)->where('theme', $theme)->orderBy('sort_order')->get();
+        $faqs = Faq::where('is_published', true)->where('theme', $theme)->orderBy('sort_order')->orderBy('id')->get();
 
         if ($faqs->isEmpty()) {
-            $faqs = Faq::where('is_published', true)->whereIn('theme', ['all', $theme])->orderBy('sort_order')->get();
+            $faqs = Faq::where('is_published', true)->whereIn('theme', ['all', $theme])->orderBy('sort_order')->orderBy('id')->get();
         }
 
         if ($faqs->isEmpty()) {
-            $faqs = Faq::where('is_published', true)->orderBy('sort_order')->get();
+            $faqs = Faq::where('is_published', true)->orderBy('sort_order')->orderBy('id')->get();
         }
 
         return $faqs;
@@ -112,50 +112,50 @@ class PortfolioController extends Controller
         $activeTheme = $this->getActiveTheme();
         $settings = $this->getSettings();
 
-        $services = Service::where('theme', $activeTheme)->orderBy('sort_order')->get();
+        $services = Service::where('theme', $activeTheme)->orderBy('sort_order')->orderBy('id')->get();
         if ($services->count() < 4) {
-            $services = Service::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
+            $services = Service::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->orderBy('id')->get();
         }
         if ($services->count() < 4) {
-            $services = Service::orderBy('sort_order')->take(6)->get();
+            $services = Service::orderBy('sort_order')->orderBy('id')->take(6)->get();
         }
 
-        $projects = Project::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
+        $projects = Project::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->orderBy('id')->get();
         if ($projects->count() < 4) {
-            $projects = Project::orderBy('sort_order')->take(4)->get();
+            $projects = Project::orderBy('sort_order')->orderBy('id')->take(4)->get();
         }
 
-        $skills = Skill::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
+        $skills = Skill::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->orderBy('id')->get();
         if ($activeTheme === 'uiux_designer') {
             if ($skills->count() < 9) {
-                $skills = Skill::orderBy('sort_order')->take(9)->get();
+                $skills = Skill::orderBy('sort_order')->orderBy('id')->take(9)->get();
             } else {
                 $skills = $skills->take(9);
             }
         } elseif ($activeTheme === 'graphic_designer') {
             if ($skills->count() < 12) {
-                $skills = Skill::orderBy('sort_order')->take(12)->get();
+                $skills = Skill::orderBy('sort_order')->orderBy('id')->take(12)->get();
             } else {
                 $skills = $skills->take(12);
             }
         } elseif ($skills->count() < 6) {
-            $skills = Skill::orderBy('sort_order')->take(12)->get();
+            $skills = Skill::orderBy('sort_order')->orderBy('id')->take(12)->get();
         }
 
-        $pricingPlans = PricingPlan::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
-        $testimonials = Testimonial::where('theme', $activeTheme)->orderBy('sort_order')->get();
+        $pricingPlans = PricingPlan::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->orderBy('id')->get();
+        $testimonials = Testimonial::where('theme', $activeTheme)->orderBy('sort_order')->orderBy('id')->get();
         if ($testimonials->isEmpty()) {
-            $testimonials = Testimonial::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
+            $testimonials = Testimonial::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->orderBy('id')->get();
         }
 
-        $resumeEducation = ResumeItem::where('type', 'education')->whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
+        $resumeEducation = ResumeItem::where('type', 'education')->whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->orderBy('id')->get();
         if ($resumeEducation->isEmpty()) {
-            $resumeEducation = ResumeItem::where('type', 'education')->orderBy('sort_order')->get();
+            $resumeEducation = ResumeItem::where('type', 'education')->orderBy('sort_order')->orderBy('id')->get();
         }
 
-        $resumeExperience = ResumeItem::where('type', 'experience')->whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
+        $resumeExperience = ResumeItem::where('type', 'experience')->whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->orderBy('id')->get();
         if ($resumeExperience->isEmpty()) {
-            $resumeExperience = ResumeItem::where('type', 'experience')->orderBy('sort_order')->get();
+            $resumeExperience = ResumeItem::where('type', 'experience')->orderBy('sort_order')->orderBy('id')->get();
         }
 
         $blogPosts = $this->getBlogPosts();
@@ -210,15 +210,15 @@ class PortfolioController extends Controller
     {
         $activeTheme = $this->getActiveTheme();
         $settings = $this->getSettings(null, 'about');
-        $skills = Skill::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
+        $skills = Skill::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->orderBy('id')->get();
         if ($activeTheme === 'graphic_designer') {
             if ($skills->count() < 12) {
-                $skills = Skill::orderBy('sort_order')->take(12)->get();
+                $skills = Skill::orderBy('sort_order')->orderBy('id')->take(12)->get();
             } else {
                 $skills = $skills->take(12);
             }
         } elseif ($skills->count() < 4) {
-            $skills = Skill::orderBy('sort_order')->take(12)->get();
+            $skills = Skill::orderBy('sort_order')->orderBy('id')->take(12)->get();
         }
 
         $themeMode = $this->getThemeMode();
@@ -244,9 +244,9 @@ class PortfolioController extends Controller
         $activeTheme = $this->getActiveTheme();
         $themeMode = $this->getThemeMode();
         $settings = $this->getSettings(null, 'project');
-        $projects = Project::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->get();
+        $projects = Project::whereIn('theme', ['all', $activeTheme])->orderBy('sort_order')->orderBy('id')->get();
         if ($projects->count() < 4) {
-            $projects = Project::orderBy('sort_order')->get();
+            $projects = Project::orderBy('sort_order')->orderBy('id')->get();
         }
 
         $viewName = "frontend.themes.{$activeTheme}.pages.portfolio";
@@ -334,20 +334,26 @@ class PortfolioController extends Controller
         $settings = $this->getSettings(null, 'blog');
         $allPosts = $this->getBlogPosts();
 
-        $post = BlogPost::where('slug', $slug)->first() ?? $allPosts->first();
-
-        // Determine true Previous and Next posts relative to current post's sort order
-        $currentSortOrder = $post->sort_order ?? 0;
-        $prevPost = $allPosts->filter(fn ($p) => ($p->sort_order ?? 0) < $currentSortOrder)->last();
-        $nextPost = $allPosts->filter(fn ($p) => ($p->sort_order ?? 0) > $currentSortOrder)->first();
-
-        // If at start, cycle to last post so Prev always points to a valid article
-        if (! $prevPost && $allPosts->count() > 1) {
-            $prevPost = $allPosts->filter(fn ($p) => ($p->slug ?? '') !== ($post->slug ?? ''))->last();
+        $post = BlogPost::where('slug', $slug)->first();
+        if (!$post) {
+            $post = $allPosts->first();
         }
-        // If at end, cycle to first post so Next always points to a valid article
-        if (! $nextPost && $allPosts->count() > 1) {
-            $nextPost = $allPosts->filter(fn ($p) => ($p->slug ?? '') !== ($post->slug ?? ''))->first();
+
+        if (!$post) {
+            abort(404, 'Blog article not found.');
+        }
+
+        // Determine true Previous and Next posts reliably based on sequential index in $allPosts
+        $currentIndex = $allPosts->search(fn ($p) => ($p->id ?? null) === $post->id);
+        $prevPost = null;
+        $nextPost = null;
+
+        if ($currentIndex !== false && $allPosts->count() > 1) {
+            $prevIndex = $currentIndex > 0 ? $currentIndex - 1 : $allPosts->count() - 1;
+            $nextIndex = $currentIndex < ($allPosts->count() - 1) ? $currentIndex + 1 : 0;
+
+            $prevPost = $allPosts->get($prevIndex);
+            $nextPost = $allPosts->get($nextIndex);
         }
 
         $relatedList = collect();

@@ -45,5 +45,17 @@ trait AutoSortOrderById
             }
         });
     }
+
+    /**
+     * Scope query to order by sort_order and reliably tie-break by primary key.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $direction
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOrdered($query, string $direction = 'asc')
+    {
+        return $query->orderBy('sort_order', $direction)->orderBy($this->getKeyName(), $direction);
+    }
 }
 

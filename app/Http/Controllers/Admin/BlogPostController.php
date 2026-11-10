@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
 use App\Models\Notification;
 use App\Models\SiteSetting;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -145,9 +146,7 @@ class BlogPostController extends Controller
             $uploadedPath = uploadFile($request->file('image_file'), 'uploads/blog', 'article');
             if ($uploadedPath) {
                 $oldImage = $blog->getRawOriginal('image');
-                if (!empty($oldImage) && !str_starts_with($oldImage, 'http') && file_exists(public_path($oldImage))) {
-                    @unlink(public_path($oldImage));
-                }
+                $this->safelyDeleteImage($oldImage, $blog->id);
                 $validated['image'] = $uploadedPath;
             }
         }
@@ -156,9 +155,7 @@ class BlogPostController extends Controller
             $uploadedAvatar = uploadFile($request->file('author_avatar_file'), 'uploads/blog/authors', 'author');
             if ($uploadedAvatar) {
                 $oldAvatar = $blog->getRawOriginal('author_avatar');
-                if (!empty($oldAvatar) && !str_starts_with($oldAvatar, 'http') && file_exists(public_path($oldAvatar))) {
-                    @unlink(public_path($oldAvatar));
-                }
+                $this->safelyDeleteAvatar($oldAvatar, $blog->id);
                 $validated['author_avatar'] = $uploadedAvatar;
             }
         }
@@ -189,14 +186,10 @@ class BlogPostController extends Controller
     {
         $title = $blog->title;
         $oldImage = $blog->getRawOriginal('image');
-        if (!empty($oldImage) && !str_starts_with($oldImage, 'http') && file_exists(public_path($oldImage))) {
-            @unlink(public_path($oldImage));
-        }
+        $this->safelyDeleteImage($oldImage, $blog->id);
 
         $oldAvatar = $blog->getRawOriginal('author_avatar');
-        if (!empty($oldAvatar) && !str_starts_with($oldAvatar, 'http') && file_exists(public_path($oldAvatar))) {
-            @unlink(public_path($oldAvatar));
-        }
+        $this->safelyDeleteAvatar($oldAvatar, $blog->id);
 
         $blog->delete();
 
@@ -213,5 +206,79 @@ class BlogPostController extends Controller
         flash()->delete('Article deleted successfully.');
 
         return redirect()->route('admin.blog.index');
+    }
+
+    /**
+     * Safely delete a blog author avatar only if it belongs strictly to uploads/blog/authors/
+     * and is not referenced by any user profile or other blog post.
+     */
+    protected function safelyDeleteAvatar(?string $avatarPath, ?int $ignoreBlogPostId = null): void
+    {
+        if (empty($avatarPath) || str_starts_with($avatarPath, 'http')) {
+            return;
+        }
+
+        $cleanPath = ltrim($avatarPath, '/\\');
+
+        if (!str_starts_with($cleanPath, 'uploads/blog/authors/')) {
+            return;
+        }
+
+        $fullPath = public_path($cleanPath);
+        if (!file_exists($fullPath) || !is_file($fullPath)) {
+            return;
+        }
+
+        // Do not delete if referenced by any user profile
+        if (User::where('avatar', $avatarPath)->orWhere('avatar', $cleanPath)->exists()) {
+            return;
+        }
+
+        // Do not delete if referenced by another blog post
+        $query = BlogPost::where(function ($q) use ($avatarPath, $cleanPath) {
+            $q->where('author_avatar', $avatarPath)->orWhere('author_avatar', $cleanPath);
+        });
+        if ($ignoreBlogPostId) {
+            $query->where('id', '!=', $ignoreBlogPostId);
+        }
+        if ($query->exists()) {
+            return;
+        }
+
+        @unlink($fullPath);
+    }
+
+    /**
+     * Safely delete a blog cover image only if it belongs strictly to uploads/blog/
+     * and is not referenced by any other blog post.
+     */
+    protected function safelyDeleteImage(?string $imagePath, ?int $ignoreBlogPostId = null): void
+    {
+        if (empty($imagePath) || str_starts_with($imagePath, 'http')) {
+            return;
+        }
+
+        $cleanPath = ltrim($imagePath, '/\\');
+
+        if (!str_starts_with($cleanPath, 'uploads/blog/')) {
+            return;
+        }
+
+        $fullPath = public_path($cleanPath);
+        if (!file_exists($fullPath) || !is_file($fullPath)) {
+            return;
+        }
+
+        $query = BlogPost::where(function ($q) use ($imagePath, $cleanPath) {
+            $q->where('image', $imagePath)->orWhere('image', $cleanPath);
+        });
+        if ($ignoreBlogPostId) {
+            $query->where('id', '!=', $ignoreBlogPostId);
+        }
+        if ($query->exists()) {
+            return;
+        }
+
+        @unlink($fullPath);
     }
 }

@@ -139,7 +139,11 @@ export function initAdminPanel() {
         const model = container.getAttribute('data-sortable-grid');
         if (!model) return;
 
-        Sortable.create(container, {
+        if (container._sortableInstance && typeof container._sortableInstance.destroy === 'function') {
+            container._sortableInstance.destroy();
+        }
+
+        container._sortableInstance = Sortable.create(container, {
             animation: 200,
             handle: '.drag-handle',
             ghostClass: 'sortable-ghost',
@@ -163,26 +167,30 @@ export function initAdminPanel() {
                 });
 
                 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-
-                window.axios.post('/admin/reorder', {
-                    model: model,
-                    ordered_ids: orderedIds,
-                }, {
+                const requestConfig = {
                     headers: {
                         'X-CSRF-TOKEN': csrfToken,
                         'Accept': 'application/json',
                     }
-                }).then(response => {
-                    if (window.toastr) {
-                        window.toastr.success(response.data.message || 'Display order updated successfully.');
-                    }
-                }).catch(error => {
-                    console.error('Reorder error:', error);
-                    if (window.toastr) {
-                        const errMsg = error.response?.data?.message || 'Failed to update order. Please refresh.';
-                        window.toastr.error(errMsg);
-                    }
-                });
+                };
+
+                const axiosClient = window.axios;
+                if (axiosClient && typeof axiosClient.post === 'function') {
+                    axiosClient.post('/admin/reorder', {
+                        model: model,
+                        ordered_ids: orderedIds,
+                    }, requestConfig).then(response => {
+                        if (window.toastr) {
+                            window.toastr.success(response.data.message || 'Display order updated successfully.');
+                        }
+                    }).catch(error => {
+                        console.error('Reorder error:', error);
+                        if (window.toastr) {
+                            const errMsg = error.response?.data?.message || 'Failed to update order. Please refresh.';
+                            window.toastr.error(errMsg);
+                        }
+                    });
+                }
             }
         });
     });

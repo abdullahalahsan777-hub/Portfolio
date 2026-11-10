@@ -23,7 +23,10 @@ return new class extends Migration
         ];
 
         foreach ($tables as $table) {
-            DB::table($table)->update(['sort_order' => DB::raw('id')]);
+            DB::table($table)
+                ->whereNull('sort_order')
+                ->orWhere('sort_order', 0)
+                ->update(['sort_order' => DB::raw('id')]);
         }
     }
 

@@ -70,12 +70,19 @@ class ReorderController extends Controller
         $modelClass = $this->models[$modelAlias];
         $startOrder = $validated['start_order'] ?? 1;
 
-        DB::transaction(function () use ($modelClass, $validated, $startOrder) {
-            foreach ($validated['ordered_ids'] as $index => $id) {
-                $orderNum = $startOrder + $index;
-                $modelClass::where('id', $id)->update(['sort_order' => $orderNum]);
-            }
-        });
+        try {
+            DB::transaction(function () use ($modelClass, $validated, $startOrder) {
+                foreach ($validated['ordered_ids'] as $index => $id) {
+                    $orderNum = $startOrder + $index;
+                    $modelClass::where('id', $id)->update(['sort_order' => $orderNum]);
+                }
+            });
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to save reordered sequence: ' . $e->getMessage(),
+            ], 500);
+        }
 
         return response()->json([
             'success' => true,

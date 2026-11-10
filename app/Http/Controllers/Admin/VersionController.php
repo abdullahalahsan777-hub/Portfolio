@@ -34,17 +34,18 @@ class VersionController extends Controller
     protected function getVersionsList(): array
     {
         $currentAppVersion = config('app.version', '1.3.0');
+        $cleanCurrentVer = 'v' . ltrim($currentAppVersion, 'v');
 
-        return [
+        $versions = [
             [
                 'version'       => 'v1.3.0',
                 'raw_version'   => '1.3.0',
                 'name'          => 'Theme-Scoped Sort Ordering Engine & Flowbite Dark UI Suite',
                 'release_date'  => '2026-11-10',
-                'is_current'    => true,
+                'is_current'    => ($cleanCurrentVer === 'v1.3.0'),
                 'is_stable'     => true,
-                'status_label'  => 'Current Stable Release',
-                'status_color'  => 'emerald',
+                'status_label'  => ($cleanCurrentVer === 'v1.3.0') ? 'Current Active Version' : 'Stable Release',
+                'status_color'  => ($cleanCurrentVer === 'v1.3.0') ? 'emerald' : 'indigo',
                 'commit'        => 'HEAD',
                 'summary'       => 'Theme-wise sequential sort order engine across all 9 Website modules, SortableJS drag-and-drop reordering with immediate badge feedback, AutoSortOrderById trait with automatic creation sequencing, Flowbite Tailwind dark components and Datepicker with standard YYYY-MM-DD formatting, and complete elimination of static dummy data.',
                 'version_features' => [
@@ -61,10 +62,10 @@ class VersionController extends Controller
                 'raw_version'   => '1.2.0',
                 'name'          => 'Enterprise Security Hardening & Full Responsive Overhaul',
                 'release_date'  => '2026-10-02',
-                'is_current'    => false,
+                'is_current'    => ($cleanCurrentVer === 'v1.2.0'),
                 'is_stable'     => true,
-                'status_label'  => 'Stable Release',
-                'status_color'  => 'indigo',
+                'status_label'  => ($cleanCurrentVer === 'v1.2.0') ? 'Current Active Version' : 'Stable Release',
+                'status_color'  => ($cleanCurrentVer === 'v1.2.0') ? 'emerald' : 'indigo',
                 'commit'        => '3a1d133',
                 'summary'       => 'Comprehensive enterprise security fortification, SQL injection audit verification, script execution prohibition in uploads, SecurityHeaders middleware, rate-limiting throttle protection, fixed 100vh admin sidebar, and full responsiveness across all screen sizes.',
                 'version_features' => [
@@ -83,10 +84,10 @@ class VersionController extends Controller
                 'raw_version'   => '1.1.9',
                 'name'          => 'Newsletter Subscription Engine & Pro Windowed Pagination',
                 'release_date'  => '2026-09-15',
-                'is_current'    => false,
+                'is_current'    => ($cleanCurrentVer === 'v1.1.9'),
                 'is_stable'     => true,
-                'status_label'  => 'Stable Release',
-                'status_color'  => 'indigo',
+                'status_label'  => ($cleanCurrentVer === 'v1.1.9') ? 'Current Active Version' : 'Stable Release',
+                'status_color'  => ($cleanCurrentVer === 'v1.1.9') ? 'emerald' : 'indigo',
                 'commit'        => 'c92962e',
                 'summary'       => 'Complete Newsletter subscription subsystem with front-end form integration, admin subscriber management, dashboard metrics telemetry, and mathematical sliding window pagination.',
                 'version_features' => [
@@ -102,10 +103,10 @@ class VersionController extends Controller
                 'raw_version'   => '1.1.8',
                 'name'          => 'Unified System & Browser Diagnostics Center',
                 'release_date'  => '2026-09-01',
-                'is_current'    => false,
+                'is_current'    => ($cleanCurrentVer === 'v1.1.8'),
                 'is_stable'     => true,
-                'status_label'  => 'Stable Release',
-                'status_color'  => 'indigo',
+                'status_label'  => ($cleanCurrentVer === 'v1.1.8') ? 'Current Active Version' : 'Stable Release',
+                'status_color'  => ($cleanCurrentVer === 'v1.1.8') ? 'emerald' : 'indigo',
                 'commit'        => 'be01293',
                 'summary'       => 'Centralized error and runtime diagnostics center combining backend Laravel exceptions with client-side JavaScript error reporting, telemetry cards, and log downloads.',
                 'version_features' => [
@@ -120,10 +121,10 @@ class VersionController extends Controller
                 'raw_version'   => '1.1.4',
                 'name'          => 'Client Inquiries & Communications Hub',
                 'release_date'  => '2026-08-02',
-                'is_current'    => false,
+                'is_current'    => ($cleanCurrentVer === 'v1.1.4'),
                 'is_stable'     => true,
-                'status_label'  => 'Stable Release',
-                'status_color'  => 'indigo',
+                'status_label'  => ($cleanCurrentVer === 'v1.1.4') ? 'Current Active Version' : 'Stable Release',
+                'status_color'  => ($cleanCurrentVer === 'v1.1.4') ? 'emerald' : 'indigo',
                 'commit'        => '5327b8d',
                 'summary'       => 'Gmail-style dark mode communications mailbox with autosaving drafts, VIP client importance inheritance, background file attachments, and HTML email replies.',
                 'version_features' => [
@@ -139,10 +140,10 @@ class VersionController extends Controller
                 'raw_version'   => '1.1.1',
                 'name'          => 'System Maintenance & Infrastructure Hub',
                 'release_date'  => '2026-07-01',
-                'is_current'    => false,
+                'is_current'    => ($cleanCurrentVer === 'v1.1.1'),
                 'is_stable'     => true,
-                'status_label'  => 'Stable Release',
-                'status_color'  => 'indigo',
+                'status_label'  => ($cleanCurrentVer === 'v1.1.1') ? 'Current Active Version' : 'Stable Release',
+                'status_color'  => ($cleanCurrentVer === 'v1.1.1') ? 'emerald' : 'indigo',
                 'commit'        => 'cc94965',
                 'summary'       => 'Production infrastructure management center with maintenance mode toggles, automated email broadcasts, database sizing telemetry, and cache clearance.',
                 'version_features' => [
@@ -157,10 +158,10 @@ class VersionController extends Controller
                 'raw_version'   => '1.1.0',
                 'name'          => 'Custom Error Pages Suite & Resilience Showcase',
                 'release_date'  => '2026-06-01',
-                'is_current'    => false,
+                'is_current'    => ($cleanCurrentVer === 'v1.1.0'),
                 'is_stable'     => true,
-                'status_label'  => 'Stable Release',
-                'status_color'  => 'indigo',
+                'status_label'  => ($cleanCurrentVer === 'v1.1.0') ? 'Current Active Version' : 'Stable Release',
+                'status_color'  => ($cleanCurrentVer === 'v1.1.0') ? 'emerald' : 'indigo',
                 'commit'        => '10d47a1',
                 'summary'       => 'Complete suite of customized 4xx client and 5xx server error pages with responsive illustrations, diagnostic error codes, and interactive showcase hub.',
                 'version_features' => [
@@ -174,10 +175,10 @@ class VersionController extends Controller
                 'raw_version'   => '1.0.0',
                 'name'          => 'Foundational Multi-Theme Portfolio Studio Release',
                 'release_date'  => '2026-05-01',
-                'is_current'    => false,
+                'is_current'    => ($cleanCurrentVer === 'v1.0.0'),
                 'is_stable'     => true,
-                'status_label'  => 'Stable Foundation',
-                'status_color'  => 'slate',
+                'status_label'  => ($cleanCurrentVer === 'v1.0.0') ? 'Current Active Version' : 'Stable Foundation',
+                'status_color'  => ($cleanCurrentVer === 'v1.0.0') ? 'emerald' : 'slate',
                 'commit'        => '0c1fbb1',
                 'summary'       => 'Initial foundation release delivering the multi-theme portfolio studio with five specialized frontend themes, full administrative content management, and user authentication.',
                 'version_features' => [
@@ -200,13 +201,13 @@ class VersionController extends Controller
         $forceRefresh = $request->boolean('refresh', false);
         $updateStatus = $updateService->getStatus($forceRefresh);
         $versions = $updateService->getRepositoryReleases($forceRefresh);
-        $currentVersion = $versions[0] ?? [
+        $currentVersion = collect($versions)->firstWhere('is_current', true) ?? ($versions[0] ?? [
             'version' => 'v1.3.0',
             'raw_version' => '1.3.0',
             'name' => 'Theme-Scoped Sort Ordering Engine & Flowbite Dark UI Suite',
             'release_date' => '2026-11-10',
             'is_current' => true,
-        ];
+        ]);
         $coreModules = $this->foundationalCoreModules;
         $repoUrl = $this->githubRepoUrl;
 
