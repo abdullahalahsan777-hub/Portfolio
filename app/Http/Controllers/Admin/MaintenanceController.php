@@ -171,6 +171,7 @@ class MaintenanceController extends Controller
 
                 $emailSummary = '';
                 if ($shouldSendEmail) {
+                    /** @var BroadcastServerStatusEmailJob $job */
                     BroadcastServerStatusEmailJob::dispatch('up');
                     $emailSummary = ' &bull; 📧 Server status notification dispatched to background queue worker for delivery.';
                 }

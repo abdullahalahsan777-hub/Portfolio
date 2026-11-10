@@ -14,6 +14,16 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Class BroadcastServerStatusEmailJob
+ *
+ * Background queued job for broadcasting server status notifications (Live / Maintenance 503)
+ * to registered users and administrative contacts.
+ *
+ * @method static \Illuminate\Foundation\Bus\PendingDispatch dispatch(string $status, array $customDetails = [])
+ * @method static \Illuminate\Foundation\Bus\PendingDispatch dispatchSync(string $status, array $customDetails = [])
+ * @method static \Illuminate\Foundation\Bus\PendingDispatch dispatchAfterResponse(string $status, array $customDetails = [])
+ */
 class BroadcastServerStatusEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
