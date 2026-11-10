@@ -769,8 +769,12 @@
                                     $isActive =
                                         request()->routeIs('admin.pages.' . $pSlug) ||
                                         ($pSlug === 'home' && request()->routeIs('admin.website.content'));
+                                    $targetRoute = !empty($pMeta['route']) && \Illuminate\Support\Facades\Route::has($pMeta['route'])
+                                        ? $pMeta['route']
+                                        : 'admin.pages.home';
+                                    $pageLink = \Illuminate\Support\Facades\URL::route($targetRoute, ['theme' => $currentThemeQuery]);
                                 @endphp
-                                <a href="{{ route($pMeta['route'], ['theme' => $currentThemeQuery]) }}"
+                                <a href="{{ $pageLink }}"
                                     class="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium {{ $isActive ? 'bg-indigo-600/30 text-indigo-200 font-bold border border-indigo-500/30 shadow-sm' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all group">
                                     <div class="flex items-center gap-2 truncate">
                                         <span class="truncate">{{ $pMeta['title'] }}</span>
