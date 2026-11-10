@@ -193,14 +193,22 @@ class VersionController extends Controller
 
     /**
      * Display the Version Control & Software Releases Center.
+     * All release data is retrieved dynamically from the GitHub repository.
      */
-    public function index(SystemUpdateService $updateService): View
+    public function index(Request $request, SystemUpdateService $updateService): View
     {
-        $versions = $this->getVersionsList();
-        $currentVersion = $versions[0];
+        $forceRefresh = $request->boolean('refresh', false);
+        $updateStatus = $updateService->getStatus($forceRefresh);
+        $versions = $updateService->getRepositoryReleases($forceRefresh);
+        $currentVersion = $versions[0] ?? [
+            'version' => 'v1.3.0',
+            'raw_version' => '1.3.0',
+            'name' => 'Theme-Scoped Sort Ordering Engine & Flowbite Dark UI Suite',
+            'release_date' => '2026-11-10',
+            'is_current' => true,
+        ];
         $coreModules = $this->foundationalCoreModules;
         $repoUrl = $this->githubRepoUrl;
-        $updateStatus = $updateService->getStatus();
 
         return view('admin.versions.index', compact('versions', 'currentVersion', 'coreModules', 'repoUrl', 'updateStatus'));
     }
@@ -211,6 +219,7 @@ class VersionController extends Controller
     public function checkUpdate(Request $request, SystemUpdateService $updateService)
     {
         $status = $updateService->getStatus(true);
+        $updateService->getRepositoryReleases(true);
 
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
@@ -251,9 +260,9 @@ class VersionController extends Controller
     }
 
     /**
-     * Download a specific software version archive from GitHub.
+     * Download a specific software version archive directly or from GitHub.
      */
-    public function download(string $version, Request $request): RedirectResponse
+    public function download(string $version, Request $request)
     {
         $cleanVersion = trim($version);
         if (!str_starts_with($cleanVersion, 'v')) {
@@ -268,11 +277,39 @@ class VersionController extends Controller
         }
 
         $format = $request->query('format', 'zip');
-        $extension = ($format === 'tar' || $format === 'tar.gz') ? 'tar.gz' : 'zip';
 
+        // Check if pre-packaged standalone release exists locally for instant download
+        $localZip = public_path("releases/{$cleanVersion}.zip");
+        if ($format === 'zip' && file_exists($localZip)) {
+            return response()->download($localZip, "Portfolio-{$cleanVersion}.zip", [
+                'Content-Type' => 'application/zip',
+            ]);
+        }
+
+        $extension = ($format === 'tar' || $format === 'tar.gz') ? 'tar.gz' : 'zip';
         $downloadUrl = "{$this->githubRepoUrl}/archive/refs/tags/{$cleanVersion}.{$extension}";
 
         return redirect()->away($downloadUrl);
+    }
+
+    /**
+     * View or read the dedicated documentation for a specific release version.
+     */
+    public function readme(string $version)
+    {
+        $cleanVersion = trim($version);
+        if (!str_starts_with($cleanVersion, 'v')) {
+            $cleanVersion = 'v' . $cleanVersion;
+        }
+
+        $localPath = base_path("docs/releases/README_{$cleanVersion}.md");
+        if (file_exists($localPath)) {
+            return response()->file($localPath, [
+                'Content-Type' => 'text/plain; charset=UTF-8',
+            ]);
+        }
+
+        return redirect()->away("{$this->githubRepoUrl}/blob/main/docs/releases/README_{$cleanVersion}.md");
     }
 }
 

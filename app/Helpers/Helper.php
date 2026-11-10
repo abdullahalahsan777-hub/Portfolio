@@ -514,9 +514,19 @@ if (! function_exists('serverPort')) {
      */
     function serverPort(?string $default = null): string
     {
-        $port = env('SERVER_PORT');
-        if (!empty($port)) {
-            return (string) $port;
+        // 1. Strictly prioritize SERVER_PORT from environment / .env
+        $envPort = env('SERVER_PORT');
+        if (!empty($envPort)) {
+            return (string) $envPort;
+        }
+
+        // 2. Direct read from .env file if env() cache is warm/missing
+        $envFile = base_path('.env');
+        if (file_exists($envFile)) {
+            $content = file_get_contents($envFile);
+            if (preg_match('/^SERVER_PORT\s*=\s*([0-9]+)/m', $content, $matches)) {
+                return (string) $matches[1];
+            }
         }
 
         $configPort = config('app.port');

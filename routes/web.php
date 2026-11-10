@@ -227,6 +227,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         // Software Version Control & Releases Center
         Route::get('/versions', [AdminVersionController::class, 'index'])->name('versions.index');
         Route::get('/versions/{version}/download', [AdminVersionController::class, 'download'])->name('versions.download');
+        Route::get('/versions/{version}/readme', [AdminVersionController::class, 'readme'])->name('versions.readme');
 
         // Automated GitHub System Update & Sync
         Route::match(['get', 'post'], '/system-update/check', [AdminVersionController::class, 'checkUpdate'])->name('systemUpdate.check');

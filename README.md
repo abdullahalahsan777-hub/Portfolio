@@ -16,6 +16,9 @@
 ## Table of Contents
 
 - [Version & Release Information](#version--release-information)
+- [Software Version Control & Releases Matrix (v1.0.0 – v1.3.0)](#software-version-control--releases-matrix-v100--v130)
+- [Automated GitHub Synchronization & Self-Healing Updates](#automated-github-synchronization--self-healing-updates)
+- [Exclusive SERVER_PORT Authority](#exclusive-server_port-authority)
 - [About The Software](#about-the-software)
 - [Themes](#themes)
 - [Features](#features)
@@ -71,18 +74,59 @@ Across all versions, the foundational modules remain identical, unified, and ful
 
 ---
 
-### Version-by-Version Subsystems & GitHub Downloads
+### Version-by-Version Subsystems, Documentation & Downloads
 
-| Version | Status | Release Date | Subsystem / Key Feature Focus | Direct Downloads | GitHub Release |
-| :--- | :---: | :---: | :--- | :---: | :---: |
-| **`v1.3.0`** | **Current Stable** | Nov 10, 2026 | **Theme-Scoped Sort Ordering & Flowbite Dark UI Suite**<br>&bull; Independent `1..N` sort ordering per theme across all 9 Website modules<br>&bull; `AutoSortOrderById` trait assigning sequential order automatically<br>&bull; Removed manual sort inputs from create/edit forms<br>&bull; Interactive SortableJS drag-and-drop reordering with live badge updates<br>&bull; Integrated Flowbite Tailwind components & autohiding datepicker (`YYYY-MM-DD`)<br>&bull; Zero static/hardcoded data: 100% dynamic MySQL retrieval<br>&bull; Standardized blog date column to SQL `date` type | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.3.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.3.0.tar.gz) | [`v1.3.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.3.0) |
-| **`v1.2.0`** | Stable | Oct 02, 2026 | **Enterprise Security & Full Responsive Polish**<br>&bull; Root `.htaccess` gateway protecting `.env`, `composer.json`, `.git`<br>&bull; Upload folder script execution prohibition (`php_flag engine off`)<br>&bull; `uploadFile()` extension blacklist<br>&bull; `SecurityHeadersMiddleware` (CSP/SAMEORIGIN/nosniff)<br>&bull; Public route rate-limiting throttle (15/min)<br>&bull; Fixed 100vh admin sidebar with slim custom scrollbars<br>&bull; Full device responsiveness (desktop, laptop, tab, mobile)<br>&bull; Version Control Releases Hub (`/admin/versions`) | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.2.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.2.0.tar.gz) | [`v1.2.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0) |
-| **`v1.1.9`** | Stable | Sep 15, 2026 | **Newsletter Engine & Pro Pagination**<br>&bull; Newsletter subscriber management & database migration<br>&bull; Public subscription endpoint (`/newsletter/subscribe`)<br>&bull; Dashboard newsletter audience health metrics card<br>&bull; Mathematical windowed pagination (capped to 7 items)<br>&bull; Scroll-to-top button auto-hide on scroll stop | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.9.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.9.tar.gz) | [`v1.1.9 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.9) |
-| **`v1.1.8`** | Stable | Sep 01, 2026 | **Unified System & Browser Diagnostics Center**<br>&bull; Dual-source log viewer: backend `laravel.log` + client `browser.log`<br>&bull; Automated frontend JavaScript error beacon<br>&bull; Structured severity & runtime environment metric cards<br>&bull; One-click combined log download & dual-file clear | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.8.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.8.tar.gz) | [`v1.1.8 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.8) |
-| **`v1.1.4`** | Stable | Aug 02, 2026 | **Client Inquiries & Communications Hub**<br>&bull; Gmail-style dark mode mailbox with hover action buttons<br>&bull; Folder navigation (Inbox, Sent, Drafts, Important, Trash)<br>&bull; Background autosave drafts with UUID `temp_id`<br>&bull; VIP importance badge inheritance from client history<br>&bull; Background file attachments & HTML email replies | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.4.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.4.tar.gz) | [`v1.1.4 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.4) |
-| **`v1.1.1`** | Stable | Jul 01, 2026 | **System Maintenance & Infrastructure Hub**<br>&bull; Maintenance mode toggle (HTTP 503) with admin preview bypass<br>&bull; Automated broadcast emails to users on server status change<br>&bull; Real-time database size telemetry (MySQL/SQLite)<br>&bull; View, route, and configuration cache clear controls | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.1.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.1.tar.gz) | [`v1.1.1 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.1) |
-| **`v1.1.0`** | Stable | Jun 01, 2026 | **Custom Error Pages Suite & Resilience**<br>&bull; Branded custom error pages: 400, 401, 403, 404, 405, 408, 410, 429, 500, 502, 503, 504<br>&bull; Interactive error preview showcase hub (`/errors`)<br>&bull; Exception reporter with route/action/IP context logging | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.0.tar.gz) | [`v1.1.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.0) |
-| **`v1.0.0`** | Foundation | May 01, 2026 | **Multi-Theme Portfolio Foundation Release**<br>&bull; 5 frontend themes (Developer, App Developer, App Software, UI/UX, Graphic Designer)<br>&bull; Full Website Group content editor (Home, About, Services, Projects, Skills, Resume, Blog, FAQ, Pricing, Testimonials)<br>&bull; Authentication, User Management, General/Image/Media settings | [`.zip`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.0.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.0.0.tar.gz) | [`v1.0.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.0.0) |
+| Version | Status | Release Date | Subsystem / Key Feature Focus | Documentation (README) | Standalone & GitHub Archives | GitHub Release Tag |
+| :--- | :---: | :---: | :--- | :---: | :---: | :---: |
+| **`v1.3.0`** | **Current Stable** | Nov 10, 2026 | **Theme-Scoped Sort Ordering & Flowbite Dark UI Suite**<br>&bull; Independent `1..N` sort ordering per theme across all 9 Website modules<br>&bull; `AutoSortOrderById` trait assigning sequential order automatically<br>&bull; Removed manual sort inputs from create/edit forms<br>&bull; Interactive SortableJS drag-and-drop reordering with live badge updates<br>&bull; Integrated Flowbite Tailwind components & autohiding datepicker (`YYYY-MM-DD`)<br>&bull; Zero static/hardcoded data: 100% dynamic MySQL retrieval<br>&bull; Standardized blog date column to SQL `date` type | [`README_v1.3.0.md`](docs/releases/README_v1.3.0.md) | [`.zip`](public/releases/v1.3.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.3.0.tar.gz) | [`v1.3.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.3.0) |
+| **`v1.2.0`** | Stable | Oct 02, 2026 | **Enterprise Security & Full Responsive Polish**<br>&bull; Root `.htaccess` gateway protecting `.env`, `composer.json`, `.git`<br>&bull; Upload folder script execution prohibition (`php_flag engine off`)<br>&bull; `uploadFile()` extension blacklist<br>&bull; `SecurityHeadersMiddleware` (CSP/SAMEORIGIN/nosniff)<br>&bull; Public route rate-limiting throttle (15/min)<br>&bull; Fixed 100vh admin sidebar with slim custom scrollbars<br>&bull; Full device responsiveness (desktop, laptop, tab, mobile)<br>&bull; Version Control Releases Hub (`/admin/versions`) | [`README_v1.2.0.md`](docs/releases/README_v1.2.0.md) | [`.zip`](public/releases/v1.2.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.2.0.tar.gz) | [`v1.2.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0) |
+| **`v1.1.9`** | Stable | Sep 15, 2026 | **Newsletter Engine & Pro Pagination**<br>&bull; Newsletter subscriber management & database migration<br>&bull; Public subscription endpoint (`/newsletter/subscribe`)<br>&bull; Dashboard newsletter audience health metrics card<br>&bull; Mathematical windowed pagination (capped to 7 items)<br>&bull; Scroll-to-top button auto-hide on scroll stop | [`README_v1.1.9.md`](docs/releases/README_v1.1.9.md) | [`.zip`](public/releases/v1.1.9.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.9.tar.gz) | [`v1.1.9 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.9) |
+| **`v1.1.8`** | Stable | Sep 01, 2026 | **Unified System & Browser Diagnostics Center**<br>&bull; Dual-source log viewer: backend `laravel.log` + client `browser.log`<br>&bull; Automated frontend JavaScript error beacon<br>&bull; Structured severity & runtime environment metric cards<br>&bull; One-click combined log download & dual-file clear | [`README_v1.1.8.md`](docs/releases/README_v1.1.8.md) | [`.zip`](public/releases/v1.1.8.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.8.tar.gz) | [`v1.1.8 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.8) |
+| **`v1.1.4`** | Stable | Aug 02, 2026 | **Client Inquiries & Communications Hub**<br>&bull; Gmail-style dark mode mailbox with hover action buttons<br>&bull; Folder navigation (Inbox, Sent, Drafts, Important, Trash)<br>&bull; Background autosave drafts with UUID `temp_id`<br>&bull; VIP importance badge inheritance from client history<br>&bull; Background file attachments & HTML email replies | [`README_v1.1.4.md`](docs/releases/README_v1.1.4.md) | [`.zip`](public/releases/v1.1.4.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.4.tar.gz) | [`v1.1.4 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.4) |
+| **`v1.1.1`** | Stable | Jul 01, 2026 | **System Maintenance & Infrastructure Hub**<br>&bull; Maintenance mode toggle (HTTP 503) with admin preview bypass<br>&bull; Automated broadcast emails to users on server status change<br>&bull; Real-time database size telemetry (MySQL/SQLite)<br>&bull; View, route, and configuration cache clear controls | [`README_v1.1.1.md`](docs/releases/README_v1.1.1.md) | [`.zip`](public/releases/v1.1.1.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.1.tar.gz) | [`v1.1.1 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.1) |
+| **`v1.1.0`** | Stable | Jun 01, 2026 | **Custom Error Pages Suite & Resilience**<br>&bull; Branded custom error pages: 400, 401, 403, 404, 405, 408, 410, 429, 500, 502, 503, 504<br>&bull; Interactive error preview showcase hub (`/errors`)<br>&bull; Exception reporter with route/action/IP context logging | [`README_v1.1.0.md`](docs/releases/README_v1.1.0.md) | [`.zip`](public/releases/v1.1.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.0.tar.gz) | [`v1.1.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.0) |
+| **`v1.0.0`** | Foundation | May 01, 2026 | **Multi-Theme Portfolio Foundation Release**<br>&bull; 5 frontend themes (Developer, App Developer, App Software, UI/UX, Graphic Designer)<br>&bull; Full Website Group content editor (Home, About, Services, Projects, Skills, Resume, Blog, FAQ, Pricing, Testimonials)<br>&bull; Authentication, User Management, General/Image/Media settings | [`README_v1.0.0.md`](docs/releases/README_v1.0.0.md) | [`.zip`](public/releases/v1.0.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.0.0.tar.gz) | [`v1.0.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.0.0) |
+
+---
+
+## Automated GitHub Synchronization & Self-Healing Updates
+
+The software is engineered with a **zero-downtime, conflict-free self-healing updater** integrated into the Admin Control Panel:
+
+1. **Live Remote Tag & Push Detection**:
+   The system queries `origin/main` commits and tags via Git protocol directly (bypassing GitHub REST API unauthenticated rate limits). Whenever any new push occurs on GitHub or a new version is tagged, an **Update Available** alert pulses in:
+   - **Admin Dashboard** header & telemetry strip
+   - **System Maintenance Hub** (`/admin/maintenance`)
+   - **Version Control & Software Releases Center** (`/admin/versions`)
+2. **Interactive Changelog Preview**:
+   Clicking **Update Software Now** opens an animated modal previewing all incoming commits, author attributions, commit hashes, and feature highlights before updating.
+3. **Automated Self-Healing Pipeline**:
+   When triggered, the backend execution service (`App\Services\SystemUpdateService`):
+   - Stashes uncommitted local modifications safely (`git stash push`).
+   - Fetches upstream commits (`git fetch origin main`).
+   - Resolves merge discrepancies automatically with `--no-edit` strategies (`git merge -X ours` or rebase fallback).
+   - Pops stashed user edits cleanly back onto working tree.
+   - Executes database schema migrations (`php artisan migrate --force`).
+   - Purges stale view templates, route bindings, and application caches (`optimize:clear`).
+   - Dispatches in-app notifications to admin users documenting the successful update.
+4. **Universal Update from Any Version**:
+   Whether a deployment is running `v1.0.0`, `v1.1.0`, or `v1.2.0`, clicking **Update to v1.3.0** on any version card immediately synchronizes the installation to the latest stable code.
+
+---
+
+## Exclusive SERVER_PORT Authority
+
+The server port is governed strictly by the `SERVER_PORT` setting in your `.env` file without static options or hardcoded fallbacks:
+
+```env
+SERVER_PORT=8044
+APP_URL=http://127.0.0.1:8044
+```
+
+- **`php artisan serve` Command**: Overridden by `App\Console\Commands\ServeCommand` to automatically read `env('SERVER_PORT')`, binding to your configured port with zero command-line flags needed.
+- **Windows Launcher (`dev.bat`)**: Automatically parses `SERVER_PORT` from `.env` and passes it to artisan serve, Vite, and queue worker.
+- **Linux / macOS Launcher (`dev.sh`)**: Dynamically evaluates `SERVER_PORT` from `.env`.
+- **Application URL Binding**: `App\Providers\AppServiceProvider` dynamically pins `URL::forceRootUrl()` to the active `SERVER_PORT`, ensuring email reset links, OAuth redirects, and internal assets resolve accurately.
 
 ---
 
@@ -246,11 +290,11 @@ Open `.env` in your text editor and set your local database credentials:
 
 ```env
 APP_NAME="Portfolio Studio"
-APP_VERSION=1.2.0
+APP_VERSION=1.3.0
 APP_ENV=local
 APP_DEBUG=true
 SERVER_PORT=8044
-APP_URL=http://127.0.0.1
+APP_URL=http://127.0.0.1:8044
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -283,12 +327,21 @@ php artisan storage:link
 
 ### Step 7: Launch the Application
 
-Open `dev.sh` (or execute it via Git Bash / terminal):
+**On Windows:**
+```cmd
+dev.bat
+```
 
+**On Linux / macOS / Git Bash:**
 ```bash
 ./dev.sh
-# or
-bash dev.sh
+```
+
+**Or natively using artisan:**
+```bash
+php artisan serve
+```
+*(Artisan automatically reads `SERVER_PORT` directly from your `.env` without any extra flags)*
 ```
 
 > **Note**: `dev.sh` automatically launches the complete development environment, running the Laravel HTTP application server, background email queue listener, and Vite frontend asset bundler concurrently.

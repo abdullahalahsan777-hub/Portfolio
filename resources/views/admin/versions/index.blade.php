@@ -265,6 +265,63 @@
                     <div
                         class="rounded-3xl bg-[#09101d] border {{ $release['is_current'] ? 'border-indigo-500/60 shadow-2xl shadow-indigo-500/10' : 'border-white/10' }} p-6 space-y-5 transition-all group">
 
+                        <!-- Upgrade Notification Banner in Every Version Card -->
+                        @if (!$release['is_current'])
+                            <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-amber-200">
+                                            A newer stable release is available: <span class="font-mono underline">{{ $currentVersion['version'] }}</span>
+                                        </p>
+                                        <p class="text-[11px] text-amber-300/80">
+                                            You can automatically update your software anytime to {{ $currentVersion['version'] }} with the built-in self-healing sync engine.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 shrink-0">
+                                    <button type="button" onclick="openSystemUpdateModal()"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black shadow-md shadow-amber-500/30 transition-all cursor-pointer">
+                                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                        <span>Update to Latest ({{ $currentVersion['version'] }})</span>
+                                    </button>
+                                </div>
+                            </div>
+                        @else
+                            <div class="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-emerald-200">
+                                            Active Production Release: <span class="font-mono">{{ $release['version'] }}</span> (Latest Stable)
+                                        </p>
+                                        <p class="text-[11px] text-emerald-300/80">
+                                            Your software is running on the latest official release. You can re-sync with GitHub anytime.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 shrink-0">
+                                    <button type="button" onclick="openSystemUpdateModal()"
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 transition-all cursor-pointer">
+                                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                        <span>Force Re-Sync ({{ $release['version'] }})</span>
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
+
                         <!-- Card Header: Version Tag, Release Date, Status, Downloads -->
                         <div
                             class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-white/10">
@@ -315,15 +372,48 @@
 
                             <!-- Action & Download Buttons for this Version -->
                             <div class="flex items-center gap-2 flex-wrap">
-                                <!-- Update System to this GitHub Version -->
-                                <button type="button"
-                                    onclick="openVersionUpdateModal(@js($release))"
-                                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider {{ $release['is_current'] ? 'bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-black shadow-lg shadow-emerald-500/25 ring-1 ring-emerald-400/40' : 'bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white shadow-lg shadow-indigo-600/30' }} transition-all cursor-pointer">
-                                    <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                @if (!$release['is_current'])
+                                    <!-- Direct Update to Latest Version from any Release Card -->
+                                    <button type="button"
+                                        onclick="openSystemUpdateModal()"
+                                        class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black shadow-lg shadow-amber-500/25 transition-all cursor-pointer">
+                                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                        <span>Update to {{ $currentVersion['version'] }}</span>
+                                    </button>
+
+                                    <!-- Switch to this specific version -->
+                                    <button type="button"
+                                        onclick="openVersionUpdateModal(@js($release))"
+                                        class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-all cursor-pointer">
+                                        <svg class="w-3.5 h-3.5 shrink-0 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                        <span>Switch to {{ $release['version'] }}</span>
+                                    </button>
+                                @else
+                                    <!-- Re-Sync Active Version -->
+                                    <button type="button"
+                                        onclick="openVersionUpdateModal(@js($release))"
+                                        class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-black shadow-lg shadow-emerald-500/25 ring-1 ring-emerald-400/40 transition-all cursor-pointer">
+                                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                        <span>Re-Sync Active ({{ $release['version'] }})</span>
+                                    </button>
+                                @endif
+
+                                <!-- Dedicated Version README -->
+                                <a href="{{ route('admin.versions.readme', ['version' => $release['version']]) }}" target="_blank" rel="noopener noreferrer"
+                                    class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-indigo-600/20 text-slate-200 hover:text-white border border-white/10 hover:border-indigo-500/40 transition-all shadow-sm"
+                                    title="Read dedicated documentation for {{ $release['version'] }}">
+                                    <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
-                                    <span>{{ $release['is_current'] ? 'Re-Sync Active (' . $release['version'] . ')' : 'Update to ' . $release['version'] }}</span>
-                                </button>
+                                    <span>README</span>
+                                </a>
 
                                 <a href="{{ route('admin.versions.download', ['version' => $release['version'], 'format' => 'zip']) }}"
                                     class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-indigo-600/20 text-slate-200 hover:text-white border border-white/10 hover:border-indigo-500/40 transition-all shadow-sm">
