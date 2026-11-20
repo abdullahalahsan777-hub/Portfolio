@@ -24,7 +24,18 @@
         (function() {
             // 1. Material Palette Custom Accent Initialization (Instant Zero-FOUC)
             try {
-                const savedAccent = localStorage.getItem('portfolio_theme_color') || localStorage.getItem('laravel_theme_color') || '#00e5ff';
+                const defaultThemeColors = {
+                    'developer': '#00ff88',
+                    'uiux_designer': '#ccff00',
+                    'graphic_designer': '#7c3aed',
+                    'app_developer': '#ff0033',
+                    'app_software_developer': '#ff6b00',
+                    'digital_designer_illustrator': '#e26d9b',
+                    'laravel_developer': '#00e5ff'
+                };
+                const activeTheme = "{{ $activeTheme }}";
+                const themeDefault = defaultThemeColors[activeTheme] || '#00e5ff';
+                const savedAccent = localStorage.getItem('portfolio_theme_color') || localStorage.getItem('laravel_theme_color') || themeDefault;
                 const root = document.documentElement;
                 root.style.setProperty('--theme-primary', savedAccent);
                 const hex = savedAccent.replace('#', '');
@@ -89,7 +100,7 @@
 </head>
 
 <body
-    class="theme-{{ $activeTheme }} antialiased selection:bg-[#7c3aed] selection:text-white min-h-screen relative overflow-x-clip">
+    class="theme-{{ $activeTheme }} antialiased selection:bg-[var(--theme-primary,#00e5ff)] selection:text-[var(--theme-on-primary,#000000)] min-h-screen relative overflow-x-clip">
 
     <!-- Frontend Content (Theme is selected solely in the Admin Panel) -->
     <div id="mainContent">

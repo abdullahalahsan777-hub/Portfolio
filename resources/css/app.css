@@ -18,6 +18,7 @@
 @import './frontend/app_developer.css';
 @import './frontend/app_software_developer.css';
 @import './frontend/digital_designer_illustrator.css';
+@import './frontend/material_palette_accents.css';
 @import './admin/admin.css';
 
 @theme {

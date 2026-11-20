@@ -1,0 +1,460 @@
+/* ==========================================================================
+   MATERIAL PALETTE DYNAMIC ACCENT SYSTEM & MODERN UI/UX ENHANCEMENTS
+   Inspired by Claude AI, Material Design 3 & Awwwards 2026 Portfolio Standards.
+   Ensures Cyan, Orange, Teal, Indigo, Amber, Pink, Purple, Lime, and Blue
+   instantly and dynamically restyle every theme's components, buttons,
+   badges, glows, borders, links, headers, and highlights.
+   ========================================================================== */
+
+/* 1. Global CSS Variables & Typography Defaults */
+:root {
+    --theme-primary: #00e5ff;
+    --theme-primary-rgb: 0, 229, 255;
+    --theme-primary-glow: rgba(0, 229, 255, 0.35);
+    --theme-on-primary: #000000;
+}
+
+/* Global Selection Accent */
+::selection {
+    background-color: var(--theme-primary) !important;
+    color: var(--theme-on-primary, #000000) !important;
+}
+
+::-moz-selection {
+    background-color: var(--theme-primary) !important;
+    color: var(--theme-on-primary, #000000) !important;
+}
+
+/* Global Form Focus Rings */
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--theme-primary) !important;
+    box-shadow: 0 0 0 3px var(--theme-primary-glow) !important;
+    outline: none !important;
+}
+
+/* Global Custom Modern Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #060606;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--theme-primary-glow, rgba(255, 255, 255, 0.2));
+    border-radius: 9999px;
+    border: 2px solid #060606;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--theme-primary, #00e5ff);
+}
+
+/* Scoped Smooth Color Transitions for Luxurious Feel */
+a,
+button,
+.palette-color-btn,
+.dev-btn-primary,
+.uiux-btn-primary,
+.gd-btn-primary,
+.illustrator-btn-primary,
+.app-dev-btn-primary,
+.software-btn-primary {
+    transition-property: color, background-color, border-color, box-shadow, transform;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   2. THEME-WISE DYNAMIC MAPPINGS (ALL 7 THEMES)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   THEME 1: Developer Theme (.theme-developer)
+   Native Signature: Emerald #00ff88
+   -------------------------------------------------------------------------- */
+.theme-developer {
+    --dev-accent-primary: var(--theme-primary, #00ff88);
+    --dev-accent-hover: var(--theme-primary, #00df76);
+    --dev-accent-glow: var(--theme-primary-glow, rgba(0, 255, 136, 0.35));
+    --dev-border-hover: var(--theme-primary, rgba(0, 255, 136, 0.45));
+    --dev-text-dark: var(--theme-on-primary, #070707);
+}
+
+.theme-developer .dev-btn-primary {
+    background: var(--theme-primary, #00ff88) !important;
+    color: var(--theme-on-primary, #070707) !important;
+    box-shadow: 0 8px 25px -4px var(--theme-primary-glow, rgba(0, 255, 136, 0.45)) !important;
+}
+.theme-developer .dev-btn-primary:hover {
+    box-shadow: 0 12px 30px -4px var(--theme-primary-glow, rgba(0, 255, 136, 0.6)) !important;
+    filter: brightness(1.08);
+}
+
+.theme-developer .dev-btn-outline {
+    border-color: var(--theme-primary, rgba(0, 255, 136, 0.4)) !important;
+    color: var(--theme-primary, #00ff88) !important;
+}
+.theme-developer .dev-btn-outline:hover {
+    background: var(--theme-primary-glow, rgba(0, 255, 136, 0.12)) !important;
+    border-color: var(--theme-primary, #00ff88) !important;
+}
+
+.theme-developer .dev-glow-emerald {
+    box-shadow: 0 0 35px -5px var(--theme-primary-glow, rgba(0, 255, 136, 0.35)) !important;
+}
+.theme-developer .dev-glow-text {
+    text-shadow: 0 0 20px var(--theme-primary-glow, rgba(0, 255, 136, 0.4)) !important;
+}
+
+.theme-developer .dev-skill-circle {
+    background: conic-gradient(var(--theme-primary, #00ff88) var(--skill-percent, 80%), transparent 0) !important;
+}
+.theme-developer .dev-skill-circle .dev-skill-inner {
+    border-color: var(--theme-primary-glow, rgba(0, 255, 136, 0.4)) !important;
+    box-shadow: 0 0 25px -5px var(--theme-primary-glow, rgba(0, 255, 136, 0.4)) !important;
+}
+
+.theme-developer .dev-service-card.highlight {
+    border-color: var(--theme-primary, rgba(0, 255, 136, 0.4)) !important;
+    box-shadow: 0 15px 35px -10px var(--theme-primary-glow, rgba(0, 255, 136, 0.2)) !important;
+}
+.theme-developer .dev-service-card.highlight .dev-service-icon-box {
+    background: linear-gradient(135deg, var(--theme-primary, #00ff88) 0%, var(--theme-primary, #00df76) 100%) !important;
+    color: var(--theme-on-primary, #070707) !important;
+    box-shadow: 0 15px 40px -8px var(--theme-primary-glow, rgba(0, 255, 136, 0.5)) !important;
+}
+
+.theme-developer .dev-pricing-card.featured {
+    border-color: var(--theme-primary, rgba(0, 255, 136, 0.35)) !important;
+}
+.theme-developer .dev-pricing-card.featured .dev-pricing-badge {
+    background: linear-gradient(135deg, var(--theme-primary, #00ff88) 0%, var(--theme-primary, #00df76) 100%) !important;
+    color: var(--theme-on-primary, #070707) !important;
+    box-shadow: 0 20px 45px -10px var(--theme-primary-glow, rgba(0, 255, 136, 0.5)) !important;
+}
+
+/* Emerald utility overrides in Developer theme */
+.theme-developer .text-\[\#00ff88\],
+.theme-developer span.text-\[\#00ff88\],
+.theme-developer a.text-\[\#00ff88\],
+.theme-developer h1 span.text-\[\#00ff88\],
+.theme-developer h2 span.text-\[\#00ff88\],
+.theme-developer h3 span.text-\[\#00ff88\],
+.theme-developer nav a.text-\[\#00ff88\] {
+    color: var(--theme-primary, #00ff88) !important;
+}
+
+.theme-developer .bg-\[\#00ff88\],
+.theme-developer span.bg-\[\#00ff88\],
+.theme-developer div.bg-\[\#00ff88\],
+.theme-developer a.bg-\[\#00ff88\] {
+    background-color: var(--theme-primary, #00ff88) !important;
+    color: var(--theme-on-primary, #070707) !important;
+}
+
+.theme-developer .border-\[\#00ff88\] {
+    border-color: var(--theme-primary, #00ff88) !important;
+}
+
+.theme-developer a:hover .text-\[\#00ff88\],
+.theme-developer a.hover\:text-\[\#00ff88\]:hover,
+.theme-developer .hover\:text-\[\#00ff88\]:hover,
+.theme-developer nav a:hover {
+    color: var(--theme-primary, #00ff88) !important;
+}
+
+.theme-developer .hover\:bg-\[\#00ff88\]:hover,
+.theme-developer .hover\:bg-\[\#00df76\]:hover {
+    background-color: var(--theme-primary, #00ff88) !important;
+    color: var(--theme-on-primary, #070707) !important;
+}
+
+.theme-developer .from-\[\#00ff88\] {
+    --tw-gradient-from: var(--theme-primary, #00ff88) var(--tw-gradient-from-position) !important;
+}
+.theme-developer .to-\[\#00df76\],
+.theme-developer .to-\[\#00ff88\] {
+    --tw-gradient-to: var(--theme-primary, #00df76) var(--tw-gradient-to-position) !important;
+}
+
+/* --------------------------------------------------------------------------
+   THEME 2: UI/UX Designer Theme (.theme-uiux_designer)
+   Native Signature: Electric Lime #ccff00
+   -------------------------------------------------------------------------- */
+.theme-uiux_designer {
+    --uiux-lime: var(--theme-primary, #ccff00);
+    --uiux-lime-dim: var(--theme-primary-glow, rgba(204, 255, 0, 0.12));
+    --uiux-border-hover: var(--theme-primary, rgba(204, 255, 0, 0.45));
+}
+
+.theme-uiux_designer .uiux-btn-primary {
+    background: var(--theme-primary, #ccff00) !important;
+    color: var(--theme-on-primary, #080808) !important;
+    box-shadow: 0 8px 20px -4px var(--theme-primary-glow, rgba(204, 255, 0, 0.4)) !important;
+}
+.theme-uiux_designer .uiux-btn-primary:hover {
+    box-shadow: 0 14px 28px -4px var(--theme-primary-glow, rgba(204, 255, 0, 0.55)) !important;
+    filter: brightness(1.08);
+}
+
+.theme-uiux_designer .uiux-glow-lime {
+    box-shadow: 0 0 35px -5px var(--theme-primary-glow, rgba(204, 255, 0, 0.35)) !important;
+}
+.theme-uiux_designer .uiux-glow-text {
+    text-shadow: 0 0 20px var(--theme-primary-glow, rgba(204, 255, 0, 0.35)) !important;
+}
+
+.theme-uiux_designer .uiux-ticker-badge {
+    background: var(--theme-primary, #ccff00) !important;
+    color: var(--theme-on-primary, #080808) !important;
+}
+
+.theme-uiux_designer .uiux-service-card:hover {
+    border-color: var(--theme-primary, rgba(204, 255, 0, 0.4)) !important;
+}
+
+.theme-uiux_designer .uiux-pricing-card.featured {
+    border-color: var(--theme-primary, #ccff00) !important;
+    box-shadow: 0 15px 40px -10px var(--theme-primary-glow, rgba(204, 255, 0, 0.25)) !important;
+}
+
+/* Lime utility overrides in UI/UX theme */
+.theme-uiux_designer .text-\[\#ccff00\],
+.theme-uiux_designer span.text-\[\#ccff00\],
+.theme-uiux_designer a.text-\[\#ccff00\],
+.theme-uiux_designer h1 span.text-\[\#ccff00\],
+.theme-uiux_designer h2 span.text-\[\#ccff00\],
+.theme-uiux_designer nav a.text-\[\#ccff00\] {
+    color: var(--theme-primary, #ccff00) !important;
+}
+
+.theme-uiux_designer .bg-\[\#ccff00\],
+.theme-uiux_designer span.bg-\[\#ccff00\],
+.theme-uiux_designer a.bg-\[\#ccff00\],
+.theme-uiux_designer button.bg-\[\#ccff00\] {
+    background-color: var(--theme-primary, #ccff00) !important;
+    color: var(--theme-on-primary, #080808) !important;
+}
+
+.theme-uiux_designer .border-\[\#ccff00\] {
+    border-color: var(--theme-primary, #ccff00) !important;
+}
+
+.theme-uiux_designer .hover\:text-\[\#ccff00\]:hover,
+.theme-uiux_designer a:hover .text-\[\#ccff00\],
+.theme-uiux_designer nav a:hover {
+    color: var(--theme-primary, #ccff00) !important;
+}
+
+.theme-uiux_designer .hover\:bg-\[\#ccff00\]:hover {
+    background-color: var(--theme-primary, #ccff00) !important;
+    color: var(--theme-on-primary, #080808) !important;
+}
+
+/* --------------------------------------------------------------------------
+   THEME 3: Graphic Designer Theme (.theme-graphic_designer)
+   Native Signature: Electric Violet #7c3aed
+   -------------------------------------------------------------------------- */
+.theme-graphic_designer {
+    --gd-accent-primary: var(--theme-primary, #7c3aed);
+    --gd-accent-hover: var(--theme-primary, #6d28d9);
+    --gd-text-accent: var(--theme-primary, #c084fc);
+    --gd-accent-gradient: linear-gradient(135deg, var(--theme-primary, #7c3aed) 0%, #a855f7 50%, #ec4899 100%);
+}
+
+.theme-graphic_designer .gd-btn-primary {
+    background: var(--theme-primary, #7c3aed) !important;
+    color: var(--theme-on-primary, #ffffff) !important;
+    box-shadow: 0 8px 25px -4px var(--theme-primary-glow, rgba(124, 58, 237, 0.4)) !important;
+}
+.theme-graphic_designer .gd-btn-primary:hover {
+    box-shadow: 0 12px 30px -4px var(--theme-primary-glow, rgba(124, 58, 237, 0.6)) !important;
+    filter: brightness(1.08);
+}
+
+.theme-graphic_designer .text-\[\#7c3aed\],
+.theme-graphic_designer span.text-\[\#7c3aed\],
+.theme-graphic_designer a.text-\[\#7c3aed\],
+.theme-graphic_designer h1 span.text-\[\#7c3aed\],
+.theme-graphic_designer nav a.text-\[\#7c3aed\] {
+    color: var(--theme-primary, #7c3aed) !important;
+}
+
+.theme-graphic_designer .bg-\[\#7c3aed\],
+.theme-graphic_designer span.bg-\[\#7c3aed\],
+.theme-graphic_designer a.bg-\[\#7c3aed\],
+.theme-graphic_designer [data-gd-filter].bg-\[\#7c3aed\] {
+    background-color: var(--theme-primary, #7c3aed) !important;
+    color: var(--theme-on-primary, #ffffff) !important;
+}
+
+.theme-graphic_designer .border-\[\#7c3aed\] {
+    border-color: var(--theme-primary, #7c3aed) !important;
+}
+
+.theme-graphic_designer .hover\:text-\[\#7c3aed\]:hover,
+.theme-graphic_designer nav a:hover {
+    color: var(--theme-primary, #7c3aed) !important;
+}
+
+.theme-graphic_designer .hover\:bg-\[\#7c3aed\]:hover {
+    background-color: var(--theme-primary, #7c3aed) !important;
+    color: var(--theme-on-primary, #ffffff) !important;
+}
+
+.theme-graphic_designer .from-\[\#7c3aed\] {
+    --tw-gradient-from: var(--theme-primary, #7c3aed) var(--tw-gradient-from-position) !important;
+}
+
+/* --------------------------------------------------------------------------
+   THEME 4: Digital Designer & Illustrator Theme (.theme-digital_designer_illustrator)
+   Native Signature: Rose Poppy #e26d9b
+   -------------------------------------------------------------------------- */
+.theme-digital_designer_illustrator {
+    --illustrator-accent: var(--theme-primary, #e26d9b);
+    --illustrator-accent-glow: var(--theme-primary-glow, rgba(226, 109, 155, 0.25));
+}
+
+.theme-digital_designer_illustrator .illustrator-card:hover {
+    border-color: var(--theme-primary, rgba(226, 109, 155, 0.5)) !important;
+    box-shadow: 0 18px 40px -12px var(--theme-primary-glow, rgba(226, 109, 155, 0.2)) !important;
+}
+
+.theme-digital_designer_illustrator .illustrator-btn-primary {
+    background: var(--theme-primary, #e26d9b) !important;
+    color: var(--theme-on-primary, #ffffff) !important;
+    box-shadow: 0 8px 25px -4px var(--theme-primary-glow, rgba(226, 109, 155, 0.4)) !important;
+}
+.theme-digital_designer_illustrator .illustrator-btn-primary:hover {
+    filter: brightness(1.08);
+}
+
+.theme-digital_designer_illustrator .text-\[\#e26d9b\],
+.theme-digital_designer_illustrator span.text-\[\#e26d9b\],
+.theme-digital_designer_illustrator a.text-\[\#e26d9b\],
+.theme-digital_designer_illustrator nav a.text-\[\#e26d9b\] {
+    color: var(--theme-primary, #e26d9b) !important;
+}
+
+.theme-digital_designer_illustrator .bg-\[\#e26d9b\],
+.theme-digital_designer_illustrator span.bg-\[\#e26d9b\],
+.theme-digital_designer_illustrator a.bg-\[\#e26d9b\] {
+    background-color: var(--theme-primary, #e26d9b) !important;
+    color: var(--theme-on-primary, #ffffff) !important;
+}
+
+.theme-digital_designer_illustrator .border-\[\#e26d9b\] {
+    border-color: var(--theme-primary, #e26d9b) !important;
+}
+
+.theme-digital_designer_illustrator .hover\:text-\[\#e26d9b\]:hover,
+.theme-digital_designer_illustrator nav a:hover {
+    color: var(--theme-primary, #e26d9b) !important;
+}
+
+/* --------------------------------------------------------------------------
+   THEME 5: App Developer Theme (.theme-app_developer)
+   Native Signature: Crimson Red #ff0033
+   -------------------------------------------------------------------------- */
+.theme-app_developer {
+    --app-red: var(--theme-primary, #ff0033);
+    --app-red-glow: var(--theme-primary-glow, rgba(255, 0, 51, 0.35));
+}
+
+.theme-app_developer .app-dev-btn-primary {
+    background: var(--theme-primary, #ff0033) !important;
+    color: var(--theme-on-primary, #ffffff) !important;
+    box-shadow: 0 8px 25px -4px var(--theme-primary-glow, rgba(255, 0, 51, 0.4)) !important;
+}
+.theme-app_developer .app-dev-btn-primary:hover {
+    filter: brightness(1.08);
+}
+
+.theme-app_developer .text-\[\#ff0033\],
+.theme-app_developer span.text-\[\#ff0033\],
+.theme-app_developer a.text-\[\#ff0033\],
+.theme-app_developer nav a.text-\[\#ff0033\] {
+    color: var(--theme-primary, #ff0033) !important;
+}
+
+.theme-app_developer .bg-\[\#ff0033\],
+.theme-app_developer span.bg-\[\#ff0033\],
+.theme-app_developer a.bg-\[\#ff0033\] {
+    background-color: var(--theme-primary, #ff0033) !important;
+    color: var(--theme-on-primary, #ffffff) !important;
+}
+
+.theme-app_developer .border-\[\#ff0033\] {
+    border-color: var(--theme-primary, #ff0033) !important;
+}
+
+.theme-app_developer .hover\:text-\[\#ff0033\]:hover,
+.theme-app_developer nav a:hover {
+    color: var(--theme-primary, #ff0033) !important;
+}
+
+.theme-app_developer .hover\:bg-\[\#ff0033\]:hover {
+    background-color: var(--theme-primary, #ff0033) !important;
+    color: var(--theme-on-primary, #ffffff) !important;
+}
+
+/* --------------------------------------------------------------------------
+   THEME 6: App & Software Developer Theme (.theme-app_software_developer)
+   Native Signature: Amber Orange #ff6b00
+   -------------------------------------------------------------------------- */
+.theme-app_software_developer {
+    --software-orange: var(--theme-primary, #ff6b00);
+    --software-orange-glow: var(--theme-primary-glow, rgba(255, 107, 0, 0.35));
+}
+
+.theme-app_software_developer .badge-bracket-orange {
+    color: var(--theme-primary, #ff6b00) !important;
+}
+
+.theme-app_software_developer .software-btn-primary {
+    background: var(--theme-primary, #ff6b00) !important;
+    color: var(--theme-on-primary, #070707) !important;
+    box-shadow: 0 8px 25px -4px var(--theme-primary-glow, rgba(255, 107, 0, 0.4)) !important;
+}
+.theme-app_software_developer .software-btn-primary:hover {
+    filter: brightness(1.08);
+}
+
+.theme-app_software_developer .text-\[\#ff6b00\],
+.theme-app_software_developer span.text-\[\#ff6b00\],
+.theme-app_software_developer a.text-\[\#ff6b00\],
+.theme-app_software_developer nav a.text-\[\#ff6b00\] {
+    color: var(--theme-primary, #ff6b00) !important;
+}
+
+.theme-app_software_developer .bg-\[\#ff6b00\],
+.theme-app_software_developer span.bg-\[\#ff6b00\],
+.theme-app_software_developer a.bg-\[\#ff6b00\] {
+    background-color: var(--theme-primary, #ff6b00) !important;
+    color: var(--theme-on-primary, #070707) !important;
+}
+
+.theme-app_software_developer .border-\[\#ff6b00\] {
+    border-color: var(--theme-primary, #ff6b00) !important;
+}
+
+.theme-app_software_developer .hover\:text-\[\#ff6b00\]:hover,
+.theme-app_software_developer nav a:hover {
+    color: var(--theme-primary, #ff6b00) !important;
+}
+
+.theme-app_software_developer .hover\:bg-\[\#ff6b00\]:hover {
+    background-color: var(--theme-primary, #ff6b00) !important;
+    color: var(--theme-on-primary, #070707) !important;
+}
+
+/* --------------------------------------------------------------------------
+   THEME 7: Full-Stack Laravel Developer Theme (.theme-laravel_developer)
+   Native Signature: Electric Cyan #00e5ff
+   Already dynamic; standardizes highlights and focus rings
+   -------------------------------------------------------------------------- */
+.theme-laravel_developer {
+    --theme-primary: var(--theme-primary, #00e5ff);
+}
