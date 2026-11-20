@@ -73,12 +73,14 @@
         </div>
 
         <!-- =========================================================================
-             2. STATEMENT BRAND WORDMARK DIVIDER (Positioned as Central Bridge)
+             2. STATEMENT BRAND WORDMARK DIVIDER (Plane Text with Water Reflection)
              ========================================================================= -->
-        <div class="py-4 sm:py-6 border-y border-[#a855f7]/15 overflow-hidden select-none pointer-events-none text-center relative">
-            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#a855f7]/[0.04] to-transparent pointer-events-none"></div>
-            <span class="font-black tracking-tighter uppercase font-['Outfit'] leading-none block whitespace-nowrap text-white/[0.22]"
-                style="font-size: 9vw; text-shadow: 0 0 25px rgba(255,255,255,0.18), 0 0 50px rgba(168,85,247,0.35), 0 4px 15px rgba(0,0,0,0.9);">
+        <div class="py-6 sm:py-8 border-y border-[#a855f7]/15 overflow-hidden select-none pointer-events-none text-center relative bg-gradient-to-b from-transparent via-white/[0.01] to-transparent">
+            <!-- Water Horizon Light Sheen -->
+            <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[1px] bg-gradient-to-r from-transparent via-white/10 via-[#a855f7]/30 to-transparent pointer-events-none"></div>
+
+            <span class="font-['Outfit'] font-black uppercase tracking-[-0.03em] leading-[0.95] inline-block whitespace-nowrap text-white/[0.16] select-none"
+                style="font-size: clamp(2rem, 7.5vw, 6.2rem); -webkit-box-reflect: below -0.22em linear-gradient(transparent 35%, rgba(255, 255, 255, 0.22)); -webkit-font-smoothing: antialiased;">
                 {{ $siteName }}
             </span>
         </div>
