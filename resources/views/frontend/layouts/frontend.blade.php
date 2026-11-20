@@ -19,9 +19,25 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Theme Mode Initialization (Dark / Light / System) -->
+    <!-- Theme Mode & Material Palette Color Initialization -->
     <script>
         (function() {
+            // 1. Material Palette Custom Accent Initialization (Instant Zero-FOUC)
+            try {
+                const savedAccent = localStorage.getItem('portfolio_theme_color') || localStorage.getItem('laravel_theme_color') || '#00e5ff';
+                const root = document.documentElement;
+                root.style.setProperty('--theme-primary', savedAccent);
+                const hex = savedAccent.replace('#', '');
+                const r = parseInt(hex.substr(0, 2), 16) || 0;
+                const g = parseInt(hex.substr(2, 2), 16) || 0;
+                const b = parseInt(hex.substr(4, 2), 16) || 0;
+                root.style.setProperty('--theme-primary-rgb', `${r}, ${g}, ${b}`);
+                root.style.setProperty('--theme-primary-glow', `rgba(${r}, ${g}, ${b}, 0.35)`);
+                const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+                root.style.setProperty('--theme-on-primary', (yiq >= 120) ? '#000000' : '#ffffff');
+            } catch (e) {}
+
+            // 2. Light / Dark / System Mode Initialization
             const mode = "{{ $themeMode ?? 'system' }}";
 
             function resolveMode(m) {
@@ -79,6 +95,9 @@
     <div id="mainContent">
         @yield('content')
     </div>
+
+    <!-- Global Material Palette Switcher for All Themes -->
+    @include('frontend.partials.palette-switcher')
 
     <!-- jQuery & Toastr Handler Component -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
