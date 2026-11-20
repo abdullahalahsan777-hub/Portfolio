@@ -1,247 +1,209 @@
 <!-- =========================================================================
-     STANDARDIZED MODERN FOOTER (Digital Designer & Illustrator Theme)
-     Modern Web & UI/UX Designer Inspired Architecture (Dual Light/Dark Mode):
-     1. Hero Call-To-Action (Statement Art & Creative Collaboration)
-     2. Focused 3-Column Architecture (Brand, Navigation, Newsletter)
-     3. Minimalist Colophon Bar (Copyright, Live Local Clock, Back to Top)
+     ULTRA-MODERN EDITORIAL FOOTER (Digital Designer & Illustrator Theme)
+     Inspired by Awwwards, Linear.app & Studio Freight:
+     - Unified single-canvas architectural surface (no clunky floating boxes)
+     - Light/Dark mode dual support with Rose Champagne #e26d9b accents
+     - High-impact kinetic hero invitation with large interactive email hook
+     - Clean 4-column balanced architectural grid with delicate hairline dividers
+     - Dramatic "Ghost Wordmark" backdrop anchor (Awwwards signature aesthetic)
+     - Live local clock & smooth colophon micro-interactions
      ========================================================================= -->
 @php
-    $accentColor = '#e26d9b';
-    $siteName = $settings['site_logo_text'] ?? ($settings['site_title'] ?? 'Alex');
-    $siteEmail = $settings['contact_email'] ?? 'contact@alexdesign.studio';
-    $sitePhone = $settings['contact_phone'] ?? '+1 234 567 8900';
-    $siteLocation = $settings['contact_location'] ?? 'Paris, France / Worldwide';
-    $siteBio = $settings['footer_bio'] ?? ($settings['site_description'] ?? 'Crafting bespoke digital interfaces, expressive 3D brand experiences, typography systems, and modern editorial illustrations.');
+    $siteName = $settings['site_logo_text'] ?? ($settings['site_title'] ?? 'elena');
+    $siteEmail = $settings['contact_email'] ?? 'elena.art@example.com';
+    $sitePhone = $settings['contact_phone'] ?? '+1 234 567 8901';
+    $siteLocation = $settings['contact_location'] ?? 'Berlin, Germany & Remote';
+    $siteBio = $settings['footer_bio'] ?? 'Visual storyteller, digital illustrator, and editorial brand designer creating immersive worlds and emotive visual craft.';
+    $cleanLocation = strip_tags(str_replace(['<br>', '<br/>', '<br />'], ', ', $siteLocation));
 @endphp
 
-<footer class="bg-[#eef1f5] dark:bg-[#0c0d10] text-[#4b5563] dark:text-[#9aa0aa] pt-20 pb-12 border-t border-black/10 dark:border-white/10 relative overflow-hidden font-['Plus_Jakarta_Sans'] transition-colors duration-300">
-    <!-- Subtle Botanical Floral Backdrop -->
-    <div class="absolute bottom-0 right-10 w-96 h-96 opacity-10 dark:opacity-5 pointer-events-none">
-        <img src="{{ asset('images/digital_designer_illustrator/flower.jpg') }}" alt="" class="w-full h-full object-contain filter grayscale contrast-125">
-    </div>
+<footer class="relative bg-slate-100 dark:bg-[#07080a] text-slate-600 dark:text-[#999999] pt-24 pb-12 overflow-hidden font-['Plus_Jakarta_Sans'] border-t border-black/[0.06] dark:border-white/[0.08] transition-colors duration-300">
+    <!-- Ambient Radial Glow Centered at Top Edge -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-[#e26d9b]/[0.08] rounded-full blur-[160px] pointer-events-none"></div>
 
-    <!-- Ambient Pink Glow Backdrop -->
-    <div class="absolute bottom-0 right-1/4 w-[450px] h-[300px] bg-[#e26d9b]/[0.08] dark:bg-[#e26d9b]/[0.05] rounded-full blur-[140px] pointer-events-none"></div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-20">
 
         <!-- =========================================================================
-             1. HERO CTA BANNER (Creative Studio Collaboration)
+             1. THE KINETIC HERO STATEMENT (Unboxed, Magnetic, High-Impact)
              ========================================================================= -->
-        <div class="p-8 sm:p-12 lg:p-14 rounded-3xl bg-white/70 dark:bg-white/[0.03] border border-black/10 dark:border-white/10 relative overflow-hidden shadow-xl dark:shadow-2xl backdrop-blur-md">
-            <div class="absolute top-0 right-0 w-72 h-72 bg-[#e26d9b]/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="space-y-8 pb-16 border-b border-black/[0.06] dark:border-white/[0.08]">
+            <!-- Live Availability Pill -->
+            <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 text-xs font-mono text-slate-800 dark:text-neutral-300">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e26d9b] opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-[#e26d9b]"></span>
+                </span>
+                <span class="tracking-wide">Available for editorial illustration &amp; brand art</span>
+            </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-                <!-- Left: Headline & Availability -->
+            <!-- Bold Invitation Heading & Magnetic Email -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end justify-between">
                 <div class="lg:col-span-8 space-y-4">
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#e26d9b]/10 border border-[#e26d9b]/30 text-xs font-mono font-medium text-[#e26d9b]">
-                        <span class="w-2 h-2 rounded-full bg-[#e26d9b] animate-pulse"></span>
-                        <span>3D ART &bull; DIGITAL CRAFT &bull; EDITORIAL ILLUSTRATION</span>
-                    </div>
-                    <h2 class="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#111215] dark:text-white tracking-tight font-serif leading-[1.15]">
-                        Looking for standout creative direction?<br class="hidden sm:inline">
-                        <span class="italic font-normal text-[#e26d9b]">Let's craft something unforgettable.</span>
+                    <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight font-['Outfit'] leading-[1.1]">
+                        Have a story to illustrate?<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 dark:from-white via-[#e26d9b] to-[#f49dbd]">
+                            Let's bring imagination to reality.
+                        </span>
                     </h2>
-                    <p class="text-xs sm:text-sm text-[#4b5563] dark:text-neutral-400 max-w-xl leading-relaxed">
-                        Available for select brand commissions, 3D character design, digital art direction, and immersive web experiences.
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+                        Character design, editorial visual art, vector iconography, and captivating brand illustration craft.
                     </p>
                 </div>
 
-                <!-- Right: Action Buttons -->
-                <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3.5 lg:items-end justify-center">
+                <!-- Primary Action & Direct Contact -->
+                <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col items-start lg:items-end gap-4">
                     <a href="{{ route('contact') }}"
-                        class="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#e26d9b] hover:bg-[#d65b89] text-white shadow-lg shadow-[#e26d9b]/25 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#e26d9b]/35 cursor-pointer">
-                        <span>Say Hello</span>
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        class="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#e26d9b] text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#e26d9b]/25">
+                        <span>Commission Work</span>
+                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
                     </a>
 
-                    <!-- Copy Email Pill Button -->
+                    <!-- Minimalist Copy Email Pill -->
                     <button type="button"
                         onclick="copyFooterEmail('{{ $siteEmail }}', this)"
-                        class="group inline-flex items-center justify-between gap-3 px-5 py-3 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 hover:border-[#e26d9b]/40 text-xs font-mono text-[#111215] dark:text-neutral-300 transition-all duration-300 cursor-pointer"
-                        title="Click to copy email">
-                        <div class="flex items-center gap-2 truncate">
-                            <svg class="w-4 h-4 text-[#e26d9b] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                            <span class="truncate">{{ $siteEmail }}</span>
-                        </div>
-                        <span class="copy-badge px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-black/10 dark:bg-white/10 group-hover:bg-[#e26d9b] group-hover:text-white transition-colors shrink-0">Copy</span>
+                        class="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/[0.03] dark:bg-white/[0.03] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] border border-black/10 dark:border-white/10 hover:border-[#e26d9b]/40 text-xs font-mono text-slate-700 dark:text-neutral-300 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer">
+                        <svg class="w-3.5 h-3.5 text-[#e26d9b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <span>{{ $siteEmail }}</span>
+                        <span class="copy-badge ml-1 text-[10px] text-slate-400 dark:text-neutral-400 group-hover:text-[#e26d9b] transition-colors">copy</span>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- =========================================================================
-             2. MAIN 3-COLUMN ARCHITECTURAL GRID
+             2. CLEAN 4-COLUMN BALANCED ARCHITECTURAL GRID
              ========================================================================= -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10 pb-12 border-b border-black/10 dark:border-white/10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-16 border-b border-black/[0.06] dark:border-white/[0.08]">
 
-            <!-- Column 1 (5 cols): Brand Identity & Coordinates -->
-            <div class="lg:col-span-5 space-y-6">
-                <!-- Brand Logo -->
+            <!-- Column 1 (4 cols): Brand & Elevator Bio -->
+            <div class="lg:col-span-4 space-y-5">
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5 group">
-                    @if (!empty($settings['two_word_logo_image']))
-                        <img src="{{ asset($settings['two_word_logo_image']) }}" alt="{{ $siteName }}" class="h-8 max-w-[160px] object-contain">
-                    @else
-                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#ffffff] to-[#fff0f5] text-[#e26d9b] border border-[#e26d9b]/30 dark:from-white/15 dark:to-white/5 dark:text-white dark:border-white/10 flex items-center justify-center font-serif italic text-base shadow-sm group-hover:scale-105 transition-transform">
-                            AW
-                        </div>
-                        <span class="text-2xl font-bold tracking-tight text-[#111215] dark:text-white font-['Outfit']">
-                            {{ $siteName }}<span class="text-[#e26d9b] inline-block font-black text-3xl leading-none">.</span>
-                        </span>
-                    @endif
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#e26d9b] to-[#f49dbd] text-white flex items-center justify-center font-black text-sm shadow-md shadow-[#e26d9b]/25 group-hover:scale-105 transition-transform">
+                        ✿
+                    </div>
+                    <span class="text-2xl font-black tracking-tight text-slate-900 dark:text-white font-['Outfit'] lowercase">
+                        {{ $siteName }}<span class="text-[#e26d9b] inline-block font-black text-3xl leading-none">.</span>
+                    </span>
                 </a>
 
-                <!-- Bio Snippet -->
-                <p class="text-xs sm:text-sm text-[#4b5563] dark:text-neutral-400 leading-relaxed max-w-md">
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-neutral-400 leading-relaxed max-w-sm">
                     {{ $siteBio }}
                 </p>
 
-                <!-- Location & Contact Chips -->
-                <div class="flex flex-wrap items-center gap-2.5 pt-1 text-xs font-mono text-[#374151] dark:text-neutral-300">
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/[0.04] dark:bg-white/[0.03] border border-black/10 dark:border-white/10">
-                        <svg class="w-3.5 h-3.5 text-[#e26d9b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span>{!! strip_tags($siteLocation) !!}</span>
-                    </span>
-
+                <!-- Location & Coordinates text -->
+                <div class="space-y-1.5 text-xs text-slate-600 dark:text-neutral-400 pt-1">
+                    <div class="flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-neutral-500 font-mono">Location:</span>
+                        <span class="text-slate-800 dark:text-neutral-300 font-medium">{{ $cleanLocation }}</span>
+                    </div>
                     @if (!empty($sitePhone))
-                        <a href="tel:{{ $sitePhone }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/[0.04] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 hover:border-[#e26d9b]/40 hover:text-[#e26d9b] transition-colors">
-                            <svg class="w-3.5 h-3.5 text-[#e26d9b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                            </svg>
-                            <span>{{ $sitePhone }}</span>
-                        </a>
+                        <div class="flex items-center gap-2">
+                            <span class="text-slate-400 dark:text-neutral-500 font-mono">Studio:</span>
+                            <a href="tel:{{ $sitePhone }}" class="text-slate-800 dark:text-neutral-300 hover:text-[#e26d9b] transition-colors font-mono">{{ $sitePhone }}</a>
+                        </div>
                     @endif
                 </div>
-
-                <!-- Modern Social Icon Cluster -->
-                <div class="flex items-center gap-2.5 pt-2">
-                    @php
-                        $socials = [
-                            ['key' => 'social_dribbble', 'default' => 'https://dribbble.com', 'title' => 'Dribbble', 'icon' => 'ph ph-dribbble-logo'],
-                            ['key' => 'social_behance', 'default' => 'https://behance.net', 'title' => 'Behance', 'icon' => 'ph ph-behance-logo'],
-                            ['key' => 'social_instagram', 'default' => null, 'title' => 'Instagram', 'icon' => 'ph ph-instagram-logo'],
-                            ['key' => 'social_linkedin', 'default' => 'https://linkedin.com', 'title' => 'LinkedIn', 'icon' => 'ph ph-linkedin-logo'],
-                            ['key' => 'social_github', 'default' => null, 'title' => 'GitHub', 'icon' => 'ph ph-github-logo'],
-                        ];
-                    @endphp
-                    @foreach ($socials as $soc)
-                        @php $url = $settings[$soc['key']] ?? $soc['default']; @endphp
-                        @if (!empty($url))
-                            <a href="{{ $url }}" target="_blank" rel="noopener noreferrer"
-                                class="w-9 h-9 rounded-xl bg-black/[0.04] dark:bg-white/[0.04] hover:bg-[#e26d9b] text-[#111215] dark:text-neutral-300 hover:text-white border border-black/10 dark:border-white/10 hover:border-[#e26d9b] flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-[#e26d9b]/25"
-                                title="{{ $soc['title'] }}">
-                                <i class="{{ $soc['icon'] }} text-base"></i>
-                            </a>
-                        @endif
-                    @endforeach
-                </div>
             </div>
 
-            <!-- Column 2 (3 cols): Navigation Hub -->
-            <div class="lg:col-span-3 space-y-4">
-                <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#e26d9b]"></span>
-                    <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-[#111215] dark:text-white">// EXPLORE</h4>
-                </div>
-                <div class="grid grid-cols-2 gap-y-2.5 gap-x-6 text-xs text-[#4b5563] dark:text-neutral-400">
-                    <div>
-                        <a href="{{ route('home') }}" class="group flex items-center gap-1.5 hover:text-[#e26d9b] transition-colors py-1">
-                            <span class="text-neutral-400 group-hover:text-[#e26d9b] transition-colors font-mono">&rarr;</span>
-                            <span>Home</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="{{ route('about') }}" class="group flex items-center gap-1.5 hover:text-[#e26d9b] transition-colors py-1">
-                            <span class="text-neutral-400 group-hover:text-[#e26d9b] transition-colors font-mono">&rarr;</span>
-                            <span>About</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="{{ route('portfolio') }}" class="group flex items-center gap-1.5 hover:text-[#e26d9b] transition-colors py-1">
-                            <span class="text-neutral-400 group-hover:text-[#e26d9b] transition-colors font-mono">&rarr;</span>
-                            <span>Works</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="{{ route('gallery') }}" class="group flex items-center gap-1.5 hover:text-[#e26d9b] transition-colors py-1">
-                            <span class="text-neutral-400 group-hover:text-[#e26d9b] transition-colors font-mono">&rarr;</span>
-                            <span>Gallery</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="{{ route('blog') }}" class="group flex items-center gap-1.5 hover:text-[#e26d9b] transition-colors py-1">
-                            <span class="text-neutral-400 group-hover:text-[#e26d9b] transition-colors font-mono">&rarr;</span>
-                            <span>Journal</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="{{ route('faq') }}" class="group flex items-center gap-1.5 hover:text-[#e26d9b] transition-colors py-1">
-                            <span class="text-neutral-400 group-hover:text-[#e26d9b] transition-colors font-mono">&rarr;</span>
-                            <span>FAQs</span>
-                        </a>
-                    </div>
-                    <div class="col-span-2">
-                        <a href="{{ route('contact') }}" class="group flex items-center gap-1.5 hover:text-[#e26d9b] transition-colors py-1 font-semibold text-[#111215] dark:text-white">
-                            <span class="text-[#e26d9b] font-mono">&rarr;</span>
-                            <span>Contact & Studio</span>
-                        </a>
-                    </div>
-                </div>
+            <!-- Column 2 (2 cols): Explore / Navigation Hub -->
+            <div class="lg:col-span-2 space-y-4">
+                <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-white">Index</h4>
+                <ul class="space-y-2 text-xs text-slate-600 dark:text-neutral-400">
+                    <li><a href="{{ route('home') }}" class="hover:text-[#e26d9b] transition-colors inline-flex items-center gap-1 group"><span>Home</span><span class="text-slate-400 dark:text-neutral-600 group-hover:text-[#e26d9b] transition-colors opacity-0 group-hover:opacity-100">&nearr;</span></a></li>
+                    <li><a href="{{ route('about') }}" class="hover:text-[#e26d9b] transition-colors inline-flex items-center gap-1 group"><span>About</span><span class="text-slate-400 dark:text-neutral-600 group-hover:text-[#e26d9b] transition-colors opacity-0 group-hover:opacity-100">&nearr;</span></a></li>
+                    <li><a href="{{ route('portfolio') }}" class="hover:text-[#e26d9b] transition-colors inline-flex items-center gap-1 group"><span>Artwork</span><span class="text-slate-400 dark:text-neutral-600 group-hover:text-[#e26d9b] transition-colors opacity-0 group-hover:opacity-100">&nearr;</span></a></li>
+                    <li><a href="{{ route('gallery') }}" class="hover:text-[#e26d9b] transition-colors inline-flex items-center gap-1 group"><span>Illustrations</span><span class="text-slate-400 dark:text-neutral-600 group-hover:text-[#e26d9b] transition-colors opacity-0 group-hover:opacity-100">&nearr;</span></a></li>
+                    <li><a href="{{ route('blog') }}" class="hover:text-[#e26d9b] transition-colors inline-flex items-center gap-1 group"><span>Journal</span><span class="text-slate-400 dark:text-neutral-600 group-hover:text-[#e26d9b] transition-colors opacity-0 group-hover:opacity-100">&nearr;</span></a></li>
+                    <li><a href="{{ route('faq') }}" class="hover:text-[#e26d9b] transition-colors inline-flex items-center gap-1 group"><span>FAQ</span><span class="text-slate-400 dark:text-neutral-600 group-hover:text-[#e26d9b] transition-colors opacity-0 group-hover:opacity-100">&nearr;</span></a></li>
+                    <li><a href="{{ route('contact') }}" class="text-slate-900 dark:text-white hover:text-[#e26d9b] font-semibold transition-colors inline-flex items-center gap-1 group"><span>Contact</span><span class="text-[#e26d9b] transition-colors">&nearr;</span></a></li>
+                </ul>
             </div>
 
-            <!-- Column 3 (4 cols): Newsletter & Response Commitment -->
+            <!-- Column 3 (2 cols): Social & Network -->
+            <div class="lg:col-span-2 space-y-4">
+                <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-white">Galleries</h4>
+                <ul class="space-y-2 text-xs text-slate-600 dark:text-neutral-400">
+                    @if (!empty($settings['social_instagram']))
+                        <li><a href="{{ $settings['social_instagram'] }}" target="_blank" rel="noopener noreferrer" class="hover:text-[#e26d9b] transition-colors inline-flex items-center gap-1 group"><span>Instagram</span><span class="text-slate-400 dark:text-neutral-600 group-hover:text-[#e26d9b] transition-colors opacity-0 group-hover:opacity-100">&nearr;</span></a></li>
+                    @endif
+                    @if (!empty($settings['social_behance']))
+                        <li><a href="{{ $settings['social_behance'] }}" target="_blank" rel="noopener noreferrer" class="hover:text-[#e26d9b] transition-colors inline-flex items-center gap-1 group"><span>Behance</span><span class="text-slate-400 dark:text-neutral-600 group-hover:text-[#e26d9b] transition-colors opacity-0 group-hover:opacity-100">&nearr;</span></a></li>
+                    @endif
+                    @if (!empty($settings['social_dribbble']))
+                        <li><a href="{{ $settings['social_dribbble'] }}" target="_blank" rel="noopener noreferrer" class="hover:text-[#e26d9b] transition-colors inline-flex items-center gap-1 group"><span>Dribbble</span><span class="text-slate-400 dark:text-neutral-600 group-hover:text-[#e26d9b] transition-colors opacity-0 group-hover:opacity-100">&nearr;</span></a></li>
+                    @endif
+                    @if (!empty($settings['social_pinterest']))
+                        <li><a href="{{ $settings['social_pinterest'] }}" target="_blank" rel="noopener noreferrer" class="hover:text-[#e26d9b] transition-colors inline-flex items-center gap-1 group"><span>Pinterest</span><span class="text-slate-400 dark:text-neutral-600 group-hover:text-[#e26d9b] transition-colors opacity-0 group-hover:opacity-100">&nearr;</span></a></li>
+                    @endif
+                    @if (!empty($settings['social_twitter']))
+                        <li><a href="{{ $settings['social_twitter'] }}" target="_blank" rel="noopener noreferrer" class="hover:text-[#e26d9b] transition-colors inline-flex items-center gap-1 group"><span>Twitter / X</span><span class="text-slate-400 dark:text-neutral-600 group-hover:text-[#e26d9b] transition-colors opacity-0 group-hover:opacity-100">&nearr;</span></a></li>
+                    @endif
+                </ul>
+            </div>
+
+            <!-- Column 4 (4 cols): Dispatch & Newsletter -->
             <div class="lg:col-span-4 space-y-4">
-                <div class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#e26d9b]"></span>
-                    <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-[#111215] dark:text-white">// STUDIO NEWSLETTER</h4>
-                </div>
-                <p class="text-xs text-[#4b5563] dark:text-neutral-400 leading-relaxed">
-                    Exclusive previews of new 3D artwork, design resources, and digital craft reflections.
+                <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-white">Studio Letters</h4>
+                <p class="text-xs text-slate-600 dark:text-neutral-400 leading-relaxed">
+                    Subscribe for quarterly art prints, sketchbook insights, creative inspiration, and print shop drops.
                 </p>
 
-                <!-- Newsletter Form -->
-                @include('frontend.partials.newsletter', [
-                    'accent' => '#e26d9b',
-                    'btnText' => 'text-white font-bold',
-                    'inputBg' => 'bg-white dark:bg-[#12141c]',
-                    'borderColor' => 'border-black/10 dark:border-white/10',
-                ])
+                <!-- Seamless Integrated Newsletter Input -->
+                <form action="{{ route('newsletter.subscribe') }}" method="POST" class="space-y-2 pt-1">
+                    @csrf
+                    <div class="relative flex items-center">
+                        <input type="email" name="email" required placeholder="Enter your email address..."
+                            class="w-full pl-4 pr-12 py-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#e26d9b]/60 focus:bg-black/[0.05] dark:focus:bg-white/[0.06] transition-all">
+                        <button type="submit"
+                            class="absolute right-1.5 w-9 h-9 rounded-lg bg-[#e26d9b] hover:bg-[#d85888] text-white flex items-center justify-center transition-transform hover:scale-105 cursor-pointer"
+                            title="Subscribe">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
 
-                <!-- Turnaround Badge -->
-                <div class="flex items-center gap-2 text-[11px] font-mono text-[#4b5563] dark:text-neutral-400 pt-1">
-                    <span class="w-2 h-2 rounded-full bg-[#e26d9b]/60"></span>
-                    <span>Average reply speed: under 24 hours</span>
+                <div class="flex items-center gap-2 text-[11px] font-mono text-slate-500 dark:text-neutral-400 pt-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#e26d9b]"></span>
+                    <span>No spam. One-click unsubscribe anytime.</span>
                 </div>
             </div>
 
         </div>
 
         <!-- =========================================================================
-             3. COLOPHON & SUB-FOOTER
+             3. DRAMATIC "GHOST WORDMARK" ANCHOR (Awwwards / Studio Freight Signature)
              ========================================================================= -->
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#4b5563] dark:text-neutral-400">
+        <div class="pt-8 pb-4 text-center overflow-hidden select-none pointer-events-none opacity-[0.06] hover:opacity-[0.10] transition-opacity duration-700">
+            <span class="text-[12vw] font-black tracking-tighter uppercase font-['Outfit'] leading-none block whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-b from-slate-900 dark:from-white to-transparent">
+                {{ $siteName }}
+            </span>
+        </div>
+
+        <!-- =========================================================================
+             4. MINIMALIST COLOPHON BAR
+             ========================================================================= -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500 dark:text-neutral-400 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
             <div>
-                &copy; {{ date('Y') }} <strong class="text-[#111215] dark:text-white">{{ $settings['site_copyright'] ?? ($settings['site_title'] ?? 'Alex') }}</strong>. All rights reserved.
+                &copy; {{ date('Y') }} <span class="text-slate-800 dark:text-neutral-300 font-medium">{{ $settings['site_copyright'] ?? ($settings['site_title'] ?? 'Abdullah Al Ahsan') }}</span>. All rights reserved.
             </div>
 
-            <!-- Real-Time Local Time Indicator -->
-            <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] dark:bg-white/[0.03] border border-black/10 dark:border-white/5 text-[11px] text-[#374151] dark:text-neutral-300">
+            <!-- Live Clock -->
+            <div class="flex items-center gap-2 text-[11px] text-slate-500 dark:text-neutral-400">
                 <span class="w-1.5 h-1.5 rounded-full bg-[#e26d9b] animate-pulse"></span>
-                <span id="footer-illustrator-clock">Loading local time...</span>
+                <span id="footer-ddi-clock">Sherpur, BD &bull; Loading local time...</span>
             </div>
 
             <!-- Smooth Back to Top Trigger -->
             <div>
                 <a href="#mainContent"
                     onclick="event.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' });"
-                    class="group inline-flex items-center gap-1.5 text-[#4b5563] dark:text-neutral-400 hover:text-[#e26d9b] transition-colors cursor-pointer">
+                    class="group inline-flex items-center gap-1 text-slate-500 dark:text-neutral-400 hover:text-[#e26d9b] transition-colors cursor-pointer">
                     <span>Back to top</span>
                     <span class="group-hover:-translate-y-0.5 transition-transform font-bold">&uarr;</span>
                 </a>
@@ -250,11 +212,11 @@
 
     </div>
 
-    <!-- Floating Back to Top Button -->
+    <!-- Floating Back to Top Button (Smooth scroll to top on page scroll) -->
     <a href="#mainContent"
         id="backToTopBtn"
         onclick="event.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' });"
-        class="fixed right-4 sm:right-6 md:right-10 bottom-4 sm:bottom-6 md:bottom-10 w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white dark:bg-[#151722] hover:bg-[#e26d9b] dark:hover:bg-[#e26d9b] text-[#e26d9b] hover:text-white border border-black/10 dark:border-white/15 flex items-center justify-center transition-all duration-300 hover:-translate-y-1 shadow-2xl shadow-black/20 dark:shadow-black/80 cursor-pointer z-50 opacity-0 invisible translate-y-4 pointer-events-none"
+        class="fixed right-4 sm:right-6 md:right-10 bottom-4 sm:bottom-6 md:bottom-10 w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white dark:bg-[#141414] hover:bg-[#e26d9b] text-[#e26d9b] hover:text-white border border-black/10 dark:border-white/15 hover:border-[#e26d9b] flex items-center justify-center transition-all duration-300 hover:-translate-y-1 shadow-2xl shadow-black/30 dark:shadow-black/80 cursor-pointer z-50 opacity-0 invisible translate-y-4 pointer-events-none"
         title="Back to top" aria-label="Back to top">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" />
@@ -264,7 +226,6 @@
 
 <!-- Shared JavaScript Helpers for Modern Footer -->
 <script>
-    // 1. Email Clipboard Copy Helper
     function copyFooterEmail(email, btn) {
         if (!email) return;
         navigator.clipboard.writeText(email).then(() => {
@@ -272,10 +233,10 @@
             if (badge) {
                 const oldText = badge.textContent;
                 badge.textContent = 'Copied! ✓';
-                badge.classList.add('bg-[#e26d9b]', 'text-white');
+                badge.classList.add('text-[#e26d9b]');
                 setTimeout(() => {
                     badge.textContent = oldText;
-                    badge.classList.remove('bg-[#e26d9b]', 'text-white');
+                    badge.classList.remove('text-[#e26d9b]');
                 }, 2000);
             }
             if (typeof toastr !== 'undefined') {
@@ -286,9 +247,8 @@
         });
     }
 
-    // 2. Real-Time Local Time Clock
     (function initFooterClock() {
-        const el = document.getElementById('footer-illustrator-clock');
+        const el = document.getElementById('footer-ddi-clock');
         if (!el) return;
 
         function updateClock() {
@@ -310,7 +270,6 @@
         setInterval(updateClock, 1000);
     })();
 
-    // 3. Floating Back to Top Button Auto-Show / Auto-Hide on Scroll
     (function initBackToTop() {
         const btn = document.getElementById('backToTopBtn');
         if (!btn) return;
