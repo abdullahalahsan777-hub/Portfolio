@@ -5,9 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="{{ $settings['site_title'] ?? 'Alex Rivera — Visual & Digital Designer' }}">
+    @php
+        $defaultTitles = [
+            'developer' => 'Alex Rivera — Lead Software Architect',
+            'uiux_designer' => 'Roy C. Jones — UI/UX Designer',
+            'graphic_designer' => 'Alex Rivera — Graphic Designer & Visual Artist',
+            'app_developer' => 'Alex Rivera — Full Stack & App Developer',
+            'app_software_developer' => 'Tanu — App & Software Developer',
+            'digital_designer_illustrator' => 'Alex Walker — Digital Designer & Illustrator',
+            'laravel_developer' => 'Md. Abdullah Al Ahsan — Full-Stack Laravel Architect',
+        ];
+        $currentThemeTitle = $settings['site_title'] ?? ($defaultTitles[$activeTheme ?? 'developer'] ?? 'Portfolio — Visual & Digital Architect');
+    @endphp
+    <meta name="description" content="{{ $currentThemeTitle }}">
 
-    <title>{{ $settings['site_title'] ?? 'Alex Rivera — Visual & Digital Designer' }}</title>
+    <title>{{ $currentThemeTitle }}</title>
 
     <!-- Google Fonts: Modern Professional Typography Suite -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

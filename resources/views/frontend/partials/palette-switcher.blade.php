@@ -95,7 +95,8 @@
     <!-- Right Fixed Floating Trigger Button: Clean round button with ONLY the swatch fan SVG -->
     <button type="button" onclick="togglePaletteMenu(event)" title="Material Palette Color Swatches"
         aria-label="Material Palette Color Swatches"
-        class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#0a0f1d]/95 border-2 border-white/20 hover:border-[var(--theme-primary)] flex items-center justify-center shadow-2xl shadow-black/90 hover:scale-110 active:scale-95 transition-all cursor-pointer backdrop-blur-2xl group flex-shrink-0">
+        id="paletteTriggerBtn"
+        class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#0a0f1d]/95 border-2 border-[var(--theme-primary,#00e5ff)]/60 hover:border-[var(--theme-primary,#00e5ff)] flex items-center justify-center shadow-2xl shadow-black/90 hover:scale-110 active:scale-95 transition-all cursor-pointer backdrop-blur-2xl group flex-shrink-0">
         <svg class="w-6 h-6 transition-transform duration-300 ease-out group-hover:scale-110 pointer-events-none drop-shadow-sm flex-shrink-0"
             viewBox="0 0 143 141" fill="currentColor" style="color: var(--theme-primary);">
             <path fill-rule="evenodd"
@@ -126,10 +127,15 @@
         root.style.setProperty('--theme-primary-rgb', `${r}, ${g}, ${b}`);
         root.style.setProperty('--theme-primary-glow', `rgba(${r}, ${g}, ${b}, 0.35)`);
         
-        // Update header label color in palette widget
+        // Update header label and trigger button ring color
         const label = document.getElementById('activeColorLabel');
         if (label) {
             label.style.color = `#${hex}`;
+        }
+        const triggerBtn = document.getElementById('paletteTriggerBtn');
+        if (triggerBtn) {
+            triggerBtn.style.borderColor = `#${hex}`;
+            triggerBtn.style.boxShadow = `0 0 20px rgba(${r}, ${g}, ${b}, 0.35), 0 10px 30px rgba(0, 0, 0, 0.8)`;
         }
     }
 
