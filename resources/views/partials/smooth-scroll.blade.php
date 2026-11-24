@@ -134,6 +134,15 @@
 
     // Smooth wheel listener
     window.addEventListener('wheel', function(e) {
+        // Allow zoom gestures (Ctrl/Cmd + wheel)
+        if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+
+        // If active element is an input or editable, do not hijack
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        if (['input', 'textarea', 'select'].includes(activeTag) || (document.activeElement && document.activeElement.isContentEditable)) {
+            return;
+        }
+
         // If cursor is inside an internal scrollable container (e.g. sidebar, modal, code pre, textarea)
         let el = e.target;
         let isInsideScrollContainer = false;
@@ -152,14 +161,16 @@
             return;
         }
 
-        let delta = e.deltaY;
-        if (e.deltaMode === 1) delta *= 32;
-        else if (e.deltaMode === 2) delta *= window.innerHeight;
-
         const maxScroll = Math.max(
             document.body.scrollHeight,
             document.documentElement.scrollHeight
         ) - window.innerHeight;
+
+        if (maxScroll <= 5) return;
+
+        let delta = e.deltaY;
+        if (e.deltaMode === 1) delta *= 32;
+        else if (e.deltaMode === 2) delta *= window.innerHeight;
 
         targetY = Math.max(0, Math.min(targetY + delta * 0.9, maxScroll));
 
