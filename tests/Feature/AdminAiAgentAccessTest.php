@@ -107,6 +107,85 @@ class AdminAiAgentAccessTest extends TestCase
     }
 
     /**
+     * User with email 'admin@portfolio.local' but ID != 1 and role 'admin' is NOT a superadmin.
+     */
+    public function test_email_alone_does_not_grant_superadmin_access(): void
+    {
+        $admin = User::factory()->create([
+            'id' => 888,
+            'role' => 'admin',
+            'email' => 'admin@portfolio.local',
+        ]);
+
+        $response = $this->actingAs($admin)->get('/admin/ai/agent');
+        $response->assertStatus(403);
+    }
+
+    /**
+     * Ordinary admin cannot assign superadmin role on user creation.
+     */
+    public function test_ordinary_admin_cannot_create_superadmin_user(): void
+    {
+        $ordinaryAdmin = User::factory()->create([
+            'id' => 200,
+            'role' => 'admin',
+            'email' => 'regularadmin@portfolio.local',
+        ]);
+
+        $response = $this->actingAs($ordinaryAdmin)->post('/admin/users', [
+            'name' => 'Attempted Superadmin',
+            'email' => 'attempt@portfolio.local',
+            'password' => 'secret123',
+            'role' => 'superadmin',
+        ]);
+
+        $response->assertSessionHasErrors('role');
+        $this->assertDatabaseMissing('users', ['email' => 'attempt@portfolio.local']);
+    }
+
+    /**
+     * Ordinary admin cannot elevate a user to superadmin on update.
+     */
+    public function test_ordinary_admin_cannot_elevate_user_to_superadmin(): void
+    {
+        $ordinaryAdmin = User::factory()->create([
+            'id' => 201,
+            'role' => 'admin',
+            'email' => 'regularadmin2@portfolio.local',
+        ]);
+
+        $targetUser = User::factory()->create([
+            'role' => 'user',
+            'email' => 'target@portfolio.local',
+        ]);
+
+        $response = $this->actingAs($ordinaryAdmin)->put("/admin/users/{$targetUser->id}", [
+            'name' => $targetUser->name,
+            'email' => $targetUser->email,
+            'role' => 'superadmin',
+        ]);
+
+        $response->assertSessionHasErrors('role');
+        $this->assertEquals('user', $targetUser->fresh()->role);
+    }
+
+    /**
+     * Superadmin can preview allowed rule file via GET /admin/ai/agent/preview.
+     */
+    public function test_superadmin_can_preview_allowed_file_via_get(): void
+    {
+        $superadmin = User::factory()->create([
+            'role' => 'superadmin',
+            'email' => 'super@portfolio.local',
+        ]);
+
+        $response = $this->actingAs($superadmin)->getJson('/admin/ai/agent/preview?path=GEMINI.md');
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure(['path', 'filename', 'content', 'size', 'last_modified']);
+    }
+
+    /**
      * Unauthorized file traversal is blocked with 403.
      */
     public function test_unauthorized_file_preview_is_blocked(): void

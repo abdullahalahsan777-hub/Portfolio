@@ -12,32 +12,46 @@
     previewPath: '',
     previewContent: '',
     previewLoading: false,
+    previewToken: 0,
     loadPreview(filePath, title) {
+        if (!filePath) return;
+        const currentToken = ++this.previewToken;
         this.previewTitle = title || filePath;
         this.previewPath = filePath;
         this.previewLoading = true;
         this.previewModal = true;
         this.previewContent = 'Loading rule content...';
 
-        fetch('{{ route('admin.ai.agent.preview') }}', {
-            method: 'POST',
+        const previewUrl = '{{ route('admin.ai.agent.preview', [], false) }}?path=' + encodeURIComponent(filePath);
+
+        fetch(previewUrl, {
+            method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ path: filePath })
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         })
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                return res.json().catch(() => ({ error: `HTTP ${res.status}: ${res.statusText || 'Failed to load file.'}` }));
+            }
+            return res.json();
+        })
         .then(data => {
+            if (this.previewToken !== currentToken) {
+                return;
+            }
             this.previewLoading = false;
-            if (data.content) {
+            if (data && data.content) {
                 this.previewContent = data.content;
             } else {
-                this.previewContent = data.error || 'Failed to load file content.';
+                this.previewContent = (data && data.error) ? data.error : 'Failed to load file content.';
             }
         })
         .catch(err => {
+            if (this.previewToken !== currentToken) {
+                return;
+            }
             this.previewLoading = false;
             this.previewContent = 'Network error loading preview: ' + err.message;
         });

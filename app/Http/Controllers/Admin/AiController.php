@@ -44,16 +44,17 @@ class AiController extends Controller
      */
     public function preview(Request $request): JsonResponse
     {
-        $path = (string) $request->input('path', '');
-        if (empty($path)) {
+        $rawPath = (string) $request->input('path', '');
+        $cleanPath = preg_replace('#^(\./)+#', '', trim($rawPath));
+        $cleanPath = ltrim(str_replace(['\\', '..'], ['/', ''], (string) $cleanPath), '/');
+
+        if (empty($cleanPath)) {
             return response()->json(['error' => 'Path is required.'], 400);
         }
 
         // Whitelist allowed base directories/files to prevent directory traversal
         $allowedPrefixes = ['.agents/', '.claude/', '.gemini/', '.cursor/', '.windsurf/', '.github/', '.devin/', '.codex/'];
         $allowedFiles = ['CLAUDE.md', 'GEMINI.md', '.cursorrules', '.windsurfrules', 'chatgpt-instructions.md', 'devin.json', '.goosehints'];
-
-        $cleanPath = ltrim(str_replace(['\\', '..'], ['/', ''], $path), '/');
 
         $isAllowed = in_array($cleanPath, $allowedFiles, true);
         if (! $isAllowed) {
@@ -70,8 +71,8 @@ class AiController extends Controller
         }
 
         $fullPath = base_path($cleanPath);
-        if (! File::exists($fullPath)) {
-            return response()->json(['error' => 'File not found.'], 404);
+        if (! File::exists($fullPath) || File::isDirectory($fullPath)) {
+            return response()->json(['error' => 'File not found: ' . $cleanPath], 404);
         }
 
         return response()->json([

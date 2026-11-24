@@ -48,7 +48,7 @@ class User extends Authenticatable
     public function isSuperAdmin(): bool
     {
         return $this->role === 'superadmin'
-            || ($this->isAdmin() && ($this->id === 1 || $this->email === 'admin@portfolio.local'));
+            || ($this->isAdmin() && (int) $this->id === 1);
     }
 
     /**

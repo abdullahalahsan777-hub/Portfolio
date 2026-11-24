@@ -246,7 +246,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         // AI Agents & Skills Intelligence Center (SUPERADMIN ONLY)
         Route::middleware(['superadmin'])->group(function () {
             Route::get('/ai/agent', [AdminAiController::class, 'index'])->name('ai.agent');
-            Route::post('/ai/agent/preview', [AdminAiController::class, 'preview'])->name('ai.agent.preview');
+            Route::match(['get', 'post'], '/ai/agent/preview', [AdminAiController::class, 'preview'])->name('ai.agent.preview');
         });
     });
 });

@@ -92,13 +92,21 @@ class UserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $currentUser = Auth::user();
+        $isSuperAdmin = $currentUser instanceof User && $currentUser->isSuperAdmin();
+        $allowedRoles = $isSuperAdmin ? ['admin', 'user', 'superadmin'] : ['admin', 'user'];
+
         $validated = $request->validate([
             'name' => 'required|string|max:120',
             'email' => 'required|email|unique:users,email|max:150',
             'password' => 'required|string|min:6',
-            'role' => 'required|string|in:admin,user,superadmin',
+            'role' => ['required', 'string', \Illuminate\Validation\Rule::in($allowedRoles)],
             'phone' => 'nullable|string|max:30',
         ]);
+
+        if (isset($validated['role']) && $validated['role'] === 'superadmin' && ! $isSuperAdmin) {
+            abort(403, 'Unauthorized: Only Super Administrators can assign the superadmin role.');
+        }
 
         $validated['password'] = Hash::make($validated['password']);
         $user = User::create($validated);
@@ -141,10 +149,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user): RedirectResponse
     {
+        $currentUser = Auth::user();
+        $isSuperAdmin = $currentUser instanceof User && $currentUser->isSuperAdmin();
+        $allowedRoles = $isSuperAdmin ? ['admin', 'user', 'superadmin'] : ['admin', 'user'];
+
         $validated = $request->validate([
             'name' => 'required|string|max:120',
             'email' => 'required|email|max:150|unique:users,email,' . $user->id,
-            'role' => 'required|string|in:admin,user,superadmin',
+            'role' => ['required', 'string', \Illuminate\Validation\Rule::in($allowedRoles)],
             'phone' => 'nullable|string|max:30',
             'location' => 'nullable|string|max:150',
             'bio' => 'nullable|string|max:1000',
@@ -152,9 +164,24 @@ class UserController extends Controller
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
+        // Only superadmins can assign the superadmin role
+        if (isset($validated['role']) && $validated['role'] === 'superadmin' && ! $isSuperAdmin) {
+            abort(403, 'Unauthorized: Only Super Administrators can assign the superadmin role.');
+        }
+
+        // Prevent non-superadmins from modifying superadmin users
+        if ($user->isSuperAdmin() && ! $isSuperAdmin) {
+            abort(403, 'Unauthorized: Cannot modify a Super Administrator.');
+        }
+
         // Prevent an administrator or superadministrator from demoting their own active session
         if ($user->id === Auth::id() && !in_array($validated['role'], ['admin', 'superadmin'], true)) {
             $validated['role'] = $user->role;
+        }
+
+        // Reject self-update role escalation to superadmin if user is not already superadmin
+        if ($user->id === Auth::id() && ! $isSuperAdmin && $validated['role'] === 'superadmin') {
+            abort(403, 'Unauthorized: Cannot escalate role to Super Administrator.');
         }
 
         if ($request->hasFile('avatar')) {
@@ -216,6 +243,13 @@ class UserController extends Controller
             flash()->danger('You cannot change your own role.');
 
             return redirect()->back();
+        }
+
+        $currentUser = Auth::user();
+        $isSuperAdmin = $currentUser instanceof User && $currentUser->isSuperAdmin();
+
+        if ($user->isSuperAdmin() && ! $isSuperAdmin) {
+            abort(403, 'Unauthorized: Cannot modify a Super Administrator.');
         }
 
         $oldRole = $user->role;
