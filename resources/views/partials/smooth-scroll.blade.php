@@ -9,9 +9,11 @@
      ========================================================================= -->
 
 <style>
-    /* Universal elimination of root native browser scrollbars */
+    /* Universal elimination of root native browser scrollbars and conflicting CSS smooth scroll */
     html,
+    html.scroll-smooth,
     body {
+        scroll-behavior: auto !important;
         scrollbar-width: none !important; /* Firefox */
         -ms-overflow-style: none !important; /* IE 10+, Edge */
     }
@@ -123,18 +125,35 @@
     let isTicking = false;
     let rafId = null;
     let activeAnchorAnimation = null;
-    let isProgrammaticWheelScroll = false;
+    let lastProgrammaticScrollY = null;
     let hideTimer = null;
     const easeFactor = 0.088; // Butter-smooth kinetic damping
 
     const indicator = document.getElementById('smoothScrollPill');
 
+    function getMaxScroll() {
+        return Math.max(
+            0,
+            Math.max(
+                document.body.scrollHeight,
+                document.documentElement.scrollHeight
+            ) - window.innerHeight
+        );
+    }
+
+    function applyWindowScrollInstant(y) {
+        const clampedY = Math.max(0, Math.min(y, getMaxScroll()));
+        lastProgrammaticScrollY = clampedY;
+        try {
+            window.scrollTo({ top: clampedY, left: window.pageXOffset, behavior: 'instant' });
+        } catch (err) {
+            window.scrollTo(window.pageXOffset, clampedY);
+        }
+    }
+
     function updateIndicator() {
         if (!indicator) return;
-        const totalHeight = Math.max(
-            document.body.scrollHeight,
-            document.documentElement.scrollHeight
-        ) - window.innerHeight;
+        const totalHeight = getMaxScroll();
 
         if (totalHeight <= 10) {
             indicator.style.opacity = '0';
@@ -160,23 +179,38 @@
         }, 650);
     }
 
+    function cancelActiveScrollAnimations() {
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+        isTicking = false;
+        lastProgrammaticScrollY = null;
+        if (activeAnchorAnimation) {
+            activeAnchorAnimation.pause();
+            activeAnchorAnimation = null;
+        }
+        targetY = window.pageYOffset;
+        currentY = window.pageYOffset;
+    }
+
     function renderSmoothStep() {
+        const maxScroll = getMaxScroll();
+        targetY = Math.max(0, Math.min(targetY, maxScroll));
         const diff = targetY - currentY;
+
         if (Math.abs(diff) > 0.45) {
             currentY += diff * easeFactor;
-            isProgrammaticWheelScroll = true;
-            window.scrollTo(0, Math.round(currentY * 10) / 10);
-            isProgrammaticWheelScroll = false;
+            applyWindowScrollInstant(Math.round(currentY * 10) / 10);
             updateIndicator();
             rafId = requestAnimationFrame(renderSmoothStep);
         } else {
             currentY = targetY;
-            isProgrammaticWheelScroll = true;
-            window.scrollTo(0, currentY);
-            isProgrammaticWheelScroll = false;
+            applyWindowScrollInstant(currentY);
             updateIndicator();
             isTicking = false;
             rafId = null;
+            lastProgrammaticScrollY = null;
         }
     }
 
@@ -196,8 +230,8 @@
         let isInsideScrollContainer = false;
         while (el && el !== document.body && el !== document.documentElement) {
             const style = window.getComputedStyle(el);
-            const hasVerticalOverflow = (style.overflowY === 'auto' || style.overflowY === 'scroll') && el.scrollHeight > el.clientHeight;
-            const hasHorizontalOverflow = (style.overflowX === 'auto' || style.overflowX === 'scroll') && el.scrollWidth > el.clientWidth;
+            const hasVerticalOverflow = (style.overflowY === 'auto' || style.overflowY === 'scroll') && el.scrollHeight > el.clientHeight + 2;
+            const hasHorizontalOverflow = (style.overflowX === 'auto' || style.overflowX === 'scroll') && el.scrollWidth > el.clientWidth + 2;
 
             if (hasVerticalOverflow || (hasHorizontalOverflow && Math.abs(e.deltaX) > 0)) {
                 isInsideScrollContainer = true;
@@ -219,10 +253,7 @@
             currentY = window.pageYOffset;
         }
 
-        const maxScroll = Math.max(
-            document.body.scrollHeight,
-            document.documentElement.scrollHeight
-        ) - window.innerHeight;
+        const maxScroll = getMaxScroll();
 
         if (maxScroll <= 5) return;
 
@@ -244,22 +275,32 @@
         e.preventDefault();
     }, { passive: false });
 
+    // Cancel active wheel/anchor animations on keyboard scroll navigation
+    window.addEventListener('keydown', function(e) {
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        if (['input', 'textarea', 'select'].includes(activeTag) || (document.activeElement && document.activeElement.isContentEditable)) {
+            return;
+        }
+        if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key)) {
+            if (isTicking || activeAnchorAnimation) {
+                cancelActiveScrollAnimations();
+            }
+        }
+    }, { passive: true });
+
     // Sync state on external scroll (e.g. keyboard arrows, scrollbar drag)
     window.addEventListener('scroll', function() {
+        const actualY = window.pageYOffset;
         if (isTicking) {
-            // If scroll was triggered by an external source (keyboard/scrollbar), cancel active wheel interpolation
-            if (!isProgrammaticWheelScroll && Math.abs(window.pageYOffset - currentY) > 2) {
-                if (rafId) {
-                    cancelAnimationFrame(rafId);
-                    rafId = null;
-                }
-                isTicking = false;
-                targetY = window.pageYOffset;
-                currentY = window.pageYOffset;
+            const expectedY = lastProgrammaticScrollY !== null ? lastProgrammaticScrollY : currentY;
+            // Ignore async scroll events produced by our own renderSmoothStep frames; cancel only on genuine external jumps
+            if (Math.abs(actualY - expectedY) > 3 && Math.abs(actualY - currentY) > 3) {
+                cancelActiveScrollAnimations();
             }
         } else {
-            targetY = window.pageYOffset;
-            currentY = window.pageYOffset;
+            targetY = actualY;
+            currentY = actualY;
         }
         updateIndicator();
     }, { passive: true });

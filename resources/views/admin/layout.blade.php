@@ -635,7 +635,7 @@
 </head>
 
 <body ng-app="adminApp"
-    class="admin-body bg-[#060b13] text-slate-100 min-h-screen antialiased flex selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
+    class="admin-body bg-[#060b13] text-slate-100 min-h-screen antialiased flex selection:bg-indigo-500 selection:text-white relative overflow-x-clip">
     <!-- Mobile Backdrop Overlay -->
     <div id="sidebarBackdrop" onclick="toggleSidebar(false)"
         class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity duration-300">
@@ -1344,7 +1344,7 @@
     </aside>
 
     <!-- Main Content Area: Offset by sidebar width on desktop so it never overlaps fixed sidebar -->
-    <div class="flex-1 flex flex-col min-h-screen lg:ml-64 w-full min-w-0 overflow-x-hidden">
+    <div class="flex-1 flex flex-col min-h-screen lg:ml-64 w-full min-w-0 overflow-x-clip">
         <!-- Topbar -->
         <header
             class="h-16 border-b border-white/10 bg-[#09101d]/60 backdrop-blur-md px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30">
