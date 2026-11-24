@@ -1029,6 +1029,23 @@
                             <span
                                 class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 font-bold">LOG</span>
                         </a>
+
+                        @if (auth()->user()->isSuperAdmin())
+                            <!-- AI Agents & Skills Engine (Superadmin Exclusive) -->
+                            <a href="{{ route('admin.ai.agent') }}"
+                                class="flex items-center justify-between px-3 py-2 rounded-xl font-medium {{ request()->routeIs('admin.ai.*') ? 'bg-cyan-600/20 text-cyan-300 border border-cyan-500/30' : 'text-slate-400 hover:text-white hover:bg-white/5' }} transition-all">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                    <span>AI Agents &amp; Skills</span>
+                                </div>
+                                <span
+                                    class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-bold">SUPER</span>
+                            </a>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -1199,7 +1216,29 @@
                     </svg>
                 </a>
 
-                <!-- 7. Section Divider: Logout -->
+                @if (auth()->user()->isSuperAdmin())
+                    <!-- 7. AI Intelligence Center (SuperAdmin Exclusive) -->
+                    <a href="{{ route('admin.ai.agent') }}"
+                        class="flex items-center justify-between p-2.5 rounded-xl hover:bg-cyan-600/15 transition-all group border border-transparent hover:border-cyan-500/20 {{ request()->routeIs('admin.ai.*') ? 'bg-cyan-600/20 border-cyan-500/30 text-white' : 'text-slate-300 hover:text-white' }}">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-9 h-9 rounded-xl bg-cyan-500/15 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-500/20 group-hover:scale-105 transition-transform">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span
+                                    class="block text-xs font-bold text-white group-hover:text-cyan-300 transition-colors">AI Intelligence</span>
+                                <span class="block text-[10px] text-slate-400">7 Agents &amp; 10 Skills</span>
+                            </div>
+                        </div>
+                        <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-bold border border-cyan-500/30">SUPER</span>
+                    </a>
+                @endif
+
+                <!-- Section Divider: Logout -->
                 <div class="pt-1 border-t border-white/10">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf

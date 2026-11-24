@@ -96,7 +96,7 @@ class UserController extends Controller
             'name' => 'required|string|max:120',
             'email' => 'required|email|unique:users,email|max:150',
             'password' => 'required|string|min:6',
-            'role' => 'required|string|in:admin,user',
+            'role' => 'required|string|in:admin,user,superadmin',
             'phone' => 'nullable|string|max:30',
         ]);
 
@@ -144,7 +144,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:120',
             'email' => 'required|email|max:150|unique:users,email,' . $user->id,
-            'role' => 'required|string|in:admin,user',
+            'role' => 'required|string|in:admin,user,superadmin',
             'phone' => 'nullable|string|max:30',
             'location' => 'nullable|string|max:150',
             'bio' => 'nullable|string|max:1000',
@@ -152,9 +152,9 @@ class UserController extends Controller
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
-        // Prevent an administrator from demoting their own active session
-        if ($user->id === Auth::id() && $validated['role'] !== 'admin') {
-            $validated['role'] = 'admin';
+        // Prevent an administrator or superadministrator from demoting their own active session
+        if ($user->id === Auth::id() && !in_array($validated['role'], ['admin', 'superadmin'], true)) {
+            $validated['role'] = $user->role;
         }
 
         if ($request->hasFile('avatar')) {

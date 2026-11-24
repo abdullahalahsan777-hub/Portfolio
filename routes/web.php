@@ -1,5 +1,7 @@
 <?php
 
+// All Admins Controllers
+use App\Http\Controllers\Admin\AiController as AdminAiController;
 use App\Http\Controllers\Admin\BlogPostController as AdminBlogController;
 use App\Http\Controllers\Admin\ContactMessageController as AdminMessageController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -20,10 +22,18 @@ use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialControll
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\VersionController as AdminVersionController;
 use App\Http\Controllers\Admin\WebsiteContentController as AdminWebsiteController;
+
+// Auth Controller
 use App\Http\Controllers\Auth\AuthController;
+
+// All Frontend Controller
 use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Frontend\PortfolioController;
+
+// All Users Controllers
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+
+// Illuminate Support Facades
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -232,6 +242,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         // Automated GitHub System Update & Sync
         Route::match(['get', 'post'], '/system-update/check', [AdminVersionController::class, 'checkUpdate'])->name('systemUpdate.check');
         Route::post('/system-update/apply', [AdminVersionController::class, 'applyUpdate'])->name('systemUpdate.apply');
+
+        // AI Agents & Skills Intelligence Center (SUPERADMIN ONLY)
+        Route::middleware(['superadmin'])->group(function () {
+            Route::get('/ai/agent', [AdminAiController::class, 'index'])->name('ai.agent');
+            Route::post('/ai/agent/preview', [AdminAiController::class, 'preview'])->name('ai.agent.preview');
+        });
     });
 });
 
