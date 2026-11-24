@@ -21,6 +21,11 @@
 @import './frontend/material_palette_accents.css';
 @import './admin/admin.css';
 
+/* Zero-FOUC Alpine.js Cloak Guard */
+[x-cloak] {
+    display: none !important;
+}
+
 @theme {
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-display: 'Outfit', 'Space Grotesk', -apple-system, sans-serif;

@@ -164,12 +164,15 @@ class UserController extends Controller
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
-        // Only superadmins can assign the superadmin role
-        if (isset($validated['role']) && $validated['role'] === 'superadmin' && ! $isSuperAdmin) {
-            abort(403, 'Unauthorized: Only Super Administrators can assign the superadmin role.');
+        $newRole = $validated['role'] ?? $user->role;
+        $wouldBeSuperAdmin = ($newRole === 'superadmin' || ((int) $user->id === 1 && in_array($newRole, ['admin', 'superadmin'], true)));
+
+        // Require a superadmin actor whenever a change would grant superadmin status (including user ID 1 becoming admin)
+        if ($wouldBeSuperAdmin && ! $isSuperAdmin) {
+            abort(403, 'Unauthorized: Only Super Administrators can grant Super Administrator status.');
         }
 
-        // Prevent non-superadmins from modifying superadmin users
+        // Prevent non-superadmins from modifying existing superadmin users
         if ($user->isSuperAdmin() && ! $isSuperAdmin) {
             abort(403, 'Unauthorized: Cannot modify a Super Administrator.');
         }
@@ -254,6 +257,12 @@ class UserController extends Controller
 
         $oldRole = $user->role;
         $newRole = $user->role === 'admin' ? 'user' : 'admin';
+
+        $wouldBeSuperAdmin = ($newRole === 'superadmin' || ((int) $user->id === 1 && in_array($newRole, ['admin', 'superadmin'], true)));
+        if ($wouldBeSuperAdmin && ! $isSuperAdmin) {
+            abort(403, 'Unauthorized: Only Super Administrators can grant Super Administrator status.');
+        }
+
         $user->update(['role' => $newRole]);
 
         Notification::record([

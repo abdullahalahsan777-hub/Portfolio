@@ -42,10 +42,10 @@
                 return;
             }
             this.previewLoading = false;
-            if (data && data.content) {
+            if (data && typeof data.content === 'string') {
                 this.previewContent = data.content;
             } else {
-                this.previewContent = (data && data.error) ? data.error : 'Failed to load file content.';
+                this.previewContent = (data && typeof data.error === 'string') ? data.error : 'Failed to load file content.';
             }
         })
         .catch(err => {
@@ -366,7 +366,7 @@
     </div>
 
     <!-- LIVE FILE PREVIEW MODAL -->
-    <div x-show="previewModal" x-cloak
+    <div x-show="previewModal" x-cloak style="display: none;"
         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-opacity">
         <div @click.away="previewModal = false"
             class="w-full max-w-4xl max-h-[85vh] flex flex-col rounded-3xl bg-[#0c1424] border border-white/15 shadow-2xl overflow-hidden">

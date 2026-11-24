@@ -201,4 +201,132 @@ class AdminAiAgentAccessTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    /**
+     * Ordinary admin cannot grant effective superadmin status by changing user ID 1 to admin.
+     */
+    public function test_ordinary_admin_cannot_grant_superadmin_status_by_updating_user_one_to_admin(): void
+    {
+        $ordinaryAdmin = User::factory()->create([
+            'id' => 202,
+            'role' => 'admin',
+            'email' => 'regularadmin3@portfolio.local',
+        ]);
+
+        $userOne = User::factory()->create([
+            'id' => 1,
+            'role' => 'user',
+            'email' => 'user1@portfolio.local',
+        ]);
+
+        $response = $this->actingAs($ordinaryAdmin)->put("/admin/users/{$userOne->id}", [
+            'name' => $userOne->name,
+            'email' => $userOne->email,
+            'role' => 'admin',
+        ]);
+
+        $response->assertStatus(403);
+        $this->assertEquals('user', $userOne->fresh()->role);
+    }
+
+    /**
+     * Ordinary admin cannot grant effective superadmin status by toggling user ID 1 role to admin.
+     */
+    public function test_ordinary_admin_cannot_grant_superadmin_status_by_toggling_user_one_role(): void
+    {
+        $ordinaryAdmin = User::factory()->create([
+            'id' => 203,
+            'role' => 'admin',
+            'email' => 'regularadmin4@portfolio.local',
+        ]);
+
+        $userOne = User::factory()->create([
+            'id' => 1,
+            'role' => 'user',
+            'email' => 'user1_toggle@portfolio.local',
+        ]);
+
+        $response = $this->actingAs($ordinaryAdmin)->post("/admin/users/{$userOne->id}/role");
+
+        $response->assertStatus(403);
+        $this->assertEquals('user', $userOne->fresh()->role);
+    }
+
+    /**
+     * Ordinary admin can update an ordinary user (ID != 1) from user to admin.
+     */
+    public function test_ordinary_admin_can_update_ordinary_user_to_admin(): void
+    {
+        $ordinaryAdmin = User::factory()->create([
+            'id' => 204,
+            'role' => 'admin',
+            'email' => 'regularadmin5@portfolio.local',
+        ]);
+
+        $targetUser = User::factory()->create([
+            'id' => 205,
+            'role' => 'user',
+            'email' => 'target205@portfolio.local',
+        ]);
+
+        $response = $this->actingAs($ordinaryAdmin)->put("/admin/users/{$targetUser->id}", [
+            'name' => $targetUser->name,
+            'email' => $targetUser->email,
+            'role' => 'admin',
+        ]);
+
+        $response->assertStatus(302);
+        $this->assertEquals('admin', $targetUser->fresh()->role);
+    }
+
+    /**
+     * Ordinary admin can toggle an ordinary user (ID != 1) role from user to admin.
+     */
+    public function test_ordinary_admin_can_toggle_ordinary_user_role(): void
+    {
+        $ordinaryAdmin = User::factory()->create([
+            'id' => 206,
+            'role' => 'admin',
+            'email' => 'regularadmin6@portfolio.local',
+        ]);
+
+        $targetUser = User::factory()->create([
+            'id' => 207,
+            'role' => 'user',
+            'email' => 'target207@portfolio.local',
+        ]);
+
+        $response = $this->actingAs($ordinaryAdmin)->post("/admin/users/{$targetUser->id}/role");
+
+        $response->assertStatus(302);
+        $this->assertEquals('admin', $targetUser->fresh()->role);
+    }
+
+    /**
+     * Superadmin preview of an empty file succeeds and returns empty string content.
+     */
+    public function test_superadmin_preview_accepts_empty_file_content(): void
+    {
+        $superadmin = User::factory()->create([
+            'role' => 'superadmin',
+            'email' => 'super_empty@portfolio.local',
+        ]);
+
+        $testEmptyFile = base_path('.agents/skills/test-empty-rule.md');
+        file_put_contents($testEmptyFile, '');
+
+        try {
+            $response = $this->actingAs($superadmin)->getJson('/admin/ai/agent/preview?path=' . urlencode('.agents/skills/test-empty-rule.md'));
+            $response->assertStatus(200);
+            $response->assertJson([
+                'path' => '.agents/skills/test-empty-rule.md',
+                'content' => '',
+            ]);
+            $this->assertSame('', $response->json('content'));
+        } finally {
+            if (file_exists($testEmptyFile)) {
+                unlink($testEmptyFile);
+            }
+        }
+    }
 }

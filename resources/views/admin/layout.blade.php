@@ -28,8 +28,15 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
     <!-- Pictureflect Photo Viewer Plugin -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/pictureflect/pictureflect.css') }}?v=1.2.4">
+    <!-- Alpine.js Core for Declarative Reactive Components & Modals -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
 
     <style>
+        /* Zero-FOUC Alpine Cloak */
+        [x-cloak] {
+            display: none !important;
+        }
+
         /* Dark Select2 Styling */
         .select2-container {
             width: 100% !important;
