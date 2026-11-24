@@ -121,6 +121,9 @@
     let targetY = window.pageYOffset;
     let currentY = window.pageYOffset;
     let isTicking = false;
+    let rafId = null;
+    let activeAnchorAnimation = null;
+    let isProgrammaticWheelScroll = false;
     let hideTimer = null;
     const easeFactor = 0.088; // Butter-smooth kinetic damping
 
@@ -146,6 +149,7 @@
 
         indicator.style.height = pillHeight + 'px';
         indicator.style.transform = `translate3d(0, ${pillTop}px, 0)`;
+        indicator.style.opacity = '';
         indicator.classList.add('scrolling');
 
         clearTimeout(hideTimer);
@@ -160,21 +164,26 @@
         const diff = targetY - currentY;
         if (Math.abs(diff) > 0.45) {
             currentY += diff * easeFactor;
+            isProgrammaticWheelScroll = true;
             window.scrollTo(0, Math.round(currentY * 10) / 10);
+            isProgrammaticWheelScroll = false;
             updateIndicator();
-            requestAnimationFrame(renderSmoothStep);
+            rafId = requestAnimationFrame(renderSmoothStep);
         } else {
             currentY = targetY;
+            isProgrammaticWheelScroll = true;
             window.scrollTo(0, currentY);
+            isProgrammaticWheelScroll = false;
             updateIndicator();
             isTicking = false;
+            rafId = null;
         }
     }
 
     // Smooth wheel listener for main window
     window.addEventListener('wheel', function(e) {
-        // Allow zoom gestures (Ctrl/Cmd + wheel)
-        if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+        // Return early on pinch-zoom / Ctrl+wheel before interception or preventDefault
+        if (e.ctrlKey) return;
 
         // If active element is an input or editable, do not hijack
         const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
@@ -182,13 +191,15 @@
             return;
         }
 
-        // If cursor is inside an internal scrollable container (e.g. sidebar, modal, code pre, textarea)
+        // Check if cursor is inside an internal scrollable container
         let el = e.target;
         let isInsideScrollContainer = false;
         while (el && el !== document.body && el !== document.documentElement) {
             const style = window.getComputedStyle(el);
-            const overflowY = style.overflowY;
-            if ((overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight) {
+            const hasVerticalOverflow = (style.overflowY === 'auto' || style.overflowY === 'scroll') && el.scrollHeight > el.clientHeight;
+            const hasHorizontalOverflow = (style.overflowX === 'auto' || style.overflowX === 'scroll') && el.scrollWidth > el.clientWidth;
+
+            if (hasVerticalOverflow || (hasHorizontalOverflow && Math.abs(e.deltaX) > 0)) {
                 isInsideScrollContainer = true;
                 break;
             }
@@ -196,8 +207,16 @@
         }
 
         if (isInsideScrollContainer) {
-            // Allow internal container to scroll smoothly without page hijack
+            // Allow internal container to scroll natively without page hijack
             return;
+        }
+
+        // Cancel active anchor animation before wheel takes ownership
+        if (activeAnchorAnimation) {
+            activeAnchorAnimation.pause();
+            activeAnchorAnimation = null;
+            targetY = window.pageYOffset;
+            currentY = window.pageYOffset;
         }
 
         const maxScroll = Math.max(
@@ -206,6 +225,9 @@
         ) - window.innerHeight;
 
         if (maxScroll <= 5) return;
+
+        // Only hijack vertical scrolling
+        if (Math.abs(e.deltaY) === 0) return;
 
         let delta = e.deltaY;
         if (e.deltaMode === 1) delta *= 32;
@@ -216,19 +238,30 @@
         if (!isTicking) {
             isTicking = true;
             currentY = window.pageYOffset;
-            requestAnimationFrame(renderSmoothStep);
+            rafId = requestAnimationFrame(renderSmoothStep);
         }
 
         e.preventDefault();
     }, { passive: false });
 
-    // Sync state on external scroll (e.g. keyboard arrows, drag)
+    // Sync state on external scroll (e.g. keyboard arrows, scrollbar drag)
     window.addEventListener('scroll', function() {
-        if (!isTicking) {
+        if (isTicking) {
+            // If scroll was triggered by an external source (keyboard/scrollbar), cancel active wheel interpolation
+            if (!isProgrammaticWheelScroll && Math.abs(window.pageYOffset - currentY) > 2) {
+                if (rafId) {
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
+                isTicking = false;
+                targetY = window.pageYOffset;
+                currentY = window.pageYOffset;
+            }
+        } else {
             targetY = window.pageYOffset;
             currentY = window.pageYOffset;
-            updateIndicator();
         }
+        updateIndicator();
     }, { passive: true });
 
     // 2. Dynamic Scroll-Activated Scrollbars for Sidebar and Modals
@@ -257,17 +290,37 @@
 
         if (targetElem) {
             e.preventDefault();
+            // Preserve URL fragment and session-history behavior for Back navigation
+            if (window.history && window.history.pushState) {
+                window.history.pushState(null, '', href);
+            } else {
+                window.location.hash = href;
+            }
+
+            // Cancel any pending wheel interpolation frame before taking ownership
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+            isTicking = false;
+
+            if (activeAnchorAnimation) {
+                activeAnchorAnimation.pause();
+                activeAnchorAnimation = null;
+            }
+
             const topOffset = targetElem.getBoundingClientRect().top + window.pageYOffset - 75;
             targetY = topOffset;
-            currentY = topOffset;
+            currentY = window.pageYOffset;
 
             if (typeof anime !== 'undefined') {
-                anime({
+                activeAnchorAnimation = anime({
                     targets: [document.scrollingElement || document.documentElement, document.body],
                     scrollTop: topOffset,
                     duration: 750,
                     easing: 'easeInOutCubic',
                     complete: function() {
+                        activeAnchorAnimation = null;
                         targetY = window.pageYOffset;
                         currentY = window.pageYOffset;
                         updateIndicator();
@@ -275,6 +328,9 @@
                 });
             } else {
                 window.scrollTo({ top: topOffset, behavior: 'smooth' });
+                targetY = topOffset;
+                currentY = topOffset;
+                updateIndicator();
             }
         }
     });
