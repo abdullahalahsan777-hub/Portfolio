@@ -1,0 +1,12 @@
+{
+  "$schema": "https://devin.ai/config.json",
+  "project_name": "Portfolio Studio CMS",
+  "environment": {
+    "php_version": "8.2",
+    "node_version": "20",
+    "database": "mysql"
+  },
+  "build_command": "npm run build",
+  "test_command": "php artisan test",
+  "instructions_file": ".devin/instructions.md"
+}

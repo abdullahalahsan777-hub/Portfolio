@@ -1,0 +1,10 @@
+---
+description: Node.js & Vite 7 Build Pipeline
+globs: vite.config.js, package.json, resources/css/**/*.css, resources/js/**/*.js
+---
+# Vite 7 Asset Pipeline Rules
+
+- **Vite 7 Integration**: Use `@tailwindcss/vite` and `laravel-vite-plugin`.
+- **Blade Inclusion**: Use `@vite(['resources/css/app.css', 'resources/js/app.js'])`.
+- **Clean Builds**: Run `npm run build` to verify manifests and bundle generation before any release.
+- **Asset Links**: Never hardcode asset URLs. Use `asset()` helper or `@vite` directive.

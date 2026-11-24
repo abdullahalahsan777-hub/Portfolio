@@ -1,0 +1,19 @@
+# Goose CLI Agent Hints — Portfolio Studio CMS
+
+# Environment
+PROJECT_ROOT="c:\xampp\htdocs\portfolio"
+PHP_BIN="php"
+COMPOSER_BIN="composer"
+NODE_BIN="node"
+NPM_BIN="npm"
+
+# Key Commands
+build: npm run build
+test: php artisan test
+serve: php artisan serve
+cache_clear: php artisan optimize:clear
+
+# Guidelines
+- All database content is dynamic. Do not insert static arrays into views.
+- Application port is strictly controlled via SERVER_PORT in .env.
+- Consult .agents/ directory for complete skill definitions and personas.

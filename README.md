@@ -37,6 +37,11 @@
   - [8. Social Authentication (Google & Facebook)](#8-social-authentication-google--facebook)
   - [9. Performance & Cache Optimization](#9-performance--cache-optimization)
   - [10. Queue & Background Processing](#10-queue--background-processing)
+- [AI Agents & Universal Developer Intelligence System](#ai-agents--universal-developer-intelligence-system)
+  - [Supported AI Coding Agents](#supported-ai-coding-agents)
+  - [AI Engineering Skills Suite](#ai-engineering-skills-suite)
+  - [Architectural Personas](#architectural-personas)
+  - [Cross-Agent Interoperability Architecture](#cross-agent-interoperability-architecture)
 - [Directory Structure](#directory-structure)
 - [Security Best Practices](#security-best-practices)
 - [Changelog](#changelog)
@@ -78,7 +83,7 @@ Across all versions, the foundational modules remain identical, unified, and ful
 
 | Version | Status | Release Date | Subsystem / Key Feature Focus | Documentation (README) | Standalone & GitHub Archives | GitHub Release Tag |
 | :--- | :---: | :---: | :--- | :---: | :---: | :---: |
-| **`v1.3.0`** | **Current Stable** | Nov 10, 2026 | **Theme-Scoped Sort Ordering & Flowbite Dark UI Suite**<br>&bull; Independent `1..N` sort ordering per theme across all 9 Website modules<br>&bull; `AutoSortOrderById` trait assigning sequential order automatically<br>&bull; Removed manual sort inputs from create/edit forms<br>&bull; Interactive SortableJS drag-and-drop reordering with live badge updates<br>&bull; Integrated Flowbite Tailwind components & autohiding datepicker (`YYYY-MM-DD`)<br>&bull; Zero static/hardcoded data: 100% dynamic MySQL retrieval<br>&bull; Standardized blog date column to SQL `date` type | [`README_v1.3.0.md`](docs/releases/README_v1.3.0.md) | [`.zip`](public/releases/v1.3.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.3.0.tar.gz) | [`v1.3.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.3.0) |
+| **`v1.3.0`** | **Current Stable** | Nov 10, 2026 | **Theme-Scoped Sort Ordering, Flowbite Dark UI & Multi-Agent Intelligence**<br>&bull; Universal AI Agent configs across 7 platforms (Gemini, Claude, ChatGPT, Cursor, Windsurf, Devin, Goose/Codex)<br>&bull; 10 domain skills & 4 architectural personas standardized in `.agents/`<br>&bull; Independent `1..N` sort ordering per theme across all 9 Website modules<br>&bull; `AutoSortOrderById` trait assigning sequential order automatically<br>&bull; Removed manual sort inputs from create/edit forms<br>&bull; Interactive SortableJS drag-and-drop reordering with live badge updates<br>&bull; Integrated Flowbite Tailwind components & autohiding datepicker (`YYYY-MM-DD`)<br>&bull; Zero static/hardcoded data: 100% dynamic MySQL retrieval<br>&bull; Standardized blog date column to SQL `date` type | [`README_v1.3.0.md`](docs/releases/README_v1.3.0.md) | [`.zip`](public/releases/v1.3.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.3.0.tar.gz) | [`v1.3.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.3.0) |
 | **`v1.2.0`** | Stable | Oct 02, 2026 | **Enterprise Security & Full Responsive Polish**<br>&bull; Root `.htaccess` gateway protecting `.env`, `composer.json`, `.git`<br>&bull; Upload folder script execution prohibition (`php_flag engine off`)<br>&bull; `uploadFile()` extension blacklist<br>&bull; `SecurityHeadersMiddleware` (CSP/SAMEORIGIN/nosniff)<br>&bull; Public route rate-limiting throttle (15/min)<br>&bull; Fixed 100vh admin sidebar with slim custom scrollbars<br>&bull; Full device responsiveness (desktop, laptop, tab, mobile)<br>&bull; Version Control Releases Hub (`/admin/versions`) | [`README_v1.2.0.md`](docs/releases/README_v1.2.0.md) | [`.zip`](public/releases/v1.2.0.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.2.0.tar.gz) | [`v1.2.0 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.2.0) |
 | **`v1.1.9`** | Stable | Sep 15, 2026 | **Newsletter Engine & Pro Pagination**<br>&bull; Newsletter subscriber management & database migration<br>&bull; Public subscription endpoint (`/newsletter/subscribe`)<br>&bull; Dashboard newsletter audience health metrics card<br>&bull; Mathematical windowed pagination (capped to 7 items)<br>&bull; Scroll-to-top button auto-hide on scroll stop | [`README_v1.1.9.md`](docs/releases/README_v1.1.9.md) | [`.zip`](public/releases/v1.1.9.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.9.tar.gz) | [`v1.1.9 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.9) |
 | **`v1.1.8`** | Stable | Sep 01, 2026 | **Unified System & Browser Diagnostics Center**<br>&bull; Dual-source log viewer: backend `laravel.log` + client `browser.log`<br>&bull; Automated frontend JavaScript error beacon<br>&bull; Structured severity & runtime environment metric cards<br>&bull; One-click combined log download & dual-file clear | [`README_v1.1.8.md`](docs/releases/README_v1.1.8.md) | [`.zip`](public/releases/v1.1.8.zip) &bull; [`.tar.gz`](https://github.com/abdullahalahsan777-hub/Portfolio/archive/refs/tags/v1.1.8.tar.gz) | [`v1.1.8 Tag`](https://github.com/abdullahalahsan777-hub/Portfolio/releases/tag/v1.1.8) |
@@ -134,13 +139,13 @@ APP_URL=http://127.0.0.1:8044
 
 **Portfolio Studio** is a self-hosted personal portfolio and content management system designed for software developers, digital designers, illustrators, and creators.
 
-The platform provides **6 switchable frontend themes** combined with an **integrated Admin Control Panel**. Content elements — including headlines, counter metrics, portfolio projects, blog posts, brand logos, wordmarks, FAQ items, customer inquiries, and real-time runtime diagnostics — are manageable directly from the web interface without touching code.
+The platform provides **7 switchable frontend themes** combined with an **integrated Admin Control Panel**. Content elements — including headlines, counter metrics, portfolio projects, blog posts, brand logos, wordmarks, FAQ items, customer inquiries, and real-time runtime diagnostics — are manageable directly from the web interface without touching code.
 
 ---
 
 ## Themes
 
-The application includes 6 themes with dedicated navigation structures, typography pairings, color systems, and interactive widgets:
+The application includes 7 themes with dedicated navigation structures, typography pairings, color systems, and interactive widgets:
 
 | Theme Identifier | Target Audience | Visual Style | Accent Color |
 | :--- | :--- | :--- | :--- |
@@ -150,13 +155,14 @@ The application includes 6 themes with dedicated navigation structures, typograp
 | `uiux_designer` | UI/UX & Product Designers | High-Contrast Wireframe, Asymmetric Layout | `#ccff00` (Cyber Lime) |
 | `app_developer` | Mobile App Developers | High-Contrast Dark, Tech Stack Chips | `#ff0033` (Crimson Red) |
 | `app_software_developer` | Enterprise & SaaS Engineers | Modern Dark Tech, Metrics Display | `#ff6b00` (Amber Orange) |
+| `laravel_developer` | Full-Stack Laravel Developers & Architects | Dynamic Angular Hero Slider, Obsidian Dark | `#ff2d20` (Laravel Crimson) |
 
 ---
 
 ## Features
 
 ### 1. Theme Engine
-- Switch between 6 themes via the Admin Panel or URL parameter (`?theme=developer`).
+- Switch between 7 themes via the Admin Panel or URL parameter (`?theme=developer`).
 - Supports **Dark Mode**, **Light Mode**, and **System Preference Auto-Detection**.
 - Persistent user theme preferences saved in session and database.
 
@@ -516,10 +522,113 @@ php artisan queue:work --tries=3 --timeout=90
 
 ---
 
+## AI Agents & Universal Developer Intelligence System
+
+Portfolio Studio CMS incorporates a cross-agent **Developer Intelligence System** engineered to provide continuous, high-fidelity context, architectural rules, and tech stack guidelines across all major AI coding agents.
+
+### Supported AI Coding Agents
+
+Every supported agent operates from a unified configuration root linked to our canonical skills engine in `.agents/`:
+
+| AI Platform | Root Config | Directory Rules | Execution Target & Role |
+| :--- | :--- | :--- | :--- |
+| **Gemini / Antigravity** | [`GEMINI.md`](GEMINI.md) | [`.gemini/config.json`](.gemini/config.json) | Deep reasoning, full-stack architectural synthesis, shell automation |
+| **Claude Code** | [`CLAUDE.md`](CLAUDE.md) | [`.claude/settings.json`](.claude/settings.json) | CLI autonomous coding, refactoring, context-aware command execution |
+| **Cursor** | [`.cursorrules`](.cursorrules) | [`.cursor/rules/*.mdc`](.cursor/rules/) | Inline completions, Composer multi-file agentic edits, MDC rules |
+| **Windsurf / Windframe** | [`.windsurfrules`](.windsurfrules) | [`.windsurf/rules/project-rules.md`](.windsurf/rules/project-rules.md) | Cascade flow, reactive debugging, multi-file code generation |
+| **ChatGPT / Copilot** | [`.github/copilot-instructions.md`](.github/copilot-instructions.md) | [`chatgpt-instructions.md`](chatgpt-instructions.md) | Codebase navigation, test synthesis, explanation, PR review |
+| **Devin** | [`devin.json`](devin.json) | [`.devin/instructions.md`](.devin/instructions.md) | End-to-end autonomous ticket execution, PR verification |
+| **Goose / Codex** | [`.goosehints`](.goosehints) | [`.codex/instructions.md`](.codex/instructions.md) | Terminal tool calling, command automation, agentic scripting |
+
+---
+
+### AI Engineering Skills Suite
+
+The canonical skills repository is located at [`.agents/skills/`](.agents/skills/) and indexed via [`.agents/agents-manifest.json`](.agents/agents-manifest.json):
+
+1. **`laravel-php8.md`**: Laravel 11/12+ & PHP 8.3+ architectural patterns, strict typing, `AutoSortOrderById` trait, and FormRequest validation.
+2. **`tailwind-flowbite.md`**: Modern Tailwind CSS v4 pipeline (`@import "tailwindcss";`), Flowbite dark mode, and ISO `YYYY-MM-DD` datepicker standardization.
+3. **`material-ui-ux.md`**: Material 3 dynamic 9-accent palette, CSS variables (`--theme-primary`, `--theme-primary-glow`, `--theme-on-primary`), and YIQ contrast calculations.
+4. **`alpinejs-reactive.md`**: Declarative UI micro-interactions, modal management, transition lifecycles, and zero-FOUC state initialization.
+5. **`jquery-datatables-sortable.md`**: SortableJS drag-and-drop table sequencing, jQuery DataTables, and real-time Toastr alert feedback.
+6. **`nodejs-vite-pipeline.md`**: Vite 7 build optimization, `@tailwindcss/vite` integration, and manifest verification.
+7. **`angularjs-slider.md`**: Dynamic hero slider bridge (`laravel_developer` theme) ensuring conflict-free coexistence with modern toolchains.
+8. **`react-phosphor-icons.md`**: Modern icon system supporting Phosphor web font classes and responsive SVG vectors.
+9. **`conversation-inquiry.md`**: Client communications hub, Gmail-style dark mode mailbox, and background draft autosave using UUID `temp_id`.
+10. **`post-deploy-verification.md`**: Automated test runner (`php artisan test`), view cache purge, and release verification checklist.
+
+---
+
+### Architectural Personas
+
+Specialized prompt personas in [`.agents/personas/`](.agents/personas/) guide AI agents during complex engineering and design tasks:
+
+- **Lead Full-Stack Architect** ([`lead-fullstack-architect.md`](.agents/personas/lead-fullstack-architect.md)): Protects system architecture, enforces zero hardcoded static data, and hardens security.
+- **Modern UI/UX Designer** ([`modern-ui-ux-designer.md`](.agents/personas/modern-ui-ux-designer.md)): Drives Awwwards-level aesthetics, dark luxury minimalism, micro-glows, and fluid typography.
+- **QA & Deploy Engineer** ([`qa-deploy-engineer.md`](.agents/personas/qa-deploy-engineer.md)): Enforces 100% green test passes, validates Vite asset manifests, and maintains the self-healing GitHub updater.
+- **Context Inference Expert** ([`context-inference-expert.md`](.agents/personas/context-inference-expert.md)): Infers implicit patterns from commit history and codebase conventions to prevent regressions.
+
+---
+
+### Cross-Agent Interoperability Architecture
+
+```mermaid
+flowchart TD
+    subgraph Agents["Supported AI Coding Agents"]
+        G["Gemini / Antigravity"]
+        C["Claude Code"]
+        CR["Cursor"]
+        W["Windsurf / Windframe"]
+        CG["ChatGPT / Copilot"]
+        D["Devin"]
+        CO["Goose / Codex"]
+    end
+
+    subgraph Core["Canonical Intelligence Engine (.agents/)"]
+        M["agents-manifest.json"]
+        S["10 Modular Skills"]
+        P["4 Architectural Personas"]
+    end
+
+    subgraph App["Portfolio Studio Application Stack"]
+        L["Laravel 12.x / PHP 8.3+"]
+        T["Tailwind v4 + Flowbite"]
+        V["Vite 7 Pipeline"]
+        DB[("MySQL / SQLite")]
+    end
+
+    Agents --> M
+    M --> S
+    M --> P
+    S --> App
+    P --> App
+```
+
+---
+
 ## Directory Structure
 
 ```plaintext
 portfolio/
+├── .agents/                    # Universal AI Multi-Agent Skills & Personas Core
+│   ├── agents-manifest.json    # Machine-readable AI Agent & Skill Registry
+│   ├── README.md               # Master AI Multi-Agent Architectural Guide
+│   ├── personas/               # 4 Strategic Engineering & Design Personas
+│   └── skills/                 # 10 Technology & Subsystem Skills Rulebooks
+├── .claude/                    # Claude Code CLI settings
+├── .codex/                     # Codex Agent execution instructions
+├── .cursor/rules/              # Cursor IDE .mdc Rulebooks
+├── .devin/                     # Devin Autonomous Agent Runbook
+├── .gemini/                    # Gemini & Antigravity configuration
+├── .github/                    # GitHub Copilot workspace instructions
+├── .windsurf/rules/            # Windsurf Cascade Project Rules
+├── CLAUDE.md                   # Claude Code Developer Directives
+├── GEMINI.md                   # Gemini / Antigravity Guide
+├── .cursorrules                # Cursor IDE Global Directives
+├── .windsurfrules              # Windsurf Global Directives
+├── chatgpt-instructions.md     # ChatGPT Project Instructions
+├── devin.json                  # Devin AI Configuration
+├── .goosehints                 # Goose CLI Agent Hints
 ├── app/
 │   ├── Helpers/
 │   │   └── Helper.php          # Global Application Helper Utilities (currentUser, flash, etc.)

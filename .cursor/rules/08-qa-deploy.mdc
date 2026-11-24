@@ -1,0 +1,10 @@
+---
+description: QA Testing & Deploy Release Verification
+globs: tests/**/*.php, phpunit.xml
+---
+# QA & Deployment Rules
+
+- **Automated Tests**: Execute `php artisan test` and maintain 100% green passing tests.
+- **Self-Healing Merge**: Test `App\Services\SystemUpdateService` for clean GitHub branch sync.
+- **Port Compliance**: Verify application runs cleanly on `SERVER_PORT` configured in `.env`.
+- **Cache Purge**: Always execute `php artisan view:clear` and `php artisan route:clear` during deployment.

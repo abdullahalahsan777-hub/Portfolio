@@ -1,0 +1,14 @@
+{
+  "project_name": "Portfolio Studio CMS",
+  "version": "1.3.0",
+  "ai_agent": "Gemini",
+  "runtime": {
+    "php": "8.2+",
+    "laravel": "12.x",
+    "node": "20+",
+    "vite": "7.x"
+  },
+  "manifest_path": ".agents/agents-manifest.json",
+  "skills_directory": ".agents/skills",
+  "personas_directory": ".agents/personas"
+}

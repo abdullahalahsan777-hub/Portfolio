@@ -1,0 +1,11 @@
+---
+description: Laravel 11+ & PHP 8.3+ Architectural Standards
+globs: app/**/*.php, routes/**/*.php, database/**/*.php
+---
+# Laravel Core Standards
+
+- **Strict Types**: Use PHP 8.2/8.3+ strict typing, constructor promotion, and return type declarations.
+- **FormRequests**: Encapsulate validation logic inside dedicated `app/Http/Requests/` classes.
+- **AutoSortOrderById**: Models with sort ordering must use the `AutoSortOrderById` trait.
+- **Zero Static Data**: Never return static fallback arrays. Always query Eloquent models.
+- **CSRF Protection**: All POST/PUT/DELETE forms and AJAX calls must carry `@csrf` or `X-CSRF-TOKEN`.

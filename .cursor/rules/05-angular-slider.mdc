@@ -1,0 +1,9 @@
+---
+description: AngularJS Dynamic Hero Slider Bridge
+globs: resources/views/frontend/themes/laravel_developer/**/*.blade.php
+---
+# AngularJS Slider Bridge Rules
+
+- **Scope & Isolation**: The hero slider in `laravel_developer` theme uses AngularJS (`ng-app="heroSliderApp"`).
+- **Framework Coexistence**: Keep AngularJS strictly isolated within its container so it does not conflict with Alpine.js or Vite bundles.
+- **Dynamic Data Binding**: Pass dynamic database projects/slides using `ng-init` or JSON encode directives (`@json($projects)`).

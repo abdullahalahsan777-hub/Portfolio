@@ -1,0 +1,10 @@
+---
+description: Tailwind CSS v4 & Flowbite Dark UI Suite
+globs: resources/css/**/*.css, resources/views/**/*.blade.php
+---
+# Tailwind CSS v4 & Flowbite Guidelines
+
+- **Tailwind v4 Setup**: Use `@import "tailwindcss";` in `resources/css/app.css` without `@tailwind base;` legacy directives.
+- **Flowbite Integration**: Ensure Flowbite plugins and JS (`flowbite.min.js`) are initialized.
+- **Dark Mode**: All components must support dark mode classes (`dark:bg-slate-900`, `dark:text-white`, `dark:border-slate-800`).
+- **Datepickers**: Flowbite datepickers must format dates as ISO `YYYY-MM-DD` and auto-hide on date selection.

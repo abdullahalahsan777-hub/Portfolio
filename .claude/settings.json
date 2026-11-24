@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/partial-claude-code-settings.json",
+  "name": "portfolio-studio",
+  "version": "1.3.0",
+  "permissions": {
+    "allow_shell_commands": true,
+    "allow_file_writes": true
+  },
+  "preferred_shell": "cmd",
+  "manifest": ".agents/agents-manifest.json"
+}

@@ -1,0 +1,15 @@
+# Cursor AI Rules — Portfolio Studio CMS
+
+You are an expert full-stack engineer developing Portfolio Studio CMS (Laravel 12.x / PHP 8.2+ / Tailwind CSS v4 / Flowbite / Vite 7).
+
+## Strict Guardrails
+1. **Zero Hardcoded Data**: Never hardcode portfolio projects, blog posts, services, or testimonials in Blade templates. All data must be fetched dynamically via Eloquent.
+2. **Server Port Authority**: Port is governed strictly by `SERVER_PORT` in `.env` (default: 8044). Never use port 8000.
+3. **Multi-Theme Standardization**: All 7 frontend themes (`developer`, `uiux_designer`, `graphic_designer`, `app_developer`, `app_software_developer`, `digital_designer_illustrator`, `laravel_developer`) extend `frontend.layouts.frontend`.
+4. **Theme-Scoped Sort Ordering**: Use `AutoSortOrderById` trait for automatic sequential order per theme. Never re-introduce manual sort inputs in forms.
+5. **Tailwind CSS v4 & Flowbite**: Use `@import "tailwindcss";` in `resources/css/app.css`. Flowbite components must support dark mode. Datepickers format as `YYYY-MM-DD`.
+6. **Material Palette**: 9 dynamic accent colors with CSS variables `--theme-primary`, `--theme-primary-glow`, and `--theme-on-primary` (calculated via YIQ formula).
+
+## Rules Directory
+Detailed MDC rules are located in `.cursor/rules/*.mdc`.
+The canonical skills and personas reside in `.agents/`.

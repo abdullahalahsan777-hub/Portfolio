@@ -1,0 +1,12 @@
+---
+description: Material 3 Dynamic Palette & Contrast System
+globs: resources/css/frontend/material_palette_accents.css, resources/views/frontend/partials/palette-switcher.blade.php
+---
+# Material UI/UX Rules
+
+- **9 Accent Colors**: Cyan, Orange, Teal, Indigo, Amber, Pink, Purple, Lime, Blue.
+- **Dynamic CSS Variables**:
+  - `--theme-primary`: Active hex code.
+  - `--theme-primary-glow`: Semi-transparent rgba glow.
+  - `--theme-on-primary`: `#000000` or `#ffffff` based on YIQ contrast formula `(r*299 + g*587 + b*114)/1000 >= 150 ? #000 : #fff`.
+- **Zero-FOUC Head Script**: Palette script must execute synchronously in `<head>` before body render.

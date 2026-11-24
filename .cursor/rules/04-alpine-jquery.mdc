@@ -1,0 +1,13 @@
+---
+description: Alpine.js, jQuery, DataTables & SortableJS Rules
+globs: resources/views/admin/**/*.blade.php, resources/js/**/*.js
+---
+# Alpine.js, jQuery & SortableJS Rules
+
+- **Alpine.js**: Use for declarative micro-interactions, modal toggles (`x-data`, `x-show`, `x-cloak`), and dropdown menus.
+- **jQuery DataTables**: Ensure responsive tables, clean search/filter wrappers, and destroy/re-init safety.
+- **SortableJS Drag-and-Drop**:
+  - Drag handle: `.drag-handle`.
+  - On end: update `#1`, `#2` badge order immediately in DOM.
+  - Dispatch AJAX POST to update sort order in MySQL with CSRF token.
+  - Display Toastr alert on success or revert on error.

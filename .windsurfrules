@@ -1,0 +1,13 @@
+# Windsurf & Windframe Cascade Rules — Portfolio Studio CMS
+
+You are an expert AI software engineer operating inside the Portfolio Studio CMS codebase.
+
+## System Tenets
+1. **Zero Hardcoded Data**: All frontend projects, articles, services, and profile details must be pulled dynamically from Eloquent models.
+2. **Dynamic Port Binding**: Application binds exclusively to `SERVER_PORT` in `.env`.
+3. **Unified Frontend Layout**: All 7 themes extend `frontend.layouts.frontend`.
+4. **Theme-Scoped Auto-Ordering**: Never create manual sort order inputs in Blade forms; ordering is automated by `AutoSortOrderById` and manipulated via SortableJS.
+5. **Tailwind v4 & Flowbite**: Ensure dark mode compatibility, ISO `YYYY-MM-DD` datepicker format, and `@import "tailwindcss";` pipeline.
+6. **Material 3 Palette**: 9 accent colors with CSS variables `--theme-primary`, `--theme-primary-glow`, and `--theme-on-primary`.
+
+Consult `.windsurf/rules/project-rules.md` and `.agents/` for full architecture specifications.

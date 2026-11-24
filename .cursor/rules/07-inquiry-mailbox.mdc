@@ -1,0 +1,10 @@
+---
+description: Conversation & Inquiry Mailbox Subsystem
+globs: app/Http/Controllers/Admin/MessageController.php, resources/views/admin/messages/**/*.blade.php
+---
+# Inquiry Mailbox Rules
+
+- **Gmail-Inspired Dark UI**: Inbox, Sent, Drafts, Important, and Trash folders.
+- **Draft Autosave**: Background autosave via AJAX using UUID `temp_id`.
+- **VIP Client Status**: Inherit and toggle VIP importance badges based on sender history.
+- **Attachments**: Secure attachment upload with file extension and MIME validation.

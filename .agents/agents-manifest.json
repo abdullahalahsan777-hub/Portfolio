@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "project": "Portfolio Studio — Multi-Theme Developer & Designer CMS",
+  "version": "1.3.0",
+  "environment": {
+    "framework": "Laravel 12.x",
+    "php": ">=8.2 (optimized for PHP 8.3+)",
+    "node": ">=20.x",
+    "database": ["MySQL 8.0+", "SQLite 3"],
+    "bundler": "Vite 7.x",
+    "css_framework": "Tailwind CSS v4 + Flowbite"
+  },
+  "agents": [
+    {
+      "name": "Gemini",
+      "config_file": "GEMINI.md",
+      "rules_dir": ".gemini/",
+      "capabilities": ["deep-reasoning", "full-stack-coding", "shell-automation"]
+    },
+    {
+      "name": "Claude",
+      "config_file": "CLAUDE.md",
+      "rules_dir": ".claude/",
+      "capabilities": ["context-synthesis", "refactoring", "command-execution"]
+    },
+    {
+      "name": "Cursor",
+      "config_file": ".cursorrules",
+      "rules_dir": ".cursor/rules/",
+      "capabilities": ["inline-autocomplete", "composer", "mdc-rules"]
+    },
+    {
+      "name": "Windsurf",
+      "config_file": ".windsurfrules",
+      "rules_dir": ".windsurf/rules/",
+      "capabilities": ["cascade-flow", "multi-file-editing"]
+    },
+    {
+      "name": "ChatGPT / Copilot",
+      "config_file": ".github/copilot-instructions.md",
+      "rules_dir": ".github/",
+      "capabilities": ["code-explanation", "unit-test-generation"]
+    },
+    {
+      "name": "Devin",
+      "config_file": "devin.json",
+      "rules_dir": ".devin/",
+      "capabilities": ["autonomous-development", "pr-verification"]
+    },
+    {
+      "name": "Goose / Codex",
+      "config_file": ".goosehints",
+      "rules_dir": ".codex/",
+      "capabilities": ["cli-agentic-execution", "toolkit-integration"]
+    }
+  ],
+  "skills": [
+    {
+      "id": "laravel-php8",
+      "title": "Laravel 11+ & PHP 8.3+ Architecture",
+      "path": ".agents/skills/laravel-php8.md",
+      "globs": ["app/**/*.php", "routes/**/*.php", "config/**/*.php", "database/**/*.php"]
+    },
+    {
+      "id": "tailwind-flowbite",
+      "title": "Tailwind CSS v4 & Flowbite Dark UI Suite",
+      "path": ".agents/skills/tailwind-flowbite.md",
+      "globs": ["resources/css/**/*.css", "resources/views/**/*.blade.php"]
+    },
+    {
+      "id": "material-ui-ux",
+      "title": "Material 3 Dynamic Palette & Contrast System",
+      "path": ".agents/skills/material-ui-ux.md",
+      "globs": ["resources/css/frontend/material_palette_accents.css", "resources/views/frontend/partials/palette-switcher.blade.php"]
+    },
+    {
+      "id": "alpinejs-reactive",
+      "title": "Alpine.js State & Micro-Interactions",
+      "path": ".agents/skills/alpinejs-reactive.md",
+      "globs": ["resources/views/**/*.blade.php", "resources/js/**/*.js"]
+    },
+    {
+      "id": "jquery-datatables-sortable",
+      "title": "jQuery, DataTables & SortableJS Reordering",
+      "path": ".agents/skills/jquery-datatables-sortable.md",
+      "globs": ["resources/views/admin/**/*.blade.php", "public/assets/**/*.js"]
+    },
+    {
+      "id": "nodejs-vite-pipeline",
+      "title": "Node.js & Vite 7 Build Pipeline",
+      "path": ".agents/skills/nodejs-vite-pipeline.md",
+      "globs": ["vite.config.js", "package.json", "resources/js/**/*.js", "resources/css/**/*.css"]
+    },
+    {
+      "id": "angularjs-slider",
+      "title": "AngularJS Dynamic Hero Slider & Legacy Bridge",
+      "path": ".agents/skills/angularjs-slider.md",
+      "globs": ["resources/views/frontend/themes/laravel_developer/**/*.blade.php"]
+    },
+    {
+      "id": "react-phosphor-icons",
+      "title": "React & Phosphor Iconography Systems",
+      "path": ".agents/skills/react-phosphor-icons.md",
+      "globs": ["resources/views/**/*.blade.php"]
+    },
+    {
+      "id": "conversation-inquiry",
+      "title": "Conversation, Mailbox & Inquiry Subsystem",
+      "path": ".agents/skills/conversation-inquiry.md",
+      "globs": ["app/Http/Controllers/Admin/MessageController.php", "resources/views/admin/messages/**/*.blade.php"]
+    },
+    {
+      "id": "post-deploy-verification",
+      "title": "Post-Deploy Test Suite & Verification Checklist",
+      "path": ".agents/skills/post-deploy-verification.md",
+      "globs": ["tests/**/*.php", "phpunit.xml"]
+    }
+  ],
+  "personas": [
+    {
+      "id": "lead-fullstack-architect",
+      "title": "Lead Full-Stack Architect",
+      "path": ".agents/personas/lead-fullstack-architect.md"
+    },
+    {
+      "id": "modern-ui-ux-designer",
+      "title": "Modern UI/UX Designer",
+      "path": ".agents/personas/modern-ui-ux-designer.md"
+    },
+    {
+      "id": "qa-deploy-engineer",
+      "title": "QA & Deploy Engineer",
+      "path": ".agents/personas/qa-deploy-engineer.md"
+    },
+    {
+      "id": "context-inference-expert",
+      "title": "Context Inference Expert",
+      "path": ".agents/personas/context-inference-expert.md"
+    }
+  ]
+}

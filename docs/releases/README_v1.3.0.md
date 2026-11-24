@@ -15,7 +15,7 @@
 | Attribute | Specification |
 | :--- | :--- |
 | **Version Tag** | `v1.3.0` |
-| **Release Name** | Theme-Scoped Sort Ordering Engine & Flowbite Dark UI Suite |
+| **Release Name** | Theme-Scoped Sort Ordering Engine, Flowbite Dark UI & Universal Multi-Agent Intelligence System |
 | **Release Date** | November 10, 2026 |
 | **Commit Target** | Official Release Tag & HEAD |
 | **Software Status** | **Current Active Version** (Universal Latest Release) |
@@ -51,6 +51,33 @@
 - Conflict-free Git merge (`-X theirs`) prioritizing official remote updates without lockouts.
 - Automatic database migrations execution (`php artisan migrate --force`).
 - Deep cache purge and optimization (`optimize:clear`, `view:clear`, `cache:clear`).
+
+### 7. Universal AI Multi-Agent & Skills Intelligence System
+- **Supported AI Coding Agents**: Native, interoperable configuration files for all major AI coding platforms:
+  - **Gemini / Antigravity**: [`GEMINI.md`](../../GEMINI.md) and [`.gemini/config.json`](../../.gemini/config.json)
+  - **Claude Code**: [`CLAUDE.md`](../../CLAUDE.md) and [`.claude/settings.json`](../../.claude/settings.json)
+  - **Cursor**: [`.cursorrules`](../../.cursorrules) and [`.cursor/rules/*.mdc`](../../.cursor/rules/)
+  - **Windsurf / Windframe**: [`.windsurfrules`](../../.windsurfrules) and [`.windsurf/rules/project-rules.md`](../../.windsurf/rules/project-rules.md)
+  - **ChatGPT / GitHub Copilot**: [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md) and [`chatgpt-instructions.md`](../../chatgpt-instructions.md)
+  - **Devin**: [`devin.json`](../../devin.json) and [`.devin/instructions.md`](../../.devin/instructions.md)
+  - **Goose / Codex**: [`.goosehints`](../../.goosehints) and [`.codex/instructions.md`](../../.codex/instructions.md)
+- **10 Core Engineering Skills** ([`.agents/skills/`](../../.agents/skills/)):
+  1. `laravel-php8.md`: Laravel 11/12+ & PHP 8.3+ architecture, `AutoSortOrderById`, FormRequests.
+  2. `tailwind-flowbite.md`: Tailwind CSS v4 `@import "tailwindcss";`, Flowbite dark mode, ISO `YYYY-MM-DD` datepicker.
+  3. `material-ui-ux.md`: Material 3 dynamic palette (9 accents), YIQ contrast formula, zero-FOUC head execution.
+  4. `alpinejs-reactive.md`: Alpine.js micro-interactions, modal management, transition lifecycle.
+  5. `jquery-datatables-sortable.md`: SortableJS drag-and-drop table reordering, jQuery DataTables, Toastr notifications.
+  6. `nodejs-vite-pipeline.md`: Node.js & Vite 7 build pipeline, `@tailwindcss/vite`, bundle optimization.
+  7. `angularjs-slider.md`: AngularJS dynamic hero slider bridge and framework coexistence.
+  8. `react-phosphor-icons.md`: Phosphor icons and inline SVG vector assets.
+  9. `conversation-inquiry.md`: Gmail-style mailbox, client inquiry engine, draft autosaving with UUID `temp_id`.
+  10. `post-deploy-verification.md`: Automated test suites and release verification checklist.
+- **4 Architectural Personas** ([`.agents/personas/`](../../.agents/personas/)):
+  - `lead-fullstack-architect.md`: Architecture integrity, zero hardcoded data, security-by-design.
+  - `modern-ui-ux-designer.md`: Awwwards-caliber aesthetics, dark luxury, micro-glows, glassmorphism.
+  - `qa-deploy-engineer.md`: 100% green tests, asset manifest verification, self-healing updates.
+  - `context-inference-expert.md`: Deep repository pattern reconstruction, single source of truth, anti-regression guards.
+- **Unified Machine-Readable Registry**: [`.agents/agents-manifest.json`](../../.agents/agents-manifest.json).
 
 ---
 
