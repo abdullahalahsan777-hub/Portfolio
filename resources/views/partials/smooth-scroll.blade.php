@@ -1,53 +1,30 @@
 <!-- =========================================================================
      MODERN ULTRA-SMOOTH SCROLL ENGINE & ANIME.JS INTEGRATION
-     - Universal native scrollbar elimination across all browsers (Chrome, Firefox, Safari, Edge)
+     - Universal native scrollbar elimination across root window
+     - Dynamic sleek custom scrollbar for Sidebar and Modals (appears when scrolling/hovered)
      - Kinetic momentum requestAnimationFrame linear interpolation (lerp) for 60-144fps smooth wheel scroll
      - Anime.js cubic-bezier anchor, modal, and programmatic scroll animations
      - Sleek, ultra-thin (3px) floating glowing accent indicator with zero layout shift
-     - Auto-hides when stationary; strictly no horizontal scrollbar or chunky vertical rails
+     - Auto-hides when stationary; strictly no horizontal scrollbar or chunky native rails
      ========================================================================= -->
 
 <style>
-    /* Universal elimination of all native browser scrollbars */
-    *,
-    *::before,
-    *::after {
-        scrollbar-width: none !important; /* Firefox: completely suppresses scrollbars everywhere */
+    /* Universal elimination of root native browser scrollbars */
+    html,
+    body {
+        scrollbar-width: none !important; /* Firefox */
         -ms-overflow-style: none !important; /* IE 10+, Edge */
     }
 
-    *::-webkit-scrollbar,
-    ::-webkit-scrollbar,
     html::-webkit-scrollbar,
     body::-webkit-scrollbar {
         width: 0px !important;
         height: 0px !important;
-        display: none !important; /* WebKit (Chrome, Safari, Edge, Opera) */
+        display: none !important;
         background: transparent !important;
     }
 
-    /* Container specific zero-scrollbar reinforcement */
-    #adminSidebar .overflow-y-auto,
-    #adminSidebar,
-    #previewModal .overflow-y-auto,
-    .overflow-y-auto,
-    .overflow-x-auto,
-    pre,
-    code,
-    textarea {
-        scrollbar-width: none !important;
-        -ms-overflow-style: none !important;
-    }
-
-    #adminSidebar .overflow-y-auto::-webkit-scrollbar,
-    #previewModal .overflow-y-auto::-webkit-scrollbar,
-    pre::-webkit-scrollbar {
-        width: 0px !important;
-        height: 0px !important;
-        display: none !important;
-    }
-
-    /* Ultra-thin floating scroll indicator */
+    /* Ultra-thin floating scroll indicator for window */
     #smoothScrollPill {
         position: fixed;
         right: 3px;
@@ -65,6 +42,68 @@
 
     #smoothScrollPill.scrolling {
         opacity: 0.85;
+    }
+
+    /* =========================================================================
+       DYNAMIC SLEEK SCROLLBAR: Sidebar & AI Modals (Appears when scrolling)
+       ========================================================================= */
+    #adminSidebar .overflow-y-auto,
+    #previewModal .overflow-y-auto,
+    .sidebar-scroll,
+    .ai-modal-scroll {
+        scrollbar-width: thin !important;
+        scrollbar-color: transparent transparent !important;
+        transition: scrollbar-color 0.35s ease;
+    }
+
+    #adminSidebar .overflow-y-auto::-webkit-scrollbar,
+    #previewModal .overflow-y-auto::-webkit-scrollbar,
+    .sidebar-scroll::-webkit-scrollbar,
+    .ai-modal-scroll::-webkit-scrollbar {
+        width: 5px !important;
+        height: 5px !important;
+        display: block !important;
+    }
+
+    #adminSidebar .overflow-y-auto::-webkit-scrollbar-track,
+    #previewModal .overflow-y-auto::-webkit-scrollbar-track,
+    .sidebar-scroll::-webkit-scrollbar-track,
+    .ai-modal-scroll::-webkit-scrollbar-track {
+        background: transparent !important;
+    }
+
+    #adminSidebar .overflow-y-auto::-webkit-scrollbar-thumb,
+    #previewModal .overflow-y-auto::-webkit-scrollbar-thumb,
+    .sidebar-scroll::-webkit-scrollbar-thumb,
+    .ai-modal-scroll::-webkit-scrollbar-thumb {
+        background: transparent !important;
+        border-radius: 9999px !important;
+        border: none !important;
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* When actively scrolling or hovered: sleek glowing cyan scrollbar illuminates smoothly */
+    #adminSidebar .overflow-y-auto.is-scrolling,
+    #previewModal .overflow-y-auto.is-scrolling,
+    .sidebar-scroll.is-scrolling,
+    .ai-modal-scroll.is-scrolling,
+    #adminSidebar .overflow-y-auto:hover,
+    #previewModal .overflow-y-auto:hover,
+    .sidebar-scroll:hover,
+    .ai-modal-scroll:hover {
+        scrollbar-color: rgba(6, 182, 212, 0.85) transparent !important;
+    }
+
+    #adminSidebar .overflow-y-auto.is-scrolling::-webkit-scrollbar-thumb,
+    #previewModal .overflow-y-auto.is-scrolling::-webkit-scrollbar-thumb,
+    .sidebar-scroll.is-scrolling::-webkit-scrollbar-thumb,
+    .ai-modal-scroll.is-scrolling::-webkit-scrollbar-thumb,
+    #adminSidebar .overflow-y-auto:hover::-webkit-scrollbar-thumb,
+    #previewModal .overflow-y-auto:hover::-webkit-scrollbar-thumb,
+    .sidebar-scroll:hover::-webkit-scrollbar-thumb,
+    .ai-modal-scroll:hover::-webkit-scrollbar-thumb {
+        background: rgba(6, 182, 212, 0.85) !important;
+        box-shadow: 0 0 10px rgba(6, 182, 212, 0.5) !important;
     }
 </style>
 
@@ -132,7 +171,7 @@
         }
     }
 
-    // Smooth wheel listener
+    // Smooth wheel listener for main window
     window.addEventListener('wheel', function(e) {
         // Allow zoom gestures (Ctrl/Cmd + wheel)
         if (e.ctrlKey || e.metaKey || e.shiftKey) return;
@@ -157,7 +196,7 @@
         }
 
         if (isInsideScrollContainer) {
-            // Allow internal container to scroll natively with zero scrollbars
+            // Allow internal container to scroll smoothly without page hijack
             return;
         }
 
@@ -192,7 +231,19 @@
         }
     }, { passive: true });
 
-    // 2. Anime.js Anchor & Programmatic Smooth Scrolling
+    // 2. Dynamic Scroll-Activated Scrollbars for Sidebar and Modals
+    document.addEventListener('scroll', function(e) {
+        const target = e.target;
+        if (target && target.nodeType === 1 && target !== document && target !== document.documentElement && target !== document.body) {
+            target.classList.add('is-scrolling');
+            clearTimeout(target._scrollActivityTimer);
+            target._scrollActivityTimer = setTimeout(function() {
+                target.classList.remove('is-scrolling');
+            }, 650);
+        }
+    }, true); // useCapture: true captures scroll on ALL elements
+
+    // 3. Anime.js Anchor & Programmatic Smooth Scrolling
     document.addEventListener('click', function(e) {
         const link = e.target.closest('a[href^="#"]');
         if (!link) return;
@@ -228,7 +279,7 @@
         }
     });
 
-    // 3. Dynamic Material Palette Color Synchronization
+    // 4. Dynamic Material Palette Color Synchronization
     window.addEventListener('theme-color-changed', function(e) {
         if (e.detail && e.detail.color && indicator) {
             indicator.style.backgroundColor = e.detail.color;
@@ -236,7 +287,7 @@
         }
     });
 
-    // 4. Initial layout sync
+    // 5. Initial layout sync
     window.addEventListener('resize', updateIndicator, { passive: true });
     document.addEventListener('DOMContentLoaded', updateIndicator);
 })();

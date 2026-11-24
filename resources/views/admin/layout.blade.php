@@ -264,24 +264,47 @@
             border: 1px solid rgba(6, 182, 212, 0.3) !important;
         }
 
-        /* Universal zero-scrollbar across all engines for Sidebar, Modals & Containers */
+        /* Dynamic Sleek Custom Scrollbar for Sidebar & Modals (Appears when scrolling or hovered) */
         #adminSidebar .overflow-y-auto,
-        #adminSidebar,
-        .overflow-y-auto,
-        .overflow-x-auto,
-        pre,
-        code {
-            scrollbar-width: none !important;
-            -ms-overflow-style: none !important;
+        .sidebar-scroll {
+            scrollbar-width: thin !important;
+            scrollbar-color: transparent transparent !important;
+            transition: scrollbar-color 0.35s ease;
         }
 
         #adminSidebar .overflow-y-auto::-webkit-scrollbar,
-        #adminSidebar::-webkit-scrollbar,
-        .overflow-y-auto::-webkit-scrollbar {
-            width: 0px !important;
-            height: 0px !important;
-            display: none !important;
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 5px !important;
+            height: 5px !important;
+            display: block !important;
+        }
+
+        #adminSidebar .overflow-y-auto::-webkit-scrollbar-track,
+        .sidebar-scroll::-webkit-scrollbar-track {
             background: transparent !important;
+        }
+
+        #adminSidebar .overflow-y-auto::-webkit-scrollbar-thumb,
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: transparent !important;
+            border-radius: 9999px !important;
+            border: none !important;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #adminSidebar .overflow-y-auto.is-scrolling,
+        .sidebar-scroll.is-scrolling,
+        #adminSidebar .overflow-y-auto:hover,
+        .sidebar-scroll:hover {
+            scrollbar-color: rgba(6, 182, 212, 0.85) transparent !important;
+        }
+
+        #adminSidebar .overflow-y-auto.is-scrolling::-webkit-scrollbar-thumb,
+        .sidebar-scroll.is-scrolling::-webkit-scrollbar-thumb,
+        #adminSidebar .overflow-y-auto:hover::-webkit-scrollbar-thumb,
+        .sidebar-scroll:hover::-webkit-scrollbar-thumb {
+            background: rgba(6, 182, 212, 0.85) !important;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.5) !important;
         }
 
         /* Pro-grade clean pagination: prevent unwanted scrollbars */
@@ -622,7 +645,7 @@
     <aside id="adminSidebar"
         class="fixed inset-y-0 left-0 w-64 bg-[#09101d] border-r border-white/10 flex flex-col shrink-0 h-screen z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none">
         <!-- Scrollable Navigation Area -->
-        <div class="flex-1 overflow-y-auto">
+        <div class="flex-1 overflow-y-auto sidebar-scroll">
             <!-- Admin Studio Brand & Profile Header (Sidebar Top) -->
             <div class="p-2 border-b border-white/10 space-y-2 bg-gradient-to-b from-white/[0.03] to-transparent">
                 <!-- Sidebar Top Profile Info Card -->

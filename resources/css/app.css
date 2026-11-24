@@ -50,6 +50,69 @@ body::-webkit-scrollbar,
     background: transparent !important;
 }
 
+/* =========================================================================
+   Dynamic Sleek Custom Scrollbars for Sidebar and Modals
+   Hidden when idle; smoothly illuminates glowing cyan when scrolling or hovered.
+   ========================================================================= */
+.sidebar-scroll,
+.ai-modal-scroll,
+#adminSidebar .overflow-y-auto,
+#previewModal .overflow-y-auto {
+    scrollbar-width: thin !important;
+    scrollbar-color: transparent transparent !important;
+    transition: scrollbar-color 0.35s ease;
+}
+
+.sidebar-scroll::-webkit-scrollbar,
+.ai-modal-scroll::-webkit-scrollbar,
+#adminSidebar .overflow-y-auto::-webkit-scrollbar,
+#previewModal .overflow-y-auto::-webkit-scrollbar {
+    width: 5px !important;
+    height: 5px !important;
+    display: block !important;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track,
+.ai-modal-scroll::-webkit-scrollbar-track,
+#adminSidebar .overflow-y-auto::-webkit-scrollbar-track,
+#previewModal .overflow-y-auto::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb,
+.ai-modal-scroll::-webkit-scrollbar-thumb,
+#adminSidebar .overflow-y-auto::-webkit-scrollbar-thumb,
+#previewModal .overflow-y-auto::-webkit-scrollbar-thumb {
+    background: transparent !important;
+    border-radius: 9999px !important;
+    border: none !important;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Scroll or Hover activation */
+.sidebar-scroll.is-scrolling,
+.ai-modal-scroll.is-scrolling,
+#adminSidebar .overflow-y-auto.is-scrolling,
+#previewModal .overflow-y-auto.is-scrolling,
+.sidebar-scroll:hover,
+.ai-modal-scroll:hover,
+#adminSidebar .overflow-y-auto:hover,
+#previewModal .overflow-y-auto:hover {
+    scrollbar-color: rgba(6, 182, 212, 0.85) transparent !important;
+}
+
+.sidebar-scroll.is-scrolling::-webkit-scrollbar-thumb,
+.ai-modal-scroll.is-scrolling::-webkit-scrollbar-thumb,
+#adminSidebar .overflow-y-auto.is-scrolling::-webkit-scrollbar-thumb,
+#previewModal .overflow-y-auto.is-scrolling::-webkit-scrollbar-thumb,
+.sidebar-scroll:hover::-webkit-scrollbar-thumb,
+.ai-modal-scroll:hover::-webkit-scrollbar-thumb,
+#adminSidebar .overflow-y-auto:hover::-webkit-scrollbar-thumb,
+#previewModal .overflow-y-auto:hover::-webkit-scrollbar-thumb {
+    background: rgba(6, 182, 212, 0.85) !important;
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.5) !important;
+}
+
 /* NiceScroll Modern UI/UX Architecture Styles */
 .nicescroll-rails {
     border-radius: 9999px !important;

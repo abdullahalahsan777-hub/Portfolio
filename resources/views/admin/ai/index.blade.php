@@ -359,7 +359,7 @@
                 </button>
             </div>
 
-            <div class="p-4 rounded-2xl bg-[#060a12] border border-white/5 max-h-[500px] overflow-y-auto">
+            <div class="p-4 rounded-2xl bg-[#060a12] border border-white/5 max-h-[500px] overflow-y-auto ai-modal-scroll">
                 <pre class="text-xs font-mono text-cyan-300 leading-relaxed"><code>{{ json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</code></pre>
             </div>
         </div>
@@ -399,7 +399,7 @@
             </div>
 
             <!-- Modal Content -->
-            <div class="p-6 overflow-y-auto flex-1 bg-[#060a12]" style="scrollbar-width: none; -ms-overflow-style: none;">
+            <div class="p-6 overflow-y-auto flex-1 bg-[#060a12] ai-modal-scroll">
                 <div x-show="previewLoading" class="py-12 text-center text-slate-400 font-mono text-xs">
                     <svg class="w-6 h-6 animate-spin text-cyan-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
