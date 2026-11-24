@@ -34,21 +34,25 @@ select:focus {
     outline: none !important;
 }
 
-/* Global Custom Modern Scrollbar */
+/* Global Removal of Default Browser Scrollbar for NiceScroll */
+html,
+body {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 0px !important;
+    height: 0px !important;
+    display: none !important;
 }
 ::-webkit-scrollbar-track {
-    background: #060606;
+    background: transparent !important;
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--theme-primary-glow, rgba(255, 255, 255, 0.2));
-    border-radius: 9999px;
-    border: 2px solid #060606;
+    display: none !important;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--theme-primary, #00e5ff);
+    display: none !important;
 }
 
 /* Scoped Smooth Color Transitions for Luxurious Feel */

@@ -124,6 +124,57 @@
 
     <!-- jQuery & Toastr Handler Component -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- NiceScroll JS Plugin for Smooth Thinner Scrollbars -->
+    <script src="{{ asset('assets/plugins/nicescroll/jquery.nicescroll.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            if (typeof $.fn.niceScroll !== 'undefined') {
+                const getPrimaryColor = function() {
+                    const saved = localStorage.getItem('portfolio_theme_color') || localStorage.getItem('laravel_theme_color');
+                    if (saved) return saved;
+                    return getComputedStyle(document.documentElement).getPropertyValue('--theme-primary').trim() || '#00e5ff';
+                };
+
+                window.frontendNiceScroll = $("html").niceScroll({
+                    cursorcolor: getPrimaryColor(),
+                    cursoropacitymin: 0,
+                    cursoropacitymax: 0.9,
+                    cursorwidth: "4px",
+                    cursorborder: "none",
+                    cursorborderradius: "9999px",
+                    zindex: "99999",
+                    scrollspeed: 60,
+                    mousescrollstep: 35,
+                    touchbehavior: false,
+                    hwacceleration: true,
+                    autohidemode: true,
+                    hidecursordelay: 400,
+                    background: "transparent",
+                    cursorminheight: 32,
+                    preservenativescrolling: false,
+                    bouncescroll: true,
+                    railalign: "right",
+                    railvalign: "bottom",
+                    smoothscroll: true,
+                    horizrailenabled: false
+                });
+
+                // Dynamically update NiceScroll color on palette accent change
+                window.addEventListener('theme-color-changed', function(e) {
+                    if (e.detail && e.detail.color && window.frontendNiceScroll && window.frontendNiceScroll.cursor) {
+                        window.frontendNiceScroll.cursor.css('background-color', e.detail.color);
+                    }
+                });
+
+                // Auto-resize on window resize
+                $(window).on('resize', function() {
+                    if (window.frontendNiceScroll && typeof window.frontendNiceScroll.resize === 'function') {
+                        window.frontendNiceScroll.resize();
+                    }
+                });
+            }
+        });
+    </script>
     @include('partials.toastr')
     @include('partials.browser-logger')
     <!-- Pictureflect Photo Viewer Plugin -->

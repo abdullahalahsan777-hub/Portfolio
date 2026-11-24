@@ -173,19 +173,16 @@ html, body {
     z-index: 50 !important;
 }
 
-/* Custom Webkit Scrollbar */
+/* Default Native Browser Scrollbar Removed for NiceScroll */
+html,
+body {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
 ::-webkit-scrollbar {
-    width: 8px;
-}
-::-webkit-scrollbar-track {
-    background: #090714;
-}
-::-webkit-scrollbar-thumb {
-    background: #251c47;
-    border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #7c3aed;
+    width: 0px !important;
+    height: 0px !important;
+    display: none !important;
 }
 
 /* Glassmorphism helpers */

@@ -1589,6 +1589,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- NiceScroll JS Plugin for Smooth Thinner Scrollbars -->
+    <script src="{{ asset('assets/plugins/nicescroll/jquery.nicescroll.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            if (typeof $.fn.niceScroll !== 'undefined') {
+                window.adminNiceScroll = $("html").niceScroll({
+                    cursorcolor: "#06b6d4",
+                    cursoropacitymin: 0,
+                    cursoropacitymax: 0.85,
+                    cursorwidth: "4px",
+                    cursorborder: "none",
+                    cursorborderradius: "9999px",
+                    zindex: "99999",
+                    scrollspeed: 60,
+                    mousescrollstep: 35,
+                    touchbehavior: false,
+                    hwacceleration: true,
+                    autohidemode: true,
+                    hidecursordelay: 400,
+                    background: "transparent",
+                    cursorminheight: 32,
+                    preservenativescrolling: false,
+                    bouncescroll: true,
+                    railalign: "right",
+                    smoothscroll: true,
+                    horizrailenabled: false
+                });
+            }
+        });
+    </script>
 
     <!-- DataTables JS & Export Extensions (Excel, Word, CSV, PDF, Image) -->
     <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>

@@ -26,6 +26,52 @@
     display: none !important;
 }
 
+/* ==========================================================================
+   Global Elimination of Default Browser Scrollbars (All Browsers & Engines)
+   Removes default thick native scrollbars in Chrome, Edge, Safari, Firefox, Opera.
+   Replaced by ultra-thin, smooth NiceScroll JS cursor.
+   ========================================================================== */
+html,
+body {
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE 10+, Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+    width: 0px !important;
+    height: 0px !important;
+    display: none !important; /* WebKit (Chrome, Safari, Edge, Opera) */
+}
+
+/* NiceScroll Modern UI/UX Architecture Styles */
+.nicescroll-rails {
+    border-radius: 9999px !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.nicescroll-rails-vr {
+    right: 2px !important;
+    background: transparent !important;
+    border: none !important;
+    width: 4px !important;
+}
+
+.nicescroll-cursors {
+    width: 4px !important;
+    border-radius: 9999px !important;
+    border: none !important;
+    background-color: var(--theme-primary, #00e5ff) !important;
+    box-shadow: 0 0 10px var(--theme-primary-glow, rgba(0, 229, 255, 0.4)) !important;
+    transition: opacity 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.nicescroll-rails-hr {
+    display: none !important; /* Strictly no horizontal scrollbar */
+}
+
 @theme {
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-display: 'Outfit', 'Space Grotesk', -apple-system, sans-serif;
