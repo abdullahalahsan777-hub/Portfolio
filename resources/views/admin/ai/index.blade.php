@@ -399,7 +399,7 @@
             </div>
 
             <!-- Modal Content -->
-            <div class="p-6 overflow-y-auto flex-1 bg-[#060a12]">
+            <div class="p-6 overflow-y-auto flex-1 bg-[#060a12]" style="scrollbar-width: none; -ms-overflow-style: none;">
                 <div x-show="previewLoading" class="py-12 text-center text-slate-400 font-mono text-xs">
                     <svg class="w-6 h-6 animate-spin text-cyan-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

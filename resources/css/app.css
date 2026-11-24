@@ -29,20 +29,26 @@
 /* ==========================================================================
    Global Elimination of Default Browser Scrollbars (All Browsers & Engines)
    Removes default thick native scrollbars in Chrome, Edge, Safari, Firefox, Opera.
-   Replaced by ultra-thin, smooth NiceScroll JS cursor.
+   Applied to all root and internal scrollable elements (sidebar, modal, pre, code).
    ========================================================================== */
+*,
+*::before,
+*::after,
 html,
 body {
-    scrollbar-width: none !important; /* Firefox */
+    scrollbar-width: none !important; /* Firefox: completely suppresses scrollbars everywhere */
     -ms-overflow-style: none !important; /* IE 10+, Edge */
 }
 
+*,
+*::-webkit-scrollbar,
 html::-webkit-scrollbar,
 body::-webkit-scrollbar,
-*::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 0px !important;
     height: 0px !important;
     display: none !important; /* WebKit (Chrome, Safari, Edge, Opera) */
+    background: transparent !important;
 }
 
 /* NiceScroll Modern UI/UX Architecture Styles */
